@@ -1,0 +1,6 @@
+.gwt
+.gwt-tmp
+gwt-unitCache
+src-core
+/war/demo
+/war/WEB-INF/deploy

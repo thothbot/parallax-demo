@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="demo">
+  <!-- Inherit the some stuff. -->
+  <inherits name="com.google.gwt.core.Core"/>
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.google.gwt.i18n.I18N"/>
+  <inherits name="thothbot.squirrel.lib.Lib"/>
+  
+  <inherits name="com.google.gwt.user.theme.standard.Standard"/>
+
+  <!--   Loggin -->
+  <inherits name="com.google.gwt.logging.Logging"/>
+  <set-property name="gwt.logging.enabled" value="TRUE"/> 
+  <set-property name="gwt.logging.logLevel" value="ALL"/>
+
+  <set-property name="gwt.logging.consoleHandler" value="DISABLED" />
+  <set-property name="gwt.logging.popupHandler" value="DISABLED" />
+
+  <!-- Enable debug ID. -->
+  <inherits name="com.google.gwt.user.Debug"/>
+  <set-property name="gwt.enableDebugId" value="true"/> 
+  
+  <!-- Use a generator to create the source code -->
+
+  <!-- Specify the app entry point class. -->
+  <entry-point class='thothbot.squirrel.demo.client.Demo'/>
+
+  <generate-with class="thothbot.squirrel.demo.resources.DemoGenerator">
+    <when-type-assignable class="thothbot.squirrel.demo.client.Demo.GeneratorInfo" />
+  </generate-with>
+  
+   <source path='client'/>
+   <source path='resources'/>
+
+</module>
