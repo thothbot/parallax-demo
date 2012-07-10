@@ -19,13 +19,13 @@
 
 package thothbot.squirrel.demo.client;
 
+import thothbot.squirrel.core.client.RenderingPanel;
+import thothbot.squirrel.core.client.RenderingReadyEvent;
+import thothbot.squirrel.core.client.RenderingReadyHandler;
+import thothbot.squirrel.core.client.RenderingScene;
+import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.squirrel.demo.resources.DemoResources;
 
-import thothbot.squirrel.lib.client.RenderingReadyEvent;
-import thothbot.squirrel.lib.client.RenderingReadyHandler;
-import thothbot.squirrel.lib.client.RenderingPanel;
-import thothbot.squirrel.lib.client.RenderingScene;
-import thothbot.squirrel.lib.client.RenderingPanel.RenderPanelAttributes;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;

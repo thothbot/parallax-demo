@@ -19,7 +19,8 @@
 
 package thothbot.squirrel.demo.client;
 
-import thothbot.squirrel.lib.client.RenderingPanel;
+import thothbot.squirrel.core.client.RenderingPanel;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.safehtml.shared.SafeHtml;

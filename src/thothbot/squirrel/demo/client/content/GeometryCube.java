@@ -22,16 +22,16 @@
 
 package thothbot.squirrel.demo.client.content;
 
+import thothbot.squirrel.core.shared.Log;
+import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
+import thothbot.squirrel.core.shared.geometries.Cube;
+import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
+import thothbot.squirrel.core.shared.objects.Mesh;
+import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
 
-import thothbot.squirrel.lib.shared.Log;
-import thothbot.squirrel.lib.shared.cameras.PerspectiveCamera;
-import thothbot.squirrel.lib.shared.geometries.Cube;
-import thothbot.squirrel.lib.shared.materials.MeshBasicMaterial;
-import thothbot.squirrel.lib.shared.objects.Mesh;
-import thothbot.squirrel.lib.shared.utils.ImageUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ClientBundle;

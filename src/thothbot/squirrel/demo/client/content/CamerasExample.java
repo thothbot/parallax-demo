@@ -23,27 +23,27 @@
 
 package thothbot.squirrel.demo.client.content;
 
+import thothbot.squirrel.core.client.RenderingPanel;
+import thothbot.squirrel.core.client.RenderingReadyEvent;
+import thothbot.squirrel.core.client.context.Canvas3d;
+import thothbot.squirrel.core.shared.cameras.Camera;
+import thothbot.squirrel.core.shared.cameras.OrthographicCamera;
+import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
+import thothbot.squirrel.core.shared.core.Color3f;
+import thothbot.squirrel.core.shared.core.Geometry;
+import thothbot.squirrel.core.shared.core.Mathematics;
+import thothbot.squirrel.core.shared.core.Object3D;
+import thothbot.squirrel.core.shared.core.Vector3f;
+import thothbot.squirrel.core.shared.geometries.Sphere;
+import thothbot.squirrel.core.shared.helpers.CameraHelper;
+import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
+import thothbot.squirrel.core.shared.materials.ParticleBasicMaterial;
+import thothbot.squirrel.core.shared.objects.Mesh;
+import thothbot.squirrel.core.shared.objects.ParticleSystem;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
 
-import thothbot.squirrel.lib.client.RenderingPanel;
-import thothbot.squirrel.lib.client.RenderingReadyEvent;
-import thothbot.squirrel.lib.client.context.Canvas3d;
-import thothbot.squirrel.lib.shared.cameras.Camera;
-import thothbot.squirrel.lib.shared.cameras.OrthographicCamera;
-import thothbot.squirrel.lib.shared.cameras.PerspectiveCamera;
-import thothbot.squirrel.lib.shared.core.Color3f;
-import thothbot.squirrel.lib.shared.core.Geometry;
-import thothbot.squirrel.lib.shared.core.Mathematics;
-import thothbot.squirrel.lib.shared.core.Object3D;
-import thothbot.squirrel.lib.shared.core.Vector3f;
-import thothbot.squirrel.lib.shared.geometries.Sphere;
-import thothbot.squirrel.lib.shared.helpers.CameraHelper;
-import thothbot.squirrel.lib.shared.materials.MeshBasicMaterial;
-import thothbot.squirrel.lib.shared.materials.ParticleBasicMaterial;
-import thothbot.squirrel.lib.shared.objects.Mesh;
-import thothbot.squirrel.lib.shared.objects.ParticleSystem;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.KeyDownEvent;

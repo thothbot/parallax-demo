@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import thothbot.squirrel.core.shared.Log;
 import thothbot.squirrel.demo.client.DataModel.Category;
 import thothbot.squirrel.demo.resources.DemoResources;
 
-import thothbot.squirrel.lib.shared.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.prefetch.Prefetcher;

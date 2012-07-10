@@ -22,19 +22,19 @@
 
 package thothbot.squirrel.demo.client.content;
 
+import thothbot.squirrel.core.client.RenderingPanel;
+import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
+import thothbot.squirrel.core.client.controls.FirstPersonControl;
+import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
+import thothbot.squirrel.core.shared.core.Color3f;
+import thothbot.squirrel.core.shared.geometries.Plane;
+import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
+import thothbot.squirrel.core.shared.objects.Mesh;
+import thothbot.squirrel.core.shared.textures.Texture;
+import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
-import thothbot.squirrel.lib.client.RenderingPanel;
-import thothbot.squirrel.lib.client.RenderingPanel.RenderPanelAttributes;
-import thothbot.squirrel.lib.client.controls.FirstPersonControl;
-import thothbot.squirrel.lib.shared.cameras.PerspectiveCamera;
-import thothbot.squirrel.lib.shared.core.Color3f;
-import thothbot.squirrel.lib.shared.geometries.Plane;
-import thothbot.squirrel.lib.shared.materials.MeshBasicMaterial;
-import thothbot.squirrel.lib.shared.objects.Mesh;
-import thothbot.squirrel.lib.shared.textures.Texture;
-import thothbot.squirrel.lib.shared.utils.ImageUtils;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
