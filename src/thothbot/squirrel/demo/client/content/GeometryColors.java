@@ -30,7 +30,7 @@ import thothbot.squirrel.core.client.RenderingReadyEvent;
 import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
-import thothbot.squirrel.core.shared.core.DimentionObject;
+import thothbot.squirrel.core.shared.core.DimensionalObject;
 import thothbot.squirrel.core.shared.core.Face3;
 import thothbot.squirrel.core.shared.core.Face4;
 import thothbot.squirrel.core.shared.core.Geometry;
@@ -181,17 +181,17 @@ public class GeometryColors extends ContentWidget
 			materials.add(lmaterial);
 			materials.add(bmaterial);
 
-			DimentionObject group1 = SceneUtils.createMultiMaterialObject( geometry, materials );
+			DimensionalObject group1 = SceneUtils.createMultiMaterialObject( geometry, materials );
 			group1.getPosition().setX(-400);
 			group1.getRotation().setX(-1.87f);
 			getScene().addChild( group1 );
 
-			DimentionObject group2 = SceneUtils.createMultiMaterialObject( geometry2, materials );
+			DimensionalObject group2 = SceneUtils.createMultiMaterialObject( geometry2, materials );
 			group2.getPosition().setX(400);
 			group2.getRotation().setX(0f);
 			getScene().addChild( group2 );
 
-			DimentionObject group3 = SceneUtils.createMultiMaterialObject( geometry3, materials );
+			DimensionalObject group3 = SceneUtils.createMultiMaterialObject( geometry3, materials );
 			group3.getPosition().setX(0);
 			group3.getRotation().setX(0f);
 			getScene().addChild( group3 );

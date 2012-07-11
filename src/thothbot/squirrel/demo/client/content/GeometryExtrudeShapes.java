@@ -30,7 +30,7 @@ import thothbot.squirrel.core.client.RenderingPanel;
 import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
-import thothbot.squirrel.core.shared.core.DimentionObject;
+import thothbot.squirrel.core.shared.core.DimensionalObject;
 import thothbot.squirrel.core.shared.core.ExtrudeGeometry;
 import thothbot.squirrel.core.shared.core.Geometry;
 import thothbot.squirrel.core.shared.core.Mathematics;
@@ -263,7 +263,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 			List<Material> materials= new ArrayList<Material>();
 			materials.add(new MeshLambertMaterial( mlOptions ));
 			materials.add(new MeshBasicMaterial( mbOptions ));
-			DimentionObject mesh = SceneUtils.createMultiMaterialObject( geometry, materials );     
+			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, materials );     
 
 			mesh.getPosition().set( x, y, z - 75.0f );
 

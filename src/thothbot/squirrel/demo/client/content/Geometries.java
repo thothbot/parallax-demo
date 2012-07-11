@@ -28,7 +28,7 @@ import java.util.List;
 import thothbot.squirrel.core.client.RenderingPanel;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
-import thothbot.squirrel.core.shared.core.DimentionObject;
+import thothbot.squirrel.core.shared.core.DimensionalObject;
 import thothbot.squirrel.core.shared.core.Vector3f;
 import thothbot.squirrel.core.shared.geometries.Cube;
 import thothbot.squirrel.core.shared.geometries.Cylinder;
@@ -120,33 +120,33 @@ public class Geometries extends ContentWidget
 			materials.add(lmaterial);
 			materials.add(bmaterial);
 	
-			DimentionObject object1 = SceneUtils.createMultiMaterialObject( new Cube( 100, 100, 100, 4, 4, 4 ), materials );
+			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new Cube( 100, 100, 100, 4, 4, 4 ), materials );
 			object1.getPosition().set( -200, 0, 400 );
 			getScene().addChild( object1 );
 			
-			DimentionObject object2 = SceneUtils.createMultiMaterialObject( new Cylinder( 25, 75, 100, 40, 5 ), materials );
+			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Cylinder( 25, 75, 100, 40, 5 ), materials );
 			object2.getPosition().set( 0, 0, 400 );
 			getScene().addChild( object2 );
 			
-			DimentionObject object3 = SceneUtils.createMultiMaterialObject( new Icosahedron( 75, 1 ), materials );
+			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Icosahedron( 75, 1 ), materials );
 			object3.getPosition().set( -200, 0, 200 );
 			getScene().addChild( object3 );
 			
-			DimentionObject object4 = SceneUtils.createMultiMaterialObject( new Octahedron( 75, 2 ), materials );
+			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Octahedron( 75, 2 ), materials );
 			object4.getPosition().set( 0, 0, 200 );
 			getScene().addChild( object4 );
 			
-			DimentionObject object5 = SceneUtils.createMultiMaterialObject( new Tetrahedron( 75, 0 ), materials );
+			DimensionalObject object5 = SceneUtils.createMultiMaterialObject( new Tetrahedron( 75, 0 ), materials );
 			object5.getPosition().set( 200, 0, 200 );
 			getScene().addChild( object5 );
 			
-			DimentionObject object6 = SceneUtils.createMultiMaterialObject( new Plane( 100, 100, 4, 4 ), materials );
+			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new Plane( 100, 100, 4, 4 ), materials );
 			Mesh Meshobject6 = (Mesh) object6.getChildren().get(0);
 			Meshobject6.setDoubleSided(true);
 			object6.getPosition().set( -200, 0, 0 );
 			getScene().addChild( object6 );
 			
-			DimentionObject object7 = SceneUtils.createMultiMaterialObject( new Sphere( 75, 20, 10 ), materials );
+			DimensionalObject object7 = SceneUtils.createMultiMaterialObject( new Sphere( 75, 20, 10 ), materials );
 			object7.getPosition().set( 0, 0, 0 );
 			getScene().addChild( object7 );
 		
@@ -155,17 +155,17 @@ public class Geometries extends ContentWidget
 			for ( int i = 0; i < 50; i ++ )
 				points.add( new Vector3f( (float) (Math.sin( i * 0.2 ) * 15f + 50f), 0f, (float)(( i - 5f ) * 2f )) );
 	
-			DimentionObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
+			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
 			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
 			Meshobject8.setDoubleSided(true);
 			object8.getPosition().set( 200, 0, 0 );
 			getScene().addChild( object8 );
 			
-			DimentionObject object9 = SceneUtils.createMultiMaterialObject( new Torus( 50, 20, 20, 20 ), materials );
+			DimensionalObject object9 = SceneUtils.createMultiMaterialObject( new Torus( 50, 20, 20, 20 ), materials );
 			object9.getPosition().set( -200, 0, -200 );
 			getScene().addChild( object9 );
 
-			DimentionObject object10 = SceneUtils.createMultiMaterialObject( new TorusKnot( 50, 10, 50, 20 ), materials );
+			DimensionalObject object10 = SceneUtils.createMultiMaterialObject( new TorusKnot( 50, 10, 50, 20 ), materials );
 			object10.getPosition().set( 0, 0, -200 );
 			getScene().addChild( object10 );
 	
@@ -194,7 +194,7 @@ public class Geometries extends ContentWidget
 
 			for ( int i = 0, l = getScene().getChildren().size(); i < l; i ++ ) 
 			{
-				DimentionObject object = getScene().getChildren().get( i );
+				DimensionalObject object = getScene().getChildren().get( i );
 
 				object.getRotation().addX(0.01f);
 				object.getRotation().addY(0.005f);

@@ -28,7 +28,7 @@ import java.util.List;
 import thothbot.squirrel.core.client.RenderingPanel;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
-import thothbot.squirrel.core.shared.core.DimentionObject;
+import thothbot.squirrel.core.shared.core.DimensionalObject;
 import thothbot.squirrel.core.shared.geometries.parametric.Klein;
 import thothbot.squirrel.core.shared.geometries.parametric.Mobius;
 import thothbot.squirrel.core.shared.lights.AmbientLight;
@@ -109,7 +109,7 @@ public class GeometriesParametric extends ContentWidget
 			materials.add(bmaterial);
 			
 			// Klein Bottle
-			DimentionObject object1 = SceneUtils.createMultiMaterialObject(new Klein(20, 20), materials );
+			DimensionalObject object1 = SceneUtils.createMultiMaterialObject(new Klein(20, 20), materials );
 			Mesh Meshobject1 = (Mesh) object1.getChildren().get(0);
 			Meshobject1.setDoubleSided(true);
 			object1.getPosition().set( 0, 0, 0 );
@@ -117,17 +117,17 @@ public class GeometriesParametric extends ContentWidget
 			getScene().addChild( object1 );
 			
 			// Mobius Strip
-			DimentionObject object2 = SceneUtils.createMultiMaterialObject( new Mobius(20,20), materials );
+			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Mobius(20,20), materials );
 			object2.getPosition().set( 10, 0, 0 );
 			object2.getScale().multiply(100);
 			getScene().addChild( object2 );
 			
-//			DimentionObject object3 = SceneUtils.createMultiMaterialObject( new com.alexusachev.lib.geometries.parametric.Plane(200, 200, 10,10), materials );
+//			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new com.alexusachev.lib.geometries.parametric.Plane(200, 200, 10,10), materials );
 //			object3.getPosition().set( 10, 0, 0 );
 //			object3.getScale().multiply(100);
 //			scene.addChild( object3 );
 //			
-//			DimentionObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
+//			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
 //			object4.getPosition().set( 10, 0, 0 );
 //			object4.getScale().multiply(100);
 //			scene.addChild( object4 );
@@ -148,7 +148,7 @@ public class GeometriesParametric extends ContentWidget
 
 			for ( int i = 0, l = getScene().getChildren().size(); i < l; i ++ ) 
 			{
-				DimentionObject object = getScene().getChildren().get( i );
+				DimensionalObject object = getScene().getChildren().get( i );
 
 				object.getRotation().addX(0.01f);
 				object.getRotation().addY(0.005f);
