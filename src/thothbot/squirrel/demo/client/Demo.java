@@ -54,7 +54,7 @@ public class Demo implements EntryPoint
 {
 	/**
 	 * The type passed into the
-	 * {@link thothbot.squirrel.demo.resources.DemoGenerator}.
+	 * {@link thothbot.squirrel.demo.generator.DemoGenerator}.
 	 */
 	private static final class GeneratorInfo {
 	}

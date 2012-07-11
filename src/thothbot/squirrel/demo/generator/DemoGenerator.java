@@ -20,7 +20,7 @@
  * Squirrel. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.squirrel.demo.resources;
+package thothbot.squirrel.demo.generator;
 
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
@@ -37,6 +37,7 @@ import java.io.OutputStream;
 
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.DemoAnnotations.*;
+import thothbot.squirrel.demo.resources.DemoResources;
 
 /**
  * Generate the source code used in Demo examples.
