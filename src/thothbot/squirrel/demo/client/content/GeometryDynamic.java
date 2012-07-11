@@ -30,6 +30,7 @@ import thothbot.squirrel.core.shared.core.Color3f;
 import thothbot.squirrel.core.shared.geometries.Plane;
 import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
 import thothbot.squirrel.core.shared.objects.Mesh;
+import thothbot.squirrel.core.shared.scenes.FogExp2;
 import thothbot.squirrel.core.shared.textures.Texture;
 import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
@@ -93,13 +94,13 @@ public class GeometryDynamic extends ContentWidget
 			getCamera().getPosition().setZ(200);
 			getScene().addChild(getCamera());
 
-//			getScene().setFog(FogExp2( 0xaaccff, 0.0007 ));
-//
+			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007f ));
+
 			this.controls = new FirstPersonControl( getCamera(), getRenderer().getCanvas() );
 			controls.setMovementSpeed(500f);
 			controls.setLookSpeed(0.1f);
 
-			this.geometry = new Plane( 20000, 20000, worldWidth - 1, worldDepth - 1 );
+			this.geometry = new Plane( 20000, 20000, worldWidth - 100, worldDepth - 100 );
 			this.geometry.dynamic = true;
 
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )
@@ -148,7 +149,7 @@ public class GeometryDynamic extends ContentWidget
 
 	public GeometryDynamic()
 	{
-		super("Surface and vertices", "Here is shown how to move vertices on single surface. (left click: forward, right click: backward). This example bases on the three.js example.");
+		super("Vertices moving", "Here are shown vertices moving on single surface and using dense fog. (left click: forward, right click: backward). This example bases on the three.js example.");
 	}
 		
 	@Override
