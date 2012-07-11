@@ -91,7 +91,7 @@ public class GeometryDynamic extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(200);
+			getCamera().getPosition().setY(200);
 			getScene().addChild(getCamera());
 
 			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007f ));
@@ -100,7 +100,7 @@ public class GeometryDynamic extends ContentWidget
 			controls.setMovementSpeed(500f);
 			controls.setLookSpeed(0.1f);
 
-			this.geometry = new Plane( 20000, 20000, worldWidth - 100, worldDepth - 100 );
+			this.geometry = new Plane( 20000, 20000, worldWidth - 1, worldDepth - 1 );
 			this.geometry.dynamic = true;
 
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )
