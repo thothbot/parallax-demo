@@ -25,13 +25,14 @@ package thothbot.squirrel.demo.client.content;
 import thothbot.squirrel.core.client.RenderingPanel;
 import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.squirrel.core.client.controls.FirstPersonControl;
+import thothbot.squirrel.core.client.gl2.enums.TextureWrapMode;
+import thothbot.squirrel.core.client.textures.Texture;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
 import thothbot.squirrel.core.shared.geometries.Plane;
 import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
 import thothbot.squirrel.core.shared.objects.Mesh;
 import thothbot.squirrel.core.shared.scenes.FogExp2;
-import thothbot.squirrel.core.shared.textures.Texture;
 import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
@@ -110,8 +111,8 @@ public class GeometryDynamic extends ContentWidget
 			this.geometry.computeVertexNormals();
 
 			Texture texture = ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null);
-			texture.setWrapS(Texture.WRAPPING_MODE.REPEAT); 
-			texture.setWrapT(Texture.WRAPPING_MODE.REPEAT);
+			texture.setWrapS(TextureWrapMode.REPEAT); 
+			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.repeat.set( 5.0f, 5.0f );
 
 			MeshBasicMaterial.MeshBasicMaterialOptions options = new MeshBasicMaterial.MeshBasicMaterialOptions();

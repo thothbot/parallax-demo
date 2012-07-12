@@ -28,7 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 import thothbot.squirrel.core.client.RenderingPanel;
+import thothbot.squirrel.core.client.gl2.enums.TextureWrapMode;
 import thothbot.squirrel.core.client.shader.Uniform;
+import thothbot.squirrel.core.client.textures.Texture;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
 import thothbot.squirrel.core.shared.core.Vector3f;
@@ -37,7 +39,6 @@ import thothbot.squirrel.core.shared.geometries.Cube;
 import thothbot.squirrel.core.shared.geometries.Sphere;
 import thothbot.squirrel.core.shared.materials.ShaderMaterial;
 import thothbot.squirrel.core.shared.objects.ParticleSystem;
-import thothbot.squirrel.core.shared.textures.Texture;
 import thothbot.squirrel.core.shared.utils.GeometryUtils;
 import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
@@ -108,8 +109,8 @@ public class CustomAttributesParticles2 extends ContentWidget
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null )));
 	
-			uniforms.get("texture").texture.setWrapS(Texture.WRAPPING_MODE.REPEAT);
-			uniforms.get("texture").texture.setWrapT(Texture.WRAPPING_MODE.REPEAT);
+			uniforms.get("texture").texture.setWrapS(TextureWrapMode.REPEAT);
+			uniforms.get("texture").texture.setWrapT(TextureWrapMode.REPEAT);
 	
 			ShaderMaterial.ShaderMaterialOptions opt = new ShaderMaterial.ShaderMaterialOptions();
 			opt.uniforms = uniforms;
