@@ -239,8 +239,6 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			cameraOrtho.updateProjectionMatrix();
 		}
 	}
-
-	RenderingPanel renderingPanel;
 	
 	public CamerasExample() 
 	{
@@ -261,7 +259,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				switch(event.getNativeEvent().getKeyCode())
 				{
 				case 79: case 111:/*O*/	rs.activeCamera = rs.cameraOrtho; break;
-				case 80: case 112:/*P*/ 	rs.activeCamera = rs.cameraPerspective; break;
+				case 80: case 112:/*P*/ rs.activeCamera = rs.cameraPerspective; break;
 				}		
 				
 			}
