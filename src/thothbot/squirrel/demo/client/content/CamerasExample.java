@@ -215,7 +215,7 @@ public class CamerasExample extends ContentWidget
 			getRenderer().setViewport( getRenderer().getCanvas().getWidth()/2, 0, 
 					getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getWidth() );
 
-			getRenderer().render( getScene(), getCamera() );
+			super.onUpdate(duration);
 
 			r += 0.01f;
 		}
