@@ -28,6 +28,7 @@ import java.util.List;
 import thothbot.squirrel.core.client.RenderingPanel;
 import thothbot.squirrel.core.client.RenderingReadyEvent;
 import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
+import thothbot.squirrel.core.shared.Log;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
 import thothbot.squirrel.core.shared.core.Face3;
@@ -55,8 +56,6 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
-
 
 public class GeometryColors extends ContentWidget
 {
@@ -212,9 +211,7 @@ public class GeometryColors extends ContentWidget
 			super.onUpdate(duration);
 		}
 	}
-	
-	RenderingPanel renderingPanel;
-	
+		
 	public GeometryColors()
 	{
 		super("Vertices colors", "Here are shown Icosahedrons and different vertex colors. At the bottom located shadow texture. Drag mouse to move. This example bases on the three.js example.");

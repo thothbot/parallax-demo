@@ -61,7 +61,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Renderi
 	/**
 	 * {@link RenderingPanel} where example will be shown
 	 */
-	private RenderingPanel renderingPanel;
+	protected RenderingPanel renderingPanel;
 	
 	/**
 	 * A description of an example.
