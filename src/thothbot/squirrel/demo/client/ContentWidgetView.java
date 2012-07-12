@@ -28,6 +28,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.LayoutPanel;
 import com.google.gwt.user.client.ui.ResizeComposite;
+import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -52,7 +53,7 @@ public class ContentWidgetView extends ResizeComposite
 	 * Main panel where will be {@link RenderingPanel} located
 	 */
 	@UiField(provided = true)
-	LayoutPanel examplePanel;
+	SimpleLayoutPanel examplePanel;
 
 	/**
 	 * Used to show a name of an example
@@ -68,7 +69,7 @@ public class ContentWidgetView extends ResizeComposite
 	 
 	public ContentWidgetView()
 	{
-		this.examplePanel = new LayoutPanel();
+		this.examplePanel = new SimpleLayoutPanel();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -89,6 +90,6 @@ public class ContentWidgetView extends ResizeComposite
 	
 	public void setRenderingPanel(RenderingPanel renderingPanel) 
 	{
-		this.examplePanel.add(renderingPanel);
+		this.examplePanel.setWidget(renderingPanel);
 	}
 }

@@ -141,7 +141,7 @@ public class DemoShell extends ResizeComposite
 
 		contentSource.getElement().getStyle().setBackgroundColor("#eee");
 		contentSource.getElement().getStyle().setProperty("border", "1px solid #c3c3c3");
-		contentSource.getElement().getStyle().setProperty("padding", "10px 2px");
+		contentSource.getElement().getStyle().setProperty("padding", "10px 10px");
 
 		// Handle events from the tabs.
 		linkExample.addClickHandler(new ClickHandler() {

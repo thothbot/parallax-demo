@@ -34,10 +34,11 @@
 		</g:DockLayoutPanel>
 
 	</g:north>
+	
 	<g:center>
-		<g:LayoutPanel ui:field='examplePanel' />
+		<g:SimpleLayoutPanel ui:field='examplePanel' />
 	</g:center>
-	<!-- Content. -->
+
 </g:DockLayoutPanel>
 
 </ui:UiBinder> 

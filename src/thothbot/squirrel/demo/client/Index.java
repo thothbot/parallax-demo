@@ -86,7 +86,6 @@ public class Index extends ResizeComposite
 		linkIndex.getElement().getStyle().setColor(DemoResources.SELECTED_TAB_COLOR);
 		bottonPanel.setVisible(false);
 		
-		this.contentWidget.clear();
 		this.contentWidget.setWidget(content);
 	}
 
@@ -95,7 +94,6 @@ public class Index extends ResizeComposite
 		linkIndex.getElement().getStyle().clearColor();
 		bottonPanel.setVisible(true);
 
-		this.contentWidget.clear();
 		this.contentWidget.setWidget(content);	
 	}	
 }
