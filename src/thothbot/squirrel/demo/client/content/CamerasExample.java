@@ -109,7 +109,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	
 			//
 			
-			this.activeCamera = this.cameraPerspective;
+			this.activeCamera = this.cameraOrtho;
 			
 			// counteract different front orientation of cameras vs rig
 	
