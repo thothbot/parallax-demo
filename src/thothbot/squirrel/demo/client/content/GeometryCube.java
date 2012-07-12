@@ -119,7 +119,7 @@ public class GeometryCube extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_cube();
+		return Demo.resources.exampleCube();
 	}
 	
 	@Override

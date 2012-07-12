@@ -51,29 +51,32 @@ public interface DemoResources extends ClientBundle
 	CssResource css();
 	
 	@Source("images/example_default.jpg")
-	ImageResource example_default();
+	ImageResource exampleDefault();
 	
 	@Source("images/example_cameras.jpg")
-	ImageResource example_cameras();
+	ImageResource exampleCameras();
 	
 	@Source("images/example_colors.jpg")
-	ImageResource example_colors();
+	ImageResource exampleColors();
 	
 	@Source("images/example_cube.jpg")
-	ImageResource example_cube();
+	ImageResource exampleCube();
 	
 	@Source("images/example_custom_attributes_particles.jpg")
-	ImageResource example_custom_attributes_particles();
+	ImageResource exampleCustomAttributesParticles();
 	
 	@Source("images/example_custom_attributes_particles2.jpg")
-	ImageResource example_custom_attributes_particles2();
+	ImageResource exampleCustomAttributesParticles2();
 	
 	@Source("images/example_geometries_parametric.jpg")
-	ImageResource example_geometries_parametric();
+	ImageResource exampleGeometriesParametric();
 	
 	@Source("images/example_geometries.jpg")
-	ImageResource example_geometries();
+	ImageResource exampleGeometries();
 	
 	@Source("images/example_geometry_dynamic.jpg")
-	ImageResource example_geometry_dinamic();
+	ImageResource exampleGeometryDinamic();
+	
+	@Source("images/example_geometry_hierarchy.jpg")
+	ImageResource exampleGeometryHierarchy();
 }

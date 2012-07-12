@@ -191,7 +191,7 @@ public class CustomAttributesParticles extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_custom_attributes_particles();
+		return Demo.resources.exampleCustomAttributesParticles();
 	}
 	
 	@Override

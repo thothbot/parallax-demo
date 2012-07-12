@@ -41,6 +41,7 @@ import thothbot.squirrel.demo.client.content.GeometriesParametric;
 import thothbot.squirrel.demo.client.content.GeometryColors;
 import thothbot.squirrel.demo.client.content.GeometryCube;
 import thothbot.squirrel.demo.client.content.GeometryDynamic;
+import thothbot.squirrel.demo.client.content.GeometryHierarchy;
 
 /**
  * The {@link TreeViewModel} used by the main menu.
@@ -254,6 +255,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometriesParametric.class));
 			category.addExample(new GeometryDynamic(),
 					RunAsyncCode.runAsyncCode(GeometryDynamic.class));
+			category.addExample(new GeometryHierarchy(),
+					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
 			category.addExample(new CamerasExample(),
 					RunAsyncCode.runAsyncCode(CamerasExample.class));
 		}

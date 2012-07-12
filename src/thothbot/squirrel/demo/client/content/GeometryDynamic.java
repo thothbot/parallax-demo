@@ -171,7 +171,7 @@ public class GeometryDynamic extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_geometry_dinamic();
+		return Demo.resources.exampleGeometryDinamic();
 	}
 	
 	@Override

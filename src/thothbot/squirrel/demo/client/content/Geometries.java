@@ -220,7 +220,7 @@ public class Geometries extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_geometries();
+		return Demo.resources.exampleGeometries();
 	}
 	
 	@Override

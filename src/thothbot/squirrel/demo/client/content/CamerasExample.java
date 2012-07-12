@@ -275,7 +275,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_cameras();
+		return Demo.resources.exampleCameras();
 	}
 	
 	@Override

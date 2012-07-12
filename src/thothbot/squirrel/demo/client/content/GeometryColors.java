@@ -251,7 +251,7 @@ public class GeometryColors extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_colors();
+		return Demo.resources.exampleColors();
 	}
 	
 	@Override

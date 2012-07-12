@@ -312,7 +312,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_default();
+		return Demo.resources.exampleDefault();
 	}
 
 	@Override

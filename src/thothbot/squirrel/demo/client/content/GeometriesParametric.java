@@ -174,7 +174,7 @@ public class GeometriesParametric extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.example_geometries_parametric();
+		return Demo.resources.exampleGeometriesParametric();
 	}
 	
 	@Override
