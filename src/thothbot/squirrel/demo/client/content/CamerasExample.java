@@ -50,9 +50,10 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class CamerasExample extends ContentWidget
+public class CamerasExample extends ContentWidget implements RequiresResize
 {
 	 
 	/*
@@ -148,9 +149,9 @@ public class CamerasExample extends ContentWidget
 			for ( int i = 0; i < 10000; i ++ ) 
 			{
 				Vector3f vertex = new Vector3f();
-				vertex.setX(Mathematics.randFloatSpread( 2000f ));
-				vertex.setY(Mathematics.randFloatSpread( 2000f ));
-				vertex.setZ(Mathematics.randFloatSpread( 2000f ));
+				vertex.setX(Mathematics.randFloatSpread( 3000f ));
+				vertex.setY(Mathematics.randFloatSpread( 3000f ));
+				vertex.setZ(Mathematics.randFloatSpread( 3000f ));
 	
 				geometry.getVertices().add( vertex );
 			}
@@ -193,7 +194,9 @@ public class CamerasExample extends ContentWidget
 
 				cameraOrthoHelper.getLine().setVisible(false);
 
-			} else {
+			} 
+			else 
+			{
 
 				cameraOrtho.setFar(mesh.getPosition().length());
 				cameraOrtho.updateProjectionMatrix();
@@ -218,6 +221,22 @@ public class CamerasExample extends ContentWidget
 			super.onUpdate(duration);
 
 			r += 0.01f;
+		}
+		
+		@Override
+		protected void onResize() 
+		{
+			Canvas3d canvas = getRenderer().getCanvas();
+			((PerspectiveCamera)getCamera()).setAspectRatio(
+					0.5f * canvas.getAspectRation());	
+
+			cameraPerspective.setAspectRatio(0.5f * canvas.getAspectRation());
+
+			cameraOrtho.setLeft(- 0.5f * canvas.getWidth() / 2.0f );
+			cameraOrtho.setRight( 0.5f * canvas.getWidth() / 2.0f );
+			cameraOrtho.setTop( canvas.getHeight() / 2.0f );
+			cameraOrtho.setBottom(- canvas.getHeight() / 2.0f );
+			cameraOrtho.updateProjectionMatrix();
 		}
 	}
 
