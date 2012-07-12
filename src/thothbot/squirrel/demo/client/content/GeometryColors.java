@@ -214,7 +214,7 @@ public class GeometryColors extends ContentWidget
 		
 	public GeometryColors()
 	{
-		super("Vertices colors", "Here are shown Icosahedrons and different vertex colors. At the bottom located shadow texture. Drag mouse to move. This example bases on the three.js example.");
+		super("Vertices colors", "Here are shown Icosahedrons and different vertex colors. At the bottom located shadow texture. Drag mouse to move. This example based on the three.js example.");
 	}
 
 	@Override

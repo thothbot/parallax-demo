@@ -150,7 +150,7 @@ public class GeometryDynamic extends ContentWidget
 
 	public GeometryDynamic()
 	{
-		super("Vertices moving", "Here are shown vertices moving on single surface and using dense fog. (left click: forward, right click: backward). This example bases on the three.js example.");
+		super("Vertices moving", "Here are shown vertices moving on single surface and using dense fog. (left click: forward, right click: backward). This example based on the three.js example.");
 	}
 		
 	@Override

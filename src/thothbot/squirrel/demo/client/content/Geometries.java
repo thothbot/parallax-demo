@@ -208,7 +208,7 @@ public class Geometries extends ContentWidget
 
 	public Geometries() 
 	{
-		super("Different geometries", "Here are used pull of some geometric objects and two materials: mesh basic and lambert. This example bases on the three.js example.");
+		super("Different geometries", "Here are used pull of some geometric objects and two materials: mesh basic and lambert. This example based on the three.js example.");
 	}
 
 	@Override

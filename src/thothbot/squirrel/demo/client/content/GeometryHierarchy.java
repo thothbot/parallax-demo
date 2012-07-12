@@ -19,30 +19,25 @@
 
 package thothbot.squirrel.demo.client.content;
 
+import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
+import thothbot.squirrel.core.client.RenderingReadyEvent;
+import thothbot.squirrel.core.client.context.Canvas3d;
+import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
+import thothbot.squirrel.core.shared.geometries.Cube;
+import thothbot.squirrel.core.shared.materials.MeshNormalMaterial;
+import thothbot.squirrel.core.shared.objects.Mesh;
+import thothbot.squirrel.core.shared.objects.Object3D;
+import thothbot.squirrel.core.shared.scenes.FogSimple;
+import thothbot.squirrel.demo.client.ContentWidget;
+import thothbot.squirrel.demo.client.Demo;
+import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
-import thothbot.squirrel.core.client.RenderingReadyEvent;
-import thothbot.squirrel.core.client.RenderingPanel.RenderPanelAttributes;
-import thothbot.squirrel.core.client.context.Canvas3d;
-import thothbot.squirrel.core.shared.Log;
-import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
-import thothbot.squirrel.core.shared.geometries.Cube;
-import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
-import thothbot.squirrel.core.shared.materials.MeshNormalMaterial;
-import thothbot.squirrel.core.shared.objects.Mesh;
-import thothbot.squirrel.core.shared.objects.Object3D;
-import thothbot.squirrel.core.shared.scenes.FogSimple;
-import thothbot.squirrel.core.shared.utils.ImageUtils;
-import thothbot.squirrel.demo.client.ContentWidget;
-import thothbot.squirrel.demo.client.Demo;
-import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
-import thothbot.squirrel.demo.client.content.GeometryCube.DemoScene;
-import thothbot.squirrel.demo.client.content.GeometryCube.Resources;
 
 public final class GeometryHierarchy extends ContentWidget 
 {
@@ -88,7 +83,7 @@ public final class GeometryHierarchy extends ContentWidget
 				mesh.getPosition().setY( (float) (Math.random() * 2000.0 - 1000.0) );
 				mesh.getPosition().setZ( (float) (Math.random() * 2000.0 - 1000.0));
 
-				mesh.getRotation().setX((float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
+				mesh.getRotation().setX( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
 				mesh.getRotation().setY( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
 
 				mesh.setMatrixAutoUpdate(false);
@@ -131,7 +126,7 @@ public final class GeometryHierarchy extends ContentWidget
 		
 	public GeometryHierarchy() 
 	{
-		super("Geometry hierarchy", "Drag mouse to move. This example bases on the three.js example.");
+		super("Geometry hierarchy", "Drag mouse to move. This example based on the three.js example.");
 	}
 	
 	@Override

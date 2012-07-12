@@ -242,7 +242,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	
 	public CamerasExample() 
 	{
-		super("Cameras", "Here is show how to split viewport to two and use different cameras for each. Use: [O] - orthographic camera,  [P] - perspective camera. This example bases on the three.js example.");
+		super("Cameras", "Here is show how to split viewport to two and use different cameras for each. Use: [O] - orthographic camera,  [P] - perspective camera. This example based on the three.js example.");
 	}
 
 	@Override

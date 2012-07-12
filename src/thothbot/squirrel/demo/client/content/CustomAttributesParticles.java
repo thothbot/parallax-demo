@@ -179,7 +179,7 @@ public class CustomAttributesParticles extends ContentWidget
 
 	public CustomAttributesParticles() 
 	{
-		super("Particles", "Here are used custom shaders and sprites. This example bases on the three.js example.");
+		super("Particles", "Here are used custom shaders and sprites. This example based on the three.js example.");
 	}
 
 	@Override

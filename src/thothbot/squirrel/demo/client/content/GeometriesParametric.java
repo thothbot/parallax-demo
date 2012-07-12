@@ -162,7 +162,7 @@ public class GeometriesParametric extends ContentWidget
 	
 	public GeometriesParametric()
 	{
-		super("Parametric geometry", "Here are show how to generate geometric objects by custom function. This example bases on the three.js example.");
+		super("Parametric geometry", "Here are show how to generate geometric objects by custom function. This example based on the three.js example.");
 	}
 
 	@Override
