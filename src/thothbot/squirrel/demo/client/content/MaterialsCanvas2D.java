@@ -1,6 +1,9 @@
 /*
  * Copyright 2012 Alex Usachev, thothbot@gmail.com
  * 
+ * This file based on the JavaScript source file of the THREE.JS project, 
+ * licensed under MIT License.
+ * 
  * This file is part of Squirrel project.
  * 
  * Squirrel is free software: you can redistribute it and/or modify it 

@@ -30,10 +30,10 @@ import thothbot.squirrel.core.client.RenderingReadyEvent;
 import thothbot.squirrel.core.client.context.Canvas3d;
 import thothbot.squirrel.core.client.shader.ShaderCubeMap;
 import thothbot.squirrel.core.client.textures.CubeTexture;
+import thothbot.squirrel.core.client.textures.Texture;
 import thothbot.squirrel.core.shared.Log;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
-import thothbot.squirrel.core.shared.core.Vector3f;
 import thothbot.squirrel.core.shared.geometries.Cube;
 import thothbot.squirrel.core.shared.geometries.Sphere;
 import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
@@ -44,8 +44,6 @@ import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
-import thothbot.squirrel.demo.client.content.GeometryColors.DemoScene;
-import thothbot.squirrel.demo.client.content.GeometryCube.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -53,12 +51,10 @@ import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public final class MaterialsCubemapBallsReflection extends ContentWidget 
+public final class MaterialsCubemapBallsRefraction extends ContentWidget 
 {
-
 	/*
 	 * Load texture
 	 */
@@ -67,22 +63,22 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 		
-		@Source("../../resources/textures/cube/pisa/px.png")
+		@Source("../../resources/textures/cube/skybox/px.jpg")
 		ImageResource px();
 		
-		@Source("../../resources/textures/cube/pisa/nx.png")
+		@Source("../../resources/textures/cube/skybox/nx.jpg")
 		ImageResource nx();
 		
-		@Source("../../resources/textures/cube/pisa/py.png")
+		@Source("../../resources/textures/cube/skybox/py.jpg")
 		ImageResource py();
 		
-		@Source("../../resources/textures/cube/pisa/ny.png")
+		@Source("../../resources/textures/cube/skybox/ny.jpg")
 		ImageResource ny();
 		
-		@Source("../../resources/textures/cube/pisa/pz.png")
+		@Source("../../resources/textures/cube/skybox/pz.jpg")
 		ImageResource pz();
 				
-		@Source("../../resources/textures/cube/pisa/nz.png")
+		@Source("../../resources/textures/cube/skybox/nz.jpg")
 		ImageResource nz();
 	}
 
@@ -127,11 +123,12 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 
 			Resources r = Resources.INSTANCE;
-			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), null, null );
+			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), Texture.MAPPING_MODE.CUBE_REFRACTION, null );
 			
 			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt = new MeshBasicMaterial.MeshBasicMaterialOptions();
 			mbOpt.color = new Color3f(0xffffff);
 			mbOpt.envMap = textureCube;
+			mbOpt.refractionRatio = 0.95f;
 			
 			MeshBasicMaterial material = new MeshBasicMaterial( mbOpt );
 
@@ -200,9 +197,9 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		}
 	}
 		
-	public MaterialsCubemapBallsReflection() 
+	public MaterialsCubemapBallsRefraction() 
 	{
-		super("Cube reflection", "Drag mouse to move. This example based on the three.js example.");
+		super("Cube refraction", "Drag mouse to move. This example based on the three.js example.");
 	}
 	
 	@Override
@@ -233,13 +230,13 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleMaterialsCubemapBallsReflection();
+		return Demo.resources.exampleMaterialsCubemapBallsRefraction();
 	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
 	{
-		GWT.runAsync(MaterialsCubemapBallsReflection.class, new RunAsyncCallback() 
+		GWT.runAsync(MaterialsCubemapBallsRefraction.class, new RunAsyncCallback() 
 		{
 			public void onFailure(Throwable caught)
 			{

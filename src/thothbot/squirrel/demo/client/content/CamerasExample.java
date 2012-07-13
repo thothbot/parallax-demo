@@ -20,10 +20,8 @@
  * Squirrel. If not, see http://www.gnu.org/licenses/.
  */
 
-
 package thothbot.squirrel.demo.client.content;
 
-import thothbot.squirrel.core.client.RenderingPanel;
 import thothbot.squirrel.core.client.RenderingReadyEvent;
 import thothbot.squirrel.core.client.context.Canvas3d;
 import thothbot.squirrel.core.shared.cameras.Camera;
