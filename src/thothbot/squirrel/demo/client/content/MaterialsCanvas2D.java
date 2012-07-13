@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.squirrel.core.client.textures.Texture;
+import thothbot.squirrel.core.shared.Log;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Color3f;
 import thothbot.squirrel.core.shared.core.Face3;
@@ -46,7 +47,6 @@ import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
 
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;
 import com.google.gwt.core.client.GWT;
@@ -55,7 +55,6 @@ import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Image;
 
 public final class MaterialsCanvas2D extends ContentWidget 
 {
@@ -116,6 +115,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			// Materials
 
 			Texture texture = new Texture( generateTexture() );
+
 			texture.setNeedsUpdate(true);
 
 			this.materials = new ArrayList<Material>();
@@ -134,7 +134,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			mpOpt.ambient = new Color3f(0x030303);
 			mpOpt.color = new Color3f(0xdddddd);
 			mpOpt.specular = new Color3f(0x009900);
-			mpOpt.shininess = 30;
+			mpOpt.shininess = 30f;
 			mpOpt.shading = Material.SHADING.FLAT;
 			materials.add( new MeshPhongMaterial( mpOpt ) );
 			
@@ -160,7 +160,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			materials.add( new MeshNormalMaterial( mnOpt ) );
 			
 			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt1 = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt1.color = new Color3f(0xffaa00);
+			mbOpt1.color = new Color3f(0x00ffaa);
 			mbOpt1.wireframe = true;
 			materials.add( new MeshBasicMaterial( mbOpt1 ) );
 
@@ -171,7 +171,6 @@ public final class MaterialsCanvas2D extends ContentWidget
 			mlOpt3.emissive = new Color3f(0xff0000);
 			mlOpt3.ambient = new Color3f(0x000000);
 			mlOpt3.shading = Material.SHADING.SMOOTH;
-			
 			materials.add( new MeshLambertMaterial( mlOpt3 ) );
 			
 			MeshPhongMaterial.MeshPhongMaterialOptions mpOpt1 = new MeshPhongMaterial.MeshPhongMaterialOptions();
@@ -179,7 +178,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			mpOpt1.emissive = new Color3f(0xff0000);
 			mpOpt1.color = new Color3f(0x000000);
 			mpOpt1.specular = new Color3f(0x666666);
-			mpOpt1.shininess = 10;
+			mpOpt1.shininess = 10f;
 			mpOpt1.shading = Material.SHADING.SMOOTH;
 			mpOpt1.opacity = 0.9f;
 			mpOpt1.transparent = true;
@@ -198,13 +197,12 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			for ( int i = 0, l = geometry_pieces.getFaces().size(); i < l; i ++ ) 
 			{
-
 				Face3 face = geometry_pieces.getFaces().get( i );
 
-				if ( Math.random() > 0.7 )
-					face.setMaterialIndex( (int)Math.floor( Math.random() * materials.size() ) );
-
-				else
+//				if ( Math.random() > 0.7 )
+//					face.setMaterialIndex( (int)Math.floor( Math.random() * materials.size() ) );
+//
+//				else
 					face.setMaterialIndex( 0 );
 
 			}
@@ -240,9 +238,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			}
 			
-			MeshBasicMaterial.MeshBasicMaterialOptions plOpt = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			plOpt.color = new Color3f(0xffffff);
-			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), new MeshBasicMaterial( plOpt ) );
+			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt3 = new MeshBasicMaterial.MeshBasicMaterialOptions();
+			mbOpt3.color = new Color3f(0xffffff);
+			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), new MeshBasicMaterial( mbOpt3 ) );
 			getScene().addChild( this.particleLight );
 
 			// Lights
@@ -273,10 +271,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 			ImageData image = context.getImageData( 0, 0, 256, 256 );
 
 			int x = 0, y = 0;
-
 			for ( int i = 0, j = 0, l = image.getData().getLength(); i < l; i += 4, j ++ ) 
 			{
-				x = j % 256;
+				x = j % 64;
 				y = x == 0 ? y + 1 : y;
 
 				image.getData().set( i, 255);
@@ -312,13 +309,19 @@ public final class MaterialsCanvas2D extends ContentWidget
 				object.getRotation().addX(0.01f);
 				object.getRotation().addY(0.005f);
 
+				Material material = this.materials.get( i ); 
+				if(i > 9 && material instanceof MeshPhongMaterial)
+				{
+					((MeshPhongMaterial)material).getEmissive()
+						.setHSV( 0.54f, 1.0f, (float) (0.7 * ( 0.5 + 0.5 * Math.sin( 35 * timer ) )) );	
+				}
+				else if(i > 9 && material instanceof MeshLambertMaterial)
+				{
+					((MeshLambertMaterial)material).getEmissive()
+						.setHSV( 0.04f, 1.0f, (float) (0.7 * ( 0.5 + 0.5 * Math.cos( 35 * timer ) )) );	
+				}
 			}
-
-			((MeshPhongMaterial)this.materials.get( materials.size() - 3 ))
-				.getEmissive().setHSV( 0.54f, 1.0f, (float) (0.7 * ( 0.5 + 0.5 * Math.sin( 35 * timer ) )) );
-			((MeshPhongMaterial)this.materials.get( materials.size() - 4 ))
-				.getEmissive().setHSV( 0.04f, 1.0f, (float) (0.7 * ( 0.5 + 0.5 * Math.cos( 35 * timer ) )) );
-
+			
 			this.particleLight.getPosition().setX( (float) (Math.sin( timer * 7 ) * 300.0) );
 			this.particleLight.getPosition().setY( (float) (Math.cos( timer * 5 ) * 400.0) );
 			this.particleLight.getPosition().setZ( (float) (Math.cos( timer * 3 ) * 300.0));
@@ -333,7 +336,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 		
 	public MaterialsCanvas2D() 
 	{
-		super("Canvas 2D as texture", "This example based on the three.js example.");
+		super("Canvas 2D texture", "This example based on the three.js example.");
 	}
 	
 	@Override
