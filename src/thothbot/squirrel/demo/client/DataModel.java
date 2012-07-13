@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import thothbot.squirrel.demo.client.content.CamerasExample;
+import thothbot.squirrel.demo.client.content.MaterialsCubemapBallsReflection;
 import thothbot.squirrel.demo.client.content.CustomAttributesParticles;
 import thothbot.squirrel.demo.client.content.CustomAttributesParticles2;
 import thothbot.squirrel.demo.client.content.Geometries;
@@ -268,6 +269,8 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 			category.addExample(new MaterialsCanvas2D(),
 					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
+			category.addExample(new MaterialsCubemapBallsReflection(),
+					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsReflection.class));
 		}
 
 		// Custom Attributes
