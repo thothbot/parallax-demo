@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import thothbot.squirrel.core.client.RenderingReadyEvent;
+import thothbot.squirrel.core.client.context.Canvas3d;
 import thothbot.squirrel.core.client.shader.ShaderCubeMap;
 import thothbot.squirrel.core.client.textures.CubeTexture;
 import thothbot.squirrel.core.shared.Log;
@@ -39,10 +41,13 @@ import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
+import thothbot.squirrel.demo.client.content.GeometryColors.DemoScene;
 import thothbot.squirrel.demo.client.content.GeometryCube.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ClientBundle.Source;
@@ -58,24 +63,24 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 	public interface Resources extends ClientBundle
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/cube/pisa/nx.png")
-		ImageResource nx();
-		
-		@Source("../../resources/textures/cube/pisa/ny.png")
-		ImageResource ny();
-		
-		@Source("../../resources/textures/cube/pisa/nz.png")
-		ImageResource nz();
 		
 		@Source("../../resources/textures/cube/pisa/px.png")
 		ImageResource px();
 		
+		@Source("../../resources/textures/cube/pisa/nx.png")
+		ImageResource nx();
+		
 		@Source("../../resources/textures/cube/pisa/py.png")
 		ImageResource py();
 		
+		@Source("../../resources/textures/cube/pisa/ny.png")
+		ImageResource ny();
+		
 		@Source("../../resources/textures/cube/pisa/pz.png")
 		ImageResource pz();
+				
+		@Source("../../resources/textures/cube/pisa/nz.png")
+		ImageResource nz();
 	}
 
 	/*
@@ -119,7 +124,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 
 			Resources r = Resources.INSTANCE;
-			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.nx(), r.ny(), r.nz(), r.px(), r.py(), r.pz()), null, null );
+			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), null, null );
 			
 			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt = new MeshBasicMaterial.MeshBasicMaterialOptions();
 			mbOpt.color = new Color3f(0xffffff);
@@ -195,6 +200,23 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 	public MaterialsCubemapBallsReflection() 
 	{
 		super("Cube reflection", "Drag mouse to move. This example based on the three.js example.");
+	}
+	
+	@Override
+	public void onAnimationReady(RenderingReadyEvent event)
+	{
+		super.onAnimationReady(event);
+
+		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+			@Override
+			public void onMouseMove(MouseMoveEvent event)
+			{
+				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
+				rs.mouseX = (event.getX() - canvas.getWidth() / 2 ) * 10; 
+				rs.mouseY = (event.getY() - canvas.getHeight() / 2) * 10;
+			}
+		});
 	}
 	
 	@Override
