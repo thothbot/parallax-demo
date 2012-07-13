@@ -79,4 +79,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_geometry_hierarchy.jpg")
 	ImageResource exampleGeometryHierarchy();
+	
+	@Source("images/example_materials_canvas2d.jpg")
+	ImageResource exampleMaterialsCanvas2D();
 }

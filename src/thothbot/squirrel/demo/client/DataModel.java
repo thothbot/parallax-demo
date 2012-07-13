@@ -42,6 +42,7 @@ import thothbot.squirrel.demo.client.content.GeometryColors;
 import thothbot.squirrel.demo.client.content.GeometryCube;
 import thothbot.squirrel.demo.client.content.GeometryDynamic;
 import thothbot.squirrel.demo.client.content.GeometryHierarchy;
+import thothbot.squirrel.demo.client.content.MaterialsCanvas2D;
 
 /**
  * The {@link TreeViewModel} used by the main menu.
@@ -259,6 +260,14 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
 			category.addExample(new CamerasExample(),
 					RunAsyncCode.runAsyncCode(CamerasExample.class));
+		}
+		
+		// Materials
+		{
+			Category category = new Category("Materials");
+			categoriesList.add(category);
+			category.addExample(new MaterialsCanvas2D(),
+					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
 		}
 
 		// Custom Attributes
