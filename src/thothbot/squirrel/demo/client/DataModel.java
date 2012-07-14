@@ -45,6 +45,7 @@ import thothbot.squirrel.demo.client.content.GeometryDynamic;
 import thothbot.squirrel.demo.client.content.GeometryHierarchy;
 import thothbot.squirrel.demo.client.content.MaterialsCanvas2D;
 import thothbot.squirrel.demo.client.content.MaterialsCubemapBallsRefraction;
+import thothbot.squirrel.demo.client.content.MaterialsCubemapDynamicReflection;
 
 /**
  * The {@link TreeViewModel} used by the main menu.
@@ -274,6 +275,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsReflection.class));
 			category.addExample(new MaterialsCubemapBallsRefraction(),
 					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsRefraction.class));
+			category.addExample(new MaterialsCubemapDynamicReflection(),
+					RunAsyncCode.runAsyncCode(MaterialsCubemapDynamicReflection.class));
 		}
 
 		// Custom Attributes

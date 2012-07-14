@@ -95,7 +95,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		public int mouseX = 0;
 		public int mouseY = 0;
 		
-		private List<Mesh> speres;
+		private List<Mesh> sphere;
 		
 		private Scene sceneCube;
 		private PerspectiveCamera cameraCube;
@@ -135,7 +135,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			
 			MeshBasicMaterial material = new MeshBasicMaterial( mbOpt );
 
-			this.speres = new ArrayList<Mesh>();
+			this.sphere = new ArrayList<Mesh>();
 			
 			for ( int i = 0; i < 500; i ++ ) 
 			{
@@ -150,7 +150,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 				getScene().addChild( mesh );
 
-				this.speres.add( mesh );
+				this.sphere.add( mesh );
 			}
 
 			// Skybox
@@ -182,10 +182,10 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		{
 			double timer = 0.0001 * duration;
 
-			for ( int i = 0, il = this.speres.size(); i < il; i ++ ) 
+			for ( int i = 0, il = this.sphere.size(); i < il; i ++ ) 
 			{
-				this.speres.get(i).getPosition().setX( (float) (5000.0 * Math.cos( timer + i )) );
-				this.speres.get(i).getPosition().setY( (float) (5000.0 * Math.sin( timer + i * 1.1 )) );
+				this.sphere.get(i).getPosition().setX( (float) (5000.0 * Math.cos( timer + i )) );
+				this.sphere.get(i).getPosition().setY( (float) (5000.0 * Math.sin( timer + i * 1.1 )) );
 			}
 
 			getCamera().getPosition().addX((float) (( mouseX - getCamera().getPosition().getX() ) * 0.05) );

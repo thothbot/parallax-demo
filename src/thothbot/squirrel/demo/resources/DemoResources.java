@@ -88,4 +88,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_materials_cubemap_balls_refraction.jpg")
 	ImageResource exampleMaterialsCubemapBallsRefraction();
+	
+	@Source("images/example_materials_cubemap_dynamic_reflection.jpg")
+	ImageResource exampleMaterialsCubemapDynamicReflection();
 }
