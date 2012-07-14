@@ -22,18 +22,8 @@
 
 package thothbot.squirrel.demo.client.content;
 
-import java.util.List;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import thothbot.squirrel.core.client.gl2.enums.TextureMinFilter;
 import thothbot.squirrel.core.client.textures.Texture;
-import thothbot.squirrel.core.shared.Log;
 import thothbot.squirrel.core.shared.cameras.CubeCamera;
 import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
 import thothbot.squirrel.core.shared.core.Vector3f;
@@ -46,8 +36,12 @@ import thothbot.squirrel.core.shared.utils.ImageUtils;
 import thothbot.squirrel.demo.client.ContentWidget;
 import thothbot.squirrel.demo.client.Demo;
 import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
-import thothbot.squirrel.demo.client.content.GeometryCube.DemoScene;
-import thothbot.squirrel.demo.client.content.GeometryCube.Resources;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MaterialsCubemapDynamicReflection extends ContentWidget 
 {
@@ -113,7 +107,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getScene().addChild( mesh );
 
 			this.cubeCamera = new CubeCamera( 1f, 1000f, 256 );
-			this.cubeCamera.getRenderTarget().minFilter = TextureMinFilter.LINEAR_MIPMAP_LINEAR;
+			this.cubeCamera.getRenderTarget().setMinFilter( TextureMinFilter.LINEAR_MIPMAP_LINEAR );
 			getScene().addChild( cubeCamera );
 
 			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt1 = new MeshBasicMaterial.MeshBasicMaterialOptions(); 

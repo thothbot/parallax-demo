@@ -113,7 +113,7 @@ public class GeometryDynamic extends ContentWidget
 			Texture texture = ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null);
 			texture.setWrapS(TextureWrapMode.REPEAT); 
 			texture.setWrapT(TextureWrapMode.REPEAT);
-			texture.repeat.set( 5.0f, 5.0f );
+			texture.getRepeat().set( 5.0f, 5.0f );
 
 			MeshBasicMaterial.MeshBasicMaterialOptions options = new MeshBasicMaterial.MeshBasicMaterialOptions();
 			options.color = new Color3f(0x0044ff);
