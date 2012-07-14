@@ -22,6 +22,7 @@
 
 package thothbot.squirrel.demo.client.content;
 
+import thothbot.squirrel.core.client.RenderingReadyEvent;
 import thothbot.squirrel.core.client.gl2.enums.TextureMinFilter;
 import thothbot.squirrel.core.client.textures.Texture;
 import thothbot.squirrel.core.shared.cameras.CubeCamera;
@@ -39,6 +40,14 @@ import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.dom.client.MouseWheelEvent;
+import com.google.gwt.event.dom.client.MouseWheelHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -65,10 +74,11 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	{
 		public int onMouseDownMouseX = 0;
 		public int onMouseDownMouseY = 0;
-		 
-		public float onMouseDownLon = 0;
-		public float onMouseDownLat = 0;
 		
+		public boolean onMouseDown = false;
+		
+		public float fov = 70f;
+
 		public double lat = 0; 
 		public double lon = 0;
 		public double phi = 0; 
@@ -85,7 +95,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		{
 			setCamera(
 					new PerspectiveCamera(
-							70, // fov
+							this.fov, // fov
 							getRenderer().getCanvas().getAspectRation(), // aspect 
 							1, // near
 							1000 // far 
@@ -178,6 +188,59 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	public MaterialsCubemapDynamicReflection() 
 	{
 		super("Dynamic cube reflection", "Use mouse to move and zoom. This example based on the three.js example.");
+	}
+	
+	@Override
+	public void onAnimationReady(RenderingReadyEvent event)
+	{
+		super.onAnimationReady(event);
+
+		this.renderingPanel.getRenderer().getCanvas().addMouseWheelHandler(new MouseWheelHandler() {
+			
+			@Override
+			public void onMouseWheel(MouseWheelEvent event) {
+				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				rs.fov -= event.getDeltaY() * 1.0f;
+				rs.getCamera().getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getCanvas().getAspectRation(), 1, 1100);
+			}
+		});
+		
+		this.renderingPanel.getRenderer().getCanvas().addMouseDownHandler(new MouseDownHandler() {
+			
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				event.preventDefault();
+
+				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				rs.onMouseDownMouseX = event.getX();
+				rs.onMouseDownMouseY = event.getY();
+				
+				rs.onMouseDown = true;
+			}
+		});
+		
+		this.renderingPanel.getRenderer().getCanvas().addMouseUpHandler(new MouseUpHandler() {
+			
+			@Override
+			public void onMouseUp(MouseUpEvent event) {
+				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				rs.onMouseDown = false;
+			}
+		});
+				
+		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+			
+		      @Override
+		      public void onMouseMove(MouseMoveEvent event)
+		      {
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	if(rs.onMouseDown)
+		    	  	{
+		    	  		rs.lon += ( event.getX() - rs.onMouseDownMouseX ) * 0.01; 
+		    	  		rs.lat += ( event.getY() - rs.onMouseDownMouseY ) * 0.01;
+		    	  	}
+		      }
+		});
 	}
 	
 	@Override

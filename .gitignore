@@ -3,5 +3,6 @@
 gwt-unitCache
 src-core
 /war/demo
+/war/genfilesforspeedtracer
 /war/WEB-INF/deploy
 /war/WEB-INF/classes
