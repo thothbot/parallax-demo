@@ -1,8 +1,12 @@
-.gwt
-.gwt-tmp
-gwt-unitCache
-src-core
+/.gwt
+/.gwt-tmp
+/gwt-unitCache
+/src-core
+/.settings
 /war/demo
 /war/genfilesforspeedtracer
 /war/WEB-INF/deploy
 /war/WEB-INF/classes
+
+.project
+.classpath
