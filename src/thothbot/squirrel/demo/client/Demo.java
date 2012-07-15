@@ -30,6 +30,7 @@ import thothbot.squirrel.demo.resources.DemoResources;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.prefetch.Prefetcher;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
@@ -121,6 +122,9 @@ public class Demo implements EntryPoint
 		Set<ContentWidget> contentWidgets = treeModel.getAllContentWidgets();
 		
 		index = new Index();
+		// Hide loading panel
+		RootPanel.get("loading").getElement().getStyle().setVisibility(Visibility.HIDDEN);
+		// Attach index panel
 		RootLayoutPanel.get().add(index);
 		
 		index.getTabIndex().addClickHandler(new ClickHandler() {
