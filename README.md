@@ -1,7 +1,5 @@
-Squirrel Demo
+Squirrel 3D Demo
 =============
 
-#### Demo of Squirrel GWT WebGL 3D library ####
-
-Links will be soon...
+[Squirrel project](https://github.com/thothbot/squirrel)
 
