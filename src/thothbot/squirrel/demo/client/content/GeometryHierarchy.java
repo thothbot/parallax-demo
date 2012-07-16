@@ -97,7 +97,7 @@ public final class GeometryHierarchy extends ContentWidget
 
 			getScene().addChild( group );
 
-			getRenderer().sortObjects = false;
+			getRenderer().setSortObjects(false);
 		}
 		
 		@Override

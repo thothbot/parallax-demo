@@ -162,7 +162,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	
 			//
 	
-			getRenderer().autoClear = false;
+			getRenderer().setAutoClear(false);
 		}
 		
 		@Override

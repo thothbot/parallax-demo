@@ -166,7 +166,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			mesh.setFlipSided(true);
 			sceneCube.addChild( mesh );
 			
-			getRenderer().autoClear = false;
+			getRenderer().setAutoClear(false);
 		}
 		
 		@Override
