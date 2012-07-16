@@ -4,23 +4,23 @@
  * This file based on the Google ShowcaseGenerator.java with some 
  * modifications, licensed under Apache License, Version 2.0.
  * 
- * This file is part of Squirrel project.
+ * This file is part of Parallax project.
  * 
- * Squirrel is free software: you can redistribute it and/or modify it 
+ * Parallax is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by the 
  * Free Software Foundation, either version 3 of the License, or (at your 
  * option) any later version.
  * 
- * Squirrel is distributed in the hope that it will be useful, but 
+ * Parallax is distributed in the hope that it will be useful, but 
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
  * for more details.
  * 
  * You should have received a copy of the GNU General Public License along with 
- * Squirrel. If not, see http://www.gnu.org/licenses/.
+ * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.squirrel.demo.generator;
+package thothbot.parallax.demo.generator;
 
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
@@ -35,9 +35,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import thothbot.squirrel.demo.client.ContentWidget;
-import thothbot.squirrel.demo.client.DemoAnnotations.*;
-import thothbot.squirrel.demo.resources.DemoResources;
+import thothbot.parallax.demo.client.ContentWidget;
+import thothbot.parallax.demo.client.DemoAnnotations.*;
+import thothbot.parallax.demo.resources.DemoResources;
 
 /**
  * Generate the source code used in Demo examples.

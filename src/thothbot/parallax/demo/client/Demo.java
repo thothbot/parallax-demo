@@ -1,31 +1,31 @@
 /*
  * Copyright 2012 Alex Usachev, thothbot@gmail.com
  * 
- * This file is part of Squirrel project.
+ * This file is part of Parallax project.
  * 
- * Squirrel is free software: you can redistribute it and/or modify it 
+ * Parallax is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by the 
  * Free Software Foundation, either version 3 of the License, or (at your 
  * option) any later version.
  * 
- * Squirrel is distributed in the hope that it will be useful, but 
+ * Parallax is distributed in the hope that it will be useful, but 
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
  * for more details.
  * 
  * You should have received a copy of the GNU General Public License along with 
- * Squirrel. If not, see http://www.gnu.org/licenses/.
+ * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.squirrel.demo.client;
+package thothbot.parallax.demo.client;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import thothbot.squirrel.core.shared.Log;
-import thothbot.squirrel.demo.client.DataModel.Category;
-import thothbot.squirrel.demo.resources.DemoResources;
+import thothbot.parallax.core.shared.Log;
+import thothbot.parallax.demo.client.DataModel.Category;
+import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -55,7 +55,7 @@ public class Demo implements EntryPoint
 {
 	/**
 	 * The type passed into the
-	 * {@link thothbot.squirrel.demo.generator.DemoGenerator}.
+	 * {@link thothbot.parallax.demo.generator.DemoGenerator}.
 	 */
 	private static final class GeneratorInfo 
 	{}

@@ -4,51 +4,51 @@
  * This file based on the JavaScript source file of the THREE.JS project, 
  * licensed under MIT License.
  * 
- * This file is part of Squirrel project.
+ * This file is part of Parallax project.
  * 
- * Squirrel is free software: you can redistribute it and/or modify it 
+ * Parallax is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by the 
  * Free Software Foundation, either version 3 of the License, or (at your 
  * option) any later version.
  * 
- * Squirrel is distributed in the hope that it will be useful, but 
+ * Parallax is distributed in the hope that it will be useful, but 
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
  * for more details.
  * 
  * You should have received a copy of the GNU General Public License along with 
- * Squirrel. If not, see http://www.gnu.org/licenses/.
+ * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.squirrel.demo.client.content;
+package thothbot.parallax.demo.client.content;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.squirrel.core.client.textures.Texture;
-import thothbot.squirrel.core.shared.Log;
-import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
-import thothbot.squirrel.core.shared.core.Color3f;
-import thothbot.squirrel.core.shared.core.Face3;
-import thothbot.squirrel.core.shared.core.Geometry;
-import thothbot.squirrel.core.shared.core.Vector3f;
-import thothbot.squirrel.core.shared.geometries.Sphere;
-import thothbot.squirrel.core.shared.lights.AmbientLight;
-import thothbot.squirrel.core.shared.lights.DirectionalLight;
-import thothbot.squirrel.core.shared.lights.PointLight;
-import thothbot.squirrel.core.shared.materials.LineBasicMaterial;
-import thothbot.squirrel.core.shared.materials.Material;
-import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
-import thothbot.squirrel.core.shared.materials.MeshDepthMaterial;
-import thothbot.squirrel.core.shared.materials.MeshFaceMaterial;
-import thothbot.squirrel.core.shared.materials.MeshLambertMaterial;
-import thothbot.squirrel.core.shared.materials.MeshNormalMaterial;
-import thothbot.squirrel.core.shared.materials.MeshPhongMaterial;
-import thothbot.squirrel.core.shared.objects.Line;
-import thothbot.squirrel.core.shared.objects.Mesh;
-import thothbot.squirrel.demo.client.ContentWidget;
-import thothbot.squirrel.demo.client.Demo;
-import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
+import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Face3;
+import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.lights.AmbientLight;
+import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.lights.PointLight;
+import thothbot.parallax.core.shared.materials.LineBasicMaterial;
+import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.materials.MeshDepthMaterial;
+import thothbot.parallax.core.shared.materials.MeshFaceMaterial;
+import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.materials.MeshNormalMaterial;
+import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
+import thothbot.parallax.core.shared.objects.Line;
+import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.demo.client.ContentWidget;
+import thothbot.parallax.demo.client.Demo;
+import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.ImageData;

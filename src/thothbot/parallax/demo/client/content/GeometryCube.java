@@ -4,33 +4,33 @@
  * This file based on the JavaScript source file of the THREE.JS project, 
  * licensed under MIT License.
  * 
- * This file is part of Squirrel project.
+ * This file is part of Parallax project.
  * 
- * Squirrel is free software: you can redistribute it and/or modify it 
+ * Parallax is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by the 
  * Free Software Foundation, either version 3 of the License, or (at your 
  * option) any later version.
  * 
- * Squirrel is distributed in the hope that it will be useful, but 
+ * Parallax is distributed in the hope that it will be useful, but 
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
  * for more details.
  * 
  * You should have received a copy of the GNU General Public License along with 
- * Squirrel. If not, see http://www.gnu.org/licenses/.
+ * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.squirrel.demo.client.content;
+package thothbot.parallax.demo.client.content;
 
-import thothbot.squirrel.core.shared.Log;
-import thothbot.squirrel.core.shared.cameras.PerspectiveCamera;
-import thothbot.squirrel.core.shared.geometries.Cube;
-import thothbot.squirrel.core.shared.materials.MeshBasicMaterial;
-import thothbot.squirrel.core.shared.objects.Mesh;
-import thothbot.squirrel.core.shared.utils.ImageUtils;
-import thothbot.squirrel.demo.client.ContentWidget;
-import thothbot.squirrel.demo.client.Demo;
-import thothbot.squirrel.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.core.shared.Log;
+import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.geometries.Cube;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.utils.ImageUtils;
+import thothbot.parallax.demo.client.ContentWidget;
+import thothbot.parallax.demo.client.Demo;
+import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;

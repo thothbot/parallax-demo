@@ -1,23 +1,23 @@
 /*
  * Copyright 2012 Alex Usachev, thothbot@gmail.com
  * 
- * This file is part of Squirrel project.
+ * This file is part of Parallax project.
  * 
- * Squirrel is free software: you can redistribute it and/or modify it 
+ * Parallax is free software: you can redistribute it and/or modify it 
  * under the terms of the GNU General Public License as published by the 
  * Free Software Foundation, either version 3 of the License, or (at your 
  * option) any later version.
  * 
- * Squirrel is distributed in the hope that it will be useful, but 
+ * Parallax is distributed in the hope that it will be useful, but 
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License 
  * for more details.
  * 
  * You should have received a copy of the GNU General Public License along with 
- * Squirrel. If not, see http://www.gnu.org/licenses/.
+ * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.squirrel.demo.client;
+package thothbot.parallax.demo.client;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
@@ -33,19 +33,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import thothbot.squirrel.demo.client.content.CamerasExample;
-import thothbot.squirrel.demo.client.content.MaterialsCubemapBallsReflection;
-import thothbot.squirrel.demo.client.content.CustomAttributesParticles;
-import thothbot.squirrel.demo.client.content.CustomAttributesParticles2;
-import thothbot.squirrel.demo.client.content.Geometries;
-import thothbot.squirrel.demo.client.content.GeometriesParametric;
-import thothbot.squirrel.demo.client.content.GeometryColors;
-import thothbot.squirrel.demo.client.content.GeometryCube;
-import thothbot.squirrel.demo.client.content.GeometryDynamic;
-import thothbot.squirrel.demo.client.content.GeometryHierarchy;
-import thothbot.squirrel.demo.client.content.MaterialsCanvas2D;
-import thothbot.squirrel.demo.client.content.MaterialsCubemapBallsRefraction;
-import thothbot.squirrel.demo.client.content.MaterialsCubemapDynamicReflection;
+import thothbot.parallax.demo.client.content.CamerasExample;
+import thothbot.parallax.demo.client.content.CustomAttributesParticles;
+import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
+import thothbot.parallax.demo.client.content.Geometries;
+import thothbot.parallax.demo.client.content.GeometriesParametric;
+import thothbot.parallax.demo.client.content.GeometryColors;
+import thothbot.parallax.demo.client.content.GeometryCube;
+import thothbot.parallax.demo.client.content.GeometryDynamic;
+import thothbot.parallax.demo.client.content.GeometryHierarchy;
+import thothbot.parallax.demo.client.content.MaterialsCanvas2D;
+import thothbot.parallax.demo.client.content.MaterialsCubemapBallsReflection;
+import thothbot.parallax.demo.client.content.MaterialsCubemapBallsRefraction;
+import thothbot.parallax.demo.client.content.MaterialsCubemapDynamicReflection;
 
 /**
  * The {@link TreeViewModel} used by the main menu.
