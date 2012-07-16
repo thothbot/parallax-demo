@@ -251,13 +251,13 @@ public class Demo implements EntryPoint
 			return;
 		
 		shell.setContent(content);
-		Window.setTitle("Pegasus demo: " + content.getName());
+		Window.setTitle("Parallax demo: " + content.getName());
 	}
 		
 	private void displayIndex()
 	{
 		History.newItem("", true);
 		index.setContentWidget(indexWidget);
-		Window.setTitle("Pegasus: All Examples");
+		Window.setTitle("Parallax: All Examples");
 	}
 }
