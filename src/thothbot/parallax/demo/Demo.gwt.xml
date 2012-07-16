@@ -23,10 +23,10 @@
   <!-- Use a generator to create the source code -->
 
   <!-- Specify the app entry point class. -->
-  <entry-point class='thothbot.squirrel.demo.client.Demo'/>
+  <entry-point class='thothbot.parallax.demo.client.Demo'/>
 
-  <generate-with class="thothbot.squirrel.demo.generator.DemoGenerator">
-    <when-type-assignable class="thothbot.squirrel.demo.client.Demo.GeneratorInfo" />
+  <generate-with class="thothbot.parallax.demo.generator.DemoGenerator">
+    <when-type-assignable class="thothbot.parallax.demo.client.Demo.GeneratorInfo" />
   </generate-with>
   
   <source path='client'/>
