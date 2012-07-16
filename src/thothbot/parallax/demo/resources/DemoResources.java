@@ -31,7 +31,7 @@ public interface DemoResources extends ClientBundle
 	/**
 	 * The text color of the selected link.
 	 */
-	String SELECTED_TAB_COLOR = "#333333";
+	String SELECTED_TAB_COLOR = "#EEEEEE";
 	
 	/**
 	 * The path to source code for examples.
@@ -43,6 +43,9 @@ public interface DemoResources extends ClientBundle
 	 */
 	String DST_SOURCE_EXAMPLE = DST_SOURCE + "java/";
 
+	@Source("images/logo.png")
+	ImageResource logo();
+	
 	@Source("images/loading.gif")
 	ImageResource loading();
 	
