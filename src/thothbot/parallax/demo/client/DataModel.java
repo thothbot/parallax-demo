@@ -33,20 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import thothbot.parallax.demo.client.content.CamerasExample;
-import thothbot.parallax.demo.client.content.CustomAttributesParticles;
-import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
-import thothbot.parallax.demo.client.content.Geometries;
-import thothbot.parallax.demo.client.content.GeometriesParametric;
-import thothbot.parallax.demo.client.content.GeometryColors;
-import thothbot.parallax.demo.client.content.GeometryCube;
-import thothbot.parallax.demo.client.content.GeometryDynamic;
-import thothbot.parallax.demo.client.content.GeometryHierarchy;
-import thothbot.parallax.demo.client.content.MaterialsCanvas2D;
-import thothbot.parallax.demo.client.content.MaterialsCubemapBallsReflection;
-import thothbot.parallax.demo.client.content.MaterialsCubemapBallsRefraction;
-import thothbot.parallax.demo.client.content.MaterialsCubemapDynamicReflection;
-import thothbot.parallax.demo.client.content.ParticleTrails;
+import thothbot.parallax.demo.client.content.*;
 
 /**
  * The {@link TreeViewModel} used by the main menu.
@@ -280,6 +267,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsCubemapDynamicReflection.class));
 			category.addExample(new ParticleTrails(),
 					RunAsyncCode.runAsyncCode(ParticleTrails.class));
+			category.addExample(new TrackballEarth(),
+					RunAsyncCode.runAsyncCode(TrackballEarth.class));
 		}
 
 		// Custom Attributes

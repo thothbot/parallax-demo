@@ -97,4 +97,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_particle_trails.jpg")
 	ImageResource exampleParticleTrails();
+	
+	@Source("images/example_trackball_earth.jpg")
+	ImageResource exampleTrackballEarth();
 }

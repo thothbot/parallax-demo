@@ -7,6 +7,6 @@
 /war/genfilesforspeedtracer
 /war/WEB-INF/deploy
 /war/WEB-INF/classes
-
+Thumbs.db
 .project
 .classpath
