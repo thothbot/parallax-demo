@@ -280,5 +280,13 @@ public class DataModel implements TreeViewModel
 			category.addExample(new CustomAttributesParticles2(),
 					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
 		}
+		
+		// Performance
+		{
+			Category category = new Category("Performance");
+			categoriesList.add(category);
+			category.addExample(new PerformanceDoubleSided(),
+					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
+		}
 	}
 }
