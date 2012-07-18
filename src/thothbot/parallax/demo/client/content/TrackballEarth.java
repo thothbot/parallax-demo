@@ -44,6 +44,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ClientBundle;
@@ -93,6 +94,8 @@ public final class TrackballEarth extends ContentWidget
 		Mesh meshPlanet;
 		Mesh meshClouds;
 		Mesh meshMoon;
+		
+		private double oldTime;
 		
 		@Override
 		protected void loadCamera()
@@ -156,7 +159,7 @@ public final class TrackballEarth extends ContentWidget
 			((Color3f)uniforms.get("uSpecularColor").value).setHex( 0x666666 );
 			((Color3f)uniforms.get("uAmbientColor").value).setHex( 0x000000 );
 
-			uniforms.get("uShininess").value = 20;
+			uniforms.get("uShininess").value = 20f;
 
 			((Color3f)uniforms.get("uDiffuseColor").value).convertGammaToLinear();
 			((Color3f)uniforms.get("uSpecularColor").value).convertGammaToLinear();
@@ -271,6 +274,8 @@ public final class TrackballEarth extends ContentWidget
 
 //			renderer.gammaInput = true;
 //			renderer.gammaOutput = true;
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		@Override
@@ -281,7 +286,7 @@ public final class TrackballEarth extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			float delta = (float) (duration * 0.001);
+			float delta = (float) ((Duration.currentTimeMillis() - this.oldTime) * 0.001);
 
 			meshPlanet.getRotation().addY( rotationSpeed * delta );
 			meshClouds.getRotation().addY( 1.25f * rotationSpeed * delta );
@@ -299,6 +304,7 @@ public final class TrackballEarth extends ContentWidget
 
 			getRenderer().clear(false, false, false);
 			
+			this.oldTime = Duration.currentTimeMillis();
 			super.onUpdate(duration);
 		}
 	}
