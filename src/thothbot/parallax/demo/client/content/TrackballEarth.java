@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import thothbot.parallax.core.client.controls.TrackballControl;
 import thothbot.parallax.core.client.shader.ShaderNormalMap;
 import thothbot.parallax.core.client.shader.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
@@ -95,6 +96,7 @@ public final class TrackballEarth extends ContentWidget
 		Mesh meshClouds;
 		Mesh meshMoon;
 		
+		private TrackballControl control;
 		private double oldTime;
 		
 		@Override
@@ -115,22 +117,11 @@ public final class TrackballEarth extends ContentWidget
 			getCamera().getPosition().setZ(radius * 7);
 			getScene().addChild(getCamera());
 
-//			controls = new TrackballControls( camera, renderer.domElement );
-//
-//			controls.rotateSpeed = 1.0;
-//			controls.zoomSpeed = 1.2;
-//			controls.panSpeed = 0.2;
-//
-//			controls.noZoom = false;
-//			controls.noPan = false;
-//
-//			controls.staticMoving = false;
-//			controls.dynamicDampingFactor = 0.3;
-//
-//			controls.minDistance = radius * 1.1;
-//			controls.maxDistance = radius * 100;
-//
-//			controls.keys = [ 65, 83, 68 ]; // [ rotateKey, zoomKey, panKey ]
+			this.control = new TrackballControl( getCamera(), getRenderer().getCanvas() );
+			this.control.setPanSpeed(0.2f);
+			this.control.setDynamicDampingFactor(0.3f);
+			this.control.setMinDistance(radius * 1.1f);
+			this.control.setMaxDistance(radius * 100f);
 
 			DirectionalLight dirLight = new DirectionalLight( 0xFFFFFF );
 			dirLight.getPosition().set( -1f, 0f, 1f ).normalize();
@@ -300,7 +291,7 @@ public final class TrackballEarth extends ContentWidget
 			));
 			meshMoon.getRotation().addY( - angle );
 
-//			controls.update();
+			this.control.update();
 
 			getRenderer().clear(false, false, false);
 			
