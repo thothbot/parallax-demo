@@ -119,7 +119,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 			getScene().addChild( light3 );
 
 			Resources r = Resources.INSTANCE;
-			Texture reflectionCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), null, null );
+			Texture reflectionCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()));
 			reflectionCube.setFormat(PixelFormat.RGB);
 
 			MeshPhongMaterial material = new MeshPhongMaterial();

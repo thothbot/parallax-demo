@@ -123,7 +123,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 
 
 			Resources r = Resources.INSTANCE;
-			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), Texture.MAPPING_MODE.CUBE_REFRACTION, null );
+			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), Texture.MAPPING_MODE.CUBE_REFRACTION );
 			
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color3f(0xffffff) );

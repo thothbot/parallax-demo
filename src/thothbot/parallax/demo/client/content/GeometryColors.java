@@ -102,7 +102,7 @@ public class GeometryColors extends ContentWidget
 			getScene().addChild( light );
 			
 			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
-			shadowMaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null) );
+			shadowMaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture()) );
 			Geometry shadowGeo = new Plane( 300, 300, 1, 1 );
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );

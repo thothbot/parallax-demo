@@ -108,7 +108,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getCamera().getPosition().setZ(400);
 			getScene().addChild(getCamera());
 
-			Texture texture = ImageUtils.loadTexture( Resources.INSTANCE.texture(),  Texture.MAPPING_MODE.UV, null);
+			Texture texture = ImageUtils.loadTexture( Resources.INSTANCE.texture(),  Texture.MAPPING_MODE.UV);
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
 			mbOpt.setMap( texture );
 			

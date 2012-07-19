@@ -127,11 +127,11 @@ public final class TrackballEarth extends ContentWidget
 			dirLight.getPosition().set( -1f, 0f, 1f ).normalize();
 			getScene().addChild( dirLight );
 
-			Texture planetTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthAtmos(), null, null );
-			Texture cloudsTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthClouds(), null, null );
-			Texture normalTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthNormal(), null, null );
-			Texture specularTexture = ImageUtils.loadTexture( Resources.INSTANCE.earthSpecular(), null, null );
-			Texture moonTexture     = ImageUtils.loadTexture( Resources.INSTANCE.moon(), null, null );
+			Texture planetTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthAtmos());
+			Texture cloudsTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthClouds());
+			Texture normalTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthNormal());
+			Texture specularTexture = ImageUtils.loadTexture( Resources.INSTANCE.earthSpecular());
+			Texture moonTexture     = ImageUtils.loadTexture( Resources.INSTANCE.moon());
 
 			ShaderNormalMap shader = new ShaderNormalMap();
 			Map<String, Uniform> uniforms = UniformsUtils.clone( shader.getUniforms() );

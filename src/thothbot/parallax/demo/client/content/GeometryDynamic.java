@@ -110,7 +110,7 @@ public class GeometryDynamic extends ContentWidget
 			this.geometry.computeFaceNormals(false);
 			this.geometry.computeVertexNormals();
 
-			Texture texture = ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null);
+			Texture texture = ImageUtils.loadTexture(Resources.INSTANCE.texture());
 			texture.setWrapS(TextureWrapMode.REPEAT); 
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.getRepeat().set( 5.0f, 5.0f );

@@ -94,7 +94,7 @@ public class GeometriesParametric extends ContentWidget
 			
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
-			lmaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null) );
+			lmaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture()) );
 			lmaterial.setAmbient( new Color3f(0xbbbbbb) );
 			materials.add(lmaterial);	
 			

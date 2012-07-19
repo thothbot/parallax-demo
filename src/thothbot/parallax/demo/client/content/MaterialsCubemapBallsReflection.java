@@ -127,7 +127,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 
 			Resources r = Resources.INSTANCE;
-			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), null, null );
+			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()));
 			
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color3f(0xffffff) );

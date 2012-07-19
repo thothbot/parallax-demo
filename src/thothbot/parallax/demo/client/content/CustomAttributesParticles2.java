@@ -107,7 +107,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0f));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
-			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null )));
+			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(Resources.INSTANCE.texture())));
 	
 			uniforms.get("texture").texture.setWrapS(TextureWrapMode.REPEAT);
 			uniforms.get("texture").texture.setWrapT(TextureWrapMode.REPEAT);

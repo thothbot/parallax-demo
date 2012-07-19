@@ -24,6 +24,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ClientBundle;
@@ -155,8 +156,8 @@ public final class MaterialsTextureFilter extends ContentWidget
 			Texture texturePainting = ImageUtils.loadTexture(Resources.INSTANCE.texture(), Texture.MAPPING_MODE.UV, new ImageUtils.Callback() {
 				
 				@Override
-				public void run(Image image) {
-					callbackPainting(image);
+				public void run(Texture texture) {
+					callbackPainting(texture);
 				}
 			} );
 			
@@ -179,9 +180,9 @@ public final class MaterialsTextureFilter extends ContentWidget
 			getRenderer().setAutoClear(false);
 		}
 		
-		private void callbackPainting( Image image ) 
+		private void callbackPainting( Texture texture ) 
 		{
-			texturePainting2.setImage(image.getElement());
+			texturePainting2.setImage(texture.getImage());
 			texturePainting2.setNeedsUpdate(true);
 
 			getScene().addChild( meshCanvas );
@@ -194,14 +195,14 @@ public final class MaterialsTextureFilter extends ContentWidget
 			mesh.getRotation().setX( (float) (Math.PI / 2.0) );
 			mesh2.getRotation().setX( (float) (Math.PI / 2.0) );
 
-			addPainting( image, getScene(), mesh );
-			addPainting( image, scene2, mesh2 );
+			addPainting( texture.getImage(), getScene(), mesh );
+			addPainting( texture.getImage(), scene2, mesh2 );
 		}
 		
-		private void addPainting( Image image, Scene zscene, Mesh zmesh ) 
+		private void addPainting( Element image, Scene zscene, Mesh zmesh ) 
 		{
-			zmesh.getScale().setX( image.getWidth() / 100.0f ) ;
-			zmesh.getScale().setZ( image.getHeight() / 100.0f );
+			zmesh.getScale().setX( image.getOffsetWidth() / 100.0f ) ;
+			zmesh.getScale().setZ( image.getOffsetHeight() / 100.0f );
 
 			zscene.addChild( zmesh );
 
@@ -213,8 +214,8 @@ public final class MaterialsTextureFilter extends ContentWidget
 			
 			Mesh meshFrame = new Mesh( geometry,  mb);
 			meshFrame.getRotation().setX( (float) (Math.PI / 2.0) );
-			meshFrame.getScale().setX( 1.1f * image.getWidth() / 100 );
-			meshFrame.getScale().setZ( 1.1f * image.getHeight() / 100 );
+			meshFrame.getScale().setX( 1.1f * image.getOffsetWidth() / 100 );
+			meshFrame.getScale().setZ( 1.1f * image.getOffsetHeight() / 100 );
 
 			zscene.addChild( meshFrame );
 
@@ -224,14 +225,14 @@ public final class MaterialsTextureFilter extends ContentWidget
 			mb2.setTransparent(true);
 			Mesh meshShadow = new Mesh( geometry, mb2 );
 
-			meshShadow.getPosition().setZ( - 1.1f * image.getHeight()/ 2 );
-			meshShadow.getScale().setX( 1.1f * image.getWidth() / 100 );
-			meshShadow.getScale().setZ( 1.1f * image.getHeight() / 100 );
+			meshShadow.getPosition().setZ( - 1.1f * image.getOffsetHeight()/ 2 );
+			meshShadow.getScale().setX( 1.1f * image.getOffsetWidth() / 100 );
+			meshShadow.getScale().setZ( 1.1f * image.getOffsetHeight() / 100 );
 			zscene.addChild( meshShadow );
 
-			meshShadow.getPosition().setY( - 1.1f * image.getHeight()/2 );
+			meshShadow.getPosition().setY( - 1.1f * image.getOffsetHeight()/2 );
 
-			float floorHeight = - 1.117f * image.getHeight()/2;
+			float floorHeight = - 1.117f * image.getOffsetHeight()/2;
 			meshCanvas.getPosition().setY( floorHeight ); 
 			meshCanvas2.getPosition().setY( floorHeight );
 		}
