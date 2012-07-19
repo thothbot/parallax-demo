@@ -168,7 +168,7 @@ public class Geometries extends ContentWidget
 	
 			AxisHelper object11 = new AxisHelper();
 			object11.getPosition().set( 200, 0, -200 );
-			object11.getScale().set(0.5f, 0.5f, 0.5f);
+			object11.getScale().set(0.5f);
 			getScene().addChild( object11 );
 			
 			ArrowHelper object12 = new ArrowHelper( new Vector3f( 0f, 1f, 0f ), new Vector3f( 0f, 0f, 0f ), 50 );

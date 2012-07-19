@@ -265,7 +265,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 
 			mesh.getPosition().set( x, y, z - 75.0f );
 
-			mesh.getScale().set( s, s, s );
+			mesh.getScale().set( s );
 
 //			if (geometry.debug) 
 //				mesh.add(geometry.debug);

@@ -110,8 +110,6 @@ public class GeometryCube extends ContentWidget
 	@Override
 	public DemoScene onInitialize()
 	{
-		Log.debug("Called onInitialize() class=" + this.getClass().getName());
-
 		return new DemoScene();
 	}
 

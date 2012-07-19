@@ -265,6 +265,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsRefraction.class));
 			category.addExample(new MaterialsCubemapDynamicReflection(),
 					RunAsyncCode.runAsyncCode(MaterialsCubemapDynamicReflection.class));
+			category.addExample(new MaterialsTextureFilter(),
+					RunAsyncCode.runAsyncCode(MaterialsTextureFilter.class));
 			category.addExample(new ParticleTrails(),
 					RunAsyncCode.runAsyncCode(ParticleTrails.class));
 			category.addExample(new TrackballEarth(),

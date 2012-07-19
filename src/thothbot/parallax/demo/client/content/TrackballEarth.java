@@ -181,7 +181,7 @@ public final class TrackballEarth extends ContentWidget
 			materialClouds.setTransparent(true);
 
 			this.meshClouds = new Mesh( geometry, materialClouds );
-			meshClouds.getScale().set( cloudsScale, cloudsScale, cloudsScale );
+			meshClouds.getScale().set( cloudsScale );
 			meshClouds.getRotation().setZ( tilt );
 			getScene().addChild( meshClouds );
 
@@ -194,7 +194,7 @@ public final class TrackballEarth extends ContentWidget
 
 			this.meshMoon = new Mesh( geometry, materialMoon );
 			meshMoon.getPosition().set( radius * 5.0f, 0, 0 );
-			meshMoon.getScale().set( moonScale, moonScale, moonScale );
+			meshMoon.getScale().set( moonScale );
 			getScene().addChild( meshMoon );
 
 
@@ -262,7 +262,7 @@ public final class TrackballEarth extends ContentWidget
 				stars.getRotation().setZ( (float) (Math.random() * 6.0) );
 
 				float s = i * 10.0f;
-				stars.getScale().set( s, s, s );
+				stars.getScale().set( s );
 
 				stars.setMatrixAutoUpdate(false);
 				stars.updateMatrix();

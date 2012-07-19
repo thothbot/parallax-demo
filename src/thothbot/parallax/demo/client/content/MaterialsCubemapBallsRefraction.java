@@ -141,7 +141,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 				mesh.getPosition().setZ( (float) (Math.random() * 10000.0 - 5000.0) );
 
 				float scale = (float) (Math.random() * 3.0 + 1.0);
-				mesh.getScale().set(scale, scale, scale);
+				mesh.getScale().set(scale);
 
 				getScene().addChild( mesh );
 

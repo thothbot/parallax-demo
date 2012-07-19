@@ -147,7 +147,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 				mesh.getRotation().setY( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
 				
 				float scale =  (float) (Math.random() * 50.0 + 100.0);
-				mesh.getScale().set( scale, scale, scale );
+				mesh.getScale().set( scale );
 
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
