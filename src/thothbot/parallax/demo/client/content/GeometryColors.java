@@ -101,9 +101,8 @@ public class GeometryColors extends ContentWidget
 			light.getPosition().set( 0, 0, 1 );
 			getScene().addChild( light );
 			
-			MeshBasicMaterial.MeshBasicMaterialOptions bopt0 = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			bopt0.map = ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null);
-			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial( bopt0 );
+			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
+			shadowMaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null) );
 			Geometry shadowGeo = new Plane( 300, 300, 1, 1 );
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );
@@ -164,20 +163,17 @@ public class GeometryColors extends ContentWidget
 			}
 
 			List<Material> materials = new ArrayList<Material>();
-			MeshLambertMaterial.MeshLambertMaterialOptions lopt = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			lopt.color = new Color3f(0xffffff);
-			lopt.shading = Material.SHADING.FLAT;
-			lopt.vertexColors = Material.COLORS.VERTEX;
-			MeshLambertMaterial lmaterial = new MeshLambertMaterial(lopt);
-
-			MeshBasicMaterial.MeshBasicMaterialOptions bopt = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			bopt.color = new Color3f(0x000000);
-			bopt.shading = Material.SHADING.FLAT;
-			bopt.wireframe = true;
-			bopt.transparent = true;
-			MeshBasicMaterial bmaterial = new MeshBasicMaterial(bopt);
-
+			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
+			lmaterial.setColor( new Color3f(0xffffff) );
+			lmaterial.setShading( Material.SHADING.FLAT );
+			lmaterial.setVertexColors( Material.COLORS.VERTEX );
 			materials.add(lmaterial);
+
+			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
+			bmaterial.setColor( new Color3f(0x000000) );
+			bmaterial.setShading( Material.SHADING.FLAT );
+			bmaterial.setWireframe(true);
+			bmaterial.setTransparent( true );
 			materials.add(bmaterial);
 
 			DimensionalObject group1 = SceneUtils.createMultiMaterialObject( geometry, materials );

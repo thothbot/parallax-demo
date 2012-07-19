@@ -122,15 +122,14 @@ public final class PerformanceDoubleSided extends ContentWidget
 			Texture reflectionCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), null, null );
 			reflectionCube.setFormat(PixelFormat.RGB);
 
-			MeshPhongMaterial.MeshPhongMaterialOptions mpOpt = new MeshPhongMaterial.MeshPhongMaterialOptions();
-			mpOpt.specular = new Color3f(0xffffff);
-			mpOpt.shininess = 100;
-			mpOpt.envMap = reflectionCube;
-			mpOpt.combine = Texture.OPERATIONS.MIX;
-			mpOpt.reflectivity = 0.1f;
-			mpOpt.perPixel = true;
-			MeshPhongMaterial material = new MeshPhongMaterial( mpOpt );
-			material.wrapAround = true; 
+			MeshPhongMaterial material = new MeshPhongMaterial();
+			material.setSpecular( new Color3f(0xffffff) );
+			material.setShininess( 100 );
+			material.setEnvMap( reflectionCube );
+			material.setCombine( Texture.OPERATIONS.MIX );
+			material.setReflectivity( 0.1f );
+			material.setPerPixel(true);
+			material.setWrapAround(true); 
 			material.getWrapRGB().set( 0.5f, 0.5f, 0.5f );
 
 			Sphere geometry = new Sphere( 1, 32, 16, 0f, (float)Math.PI );

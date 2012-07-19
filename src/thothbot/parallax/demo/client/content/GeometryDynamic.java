@@ -115,10 +115,9 @@ public class GeometryDynamic extends ContentWidget
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.getRepeat().set( 5.0f, 5.0f );
 
-			MeshBasicMaterial.MeshBasicMaterialOptions options = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			options.color = new Color3f(0x0044ff);
-			options.map = texture;
-			MeshBasicMaterial material = new MeshBasicMaterial( options );
+			MeshBasicMaterial material = new MeshBasicMaterial();
+			material.setColor( new Color3f(0x0044ff) );
+			material.setMap( texture );
 
 			this.mesh = new Mesh( this.geometry, material );
 			getScene().addChild( this.mesh );

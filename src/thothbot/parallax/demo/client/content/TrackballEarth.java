@@ -156,12 +156,12 @@ public final class TrackballEarth extends ContentWidget
 			((Color3f)uniforms.get("uSpecularColor").value).convertGammaToLinear();
 			((Color3f)uniforms.get("uAmbientColor").value).convertGammaToLinear();
 
-			ShaderMaterial.ShaderMaterialOptions sOpt = new ShaderMaterial.ShaderMaterialOptions(); 
-			sOpt.fragmentShader = shader.getFragmentSource();
-			sOpt.vertexShader = shader.getVertexSource();
-			sOpt.uniforms = uniforms;
-			sOpt.lights = true;
-			ShaderMaterial materialNormalMap = new ShaderMaterial(sOpt);
+			ShaderMaterial materialNormalMap = new ShaderMaterial(); 
+			materialNormalMap.setFragmentShaderSource( shader.getFragmentSource() );
+			materialNormalMap.setVertexShaderSource( shader.getVertexSource() );
+			materialNormalMap.setUniforms( uniforms );
+			materialNormalMap.setLights(true);
+			
 
 			// planet
 
@@ -175,11 +175,10 @@ public final class TrackballEarth extends ContentWidget
 
 
 			// clouds
-			MeshLambertMaterial.MeshLambertMaterialOptions mlOpt = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			mlOpt.color = new Color3f(0xffffff);
-			mlOpt.map = cloudsTexture;
-			mlOpt.transparent = true;
-			MeshLambertMaterial materialClouds = new MeshLambertMaterial( mlOpt );
+			MeshLambertMaterial materialClouds = new MeshLambertMaterial();
+			materialClouds.setColor( new Color3f(0xffffff) );
+			materialClouds.setMap( cloudsTexture );
+			materialClouds.setTransparent(true);
 
 			this.meshClouds = new Mesh( geometry, materialClouds );
 			meshClouds.getScale().set( cloudsScale, cloudsScale, cloudsScale );
@@ -188,10 +187,10 @@ public final class TrackballEarth extends ContentWidget
 
 
 			// moon
-			MeshPhongMaterial.MeshPhongMaterialOptions mpOpt = new MeshPhongMaterial.MeshPhongMaterialOptions();
-			mpOpt.color = new Color3f(0xffffff);
-			mpOpt.map = moonTexture;
-			MeshPhongMaterial materialMoon = new MeshPhongMaterial( mpOpt );
+			MeshPhongMaterial materialMoon = new MeshPhongMaterial();
+			materialMoon.setColor( new Color3f(0xffffff) );
+			materialMoon.setMap( moonTexture );
+			
 
 			this.meshMoon = new Mesh( geometry, materialMoon );
 			meshMoon.getPosition().set( radius * 5.0f, 0, 0 );
@@ -216,32 +215,43 @@ public final class TrackballEarth extends ContentWidget
 
 			}
 
-			ParticleBasicMaterial.ParticleBasicMaterialOptions pbOpt = new ParticleBasicMaterial.ParticleBasicMaterialOptions();
-			pbOpt.color = new Color3f(0x555555);
-			pbOpt.size = 2;
-			pbOpt.sizeAttenuation = false;
+			ParticleBasicMaterial pbOpt = new ParticleBasicMaterial();
+			pbOpt.setColor( new Color3f(0x555555) );
+			pbOpt.setSize( 2 );
+			pbOpt.setSizeAttenuation(false);
 			
 			List<ParticleBasicMaterial> starsMaterials = new ArrayList<ParticleBasicMaterial>();
-			starsMaterials.add(new ParticleBasicMaterial( pbOpt ));
+			starsMaterials.add(pbOpt);
 			
-			pbOpt.size = 1;
-			starsMaterials.add(new ParticleBasicMaterial( pbOpt ));
+			ParticleBasicMaterial pbOpt1 = new ParticleBasicMaterial();
+			pbOpt1.setColor( new Color3f(0x555555) );
+			pbOpt1.setSize( 1 );
+			pbOpt1.setSizeAttenuation(false);
+			starsMaterials.add(pbOpt1);
 			
-			pbOpt.color = new Color3f(0x333333);
-			pbOpt.size = 2;
-			starsMaterials.add(new ParticleBasicMaterial( pbOpt ));
+			ParticleBasicMaterial pbOpt2 = new ParticleBasicMaterial();
+			pbOpt2.setColor( new Color3f(0x333333) );
+			pbOpt2.setSize( 2 );
+			pbOpt2.setSizeAttenuation(false);
+			starsMaterials.add(pbOpt2);
 			
-			pbOpt.color = new Color3f(0x3a3a3a);
-			pbOpt.size = 1;
-			starsMaterials.add(new ParticleBasicMaterial( pbOpt ));
+			ParticleBasicMaterial pbOpt3 = new ParticleBasicMaterial();
+			pbOpt3.setColor( new Color3f(0x3a3a3a) );
+			pbOpt3.setSize( 1 );
+			pbOpt3.setSizeAttenuation(false);
+			starsMaterials.add(pbOpt3);
 			
-			pbOpt.color = new Color3f(0x1a1a1a);
-			pbOpt.size = 2;
-			starsMaterials.add(new ParticleBasicMaterial( pbOpt ));
+			ParticleBasicMaterial pbOpt4 = new ParticleBasicMaterial();
+			pbOpt4.setColor( new Color3f(0x1a1a1a) );
+			pbOpt4.setSize( 2 );
+			pbOpt4.setSizeAttenuation(false);
+			starsMaterials.add(pbOpt4);
 			
-			pbOpt.color = new Color3f(0x1a1a1a);
-			pbOpt.size = 1;
-			starsMaterials.add(new ParticleBasicMaterial( pbOpt ));				
+			ParticleBasicMaterial pbOpt5 = new ParticleBasicMaterial();
+			pbOpt5.setColor( new Color3f(0x1a1a1a) );
+			pbOpt5.setSize( 1 );
+			pbOpt5.setSizeAttenuation(false);
+			starsMaterials.add(pbOpt5);				
 
 			for ( int i = 10; i < 30; i ++ ) 
 			{

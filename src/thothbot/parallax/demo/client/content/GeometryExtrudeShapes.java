@@ -43,8 +43,6 @@ import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial.MeshBasicMaterialOptions;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial.MeshLambertMaterialOptions;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.utils.SceneUtils;
@@ -250,19 +248,19 @@ public class GeometryExtrudeShapes extends ContentWidget
 		private void addGeometry( Geometry geometry, Color3f color, float x, float y, float z, float rx, float ry, float rz, float s ) 
 		{
 			// 3d shape
-			MeshLambertMaterialOptions mlOptions = new MeshLambertMaterialOptions();
-			mlOptions.color = color;
-			mlOptions.opacity = 0.2f;
-			mlOptions.transparent = true;
+			MeshLambertMaterial ml = new MeshLambertMaterial();
+			ml.setColor(color);
+			ml.setOpacity( 0.2f );
+			ml.setTransparent(true);
 
-			MeshBasicMaterialOptions mbOptions = new MeshBasicMaterialOptions();
-			mbOptions.color = new Color3f(0x000000);
-			mbOptions.wireframe = true;
-			mbOptions.opacity = 0.3f;
+			MeshBasicMaterial mb = new MeshBasicMaterial();
+			mb.setColor( new Color3f(0x000000) );
+			mb.setWireframe( true );
+			mb.setOpacity( 0.3f );
 
 			List<Material> materials= new ArrayList<Material>();
-			materials.add(new MeshLambertMaterial( mlOptions ));
-			materials.add(new MeshBasicMaterial( mbOptions ));
+			materials.add(ml);
+			materials.add(mb);
 			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, materials );     
 
 			mesh.getPosition().set( x, y, z - 75.0f );

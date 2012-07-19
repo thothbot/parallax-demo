@@ -109,10 +109,10 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getScene().addChild(getCamera());
 
 			Texture texture = ImageUtils.loadTexture( Resources.INSTANCE.texture(),  Texture.MAPPING_MODE.UV, null);
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt.map = texture;
+			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
+			mbOpt.setMap( texture );
 			
-			Mesh mesh = new Mesh( new Sphere( 500, 60, 40 ), new MeshBasicMaterial( mbOpt ) );
+			Mesh mesh = new Mesh( new Sphere( 500, 60, 40 ), mbOpt );
 			mesh.getScale().setX( -1 );
 			getScene().addChild( mesh );
 
@@ -120,9 +120,8 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			this.cubeCamera.getRenderTarget().setMinFilter( TextureMinFilter.LINEAR_MIPMAP_LINEAR );
 			getScene().addChild( cubeCamera );
 
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt1 = new MeshBasicMaterial.MeshBasicMaterialOptions(); 
-			mbOpt1.envMap = cubeCamera.getRenderTarget();
-			MeshBasicMaterial material = new MeshBasicMaterial( mbOpt1 );
+			MeshBasicMaterial material = new MeshBasicMaterial(); 
+			material.setEnvMap( cubeCamera.getRenderTarget() );
 			
 			sphere = new Mesh( new Sphere( 20, 60, 40 ), material );
 			getScene().addChild( sphere );

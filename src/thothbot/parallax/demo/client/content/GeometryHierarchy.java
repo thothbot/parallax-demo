@@ -75,7 +75,7 @@ public final class GeometryHierarchy extends ContentWidget
 			getScene().setFog(new FogSimple( 0xffffff, 1f, 10000f));
 
 			Cube geometry = new Cube( 100, 100, 100 );
-			MeshNormalMaterial material = new MeshNormalMaterial(new MeshNormalMaterial.MeshNormalMaterialOptions());
+			MeshNormalMaterial material = new MeshNormalMaterial();
 
 			this.group = new Object3D();
 

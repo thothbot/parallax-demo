@@ -105,19 +105,16 @@ public class Geometries extends ContentWidget
 			getScene().addChild( light );
 			
 			List<Material> materials = new ArrayList<Material>();
-			MeshLambertMaterial.MeshLambertMaterialOptions lopt = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			lopt.map = ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null);
-			lopt.ambient = new Color3f(0xbbbbbb);
-			MeshLambertMaterial lmaterial = new MeshLambertMaterial(lopt);
-	
-			MeshBasicMaterial.MeshBasicMaterialOptions bopt = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			bopt.color = new Color3f(0xffffff);
-			bopt.wireframe = true;
-			bopt.transparent = true;
-			bopt.opacity = 0.1f;
-			MeshBasicMaterial bmaterial = new MeshBasicMaterial(bopt);
-	
-			materials.add(lmaterial);
+			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
+			lmaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null) );
+			lmaterial.setAmbient( new Color3f(0xbbbbbb) );
+			materials.add(lmaterial);	
+			
+			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
+			bmaterial.setColor( new Color3f(0xffffff) );
+			bmaterial.setWireframe(true);
+			bmaterial.setTransparent(true);
+			bmaterial.setOpacity( 0.1f );
 			materials.add(bmaterial);
 	
 			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new Cube( 100, 100, 100, 4, 4, 4 ), materials );

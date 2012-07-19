@@ -80,9 +80,8 @@ public class GeometryCube extends ContentWidget
 
 			Cube geometry = new Cube( 200, 200, 200 );
 
-			MeshBasicMaterial.MeshBasicMaterialOptions options = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			options.map = ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null);
-			MeshBasicMaterial material = new MeshBasicMaterial(options);
+			MeshBasicMaterial material = new MeshBasicMaterial();
+			material.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture(), null, null) );
 
 			this.mesh = new Mesh(geometry, material);
 			getScene().addChild(mesh);

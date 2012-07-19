@@ -125,12 +125,10 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			Resources r = Resources.INSTANCE;
 			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), Texture.MAPPING_MODE.CUBE_REFRACTION, null );
 			
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt.color = new Color3f(0xffffff);
-			mbOpt.envMap = textureCube;
-			mbOpt.refractionRatio = 0.95f;
-			
-			MeshBasicMaterial material = new MeshBasicMaterial( mbOpt );
+			MeshBasicMaterial material = new MeshBasicMaterial();
+			material.setColor( new Color3f(0xffffff) );
+			material.setEnvMap( textureCube );
+			material.setRefractionRatio( 0.95f );
 
 			this.speres = new ArrayList<Mesh>();
 			
@@ -155,13 +153,12 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			ShaderCubeMap shader = new ShaderCubeMap();
 			shader.getUniforms().get("tCube").texture = textureCube; 
 
-			ShaderMaterial.ShaderMaterialOptions sOpt = new ShaderMaterial.ShaderMaterialOptions();
-			sOpt.fragmentShader = shader.getFragmentSource();
-			sOpt.vertexShader = shader.getVertexSource();
-			sOpt.uniforms = shader.getUniforms();
-			sOpt.depthWrite = false;
+			ShaderMaterial sMaterial = new ShaderMaterial();
+			sMaterial.setFragmentShaderSource( shader.getFragmentSource() );
+			sMaterial.setVertexShaderSource( shader.getVertexSource() );
+			sMaterial.setUniforms( shader.getUniforms() );
+			sMaterial.setDepthWrite( false );
 			
-			ShaderMaterial sMaterial = new ShaderMaterial( sOpt );
 			Mesh mesh = new Mesh( new Cube( 100, 100, 100 ), sMaterial );
 			mesh.setFlipSided(true);
 			sceneCube.addChild( mesh );

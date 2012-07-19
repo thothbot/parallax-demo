@@ -112,13 +112,11 @@ public class CustomAttributesParticles2 extends ContentWidget
 			uniforms.get("texture").texture.setWrapS(TextureWrapMode.REPEAT);
 			uniforms.get("texture").texture.setWrapT(TextureWrapMode.REPEAT);
 	
-			ShaderMaterial.ShaderMaterialOptions opt = new ShaderMaterial.ShaderMaterialOptions();
-			opt.uniforms = uniforms;
-			opt.attributes = attributes;
-			opt.vertexShader = Resources.INSTANCE.vertexShader().getText();
-			opt.fragmentShader = Resources.INSTANCE.fragmetShader().getText();
-			
-			ShaderMaterial shaderMaterial = new ShaderMaterial(opt);
+			ShaderMaterial shaderMaterial = new ShaderMaterial();
+			shaderMaterial.setUniforms(uniforms);
+			shaderMaterial.setAttributes(attributes);
+			shaderMaterial.setVertexShaderSource( Resources.INSTANCE.vertexShader().getText() );
+			shaderMaterial.setFragmentShaderSource( Resources.INSTANCE.fragmetShader().getText() );
 			
 			int radius = 100, segments = 68, rings = 38;
 			

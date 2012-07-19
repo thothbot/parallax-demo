@@ -105,17 +105,15 @@ public class CustomAttributesParticles extends ContentWidget
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( Resources.INSTANCE.texture(), null, null )));
 			
-			ShaderMaterial.ShaderMaterialOptions opt = new ShaderMaterial.ShaderMaterialOptions();
-			opt.uniforms = uniforms;
-			opt.attributes = attributes;
-			opt.vertexShader =  Resources.INSTANCE.vertexShader().getText();
-			opt.fragmentShader = Resources.INSTANCE.fragmetShader().getText();
-			opt.blending = Material.BLENDING.ADDITIVE;
-			opt.depthTest = false;
-			opt.transparent = true;
-			
-			ShaderMaterial shaderMaterial = new ShaderMaterial(opt);
-			
+			ShaderMaterial shaderMaterial = new ShaderMaterial();
+			shaderMaterial.setUniforms(uniforms);
+			shaderMaterial.setAttributes(attributes);
+			shaderMaterial.setVertexShaderSource( Resources.INSTANCE.vertexShader().getText() );
+			shaderMaterial.setFragmentShaderSource( Resources.INSTANCE.fragmetShader().getText() );
+			shaderMaterial.setBlending( Material.BLENDING.ADDITIVE );
+			shaderMaterial.setDepthTest(false);
+			shaderMaterial.setTransparent( true );
+					
 			float radius = 200f;
 			Geometry geometry = new Geometry();
 	

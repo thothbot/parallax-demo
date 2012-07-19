@@ -107,10 +107,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 				geometry.getVertices().add( new Vector3f( i * step - 500f, floor,  500f ) );
 			}
 
-			LineBasicMaterial.LineBasicMaterialOptions lopt = new LineBasicMaterial.LineBasicMaterialOptions();
-			lopt.color = new Color3f( 0xffffff);
-			lopt.opacity = 0.2f;
-			LineBasicMaterial line_material = new LineBasicMaterial(lopt);
+			LineBasicMaterial line_material = new LineBasicMaterial();
+			line_material.setColor( new Color3f( 0xffffff) );
+			line_material.setOpacity( 0.2f );
 
 			Line line = new Line( geometry, line_material, Line.TYPE.PIECES );
 			getScene().addChild( line );
@@ -123,74 +122,75 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			this.materials = new ArrayList<Material>();
 			
-			MeshLambertMaterial.MeshLambertMaterialOptions mlOpt = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			mlOpt.map = texture;
-			mlOpt.transparent = true;
-			materials.add( new MeshLambertMaterial( mlOpt ) );
+			MeshLambertMaterial mlOpt = new MeshLambertMaterial();
+			mlOpt.setMap(texture);
+			mlOpt.setTransparent(true);
+			materials.add( mlOpt );
 			
-			MeshLambertMaterial.MeshLambertMaterialOptions mlOpt1 = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			mlOpt1.color = new Color3f(0xdddddd);
-			mlOpt1.shading = Material.SHADING.FLAT;
-			materials.add( new MeshLambertMaterial( mlOpt1 ) );
+			MeshLambertMaterial mlOpt1 = new MeshLambertMaterial();
+			mlOpt1.setColor( new Color3f(0xdddddd) );
+			mlOpt1.setShading( Material.SHADING.FLAT );
+			materials.add( mlOpt1 );
 			
-			MeshPhongMaterial.MeshPhongMaterialOptions mpOpt = new MeshPhongMaterial.MeshPhongMaterialOptions();
-			mpOpt.ambient = new Color3f(0x030303);
-			mpOpt.color = new Color3f(0xdddddd);
-			mpOpt.specular = new Color3f(0x009900);
-			mpOpt.shininess = 30f;
-			mpOpt.shading = Material.SHADING.FLAT;
-			materials.add( new MeshPhongMaterial( mpOpt ) );
+			MeshPhongMaterial mpOpt = new MeshPhongMaterial();
+			mpOpt.setAmbient( new Color3f(0x030303) );
+			mpOpt.setColor( new Color3f(0xdddddd) );
+			mpOpt.setSpecular( new Color3f(0x009900) );
+			mpOpt.setShininess( 30f );
+			mpOpt.setShading( Material.SHADING.FLAT );
+			materials.add( mpOpt );
 			
-			materials.add( new MeshNormalMaterial( new MeshNormalMaterial.MeshNormalMaterialOptions() ) );
+			materials.add( new MeshNormalMaterial() );
 			
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt.color = new Color3f(0xffaa00);
-			mbOpt.transparent = true;
-			mbOpt.blending = Material.BLENDING.ADDITIVE;
-			materials.add( new MeshBasicMaterial( mbOpt ) );
+			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
+			mbOpt.setColor( new Color3f(0xffaa00) );
+			mbOpt.setTransparent( true );
+			mbOpt.setBlending( Material.BLENDING.ADDITIVE );
+			materials.add( mbOpt );
 
-			MeshLambertMaterial.MeshLambertMaterialOptions mlOpt2 = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			mlOpt2.color = new Color3f(0xdddddd);
-			mlOpt2.shading = Material.SHADING.SMOOTH;
-			materials.add( new MeshLambertMaterial( mlOpt2 ) );
+			MeshLambertMaterial mlOpt2 = new MeshLambertMaterial();
+			mlOpt2.setColor( new Color3f(0xdddddd) );
+			mlOpt2.setShading( Material.SHADING.SMOOTH );
+			materials.add( mlOpt2 );
 			
-			mpOpt.map = texture;
-			mpOpt.transparent = true;			
-			materials.add( new MeshPhongMaterial( mpOpt ) );
+			MeshPhongMaterial mpOpt2 = new MeshPhongMaterial();
+			mpOpt2.setMap( texture );
+			mpOpt2.setTransparent( true );			
+			materials.add( mpOpt2 );
 			
-			MeshNormalMaterial.MeshNormalMaterialOptions mnOpt = new MeshNormalMaterial.MeshNormalMaterialOptions();
-			mnOpt.shading = Material.SHADING.SMOOTH;
-			materials.add( new MeshNormalMaterial( mnOpt ) );
+			MeshNormalMaterial mnOpt = new MeshNormalMaterial();
+			mnOpt.setShading( Material.SHADING.SMOOTH );
+			materials.add( mnOpt );
 			
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt1 = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt1.color = new Color3f(0x00ffaa);
-			mbOpt1.wireframe = true;
-			materials.add( new MeshBasicMaterial( mbOpt1 ) );
+			MeshBasicMaterial mbOpt1 = new MeshBasicMaterial();
+			mbOpt1.setColor( new Color3f(0x00ffaa) );
+			mbOpt1.setWireframe(true);
+			materials.add( mbOpt1 );
 
-			materials.add( new MeshDepthMaterial( new MeshDepthMaterial.MeshDepthMaterialOptions()) );
+			materials.add( new MeshDepthMaterial() );
 
-			MeshLambertMaterial.MeshLambertMaterialOptions mlOpt3 = new MeshLambertMaterial.MeshLambertMaterialOptions();
-			mlOpt3.color = new Color3f(0x666666);
-			mlOpt3.emissive = new Color3f(0xff0000);
-			mlOpt3.ambient = new Color3f(0x000000);
-			mlOpt3.shading = Material.SHADING.SMOOTH;
-			materials.add( new MeshLambertMaterial( mlOpt3 ) );
+			MeshLambertMaterial mlOpt3 = new MeshLambertMaterial();
+			mlOpt3.setColor( new Color3f(0x666666) );
+			mlOpt3.setEmissive( new Color3f(0xff0000) );
+			mlOpt3.setAmbient( new Color3f(0x000000) );
+			mlOpt3.setShading( Material.SHADING.SMOOTH );
+			materials.add( mlOpt3 );
 			
-			MeshPhongMaterial.MeshPhongMaterialOptions mpOpt1 = new MeshPhongMaterial.MeshPhongMaterialOptions();
-			mpOpt1.ambient = new Color3f(0x000000);
-			mpOpt1.emissive = new Color3f(0xff0000);
-			mpOpt1.color = new Color3f(0x000000);
-			mpOpt1.specular = new Color3f(0x666666);
-			mpOpt1.shininess = 10f;
-			mpOpt1.shading = Material.SHADING.SMOOTH;
-			mpOpt1.opacity = 0.9f;
-			mpOpt1.transparent = true;
-			materials.add( new MeshPhongMaterial( mpOpt1 ) );
+			MeshPhongMaterial mpOpt1 = new MeshPhongMaterial();
+			mpOpt1.setAmbient( new Color3f(0x000000) );
+			mpOpt1.setEmissive( new Color3f(0xff0000) );
+			mpOpt1.setColor( new Color3f(0x000000) );
+			mpOpt1.setSpecular( new Color3f(0x666666) );
+			mpOpt1.setShininess( 10f );
+			mpOpt1.setShading( Material.SHADING.SMOOTH );
+			mpOpt1.setOpacity( 0.9f );
+			mpOpt1.setTransparent(true);
+			materials.add( mpOpt1 );
 
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt2 = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt1.map = texture;
-			mbOpt1.transparent = true;
-			materials.add( new MeshBasicMaterial( mbOpt2 ) );
+			MeshBasicMaterial mbOpt2 = new MeshBasicMaterial();
+			mbOpt1.setMap( texture );
+			mbOpt1.setTransparent( true );
+			materials.add( mbOpt2 );
 
 			// Spheres geometry
 
@@ -241,9 +241,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			}
 			
-			MeshBasicMaterial.MeshBasicMaterialOptions mbOpt3 = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			mbOpt3.color = new Color3f(0xffffff);
-			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), new MeshBasicMaterial( mbOpt3 ) );
+			MeshBasicMaterial mbOpt3 = new MeshBasicMaterial();
+			mbOpt3.setColor( new Color3f(0xffffff) );
+			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), mbOpt3 );
 			getScene().addChild( this.particleLight );
 
 			// Lights

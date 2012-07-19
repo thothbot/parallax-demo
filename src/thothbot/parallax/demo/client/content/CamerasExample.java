@@ -123,20 +123,22 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			
 			//
 	
-			MeshBasicMaterial.MeshBasicMaterialOptions bopt0 = new MeshBasicMaterial.MeshBasicMaterialOptions();
-			bopt0.color = new Color3f(0xffffff);
-			bopt0.wireframe = true;
+			MeshBasicMaterial  bopt0 = new MeshBasicMaterial();
+			bopt0.setColor( new Color3f(0xffffff) );
+			bopt0.setWireframe(true);
 			
-			this.mesh = new Mesh( new Sphere( 100, 16, 8 ), new MeshBasicMaterial( bopt0 ) );
+			this.mesh = new Mesh( new Sphere( 100, 16, 8 ), bopt0);
 			getScene().addChild( mesh );
 	
-			bopt0.color = new Color3f(0x00ff00);
-			Mesh mesh2 = new Mesh( new Sphere( 50, 16, 8 ), new MeshBasicMaterial( bopt0 ) );
+			MeshBasicMaterial  bopt1 = new MeshBasicMaterial();
+			bopt1.setColor( new Color3f(0x00ff00) );
+			Mesh mesh2 = new Mesh( new Sphere( 50, 16, 8 ), bopt1);
 			mesh2.getPosition().setY(150);
 			mesh.addChild( mesh2 );
 	
-			bopt0.color = new Color3f(0x0000ff);
-			Mesh mesh3 = new Mesh( new Sphere( 5, 16, 8 ), new MeshBasicMaterial( bopt0 ) );
+			MeshBasicMaterial  bopt2 = new MeshBasicMaterial();
+			bopt2.setColor( new Color3f(0x0000ff) );
+			Mesh mesh3 = new Mesh( new Sphere( 5, 16, 8 ), bopt2);
 			mesh3.getPosition().setZ(150);
 			cameraRig.addChild( mesh3 );
 	
@@ -154,10 +156,10 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				geometry.getVertices().add( vertex );
 			}
 			
-			ParticleBasicMaterial.ParticleBasicMaterialOptions popt = new ParticleBasicMaterial.ParticleBasicMaterialOptions();
-			popt.color = new Color3f(0xDDDDDD);
+			ParticleBasicMaterial popt = new ParticleBasicMaterial();
+			popt.setColor( new Color3f(0xDDDDDD) );
 	
-			ParticleSystem particles = new ParticleSystem( geometry, new ParticleBasicMaterial( popt ) );
+			ParticleSystem particles = new ParticleSystem( geometry, popt );
 			getScene().addChild( particles );
 	
 			//
