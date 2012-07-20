@@ -83,7 +83,7 @@ public final class TrackballEarth extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		static final int radius = 6371;
 		static final float tilt = 0.41f;
@@ -328,7 +328,7 @@ public final class TrackballEarth extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(TrackballEarth.class, new RunAsyncCallback() 
 		{

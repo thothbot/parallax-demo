@@ -64,7 +64,7 @@ public class GeometryDynamic extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		FirstPersonControl controls;
 		Plane geometry;
@@ -174,7 +174,7 @@ public class GeometryDynamic extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometryDynamic.class, new RunAsyncCallback() 
 		{

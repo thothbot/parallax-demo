@@ -77,7 +77,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		int mouseX = 0, mouseY = 0;
 		
@@ -299,7 +299,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsTextureFilter.class, new RunAsyncCallback() 
 		{

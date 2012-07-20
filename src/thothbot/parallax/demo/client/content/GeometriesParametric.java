@@ -67,7 +67,7 @@ public class GeometriesParametric extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		@Override
 		protected void loadCamera()
@@ -175,7 +175,7 @@ public class GeometriesParametric extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometriesParametric.class, new RunAsyncCallback() 
 		{

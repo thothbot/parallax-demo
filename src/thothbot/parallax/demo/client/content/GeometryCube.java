@@ -55,7 +55,7 @@ public class GeometryCube extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		private Mesh mesh;
 
@@ -119,7 +119,7 @@ public class GeometryCube extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometryCube.class, new RunAsyncCallback() 
 		{

@@ -74,7 +74,7 @@ public class CustomAttributesParticles extends ContentWidget
 	 */
 	@SuppressWarnings("unchecked")
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{	
 		Map<String, WebGLCustomAttribute> attributes;
 		ParticleSystem sphere;
@@ -193,7 +193,7 @@ public class CustomAttributesParticles extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(CustomAttributesParticles.class, new RunAsyncCallback() 
 		{

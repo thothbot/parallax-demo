@@ -86,7 +86,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		public int mouseX = 0;
 		public int mouseY = 0;
@@ -231,7 +231,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsCubemapBallsRefraction.class, new RunAsyncCallback() 
 		{

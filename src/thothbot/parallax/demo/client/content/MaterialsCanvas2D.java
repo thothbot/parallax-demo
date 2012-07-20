@@ -66,7 +66,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		
 		private List<Material> materials;
@@ -355,7 +355,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsCanvas2D.class, new RunAsyncCallback() 
 		{

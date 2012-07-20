@@ -83,7 +83,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		public int mouseX;
 		public int mouseY;
@@ -223,7 +223,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(PerformanceDoubleSided.class, new RunAsyncCallback() 
 		{

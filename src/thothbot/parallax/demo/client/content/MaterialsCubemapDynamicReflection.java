@@ -70,7 +70,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		public int onMouseDownMouseX = 0;
 		public int onMouseDownMouseY = 0;
@@ -255,7 +255,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsCubemapDynamicReflection.class, new RunAsyncCallback() 
 		{

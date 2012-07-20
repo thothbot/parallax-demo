@@ -49,7 +49,7 @@ public final class GeometryHierarchy extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		Object3D group;
 
@@ -171,7 +171,7 @@ public final class GeometryHierarchy extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometryHierarchy.class, new RunAsyncCallback() 
 		{

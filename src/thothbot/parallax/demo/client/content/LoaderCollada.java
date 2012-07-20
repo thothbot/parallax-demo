@@ -49,7 +49,7 @@ public final class LoaderCollada extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{
 		static final String model = "./models/collada/monster/monster.dae";
 		
@@ -184,7 +184,7 @@ public final class LoaderCollada extends ContentWidget
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(LoaderCollada.class, new RunAsyncCallback() 
 		{

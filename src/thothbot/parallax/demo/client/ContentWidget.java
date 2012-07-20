@@ -111,16 +111,16 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 	/**
 	 * This is basic preparation for Demo Scene
 	 */
-	protected abstract class DemoRenderingScene extends AnimatedScene{};
+	protected abstract class DemoAnimatedScene extends AnimatedScene{};
 	
 	/**
 	 * This is called when the example is first initialized.
 	 * 
-	 * @return a {@link DemoRenderingScene} to add to the {@link RenderingPanel}
+	 * @return a {@link DemoAnimatedScene} to add to the {@link RenderingPanel}
 	 */
-	protected abstract DemoRenderingScene onInitialize();
+	protected abstract DemoAnimatedScene onInitialize();
 
-	protected abstract void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback);
+	protected abstract void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback);
 
 	/**
 	 * Get the simple filename of a class (name without dots).
@@ -269,23 +269,23 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 
 		widgetInitializing = true;
 
-		asyncOnInitialize(new AsyncCallback<DemoRenderingScene>() {
+		asyncOnInitialize(new AsyncCallback<DemoAnimatedScene>() {
 			public void onFailure(Throwable reason)
 			{
 				widgetInitializing = false;
 				Window.alert("Failed to download code for this widget (" + reason + ")");
 			}
 
-			public void onSuccess(DemoRenderingScene demoRenderingScene)
+			public void onSuccess(DemoAnimatedScene demoAnimatedScene)
 			{
 				widgetInitializing = false;
 				widgetInitialized = true;
 
 				// Finally setup RenderingPanel attached to the loaded example
-		        if (demoRenderingScene != null)
+		        if (demoAnimatedScene != null)
 		        {
 		    		final RenderingPanel renderingPanel = new RenderingPanel(getRenderPanelAttributes());
-		    		renderingPanel.setRenderingScene(demoRenderingScene);
+		    		renderingPanel.setRenderingScene(demoAnimatedScene);
 		    		renderingPanel.addAnimationReadyEventHandler(ContentWidget.this);
 		        	ContentWidget.this.renderingPanel = renderingPanel;
 

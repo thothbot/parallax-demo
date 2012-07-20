@@ -58,7 +58,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoRenderingScene 
+	class DemoScene extends DemoAnimatedScene 
 	{	
 		public Camera activeCamera;
 
@@ -279,7 +279,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	}
 	
 	@Override
-	protected void asyncOnInitialize(final AsyncCallback<DemoRenderingScene> callback)
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(CamerasExample.class, new RunAsyncCallback() 
 		{
