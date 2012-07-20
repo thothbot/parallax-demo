@@ -283,6 +283,14 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
 		}
 		
+		// Loaders
+		{
+			Category category = new Category("Loaders");
+			categoriesList.add(category);
+			category.addExample(new LoaderCollada(),
+					RunAsyncCode.runAsyncCode(LoaderCollada.class));
+		}
+		
 		// Performance
 		{
 			Category category = new Category("Performance");

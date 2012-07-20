@@ -104,6 +104,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_trackball_earth.jpg")
 	ImageResource exampleTrackballEarth();
 	
+	@Source("images/example_loader_collada.jpg")
+	ImageResource exampleLoaderCollada();
+	
 	@Source("images/example_performance_double_sided.jpg")
 	ImageResource examplePerformanceDoubleSided();
 }

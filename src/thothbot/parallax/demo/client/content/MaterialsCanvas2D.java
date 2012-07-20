@@ -178,7 +178,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			
 			MeshPhongMaterial mpOpt1 = new MeshPhongMaterial();
 			mpOpt1.setAmbient( new Color3f(0x000000) );
-			mpOpt1.setEmissive( new Color3f(0xff0000) );
+			mpOpt1.setEmissive( new Color3f(0xffff00) );
 			mpOpt1.setColor( new Color3f(0x000000) );
 			mpOpt1.setSpecular( new Color3f(0x666666) );
 			mpOpt1.setShininess( 10f );
@@ -203,8 +203,8 @@ public final class MaterialsCanvas2D extends ContentWidget
 				Face3 face = geometry_pieces.getFaces().get( i );
 
 //				if ( Math.random() > 0.7 )
-//					face.setMaterialIndex( (int)Math.floor( Math.random() * materials.size() ) );
-//
+//					face.setMaterialIndex( (int)( Math.random() * materials.size()) );
+
 //				else
 					face.setMaterialIndex( 0 );
 
