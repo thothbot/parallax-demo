@@ -21,7 +21,7 @@ package thothbot.parallax.demo.client.content;
 
 import java.util.Arrays;
 
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
@@ -194,7 +194,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 	}
 	
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -214,7 +214,7 @@ public class GeometryColors extends ContentWidget
 	}
 
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 

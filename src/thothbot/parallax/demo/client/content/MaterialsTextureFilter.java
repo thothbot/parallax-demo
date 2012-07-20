@@ -33,7 +33,7 @@ import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
@@ -276,7 +276,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 	}
 
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 

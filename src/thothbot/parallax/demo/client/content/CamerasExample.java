@@ -22,7 +22,7 @@
 
 package thothbot.parallax.demo.client.content;
 
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.Camera;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
@@ -246,7 +246,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	}
 
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 		

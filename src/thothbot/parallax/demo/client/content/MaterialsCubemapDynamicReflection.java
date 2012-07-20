@@ -22,7 +22,7 @@
 
 package thothbot.parallax.demo.client.content;
 
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.CubeCamera;
@@ -190,7 +190,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	}
 	
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 

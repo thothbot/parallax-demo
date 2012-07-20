@@ -20,9 +20,9 @@
 package thothbot.parallax.demo.client;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.RenderingReadyEvent;
-import thothbot.parallax.core.client.RenderingReadyHandler;
-import thothbot.parallax.core.client.RenderingScene;
+import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyHandler;
+import thothbot.parallax.core.client.AnimatedScene;
 import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.demo.resources.DemoResources;
 
@@ -44,7 +44,7 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 /**
  * A widget used to show Parallax examples.
  */
-public abstract class ContentWidget extends SimpleLayoutPanel implements RenderingReadyHandler
+public abstract class ContentWidget extends SimpleLayoutPanel implements AnimationReadyHandler
 {
 
 	/**
@@ -111,7 +111,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Renderi
 	/**
 	 * This is basic preparation for Demo Scene
 	 */
-	protected abstract class DemoRenderingScene extends RenderingScene{};
+	protected abstract class DemoRenderingScene extends AnimatedScene{};
 	
 	/**
 	 * This is called when the example is first initialized.
@@ -224,9 +224,9 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Renderi
 	
 	/**
 	 * This event called when {@link RenderingPanel} is ready to animate a 
-	 * {@link RenderingScene} in loaded example.
+	 * {@link AnimatedScene} in loaded example.
 	 */
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
     	view.getAnimationSwitch().setEnabled(true);
     	view.getAnimationSwitch().setDown(true);

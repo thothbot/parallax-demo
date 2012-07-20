@@ -22,7 +22,7 @@
 
 package thothbot.parallax.demo.client.content;
 
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -142,7 +142,7 @@ public final class GeometryHierarchy extends ContentWidget
 	}
 	
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 

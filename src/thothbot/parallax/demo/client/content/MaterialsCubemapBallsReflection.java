@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import thothbot.parallax.core.client.RenderingReadyEvent;
+import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.shader.ShaderCubeMap;
 import thothbot.parallax.core.client.textures.CubeTexture;
@@ -203,7 +203,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 	}
 	
 	@Override
-	public void onAnimationReady(RenderingReadyEvent event)
+	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 
