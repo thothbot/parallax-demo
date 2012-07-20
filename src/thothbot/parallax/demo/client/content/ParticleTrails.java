@@ -19,8 +19,9 @@
 
 package thothbot.parallax.demo.client.content;
 
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
@@ -129,7 +130,7 @@ public final class ParticleTrails extends ContentWidget
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ) * 10; 
 		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2) * 10;
@@ -138,12 +139,10 @@ public final class ParticleTrails extends ContentWidget
 	}
 
 	@Override
-	public RenderPanelAttributes getRenderPanelAttributes()
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
 	{
-		RenderPanelAttributes att = super.getRenderPanelAttributes();
-		att.isPreserveDrawingBufferEnabled         = true;
-
-		return att;
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.getCanvas3dAttributes().setPreserveDrawingBufferEnable(true);
 	}
 
 	@Override

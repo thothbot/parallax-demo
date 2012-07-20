@@ -211,7 +211,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			@Override
 			public void onMouseMove(MouseMoveEvent event)
 			{
-				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 				rs.mouseX = (event.getX() - canvas.getWidth() / 2 ) * 10; 
 				rs.mouseY = (event.getY() - canvas.getHeight() / 2) * 10;

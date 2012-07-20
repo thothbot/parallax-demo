@@ -132,6 +132,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	
 			MeshBasicMaterial  bopt1 = new MeshBasicMaterial();
 			bopt1.setColor( new Color3f(0x00ff00) );
+			bopt1.setWireframe(true);
 			Mesh mesh2 = new Mesh( new Sphere( 50, 16, 8 ), bopt1);
 			mesh2.getPosition().setY(150);
 			mesh.addChild( mesh2 );
@@ -255,7 +256,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			@Override
 			public void onKeyDown(KeyDownEvent event) 
 			{
-				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				switch(event.getNativeEvent().getKeyCode())
 				{
 				case 79: case 111:/*O*/	rs.activeCamera = rs.cameraOrtho; break;

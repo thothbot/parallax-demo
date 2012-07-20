@@ -27,7 +27,6 @@ import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
@@ -212,6 +211,13 @@ public class GeometryColors extends ContentWidget
 	{
 		super("Vertices colors", "Here are shown Icosahedrons and different vertex colors. At the bottom located shadow texture. Drag mouse to move. This example based on the three.js example.");
 	}
+	
+	@Override
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xDDDDDD);
+	}
 
 	@Override
 	public void onAnimationReady(AnimationReadyEvent event)
@@ -222,20 +228,11 @@ public class GeometryColors extends ContentWidget
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	rs.mouseX = event.getX(); 
 		    	  	rs.mouseY = event.getY();
 		      }
 		});
-	}
-
-	@Override
-	public RenderPanelAttributes getRenderPanelAttributes()
-	{
-		RenderPanelAttributes att = super.getRenderPanelAttributes();
-		att.clearColor         = 0xDDDDDD;
-		
-		return att;
 	}
 
 	@Override

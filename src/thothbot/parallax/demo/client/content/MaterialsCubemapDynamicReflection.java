@@ -198,7 +198,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			
 			@Override
 			public void onMouseWheel(MouseWheelEvent event) {
-				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				rs.fov -= event.getDeltaY() * 1.0f;
 				rs.getCamera().getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getCanvas().getAspectRation(), 1, 1100);
 			}
@@ -210,7 +210,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			public void onMouseDown(MouseDownEvent event) {
 				event.preventDefault();
 
-				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				rs.onMouseDownMouseX = event.getX();
 				rs.onMouseDownMouseY = event.getY();
 				
@@ -222,7 +222,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			
 			@Override
 			public void onMouseUp(MouseUpEvent event) {
-				DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				rs.onMouseDown = false;
 			}
 		});
@@ -232,7 +232,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	if(rs.onMouseDown)
 		    	  	{
 		    	  		rs.lon += ( event.getX() - rs.onMouseDownMouseX ) * 0.01; 

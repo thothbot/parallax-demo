@@ -23,7 +23,6 @@
 package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.Cube;
@@ -98,6 +97,7 @@ public final class GeometryHierarchy extends ContentWidget
 			getScene().addChild( group );
 
 			getRenderer().setSortObjects(false);
+			getRenderer().setClearColorHex(0xeeeeee);
 		}
 		
 		@Override
@@ -133,15 +133,6 @@ public final class GeometryHierarchy extends ContentWidget
 	}
 	
 	@Override
-	public RenderPanelAttributes getRenderPanelAttributes()
-	{
-		RenderPanelAttributes att = super.getRenderPanelAttributes();
-		att.clearColor         = 0xeeeeee;
-		
-		return att;
-	}
-	
-	@Override
 	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
@@ -150,7 +141,7 @@ public final class GeometryHierarchy extends ContentWidget
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ) * 10; 
 		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2) * 10;

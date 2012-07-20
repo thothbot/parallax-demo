@@ -165,7 +165,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			materialPainting.setColor(new Color3f(0xffffff));
 			materialPainting.setMap(texturePainting);
 			
-			texturePainting2 = new Texture(texturePainting.getImage());
+			texturePainting2 = new Texture();
 			materialPainting2 = new MeshBasicMaterial();
 			materialPainting2.setColor(new Color3f(0xffccaa));
 			materialPainting2.setMap(texturePainting2);
@@ -258,7 +258,6 @@ public final class MaterialsTextureFilter extends ContentWidget
 			getRenderer().setScissor( canvas.getOffsetWidth()/2, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight()  );
 			getRenderer().render( this.scene2, getCamera() );
 
-			
 			getRenderer().setScissor( 0, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight() );
 			super.onUpdate(duration);
 		}
@@ -284,7 +283,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
 		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);

@@ -23,7 +23,6 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.AnimationReadyHandler;
 import thothbot.parallax.core.client.AnimatedScene;
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;
@@ -206,23 +205,6 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 	}
 	
 	/**
-	 * Initialize {@link RenderingPanel} attributes. This method can be
-	 * overridden by an example. For example to change clearColor or other
-	 * options. For more information see {@link RenderingPanel.RenderPanelAttributes}
-	 * 
-	 * @return {@link RenderingPanel.RenderPanelAttributes}
-	 */
-	public RenderPanelAttributes getRenderPanelAttributes()
-	{
-		RenderPanelAttributes att = new RenderPanelAttributes();
-		att.clearColor         = 0x111111;
-		att.clearAlpha         = 1.0f;
-		att.isDebugEnabled     = true;
-		
-		return att;
-	}
-	
-	/**
 	 * This event called when {@link RenderingPanel} is ready to animate a 
 	 * {@link AnimatedScene} in loaded example.
 	 */
@@ -233,9 +215,9 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
     	view.getAnimationSwitch().addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
     			if (view.getAnimationSwitch().isDown())
-    				ContentWidget.this.renderingPanel.getRenderingScene().run();
+    				ContentWidget.this.renderingPanel.getAnimatedScene().run();
     			else
-    				ContentWidget.this.renderingPanel.getRenderingScene().stop();
+    				ContentWidget.this.renderingPanel.getAnimatedScene().stop();
     		}
     	});
 	}
@@ -284,15 +266,22 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 				// Finally setup RenderingPanel attached to the loaded example
 		        if (demoAnimatedScene != null)
 		        {
-		    		final RenderingPanel renderingPanel = new RenderingPanel(getRenderPanelAttributes());
-		    		renderingPanel.setRenderingScene(demoAnimatedScene);
+		        	RenderingPanel renderingPanel = new RenderingPanel();
+		    		loadRenderingPanelAttributes(renderingPanel);
+		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
 		    		renderingPanel.addAnimationReadyEventHandler(ContentWidget.this);
-		        	ContentWidget.this.renderingPanel = renderingPanel;
+		    		
+		    		ContentWidget.this.renderingPanel = renderingPanel;
 
 		        	view.setRenderingPanel(renderingPanel);
 		        }
 			}
 		});
+	}
+	
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel)
+	{
+		renderingPanel.enableDebug(true);
 	}
 
 	/**

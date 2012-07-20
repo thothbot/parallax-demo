@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
@@ -293,14 +292,12 @@ public class GeometryExtrudeShapes extends ContentWidget
 	}
 	
 	@Override
-	public RenderPanelAttributes getRenderPanelAttributes()
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
 	{
-		RenderPanelAttributes att = super.getRenderPanelAttributes();
-		att.clearColor         = 0xCCCCCC;
-		
-		return att;
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xCCCCCC);
 	}
-	
+
 	@Override
 	public DemoScene onInitialize()
 	{

@@ -23,7 +23,6 @@
 package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
 import thothbot.parallax.core.client.controls.FirstPersonControl;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
@@ -151,16 +150,14 @@ public class GeometryDynamic extends ContentWidget
 	{
 		super("Vertices moving", "Here are shown vertices moving on single surface and using dense fog. (left click: forward, right click: backward). This example based on the three.js example.");
 	}
-		
-	@Override
-	public RenderPanelAttributes getRenderPanelAttributes()
-	{
-		RenderPanelAttributes att = super.getRenderPanelAttributes();
-		att.clearColor         = 0xaaccff;
-		
-		return att;
-	}
 	
+	@Override
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xaaccff);
+	}
+
 	@Override
 	public DemoScene onInitialize()
 	{

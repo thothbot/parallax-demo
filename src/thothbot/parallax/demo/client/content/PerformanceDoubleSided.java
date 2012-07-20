@@ -22,7 +22,7 @@ package thothbot.parallax.demo.client.content;
 import java.util.Arrays;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.RenderingPanel.RenderPanelAttributes;
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
@@ -185,12 +185,10 @@ public final class PerformanceDoubleSided extends ContentWidget
 	}
 	
 	@Override
-	public RenderPanelAttributes getRenderPanelAttributes()
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
 	{
-		RenderPanelAttributes att = super.getRenderPanelAttributes();
-		att.clearColor         = 0x050505;
-		
-		return att;
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0x050505);
 	}
 	
 	@Override
@@ -202,7 +200,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getRenderingScene();
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ) * 10; 
 		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2) * 10;
