@@ -32,19 +32,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class LoaderCollada extends ContentWidget 
 {
-
-	/*
-	 * Load model
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/crate.gif")
-		ImageResource texture();
-	}
-
 	/*
 	 * Prepare Rendering Scene
 	 */
@@ -56,17 +43,17 @@ public final class LoaderCollada extends ContentWidget
 		{
 			setCamera(
 					new PerspectiveCamera(
-							70, // fov
+							45, // fov
 							getRenderer().getCanvas().getAspectRation(), // aspect 
 							1, // near
-							1000 // far 
+							2000 // far 
 					)); 
 		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(400);
+			getCamera().getPosition().set(2, 2, 3);
 			getScene().addChild(getCamera());
 
 		}
@@ -97,7 +84,7 @@ public final class LoaderCollada extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleLoaderCollada();
 	}
 	
 	@Override
