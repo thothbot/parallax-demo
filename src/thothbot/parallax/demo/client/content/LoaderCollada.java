@@ -161,8 +161,6 @@ public final class LoaderCollada extends ContentWidget
 			this.particleLight.getPosition().setX( (float) (Math.sin( timer * 4 ) * 3009.0) );
 			this.particleLight.getPosition().setY( (float) (Math.cos( timer * 5 ) * 4000.0) );
 			this.particleLight.getPosition().setZ( (float) (Math.cos( timer * 4 ) * 3009.0) );
-			
-			super.onUpdate(duration);
 		}
 	}
 		

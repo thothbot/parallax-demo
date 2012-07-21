@@ -332,8 +332,6 @@ public final class MaterialsCanvas2D extends ContentWidget
 			this.pointLight.getPosition().setX( particleLight.getPosition().getX() );
 			this.pointLight.getPosition().setY( particleLight.getPosition().getY() );
 			this.pointLight.getPosition().setZ( particleLight.getPosition().getZ() );
-			
-			super.onUpdate(duration);
 		}
 	}
 		

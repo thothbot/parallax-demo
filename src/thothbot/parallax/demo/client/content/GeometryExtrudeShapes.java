@@ -280,7 +280,6 @@ public class GeometryExtrudeShapes extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			super.onUpdate(duration);
 		}
 	}
 		

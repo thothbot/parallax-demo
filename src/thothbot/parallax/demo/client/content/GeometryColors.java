@@ -203,7 +203,6 @@ public class GeometryColors extends ContentWidget
 			getCamera().getPosition().addY(( mouseY - getRenderer().getCanvas().getHeight()/2.5f- getCamera().getPosition().getY()) );
 
 			getCamera().lookAt( getScene().getPosition());
-			super.onUpdate(duration);
 		}
 	}
 		

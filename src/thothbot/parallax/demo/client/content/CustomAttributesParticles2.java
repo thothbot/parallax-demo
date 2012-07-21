@@ -180,7 +180,6 @@ public class CustomAttributesParticles2 extends ContentWidget
 			}
 			
 			attributes.get("size").needsUpdate = true;
-			super.onUpdate(duration);
 		}
 	}
 

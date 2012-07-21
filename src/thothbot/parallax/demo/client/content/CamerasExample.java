@@ -219,8 +219,6 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			getRenderer().setViewport( getRenderer().getCanvas().getWidth()/2, 0, 
 					getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getWidth() );
 
-			super.onUpdate(duration);
-
 			r += 0.01f;
 		}
 		

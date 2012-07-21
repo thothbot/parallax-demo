@@ -96,8 +96,6 @@ public class GeometryCube extends ContentWidget
 		{
 			this.mesh.getRotation().setX(this.mesh.getRotation().getX() + 0.005f);
 			this.mesh.getRotation().setY(this.mesh.getRotation().getY() + 0.01f);
-
-			super.onUpdate(duration);
 		}
 	}
 		

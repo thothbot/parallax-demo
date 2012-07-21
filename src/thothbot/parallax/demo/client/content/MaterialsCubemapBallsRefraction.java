@@ -189,8 +189,6 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			this.cameraCube.getRotation().copy( getCamera().getRotation() );
 
 			getRenderer().render( sceneCube, cameraCube );
-			
-			super.onUpdate(duration);
 		}
 	}
 		

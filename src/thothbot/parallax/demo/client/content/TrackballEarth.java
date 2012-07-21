@@ -306,7 +306,6 @@ public final class TrackballEarth extends ContentWidget
 			getRenderer().clear(false, false, false);
 			
 			this.oldTime = Duration.currentTimeMillis();
-			super.onUpdate(duration);
 		}
 	}
 

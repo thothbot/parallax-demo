@@ -169,7 +169,6 @@ public class CustomAttributesParticles extends ContentWidget
 			}
 
 			this.attributes.get("size").needsUpdate = true;
-			super.onUpdate(duration);
 		}
 	}
 	

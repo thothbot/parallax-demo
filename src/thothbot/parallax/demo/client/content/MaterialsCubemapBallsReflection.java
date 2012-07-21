@@ -191,9 +191,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			getCamera().lookAt( getScene().getPosition() );
 			this.cameraCube.getRotation().copy( getCamera().getRotation() );
 
-			getRenderer().render( sceneCube, cameraCube );
-			
-			super.onUpdate(duration);
+			getRenderer().render( this.sceneCube, this.cameraCube );
 		}
 	}
 		

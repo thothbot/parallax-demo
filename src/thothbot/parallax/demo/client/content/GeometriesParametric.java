@@ -150,8 +150,6 @@ public class GeometriesParametric extends ContentWidget
 				object.getRotation().addX(0.01f);
 				object.getRotation().addY(0.005f);
 			}
-
-			super.onUpdate(duration);
 		}
 	}
 	

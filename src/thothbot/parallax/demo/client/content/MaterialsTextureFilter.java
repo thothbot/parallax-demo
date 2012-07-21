@@ -259,7 +259,6 @@ public final class MaterialsTextureFilter extends ContentWidget
 			getRenderer().render( this.scene2, getCamera() );
 
 			getRenderer().setScissor( 0, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight() );
-			super.onUpdate(duration);
 		}
 	}
 		

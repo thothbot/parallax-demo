@@ -112,7 +112,6 @@ public final class ParticleTrails extends ContentWidget
 			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05f );
 
 			getCamera().lookAt( getScene().getPosition() );
-			super.onUpdate(duration);
 		}
 	}
 

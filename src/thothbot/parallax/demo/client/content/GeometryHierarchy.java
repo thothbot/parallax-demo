@@ -122,8 +122,6 @@ public final class GeometryHierarchy extends ContentWidget
 			this.group.getRotation().setX( rx );
 			this.group.getRotation().setY( ry );
 			this.group.getRotation().setZ( rz );
-
-			super.onUpdate(duration);
 		}
 	}
 		

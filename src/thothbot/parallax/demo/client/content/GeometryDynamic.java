@@ -140,7 +140,6 @@ public class GeometryDynamic extends ContentWidget
 			this.controls.update( (float) ((Duration.currentTimeMillis() - this.oldTime) * 0.001) );
 
 			this.oldTime = Duration.currentTimeMillis();
-			super.onUpdate(duration);
 		}
 	}
 		
