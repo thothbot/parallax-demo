@@ -35,7 +35,7 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.collada.Collada;
+import thothbot.parallax.loader.shared.Collada;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -77,10 +77,12 @@ public final class LoaderCollada extends ContentWidget
 			try
 			{
 				collada.load(model, new Collada.Callback() {
-					
+
 					@Override
-					public void onReady() {
-						assert(false); 		
+					public void onLoaded() {
+//						assert(false);
+						// Add the COLLADA
+//						getScene().addChild( dae );
 					}
 				});
 			}
@@ -90,7 +92,7 @@ public final class LoaderCollada extends ContentWidget
 			}
 			finally
 			{
-				assert(false);
+//				assert(false);
 			}
 			
 			// Grid
@@ -115,10 +117,6 @@ public final class LoaderCollada extends ContentWidget
 
 			Line line = new Line( geometry, line_material, Line.TYPE.PIECES);
 			getScene().addChild( line );
-
-			// Add the COLLADA
-
-//			getScene().addChild( dae );
 
 			MeshBasicMaterial sMaterial = new MeshBasicMaterial();
 			sMaterial.setColor(new Color3f(0xffffff));

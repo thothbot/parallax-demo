@@ -283,6 +283,14 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
 		}
 		
+		// Morphing
+		{
+			Category category = new Category("Morphing");
+			categoriesList.add(category);
+			category.addExample(new MorphNormalsFlamingo(),
+					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
+		}
+		
 		// Loaders
 		{
 			Category category = new Category("Loaders");
