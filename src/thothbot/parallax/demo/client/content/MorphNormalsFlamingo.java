@@ -28,6 +28,7 @@ import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3f;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
@@ -60,7 +61,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			setCamera(
 					new PerspectiveCamera(
 							40, // fov
-							getRenderer().getCanvas().getAspectRation() * 0.5f, // aspect 
+							getRenderer().getCanvas().getAspectRation(), // aspect 
 							1, // near
 							10000 // far 
 					)); 
@@ -69,7 +70,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setY(300);
+			getCamera().getPosition().setY(200);
 			getScene().addChild(getCamera());
 			
 			scene2 = new Scene();
@@ -95,13 +96,21 @@ public final class MorphNormalsFlamingo extends ContentWidget
 //						morphColorsToFaceColors( geometry );
 						geometry.computeMorphNormals();
 
-						MeshLambertMaterial material = new MeshLambertMaterial();
-						material.setColor(new Color3f(0xffffff));
-						material.setMorphTargets(true);
-						material.setMorphNormals(true);
-						material.setVertexColors(Material.COLORS.FACE);
-						material.setShading(Material.SHADING.FLAT);
-						getScene().addChild(new Mesh(geometry, material));
+//						MeshLambertMaterial material = new MeshLambertMaterial();
+//						material.setColor(new Color3f(0xffffff));
+//						material.setWireframe(true);
+////						material.setMorphTargets(true);
+////						material.setMorphNormals(true);
+//						material.setVertexColors(Material.COLORS.FACE);
+//						material.setShading(Material.SHADING.FLAT);
+						MeshBasicMaterial material = new MeshBasicMaterial();
+						material.setColor( new Color3f(0xFF0000) );
+						material.setWireframe( true );
+						
+						Mesh mesh = new Mesh(geometry, material);
+						mesh.getScale().set(2f);
+						mesh.getPosition().set(0);
+						getScene().addChild(mesh);
 //						var meshAnim = new MorphAnimMesh( geometry, material );
 
 //						meshAnim.duration = 5000;
@@ -131,12 +140,12 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			double theta = duration * 0.001;
+			double theta = duration * 0.01;
 
 			getCamera().getPosition().setX( (float) (radius * Math.sin( theta * Math.PI / 360.0 )) );
 			getCamera().getPosition().setZ( (float) (radius * Math.cos( theta * Math.PI / 360.0 )) );
 
-			getCamera().lookAt( new Vector3f( 0, 150, 0 ) );
+			getCamera().lookAt( getScene().getPosition() );
 
 //			var delta = clock.getDelta();
 //
@@ -147,9 +156,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 //
 //			}
 
-			getRenderer().clear(false, false, false);
-
-			getRenderer().setViewport( 0, 0, getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getHeight() );
+//			getRenderer().clear(false, false, false);
 		}
 	}
 		
