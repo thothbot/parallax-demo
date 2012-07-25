@@ -19,13 +19,26 @@
 
 package thothbot.parallax.demo.client.content;
 
+import org.mortbay.util.Loader;
+
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.loader.shared.Json;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -37,26 +50,77 @@ public final class MorphNormalsFlamingo extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		static final int radius = 600;
 		static final String model = "./models/animated/flamingo.js";
+		Scene scene2;
 
 		@Override
 		protected void loadCamera()
 		{
 			setCamera(
 					new PerspectiveCamera(
-							70, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
+							40, // fov
+							getRenderer().getCanvas().getAspectRation() * 0.5f, // aspect 
 							1, // near
-							1000 // far 
+							10000 // far 
 					)); 
 		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(400);
+			getCamera().getPosition().setY(300);
 			getScene().addChild(getCamera());
+			
+			scene2 = new Scene();
+			
+			DirectionalLight light = new DirectionalLight( 0xffffff, 1.3f );
+			light.getPosition().set( 1, 1, 1 );
+			getScene().addChild( light );
+			scene2.addChild( light );
 
+			DirectionalLight light2 = new DirectionalLight( 0xffffff, 0.1f );
+			light2.getPosition().set( 0.25f, -1, 0 );
+			getScene().addChild( light2 );
+			scene2.addChild( light2 );
+
+			final Json json = new Json();
+			try
+			{
+				json.load(model, new Json.Callback() {
+
+					@Override
+					public void onLoaded() {
+						Geometry geometry = json.getGeometry();
+//						morphColorsToFaceColors( geometry );
+						geometry.computeMorphNormals();
+
+						MeshLambertMaterial material = new MeshLambertMaterial();
+						material.setColor(new Color3f(0xffffff));
+						material.setMorphTargets(true);
+						material.setMorphNormals(true);
+						material.setVertexColors(Material.COLORS.FACE);
+						material.setShading(Material.SHADING.FLAT);
+						getScene().addChild(new Mesh(geometry, material));
+//						var meshAnim = new MorphAnimMesh( geometry, material );
+
+//						meshAnim.duration = 5000;
+
+//						meshAnim.scale.set( 1.5, 1.5, 1.5 );
+//						meshAnim.position.y = 150;
+
+//						getScene().add( meshAnim );
+//						morphs.push( meshAnim );
+					}
+				});
+			}
+			catch (RequestException exception) 
+			{
+				Log.error("Error while loading JSON file.");
+			}
+			
+			getRenderer().setSortObjects(false);
+			getRenderer().setAutoClear(false);
 		}
 		
 		@Override
@@ -67,7 +131,25 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			
+			double theta = duration * 0.001;
+
+			getCamera().getPosition().setX( (float) (radius * Math.sin( theta * Math.PI / 360.0 )) );
+			getCamera().getPosition().setZ( (float) (radius * Math.cos( theta * Math.PI / 360.0 )) );
+
+			getCamera().lookAt( new Vector3f( 0, 150, 0 ) );
+
+//			var delta = clock.getDelta();
+//
+//			for ( var i = 0; i < morphs.length; i ++ ) {
+//
+//				morph = morphs[ i ];
+//				morph.updateAnimation( 1000 * delta );
+//
+//			}
+
+			getRenderer().clear(false, false, false);
+
+			getRenderer().setViewport( 0, 0, getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getHeight() );
 		}
 	}
 		
