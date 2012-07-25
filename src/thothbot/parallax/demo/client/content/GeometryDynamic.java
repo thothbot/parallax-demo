@@ -101,7 +101,7 @@ public class GeometryDynamic extends ContentWidget
 			controls.setLookSpeed(0.1f);
 
 			this.geometry = new Plane( 20000, 20000, worldWidth - 1, worldDepth - 1 );
-			this.geometry.dynamic = true;
+			this.geometry.setDynamic( true );
 
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )
 				this.geometry.getVertices().get( i ).setY((float) (35.0 * Math.sin( i/2.0 )));

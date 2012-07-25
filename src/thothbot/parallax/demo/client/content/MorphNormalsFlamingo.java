@@ -36,7 +36,9 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.Json;
+import thothbot.parallax.loader.shared.MorphAnimation;
 
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.http.client.RequestException;
@@ -53,7 +55,11 @@ public final class MorphNormalsFlamingo extends ContentWidget
 	{
 		static final int radius = 600;
 		static final String model = "./models/animated/flamingo.js";
+		
+		Json json;
 		Scene scene2;
+		
+		private double oldTime;
 
 		@Override
 		protected void loadCamera()
@@ -85,41 +91,22 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			getScene().addChild( light2 );
 			scene2.addChild( light2 );
 
-			final Json json = new Json();
+			this.json = new Json();
 			try
 			{
-				json.load(model, new Json.Callback() {
+				this.json.load(model, new Json.Callback() {
 
 					@Override
 					public void onLoaded() {
-						Geometry geometry = json.getGeometry();
 //						morphColorsToFaceColors( geometry );
-						geometry.computeMorphNormals();
+																							
+						json.getAnimation().setDuration(5000);
 
-//						MeshLambertMaterial material = new MeshLambertMaterial();
-//						material.setColor(new Color3f(0xffffff));
-//						material.setWireframe(true);
-////						material.setMorphTargets(true);
-////						material.setMorphNormals(true);
-//						material.setVertexColors(Material.COLORS.FACE);
-//						material.setShading(Material.SHADING.FLAT);
-						MeshBasicMaterial material = new MeshBasicMaterial();
-						material.setColor( new Color3f(0xFF0000) );
-						material.setWireframe( true );
-						
-						Mesh mesh = new Mesh(geometry, material);
+						Mesh mesh = json.getMesh();
 						mesh.getScale().set(2f);
 						mesh.getPosition().set(0);
+
 						getScene().addChild(mesh);
-//						var meshAnim = new MorphAnimMesh( geometry, material );
-
-//						meshAnim.duration = 5000;
-
-//						meshAnim.scale.set( 1.5, 1.5, 1.5 );
-//						meshAnim.position.y = 150;
-
-//						getScene().add( meshAnim );
-//						morphs.push( meshAnim );
 					}
 				});
 			}
@@ -130,6 +117,8 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		@Override
@@ -147,15 +136,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 
 			getCamera().lookAt( getScene().getPosition() );
 
-//			var delta = clock.getDelta();
-//
-//			for ( var i = 0; i < morphs.length; i ++ ) {
-//
-//				morph = morphs[ i ];
-//				morph.updateAnimation( 1000 * delta );
-//
-//			}
-
+			this.json.getAnimation().updateAnimation( (float) (Duration.currentTimeMillis() - this.oldTime) );
 //			getRenderer().clear(false, false, false);
 		}
 	}
