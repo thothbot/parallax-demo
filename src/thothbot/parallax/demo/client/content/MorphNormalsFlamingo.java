@@ -21,6 +21,7 @@ package thothbot.parallax.demo.client.content;
 
 import org.mortbay.util.Loader;
 
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
@@ -57,7 +58,6 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		static final String model = "./models/animated/flamingo.js";
 		
 		Json json;
-		Scene scene2;
 		
 		private double oldTime;
 
@@ -79,17 +79,13 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			getCamera().getPosition().setY(200);
 			getScene().addChild(getCamera());
 			
-			scene2 = new Scene();
-			
 			DirectionalLight light = new DirectionalLight( 0xffffff, 1.3f );
 			light.getPosition().set( 1, 1, 1 );
 			getScene().addChild( light );
-			scene2.addChild( light );
 
 			DirectionalLight light2 = new DirectionalLight( 0xffffff, 0.1f );
 			light2.getPosition().set( 0.25f, -1, 0 );
 			getScene().addChild( light2 );
-			scene2.addChild( light2 );
 
 			this.json = new Json();
 			try
@@ -97,10 +93,8 @@ public final class MorphNormalsFlamingo extends ContentWidget
 				this.json.load(model, new Json.Callback() {
 
 					@Override
-					public void onLoaded() {
-//						morphColorsToFaceColors( geometry );
-																							
-						json.getAnimation().setDuration(5000);
+					public void onLoaded() {																					
+						json.getAnimation().setDuration(3000);
 
 						Mesh mesh = json.getMesh();
 						mesh.getScale().set(2f);
@@ -117,8 +111,6 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
-			
-			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		@Override
@@ -129,6 +121,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			this.oldTime = Duration.currentTimeMillis();
 			double theta = duration * 0.01;
 
 			getCamera().getPosition().setX( (float) (radius * Math.sin( theta * Math.PI / 360.0 )) );
@@ -136,14 +129,21 @@ public final class MorphNormalsFlamingo extends ContentWidget
 
 			getCamera().lookAt( getScene().getPosition() );
 
-			this.json.getAnimation().updateAnimation( (float) (Duration.currentTimeMillis() - this.oldTime) );
-//			getRenderer().clear(false, false, false);
+			this.json.getAnimation().updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime)  );
+			getRenderer().clear(false, false, false);
 		}
 	}
 		
 	public MorphNormalsFlamingo() 
 	{
 		super("Morph normals: flamingo", "This example based on the three.js example.");
+	}
+	
+	@Override
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0x222222);
 	}
 	
 	@Override
