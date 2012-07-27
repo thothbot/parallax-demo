@@ -83,10 +83,6 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			light.getPosition().set( 1, 1, 1 );
 			getScene().addChild( light );
 
-			DirectionalLight light2 = new DirectionalLight( 0xffffff, 0.1f );
-			light2.getPosition().set( 0.25f, -1, 0 );
-			getScene().addChild( light2 );
-
 			this.json = new Json();
 			try
 			{
@@ -109,6 +105,8 @@ public final class MorphNormalsFlamingo extends ContentWidget
 				Log.error("Error while loading JSON file.");
 			}
 			
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
 		}
