@@ -25,9 +25,8 @@ package thothbot.parallax.demo.client.content;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.shared.Log;
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
 import thothbot.parallax.core.shared.core.Face3;
@@ -52,30 +51,19 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class GeometryColors extends ContentWidget
 {
 	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/shadow.png")
-		ImageResource texture();
-	}
-	
-	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{	
+		private static final String texture = "./static/textures/shadow.png";
+		
 		public int mouseX;
 		public int mouseY;
 
@@ -101,7 +89,7 @@ public class GeometryColors extends ContentWidget
 			getScene().addChild( light );
 			
 			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
-			shadowMaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture()) );
+			shadowMaterial.setMap( ImageUtils.loadTexture(texture) );
 			Geometry shadowGeo = new Plane( 300, 300, 1, 1 );
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );

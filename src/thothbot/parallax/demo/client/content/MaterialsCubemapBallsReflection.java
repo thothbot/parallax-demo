@@ -23,7 +23,6 @@
 package thothbot.parallax.demo.client.content;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
@@ -33,7 +32,6 @@ import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
-import thothbot.parallax.core.shared.core.Vector3f;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -44,54 +42,24 @@ import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.GeometryColors.DemoScene;
-import thothbot.parallax.demo.client.content.GeometryCube.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MaterialsCubemapBallsReflection extends ContentWidget 
 {
-
-	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-		
-		@Source("../../resources/textures/cube/pisa/px.png")
-		ImageResource px();
-		
-		@Source("../../resources/textures/cube/pisa/nx.png")
-		ImageResource nx();
-		
-		@Source("../../resources/textures/cube/pisa/py.png")
-		ImageResource py();
-		
-		@Source("../../resources/textures/cube/pisa/ny.png")
-		ImageResource ny();
-		
-		@Source("../../resources/textures/cube/pisa/pz.png")
-		ImageResource pz();
-				
-		@Source("../../resources/textures/cube/pisa/nz.png")
-		ImageResource nz();
-	}
-
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String textures = "./static/textures/cube/pisa/*.png";
+		
 		public int mouseX = 0;
 		public int mouseY = 0;
 		
@@ -125,9 +93,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 			Sphere geometry = new Sphere( 100, 32, 16 );
 
-
-			Resources r = Resources.INSTANCE;
-			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()));
+			CubeTexture textureCube = ImageUtils.loadTextureCube( textures );
 			
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color3f(0xffffff) );

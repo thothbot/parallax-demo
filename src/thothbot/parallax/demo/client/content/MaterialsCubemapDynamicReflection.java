@@ -48,30 +48,19 @@ import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.dom.client.MouseWheelEvent;
 import com.google.gwt.event.dom.client.MouseWheelHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MaterialsCubemapDynamicReflection extends ContentWidget 
 {
 	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/ruins.jpg")
-		ImageResource texture();
-	}
-
-	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String texture = "./static/textures/ruins.jpg";
+		
 		public int onMouseDownMouseX = 0;
 		public int onMouseDownMouseY = 0;
 		
@@ -108,7 +97,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getCamera().getPosition().setZ(400);
 			getScene().addChild(getCamera());
 
-			Texture texture = ImageUtils.loadTexture( Resources.INSTANCE.texture(),  Texture.MAPPING_MODE.UV);
+			Texture texture = ImageUtils.loadTexture(DemoScene.texture, Texture.MAPPING_MODE.UV);
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
 			mbOpt.setMap( texture );
 			

@@ -40,31 +40,19 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class GeometryDynamic extends ContentWidget
 {
-
-	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/water.jpg")
-		ImageResource texture();
-	}
-
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String texture = "./static/textures/water.jpg";
+		
 		FirstPersonControl controls;
 		Plane geometry;
 		Mesh mesh;
@@ -109,7 +97,7 @@ public class GeometryDynamic extends ContentWidget
 			this.geometry.computeFaceNormals(false);
 			this.geometry.computeVertexNormals();
 
-			Texture texture = ImageUtils.loadTexture(Resources.INSTANCE.texture());
+			Texture texture = ImageUtils.loadTexture(this.texture);
 			texture.setWrapS(TextureWrapMode.REPEAT); 
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.getRepeat().set( 5.0f, 5.0f );

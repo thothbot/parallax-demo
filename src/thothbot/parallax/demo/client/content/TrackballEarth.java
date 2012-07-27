@@ -48,43 +48,23 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class TrackballEarth extends ContentWidget 
 {
-
-	/*
-	 * Load textures
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/planets/earth_atmos_2048.jpg")
-		ImageResource earthAtmos();
-		
-		@Source("../../resources/textures/planets/earth_clouds_1024.png")
-		ImageResource earthClouds();
-		
-		@Source("../../resources/textures/planets/earth_normal_2048.jpg")
-		ImageResource earthNormal();
-		
-		@Source("../../resources/textures/planets/earth_specular_2048.jpg")
-		ImageResource earthSpecular();
-		
-		@Source("../../resources/textures/planets/moon_1024.jpg")
-		ImageResource moon();
-	}
-	
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String earthAtmos    = "./static/textures/planets/earth_atmos_2048.jpg";
+		private static final String earthClouds   = "./static/textures/planets/earth_clouds_1024.png";
+		private static final String earthNormal   = "./static/textures/planets/earth_normal_2048.jpg";
+		private static final String earthSpecular = "./static/textures/planets/earth_specular_2048.jpg";
+		private static final String moon          = "./static/textures/planets/moon_1024.jpg";
+		
 		static final int radius = 6371;
 		static final float tilt = 0.41f;
 		static final float rotationSpeed = 0.1f;
@@ -127,11 +107,11 @@ public final class TrackballEarth extends ContentWidget
 			dirLight.getPosition().set( -1f, 0f, 1f ).normalize();
 			getScene().addChild( dirLight );
 
-			Texture planetTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthAtmos());
-			Texture cloudsTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthClouds());
-			Texture normalTexture   = ImageUtils.loadTexture( Resources.INSTANCE.earthNormal());
-			Texture specularTexture = ImageUtils.loadTexture( Resources.INSTANCE.earthSpecular());
-			Texture moonTexture     = ImageUtils.loadTexture( Resources.INSTANCE.moon());
+			Texture planetTexture   = ImageUtils.loadTexture( earthAtmos );
+			Texture cloudsTexture   = ImageUtils.loadTexture( earthClouds );
+			Texture normalTexture   = ImageUtils.loadTexture( earthNormal );
+			Texture specularTexture = ImageUtils.loadTexture( earthSpecular );
+			Texture moonTexture     = ImageUtils.loadTexture( moon );
 
 			ShaderNormalMap shader = new ShaderNormalMap();
 			Map<String, Uniform> uniforms = UniformsUtils.clone( shader.getUniforms() );

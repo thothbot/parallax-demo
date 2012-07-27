@@ -19,7 +19,6 @@
 
 package thothbot.parallax.demo.client.content;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;

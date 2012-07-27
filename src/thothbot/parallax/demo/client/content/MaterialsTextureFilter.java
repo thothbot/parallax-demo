@@ -19,6 +19,25 @@
 
 package thothbot.parallax.demo.client.content;
 
+import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
+import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
+import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Vector2f;
+import thothbot.parallax.core.shared.geometries.Plane;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.scenes.FogSimple;
+import thothbot.parallax.core.shared.scenes.Scene;
+import thothbot.parallax.core.shared.utils.ImageUtils;
+import thothbot.parallax.demo.client.ContentWidget;
+import thothbot.parallax.demo.client.Demo;
+import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -27,58 +46,19 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Image;
-
-import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.context.Canvas3d;
-import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
-import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
-import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
-import thothbot.parallax.core.shared.core.Vector2f;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Plane;
-import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.Fog;
-import thothbot.parallax.core.shared.scenes.FogSimple;
-import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.ImageUtils;
-import thothbot.parallax.demo.client.ContentWidget;
-import thothbot.parallax.demo.client.Demo;
-import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.GeometryCube.DemoScene;
-import thothbot.parallax.demo.client.content.GeometryCube.Resources;
 
 public final class MaterialsTextureFilter extends ContentWidget 
 {
-
-	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/caravaggio.jpg")
-		ImageResource texture();
-	}
-
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String texture = "./static/textures/caravaggio.jpg";
+		
 		int mouseX = 0, mouseY = 0;
 		
 		Scene scene2;
@@ -153,7 +133,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			meshCanvas2.getScale().set( 1000 );
 
 			// PAINTING
-			Texture texturePainting = ImageUtils.loadTexture(Resources.INSTANCE.texture(), Texture.MAPPING_MODE.UV, new ImageUtils.Callback() {
+			Texture texturePainting = ImageUtils.loadTexture(texture, Texture.MAPPING_MODE.UV, new ImageUtils.Callback() {
 				
 				@Override
 				public void run(Texture texture) {

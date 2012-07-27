@@ -19,13 +19,10 @@
 
 package thothbot.parallax.demo.client.content;
 
-import java.util.Arrays;
-
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
-import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
@@ -37,54 +34,24 @@ import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.GeometryHierarchy.DemoScene;
-import thothbot.parallax.demo.client.content.MaterialsCubemapBallsRefraction.Resources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class PerformanceDoubleSided extends ContentWidget 
 {
-
-	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-		
-		@Source("../../resources/textures/cube/swedishRoyalCastle/px.jpg")
-		ImageResource px();
-		
-		@Source("../../resources/textures/cube/swedishRoyalCastle/nx.jpg")
-		ImageResource nx();
-		
-		@Source("../../resources/textures/cube/swedishRoyalCastle/py.jpg")
-		ImageResource py();
-		
-		@Source("../../resources/textures/cube/swedishRoyalCastle/ny.jpg")
-		ImageResource ny();
-		
-		@Source("../../resources/textures/cube/swedishRoyalCastle/pz.jpg")
-		ImageResource pz();
-				
-		@Source("../../resources/textures/cube/swedishRoyalCastle/nz.jpg")
-		ImageResource nz();
-	}
-	
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String textures = "./static/textures/cube/swedishRoyalCastle/*.jpg";
+		
 		public int mouseX;
 		public int mouseY;
 		
@@ -118,8 +85,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 			light3.getPosition().set( 0, 0, 0 );
 			getScene().addChild( light3 );
 
-			Resources r = Resources.INSTANCE;
-			Texture reflectionCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()));
+			Texture reflectionCube = ImageUtils.loadTextureCube( textures );
 			reflectionCube.setFormat(PixelFormat.RGB);
 
 			MeshPhongMaterial material = new MeshPhongMaterial();

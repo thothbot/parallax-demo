@@ -19,13 +19,6 @@
 
 package thothbot.parallax.demo.client.content;
 
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -35,8 +28,14 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.MorphNormalsFlamingo.DemoScene;
 import thothbot.parallax.loader.shared.Json;
+
+import com.google.gwt.core.client.Duration;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MorphTargetsHorse extends ContentWidget 
 {
@@ -46,8 +45,9 @@ public final class MorphTargetsHorse extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String model = "./static/models/animated/horse.js";
+		
 		static final int radius = 600;
-		static final String model = "./models/animated/horse.js";
 		
 		Mesh mesh;
 		Vector3f target = new Vector3f(0, 150, 0);

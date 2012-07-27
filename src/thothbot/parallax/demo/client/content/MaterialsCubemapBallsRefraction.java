@@ -23,7 +23,6 @@
 package thothbot.parallax.demo.client.content;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
@@ -49,45 +48,19 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MaterialsCubemapBallsRefraction extends ContentWidget 
 {
 	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-		
-		@Source("../../resources/textures/cube/skybox/px.jpg")
-		ImageResource px();
-		
-		@Source("../../resources/textures/cube/skybox/nx.jpg")
-		ImageResource nx();
-		
-		@Source("../../resources/textures/cube/skybox/py.jpg")
-		ImageResource py();
-		
-		@Source("../../resources/textures/cube/skybox/ny.jpg")
-		ImageResource ny();
-		
-		@Source("../../resources/textures/cube/skybox/pz.jpg")
-		ImageResource pz();
-				
-		@Source("../../resources/textures/cube/skybox/nz.jpg")
-		ImageResource nz();
-	}
-
-	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String textures = "./static/textures/cube/skybox/*.jpg";
+		
 		public int mouseX = 0;
 		public int mouseY = 0;
 		
@@ -121,9 +94,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 
 			Sphere geometry = new Sphere( 100, 32, 16 );
 
-
-			Resources r = Resources.INSTANCE;
-			CubeTexture textureCube = ImageUtils.loadTextureCube( Arrays.asList(r.px(), r.nx(), r.py(), r.ny(), r.pz(), r.nz()), Texture.MAPPING_MODE.CUBE_REFRACTION );
+			CubeTexture textureCube = ImageUtils.loadTextureCube( textures, Texture.MAPPING_MODE.CUBE_REFRACTION );
 			
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color3f(0xffffff) );

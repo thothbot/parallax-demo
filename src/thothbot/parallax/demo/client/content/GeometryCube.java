@@ -33,30 +33,18 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class GeometryCube extends ContentWidget
 {
 	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/crate.gif")
-		ImageResource texture();
-	}
-
-	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String texture = "./static/textures/crate.gif";
 		private Mesh mesh;
 
 		@Override
@@ -80,7 +68,7 @@ public class GeometryCube extends ContentWidget
 			Cube geometry = new Cube( 200, 200, 200 );
 
 			MeshBasicMaterial material = new MeshBasicMaterial();
-			material.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture()) );
+			material.setMap( ImageUtils.loadTexture(texture) );
 
 			this.mesh = new Mesh(geometry, material);
 			getScene().addChild(mesh);

@@ -64,9 +64,6 @@ public class CustomAttributesParticles extends ContentWidget
 		
 		@Source("../../resources/shaders/custom_attributes_particles.vs")
 		TextResource vertexShader();
-		
-		@Source("../../resources/textures/sprites/spark1.png")
-		ImageResource texture();
 	}
 
 	/*
@@ -76,6 +73,8 @@ public class CustomAttributesParticles extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{	
+		private static final String texture = "./static/textures/sprites/spark1.png";
+		
 		Map<String, WebGLCustomAttribute> attributes;
 		ParticleSystem sphere;
 
@@ -103,7 +102,7 @@ public class CustomAttributesParticles extends ContentWidget
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0f));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
-			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( Resources.INSTANCE.texture() )));
+			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
 			
 			ShaderMaterial shaderMaterial = new ShaderMaterial();
 			shaderMaterial.setUniforms(uniforms);

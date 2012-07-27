@@ -45,30 +45,19 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class GeometriesParametric extends ContentWidget
 {
 	/*
-	 * Load texture
-	 */
-	@DemoSource
-	public interface Resources extends ClientBundle
-	{
-		Resources INSTANCE = GWT.create(Resources.class);
-
-		@Source("../../resources/textures/ash_uvgrid01.jpg")
-		ImageResource texture();
-	}
-	
-	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String texture = "./static/textures/ash_uvgrid01.jpg";
+		
 		@Override
 		protected void loadCamera()
 		{
@@ -94,7 +83,7 @@ public class GeometriesParametric extends ContentWidget
 			
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
-			lmaterial.setMap( ImageUtils.loadTexture(Resources.INSTANCE.texture()) );
+			lmaterial.setMap( ImageUtils.loadTexture(texture) );
 			lmaterial.setAmbient( new Color3f(0xbbbbbb) );
 			materials.add(lmaterial);	
 			

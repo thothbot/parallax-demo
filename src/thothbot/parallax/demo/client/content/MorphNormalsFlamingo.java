@@ -19,25 +19,15 @@
 
 package thothbot.parallax.demo.client.content;
 
-import org.mortbay.util.Loader;
-
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3f;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.Json;
-import thothbot.parallax.loader.shared.MorphAnimation;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -54,8 +44,9 @@ public final class MorphNormalsFlamingo extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String model = "./static/models/animated/flamingo.js";
+		
 		static final int radius = 600;
-		static final String model = "./models/animated/flamingo.js";
 		
 		Json json;
 		
