@@ -289,6 +289,8 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 			category.addExample(new MorphNormalsFlamingo(),
 					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
+			category.addExample(new MorphTargetsHorse(),
+					RunAsyncCode.runAsyncCode(MorphTargetsHorse.class));
 		}
 		
 		// Loaders

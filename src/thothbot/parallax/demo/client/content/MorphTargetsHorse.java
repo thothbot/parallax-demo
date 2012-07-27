@@ -19,30 +19,172 @@
 
 package thothbot.parallax.demo.client.content;
 
+import com.google.gwt.core.client.Duration;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.shared.Log;
+import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
+import thothbot.parallax.demo.client.Demo;
+import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.client.content.MorphNormalsFlamingo.DemoScene;
+import thothbot.parallax.loader.shared.Json;
 
 public final class MorphTargetsHorse extends ContentWidget 
 {
+	/*
+	 * Prepare Rendering Scene
+	 */
+	@DemoSource
+	class DemoScene extends DemoAnimatedScene 
+	{
+		static final int radius = 600;
+		static final String model = "./models/animated/horse.js";
+		
+		Mesh mesh;
+		Vector3f target = new Vector3f(0, 150, 0);
+		
+		static final int aminationDuration = 1000;
+		static final int keyframes = 15;
+		static final float interpolation = (float)aminationDuration / keyframes;
+		
+		int lastKeyframe = 0;
+		int currentKeyframe = 0;
 
+		@Override
+		protected void loadCamera()
+		{
+			setCamera(
+					new PerspectiveCamera(
+							50, // fov
+							getRenderer().getCanvas().getAspectRation(), // aspect 
+							1, // near
+							10000 // far 
+					)); 
+		}
+
+		@Override
+		protected void onStart()
+		{
+			getCamera().getPosition().setY(300);
+			getScene().addChild(getCamera());
+			
+			DirectionalLight light = new DirectionalLight( 0xefefff, 2 );
+			light.getPosition().set( 1, 1, 1 ).normalize();
+			getScene().addChild( light );
+
+			DirectionalLight light1 = new DirectionalLight( 0xffefef, 2 );
+			light1.getPosition().set( -1, -1, -1 ).normalize();
+			getScene().addChild( light1 );
+
+			final Json json = new Json();
+			try
+			{
+				json.load(model, new Json.Callback() {
+
+					@Override
+					public void onLoaded() {																					
+						json.getAnimation().setDuration(3000);
+
+						mesh = json.getMesh();
+						mesh.getScale().set(1.5f);
+
+						getScene().addChild(mesh);
+					}
+				});
+			}
+			catch (RequestException exception) 
+			{
+				Log.error("Error while loading JSON file.");
+			}
+		}
+		
+		@Override
+		protected void onStop()
+		{			
+		}
+		
+		@Override
+		protected void onUpdate(double duration)
+		{
+			double theta = duration * 0.02;
+
+			getCamera().getPosition().setX( (float) (radius * Math.sin( theta * Math.PI / 360.0 )) );
+			getCamera().getPosition().setZ( (float) (radius * Math.cos( theta * Math.PI / 360.0 )) );
+
+			getCamera().lookAt( target );
+
+			if ( mesh != null ) 
+			{
+				// Alternate morph targets
+				double time = Duration.currentTimeMillis() % aminationDuration;
+
+				int keyframe = (int)Math.floor( time / interpolation );
+
+				if ( keyframe != currentKeyframe ) 
+				{
+					mesh.getMorphTargetInfluences().set( lastKeyframe, 0f );
+					mesh.getMorphTargetInfluences().set( currentKeyframe, 1f );
+					mesh.getMorphTargetInfluences().set( keyframe, 0f );
+
+					lastKeyframe = currentKeyframe;
+					currentKeyframe = keyframe;
+				}
+
+				mesh.getMorphTargetInfluences().set( keyframe, 
+						(float)( time % interpolation ) / interpolation);
+				mesh.getMorphTargetInfluences().set( lastKeyframe,
+						1f - mesh.getMorphTargetInfluences().get( keyframe ));
+			}
+		}
+	}
+		
+	public MorphTargetsHorse() 
+	{
+		super("Morph targets: horse", "This example based on the three.js example.");
+	}
+	
 	@Override
-	protected DemoAnimatedScene onInitialize() {
-		// TODO Auto-generated method stub
-		return null;
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xf0f0f0);
+	}
+	
+	@Override
+	public DemoScene onInitialize()
+	{
+		return new DemoScene();
 	}
 
 	@Override
-	protected void asyncOnInitialize(AsyncCallback<DemoAnimatedScene> callback) {
-		// TODO Auto-generated method stub
-
+	public ImageResource getIcon()
+	{
+		return Demo.resources.exampleMorphTargetsHorse();
 	}
-
+	
 	@Override
-	public ImageResource getIcon() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
+	{
+		GWT.runAsync(MorphTargetsHorse.class, new RunAsyncCallback() 
+		{
+			public void onFailure(Throwable caught)
+			{
+				callback.onFailure(caught);
+			}
 
+			public void onSuccess()
+			{
+				callback.onSuccess(onInitialize());
+			}
+		});
+	}
 }
