@@ -77,7 +77,42 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		@Override
 		protected void loadCamera()
 		{
-			setCamera(new PerspectiveCamera( 50f, 0.5f * getRenderer().getCanvas().getAspectRation(), 1f, 10000f ));
+			Canvas3d canvas = getRenderer().getCanvas();
+			
+			setCamera(new PerspectiveCamera( 
+					50f, 
+					0.5f * canvas.getAspectRation(), 
+					1f, 
+					10000f ));
+			
+			this.cameraPerspective = new PerspectiveCamera( 
+					50f, 
+					canvas.getAspectRation() * 0.5f, 
+					150f, 
+					1000f );
+			
+			this.cameraOrtho = new OrthographicCamera( 0.5f * canvas.getWidth() / - 2f, 
+					0.5f * canvas.getWidth() / 2f, 
+					canvas.getHeight() / 2f, 
+					canvas.getHeight() / - 2f, 
+					150f, 
+					1000f );
+		}
+		
+		
+		@Override
+		protected void onResize() 
+		{
+			super.onResize();
+			Canvas3d canvas = getRenderer().getCanvas();
+
+			cameraPerspective.setAspectRatio(0.5f * canvas.getAspectRation());
+
+			cameraOrtho.setLeft(- 0.5f * canvas.getWidth() / 2.0f );
+			cameraOrtho.setRight( 0.5f * canvas.getWidth() / 2.0f );
+			cameraOrtho.setTop( canvas.getHeight() / 2.0f );
+			cameraOrtho.setBottom(- canvas.getHeight() / 2.0f );
+			cameraOrtho.updateProjectionMatrix();
 		}
 
 		@Override
@@ -85,23 +120,10 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		{
 			getCamera().getPosition().setZ(2500);
 			getScene().addChild( getCamera() );
-			
-			Canvas3d canvas = getRenderer().getCanvas();
-	
-			this.cameraPerspective = new PerspectiveCamera( 50f, canvas.getAspectRation() * 0.5f, 150f, 1000f );
-	
+					
 			this.cameraPerspectiveHelper = new CameraHelper( this.cameraPerspective );
 			this.cameraPerspective.addChild( this.cameraPerspectiveHelper );
-			
-			//
-	
-			this.cameraOrtho = new OrthographicCamera( 0.5f * canvas.getWidth() / - 2f, 
-					0.5f * canvas.getWidth() / 2f, 
-					canvas.getHeight() / 2f, 
-					canvas.getHeight() / - 2f, 
-					150f, 
-					1000f );
-	
+
 			this.cameraOrthoHelper = new CameraHelper( this.cameraOrtho );
 			this.cameraOrtho.addChild( this.cameraOrthoHelper );
 	
@@ -220,22 +242,6 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 					getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getWidth() );
 
 			r += 0.01f;
-		}
-		
-		@Override
-		protected void onResize() 
-		{
-			Canvas3d canvas = getRenderer().getCanvas();
-			((PerspectiveCamera)getCamera()).setAspectRatio(
-					0.5f * canvas.getAspectRation());	
-
-			cameraPerspective.setAspectRatio(0.5f * canvas.getAspectRation());
-
-			cameraOrtho.setLeft(- 0.5f * canvas.getWidth() / 2.0f );
-			cameraOrtho.setRight( 0.5f * canvas.getWidth() / 2.0f );
-			cameraOrtho.setTop( canvas.getHeight() / 2.0f );
-			cameraOrtho.setBottom(- canvas.getHeight() / 2.0f );
-			cameraOrtho.updateProjectionMatrix();
 		}
 	}
 	

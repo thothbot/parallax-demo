@@ -79,6 +79,20 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 							1, // near
 							100000 // far 
 					)); 
+			
+			this.cameraCube = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					100000 // far 
+			);
+		}
+		
+		@Override
+		protected void onResize()
+		{
+			super.onResize();
+			this.cameraCube.setAspectRatio(getRenderer().getCanvas().getAspectRation());
 		}
 
 		@Override
@@ -88,8 +102,6 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			getScene().addChild(getCamera());
 			
 			this.sceneCube = new Scene();
-			this.cameraCube = new PerspectiveCamera( 60, getRenderer().getCanvas().getAspectRation(), 1, 100000 );
-
 			sceneCube.addChild( cameraCube );
 
 			Sphere geometry = new Sphere( 100, 32, 16 );
