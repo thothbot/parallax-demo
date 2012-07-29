@@ -251,6 +251,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
 			category.addExample(new CamerasExample(),
 					RunAsyncCode.runAsyncCode(CamerasExample.class));
+			category.addExample(new GeometryLinesColors(),
+					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
 		}
 		
 		// Materials
