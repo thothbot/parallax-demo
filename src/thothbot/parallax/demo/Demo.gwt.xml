@@ -6,6 +6,7 @@
   <inherits name="com.google.gwt.i18n.I18N"/>
   <inherits name="thothbot.parallax.core.Core"/>
   <inherits name="thothbot.parallax.loader.Loader"/>
+  <inherits name="thothbot.parallax.postprocessing.Postprocessing"/>
   
   <inherits name="com.google.gwt.user.theme.standard.Standard"/>
 

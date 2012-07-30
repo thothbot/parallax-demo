@@ -29,6 +29,7 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector2f;
 import thothbot.parallax.core.shared.core.Vector3f;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
@@ -62,7 +63,9 @@ public final class GeometryLinesColors extends ContentWidget
 		public int mouseX;
 		public int mouseY;
 		
-		EffectComposer composer;
+		private EffectComposer composer;
+		
+		ShaderPass effectFXAA;
 		
 		@Override
 		protected void loadCamera()
@@ -147,8 +150,9 @@ public final class GeometryLinesColors extends ContentWidget
 			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
 			effectScreen.setRenderToScreen(true);
 			
-			ShaderPass effectFXAA = new ShaderPass( new ShaderFxaa() );
-//			effectFXAA.getUniforms().get("resolution").value.set( 1 / 500f, 1 / 500f);
+			effectFXAA = new ShaderPass( new ShaderFxaa() );
+			((Vector2f)effectFXAA.getUniforms().get("resolution").value).set( 
+					1f / getRenderer().getCanvas().getWidth(), 1f / getRenderer().getCanvas().getHeight());
 
 			composer = new EffectComposer( getRenderer() );
 
@@ -158,6 +162,15 @@ public final class GeometryLinesColors extends ContentWidget
 			composer.addPass( effectScreen );
 
 			getRenderer().setAutoClear(false);
+		}
+		
+		@Override
+		protected void onResize() 
+		{
+			super.onResize();
+
+			((Vector2f)effectFXAA.getUniforms().get("resolution").value).set( 
+					1f / getRenderer().getCanvas().getWidth(), 1f / getRenderer().getCanvas().getHeight());
 		}
 		
 		/**
@@ -224,7 +237,7 @@ public final class GeometryLinesColors extends ContentWidget
 			}
 
 			getRenderer().clear(false, false, false);
-			composer.render(getRenderer(), 0);
+			composer.render();
 		}
 	}
 		
