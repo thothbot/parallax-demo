@@ -251,8 +251,6 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
 			category.addExample(new CamerasExample(),
 					RunAsyncCode.runAsyncCode(CamerasExample.class));
-			category.addExample(new GeometryLinesColors(),
-					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
 		}
 		
 		// Materials
@@ -283,6 +281,16 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(CustomAttributesParticles.class));
 			category.addExample(new CustomAttributesParticles2(),
 					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
+		}
+		
+		// Post-processing
+		{
+			Category category = new Category("Post-processing");
+			categoriesList.add(category);
+			category.addExample(new GeometryLinesColors(),
+					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
+			category.addExample(new PostprocessingGodrays(),
+					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
 		}
 		
 		// Morphing
