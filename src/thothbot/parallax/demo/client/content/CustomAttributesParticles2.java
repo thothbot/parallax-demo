@@ -107,8 +107,8 @@ public class CustomAttributesParticles2 extends ContentWidget
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(texture)));
 	
-			uniforms.get("texture").texture.setWrapS(TextureWrapMode.REPEAT);
-			uniforms.get("texture").texture.setWrapT(TextureWrapMode.REPEAT);
+			uniforms.get("texture").getTexture().setWrapS(TextureWrapMode.REPEAT);
+			uniforms.get("texture").getTexture().setWrapT(TextureWrapMode.REPEAT);
 	
 			ShaderMaterial shaderMaterial = new ShaderMaterial();
 			shaderMaterial.setUniforms(uniforms);

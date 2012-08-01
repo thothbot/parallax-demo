@@ -284,14 +284,14 @@ public class DataModel implements TreeViewModel
 		}
 		
 		// Post-processing
-		{
-			Category category = new Category("Post-processing");
-			categoriesList.add(category);
-			category.addExample(new GeometryLinesColors(),
-					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
-			category.addExample(new PostprocessingGodrays(),
-					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
-		}
+//		{
+//			Category category = new Category("Post-processing");
+//			categoriesList.add(category);
+//			category.addExample(new GeometryLinesColors(),
+//					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
+//			category.addExample(new PostprocessingGodrays(),
+//					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
+//		}
 		
 		// Morphing
 		{

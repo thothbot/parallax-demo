@@ -116,25 +116,25 @@ public final class TrackballEarth extends ContentWidget
 			ShaderNormalMap shader = new ShaderNormalMap();
 			Map<String, Uniform> uniforms = UniformsUtils.clone( shader.getUniforms() );
 
-			uniforms.get("tNormal").texture = normalTexture;
-			uniforms.get("uNormalScale").value = 0.85f;
+			uniforms.get("tNormal").setTexture( normalTexture );
+			uniforms.get("uNormalScale").setValue( 0.85f );
 
-			uniforms.get("tDiffuse").texture = planetTexture;
-			uniforms.get("tSpecular").texture = specularTexture;
+			uniforms.get("tDiffuse").setTexture( planetTexture );
+			uniforms.get("tSpecular").setTexture( specularTexture );
 
-			uniforms.get("enableAO").value = 0;
-			uniforms.get("enableDiffuse").value = 1;
-			uniforms.get("enableSpecular").value = 1;
+			uniforms.get("enableAO").setValue( 0 );
+			uniforms.get("enableDiffuse").setValue( 1 );
+			uniforms.get("enableSpecular").setValue( 1 );
 
-			((Color3f)uniforms.get("uDiffuseColor").value).setHex( 0xffffff );
-			((Color3f)uniforms.get("uSpecularColor").value).setHex( 0x666666 );
-			((Color3f)uniforms.get("uAmbientColor").value).setHex( 0x000000 );
+			((Color3f)uniforms.get("uDiffuseColor").getValue()).setHex( 0xffffff );
+			((Color3f)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
+			((Color3f)uniforms.get("uAmbientColor").getValue()).setHex( 0x000000 );
 
-			uniforms.get("uShininess").value = 20f;
+			uniforms.get("uShininess").setValue( 20f );
 
-			((Color3f)uniforms.get("uDiffuseColor").value).convertGammaToLinear();
-			((Color3f)uniforms.get("uSpecularColor").value).convertGammaToLinear();
-			((Color3f)uniforms.get("uAmbientColor").value).convertGammaToLinear();
+			((Color3f)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
+			((Color3f)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
+			((Color3f)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
 
 			ShaderMaterial materialNormalMap = new ShaderMaterial(); 
 			materialNormalMap.setFragmentShaderSource( shader.getFragmentSource() );

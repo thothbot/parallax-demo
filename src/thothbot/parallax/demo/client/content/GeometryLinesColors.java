@@ -151,7 +151,7 @@ public final class GeometryLinesColors extends ContentWidget
 			effectScreen.setRenderToScreen(true);
 			
 			effectFXAA = new ShaderPass( new ShaderFxaa() );
-			((Vector2f)effectFXAA.getUniforms().get("resolution").value).set( 
+			((Vector2f)effectFXAA.getUniforms().get("resolution").getValue()).set( 
 					1f / getRenderer().getCanvas().getWidth(), 1f / getRenderer().getCanvas().getHeight());
 
 			composer = new EffectComposer( getRenderer() );
@@ -169,7 +169,7 @@ public final class GeometryLinesColors extends ContentWidget
 		{
 			super.onResize();
 
-			((Vector2f)effectFXAA.getUniforms().get("resolution").value).set( 
+			((Vector2f)effectFXAA.getUniforms().get("resolution").getValue()).set( 
 					1f / getRenderer().getCanvas().getWidth(), 1f / getRenderer().getCanvas().getHeight());
 		}
 		

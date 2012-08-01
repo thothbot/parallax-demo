@@ -34,6 +34,10 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.Json;
+import thothbot.parallax.postprocessing.client.EffectComposer;
+import thothbot.parallax.postprocessing.client.RenderPass;
+import thothbot.parallax.postprocessing.client.ShaderPass;
+import thothbot.parallax.postprocessing.client.shader.ShaderScreen;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -62,6 +66,8 @@ public final class PostprocessingGodrays extends ContentWidget
 		public int mouseY;
 		
 		Mesh sphereMesh;
+		
+		private EffectComposer composer;
 		
 		@Override
 		protected void loadCamera()
@@ -99,8 +105,8 @@ public final class PostprocessingGodrays extends ContentWidget
 					@Override
 					public void onLoaded() {																					
 						Mesh mesh = loader.getMesh();
-						mesh.getScale().set(0, -150, -150);
-						mesh.getPosition().set(400);
+						mesh.getPosition().set(0, -150, -150);
+						mesh.getScale().set(400);
 						mesh.setMatrixAutoUpdate(false);
 						mesh.updateMatrix();
 
@@ -122,10 +128,10 @@ public final class PostprocessingGodrays extends ContentWidget
 			getScene().addChild( this.sphereMesh );
 
 			//
-			
+					
 			getRenderer().setSortObjects(false);
-//			getRenderer().setAutoClear(false);
-//			getRenderer().setClearColorHex( bgColor, 1 );
+			getRenderer().setAutoClear(false);
+			getRenderer().setClearColorHex( bgColor, 1 );
 		}
 		
 		@Override
@@ -146,7 +152,7 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			getCamera().lookAt( getScene().getPosition() );
 			
-//			getRenderer().clear(false, false, false);
+			getRenderer().clear(false, false, false);
 		}
 	}
 		
@@ -160,7 +166,7 @@ public final class PostprocessingGodrays extends ContentWidget
 	{
 		super.loadRenderingPanelAttributes(renderingPanel);
 		renderingPanel.getCanvas3dAttributes().setAntialiasEnable(false);
-		renderingPanel.setBackground(0xaaccff);
+		renderingPanel.setBackground(0x000511);
 	}
 	
 	@Override
