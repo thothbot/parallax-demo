@@ -19,16 +19,17 @@
 
 package thothbot.parallax.demo.client.content;
 
+import thothbot.parallax.core.client.controls.FlyControls;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.lights.LensFlare;
 import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
+import thothbot.parallax.core.shared.objects.LensFlare;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ColorUtils;
@@ -37,6 +38,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ImageResource;
@@ -54,6 +56,10 @@ public final class EffectsLensFlares extends ContentWidget
 		private Texture textureFlare0 = ImageUtils.loadTexture( "./static/textures/lensflare/lensflare0.png" );
 		private Texture textureFlare2 = ImageUtils.loadTexture( "./static/textures/lensflare/lensflare2.png" );
 		private Texture textureFlare3 = ImageUtils.loadTexture( "./static/textures/lensflare/lensflare3.png" );
+		
+		private FlyControls controls;
+		
+		private double oldTime;
 
 		@Override
 		protected void loadCamera()
@@ -72,6 +78,13 @@ public final class EffectsLensFlares extends ContentWidget
 		{
 			getCamera().getPosition().setZ(250);
 			getScene().addChild(getCamera());
+			
+			controls = new FlyControls( getCamera(), getRenderer().getCanvas() );
+
+			controls.setMovementSpeed( 2500 );
+			controls.setRollSpeed( (float) (Math.PI / 6.0) );
+			controls.setAutoForward( false );
+			controls.setDragToLook( false );
 			
 			FogSimple fog = new FogSimple( 0x000000, 3500, 15000 );
 			fog.getColor().setHSV( 0.51f, 0.6f, 0.025f );
@@ -104,9 +117,7 @@ public final class EffectsLensFlares extends ContentWidget
 				mesh.updateMatrix();
 
 				getScene().addChild( mesh );
-
 			}
-
 
 			// lights
 
@@ -133,6 +144,8 @@ public final class EffectsLensFlares extends ContentWidget
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 			getRenderer().setPhysicallyBasedShading(true);
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		private void addLight( float h, float s, float v, float x, float y, float z ) 
@@ -173,6 +186,8 @@ public final class EffectsLensFlares extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			controls.update( (float) ((Duration.currentTimeMillis() - this.oldTime) * 0.001) );
+			this.oldTime = Duration.currentTimeMillis();
 		}
 	}
 		
