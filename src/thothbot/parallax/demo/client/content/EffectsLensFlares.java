@@ -21,6 +21,7 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.controls.FlyControls;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color3f;
 import thothbot.parallax.core.shared.geometries.Cube;
@@ -167,10 +168,10 @@ public final class EffectsLensFlares extends ContentWidget
 			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
 			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
 
-			lensFlare.add( textureFlare3, 60, 0.6f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare3, 70, 0.7f, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 60,  0.6f, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 70,  0.7f, Material.BLENDING.ADDITIVE );
 			lensFlare.add( textureFlare3, 120, 0.9f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare3, 70, 1.0f, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 70,  1.0f, Material.BLENDING.ADDITIVE );
 
 			lensFlare.setUpdateCallback(new LensFlare.Callback() {
 
