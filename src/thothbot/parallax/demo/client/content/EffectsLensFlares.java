@@ -31,6 +31,7 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.LensFlare;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.objects.LensFlare.LensSprite;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ColorUtils;
 import thothbot.parallax.core.shared.utils.ImageUtils;
@@ -160,8 +161,7 @@ public final class EffectsLensFlares extends ContentWidget
 			flareColor.copy( light.getColor() );
 			ColorUtils.adjustHSV( flareColor, 0, -0.5f, 0.5f );
 
-//			LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0f, Material.BLENDING.ADDITIVE, flareColor );
-			LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0f, Material.BLENDING.ADDITIVE );
+			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0f, Material.BLENDING.ADDITIVE, flareColor );
 
 			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
 			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
@@ -172,7 +172,29 @@ public final class EffectsLensFlares extends ContentWidget
 			lensFlare.add( textureFlare3, 120, 0.9f, Material.BLENDING.ADDITIVE );
 			lensFlare.add( textureFlare3, 70, 1.0f, Material.BLENDING.ADDITIVE );
 
-//			lensFlare.customUpdateCallback = lensFlareUpdateCallback;
+			lensFlare.setUpdateCallback(new LensFlare.Callback() {
+
+				@Override
+				public void update() {
+
+					float vecX = -lensFlare.getPositionScreen().getX() * 2f;
+					float vecY = -lensFlare.getPositionScreen().getY() * 2f;
+
+					for( int f = 0; f < lensFlare.getLensFlares().size(); f++ ) 
+					{
+						LensSprite flare = lensFlare.getLensFlares().get( f );
+
+						flare.x = lensFlare.getPositionScreen().getX() + vecX * flare.distance;
+						flare.y = lensFlare.getPositionScreen().getY() + vecY * flare.distance;
+
+						flare.rotation = 0;
+					}
+
+					lensFlare.getLensFlares().get( 2 ).y += 0.025;
+					lensFlare.getLensFlares().get( 3 ).rotation = (float) (lensFlare.getPositionScreen().getX() * 0.5f + 45 * Math.PI / 180);
+				}
+			});
+
 			lensFlare.setPosition(light.getPosition());
 
 			getScene().addChild( lensFlare );
