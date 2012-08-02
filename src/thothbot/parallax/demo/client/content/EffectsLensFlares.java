@@ -42,7 +42,7 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public final class Lensflares extends ContentWidget 
+public final class EffectsLensFlares extends ContentWidget 
 {
 	/*
 	 * Prepare Rendering Scene
@@ -176,9 +176,9 @@ public final class Lensflares extends ContentWidget
 		}
 	}
 		
-	public Lensflares() 
+	public EffectsLensFlares() 
 	{
-		super("Lensflares", "Fly with WASD/RF/QE + mouse. This example based on the three.js example.");
+		super("Lens Flares", "Fly with WASD/RF/QE + mouse. This example based on the three.js example.");
 	}
 	
 	@Override
@@ -196,7 +196,7 @@ public final class Lensflares extends ContentWidget
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
-		GWT.runAsync(Lensflares.class, new RunAsyncCallback() 
+		GWT.runAsync(EffectsLensFlares.class, new RunAsyncCallback() 
 		{
 			public void onFailure(Throwable caught)
 			{
