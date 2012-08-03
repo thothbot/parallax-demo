@@ -124,4 +124,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_lensflares.jpg")
 	ImageResource exampleLensflares();
+	
+	@Source("images/example_sprites.jpg")
+	ImageResource exampleSprites();
 }

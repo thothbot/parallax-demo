@@ -319,6 +319,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
 			category.addExample(new EffectsLensFlares(),
 					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
+			category.addExample(new EffectsSprites(),
+					RunAsyncCode.runAsyncCode(EffectsSprites.class));
 		}
 	}
 }
