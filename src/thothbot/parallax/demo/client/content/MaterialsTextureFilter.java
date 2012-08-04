@@ -172,8 +172,8 @@ public final class MaterialsTextureFilter extends ContentWidget
 			Mesh mesh = new Mesh( geometry, materialPainting );
 			Mesh mesh2 = new Mesh( geometry, materialPainting2 );
 
-			mesh.getRotation().setX( (float) (Math.PI / 2.0) );
-			mesh2.getRotation().setX( (float) (Math.PI / 2.0) );
+			mesh.getRotation().setX(Math.PI / 2.0 );
+			mesh2.getRotation().setX(Math.PI / 2.0 );
 
 			addPainting( texture.getImage(), getScene(), mesh );
 			addPainting( texture.getImage(), scene2, mesh2 );
@@ -181,8 +181,8 @@ public final class MaterialsTextureFilter extends ContentWidget
 		
 		private void addPainting( Element image, Scene zscene, Mesh zmesh ) 
 		{
-			zmesh.getScale().setX( image.getOffsetWidth() / 100.0f ) ;
-			zmesh.getScale().setZ( image.getOffsetHeight() / 100.0f );
+			zmesh.getScale().setX( image.getOffsetWidth() / 100.0 ) ;
+			zmesh.getScale().setZ( image.getOffsetHeight() / 100.0 );
 
 			zscene.addChild( zmesh );
 
@@ -193,26 +193,26 @@ public final class MaterialsTextureFilter extends ContentWidget
 			mb.setPolygonOffsetUnits(5);
 			
 			Mesh meshFrame = new Mesh( geometry,  mb);
-			meshFrame.getRotation().setX( (float) (Math.PI / 2.0) );
-			meshFrame.getScale().setX( 1.1f * image.getOffsetWidth() / 100 );
-			meshFrame.getScale().setZ( 1.1f * image.getOffsetHeight() / 100 );
+			meshFrame.getRotation().setX( Math.PI / 2.0 );
+			meshFrame.getScale().setX( 1.1 * image.getOffsetWidth() / 100 );
+			meshFrame.getScale().setZ( 1.1 * image.getOffsetHeight() / 100 );
 
 			zscene.addChild( meshFrame );
 
 			MeshBasicMaterial mb2 = new MeshBasicMaterial();
 			mb2.setColor(new Color3f(0x000000));
-			mb2.setOpacity(0.75f);
+			mb2.setOpacity(0.75);
 			mb2.setTransparent(true);
 			Mesh meshShadow = new Mesh( geometry, mb2 );
 
-			meshShadow.getPosition().setZ( - 1.1f * image.getOffsetHeight()/ 2 );
-			meshShadow.getScale().setX( 1.1f * image.getOffsetWidth() / 100 );
-			meshShadow.getScale().setZ( 1.1f * image.getOffsetHeight() / 100 );
+			meshShadow.getPosition().setZ( - 1.1 * image.getOffsetHeight()/ 2.0 );
+			meshShadow.getScale().setX( 1.1 * image.getOffsetWidth() / 100.0 );
+			meshShadow.getScale().setZ( 1.1 * image.getOffsetHeight() / 100.0 );
 			zscene.addChild( meshShadow );
 
-			meshShadow.getPosition().setY( - 1.1f * image.getOffsetHeight()/2 );
+			meshShadow.getPosition().setY( - 1.1 * image.getOffsetHeight() / 2.0 );
 
-			float floorHeight = - 1.117f * image.getOffsetHeight()/2;
+			double floorHeight = - 1.117 * image.getOffsetHeight() / 2.0;
 			meshCanvas.getPosition().setY( floorHeight ); 
 			meshCanvas2.getPosition().setY( floorHeight );
 		}
@@ -225,8 +225,8 @@ public final class MaterialsTextureFilter extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05f );
-			getCamera().getPosition().addY( ( - ( mouseY - 200) - getCamera().getPosition().getY() ) * .05f );
+			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
+			getCamera().getPosition().addY( ( - ( mouseY - 200) - getCamera().getPosition().getY() ) * .05 );
 
 			getCamera().lookAt( getScene().getPosition() );
 

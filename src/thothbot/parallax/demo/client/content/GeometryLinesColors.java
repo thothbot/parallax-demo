@@ -88,7 +88,7 @@ public final class GeometryLinesColors extends ContentWidget
 			Geometry geometry = new Geometry();
 			Geometry geometry2 = new Geometry();
 			Geometry geometry3 = new Geometry();
-			List<Vector3f> points = hilbert3D( new Vector3f( 0,0,0 ), 200.0f, 2, 0, 1, 2, 3, 4, 5, 6, 7 );
+			List<Vector3f> points = hilbert3D( new Vector3f( 0,0,0 ), 200.0, 2, 0, 1, 2, 3, 4, 5, 6, 7 );
 
 			List<Color3f> colors = new ArrayList<Color3f>(); 
 			List<Color3f> colors2 = new ArrayList<Color3f>();
@@ -99,13 +99,13 @@ public final class GeometryLinesColors extends ContentWidget
 				geometry.getVertices().add( points.get( i ) );
 
 				colors.add( new Color3f( 0xffffff ) );
-				colors.get( i ).setHSV( 0.6f, ( 200 + points.get( i ).getX() ) / 400f, 1.0f );
+				colors.get( i ).setHSV( 0.6, ( 200 + points.get( i ).getX() ) / 400, 1.0 );
 
 				colors2.add( new Color3f( 0xffffff ) );
-				colors2.get( i ).setHSV( 0.3f, 1.0f, ( 200 + points.get( i ).getX() ) / 400f );
+				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400 );
 
 				colors3.add( new Color3f( 0xffffff ));
-				colors3.get( i ).setHSV( i / points.size() * 1.0f, 1.0f, 1.0f );
+				colors3.get( i ).setHSV( i / points.size() * 1.0, 1.0, 1.0 );
 			}
 
 			geometry2.setVertices(geometry.getVertices()); 
@@ -122,37 +122,37 @@ public final class GeometryLinesColors extends ContentWidget
 			material.setLinewidth(3);
 			material.setOpacity(1);
 
-			float scale = 0.3f;
-			float d = 225;
+			double scale = 0.3f;
+			double d = 225;
 
 			material.setVertexColors(COLORS.VERTEX);
 
 			Line line = new Line( geometry,  material );
-			line.getScale().set(scale * 1.5f);
+			line.getScale().set(scale * 1.5);
 			line.getPosition().set(-d, 0, 0);
 			getScene().addChild( line );
 			
 			Line line2 = new Line( geometry2,  material );
-			line2.getScale().set(scale * 1.5f);
+			line2.getScale().set(scale * 1.5);
 			line2.getPosition().set(0, 0, 0);
 			getScene().addChild( line2 );
 			
 			Line line3 = new Line( geometry2,  material );
-			line3.getScale().set(scale * 1.5f);
+			line3.getScale().set(scale * 1.5);
 			line3.getPosition().set(d, 0, 0);
 			getScene().addChild( line3 );
 			
 			//
 
 			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
-			BloomPass effectBloom = new BloomPass( 1.3f );
+			BloomPass effectBloom = new BloomPass( 1.3 );
 			
 			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
 			effectScreen.setRenderToScreen(true);
 			
 			effectFXAA = new ShaderPass( new ShaderFxaa() );
 			((Vector2f)effectFXAA.getUniforms().get("resolution").getValue()).set( 
-					1f / getRenderer().getCanvas().getWidth(), 1f / getRenderer().getCanvas().getHeight());
+					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
 
 			composer = new EffectComposer( getRenderer() );
 
@@ -170,18 +170,18 @@ public final class GeometryLinesColors extends ContentWidget
 			super.onResize();
 
 			((Vector2f)effectFXAA.getUniforms().get("resolution").getValue()).set( 
-					1f / getRenderer().getCanvas().getWidth(), 1f / getRenderer().getCanvas().getHeight());
+					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
 		}
 		
 		/**
 		 * Port of Processing Java code by Thomas Diewald
 		 * <a href="http://www.openprocessing.org/visuals/?visualID=15599">openprocessing.org</a>
 		 */
-		private List<Vector3f> hilbert3D( Vector3f center, float side, int iterations, 
+		private List<Vector3f> hilbert3D( Vector3f center, double side, int iterations, 
 				int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7 ) 
 		{
 
-			float half = side / 2.0f;
+			double half = side / 2.0f;
 
 			List<Vector3f> vec_s = Arrays.asList(
 					new Vector3f( center.getX() - half, center.getY() + half, center.getZ() - half ),
@@ -224,8 +224,8 @@ public final class GeometryLinesColors extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05f );
-			getCamera().getPosition().addY( ( - mouseY + 200.0f - getCamera().getPosition().getY() ) * .05f );
+			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
+			getCamera().getPosition().addY( ( - mouseY + 200.0 - getCamera().getPosition().getY() ) * .05 );
 
 			getCamera().lookAt( getScene().getPosition() );
 
@@ -233,7 +233,7 @@ public final class GeometryLinesColors extends ContentWidget
 			{
 				DimensionalObject object = getScene().getChildren().get(i);
 				if ( object instanceof Line ) 
-					object.getRotation().setY( (float) (duration * 0.0005 * ( (i % 2 > 0) ? 1 : -1 )) );
+					object.getRotation().setY( duration * 0.0005 * ( (i % 2 > 0) ? 1.0 : -1.0 ) );
 			}
 
 			getRenderer().clear(false, false, false);

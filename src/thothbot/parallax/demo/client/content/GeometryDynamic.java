@@ -85,14 +85,14 @@ public class GeometryDynamic extends ContentWidget
 			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007f ));
 
 			this.controls = new FirstPersonControl( getCamera(), getRenderer().getCanvas() );
-			controls.setMovementSpeed(500f);
-			controls.setLookSpeed(0.1f);
+			controls.setMovementSpeed(500);
+			controls.setLookSpeed(0.1);
 
 			this.geometry = new Plane( 20000, 20000, worldWidth - 1, worldDepth - 1 );
 			this.geometry.setDynamic( true );
 
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )
-				this.geometry.getVertices().get( i ).setY((float) (35.0 * Math.sin( i/2.0 )));
+				this.geometry.getVertices().get( i ).setY(35.0 * Math.sin( i/2.0 ));
 
 			this.geometry.computeFaceNormals(false);
 			this.geometry.computeVertexNormals();
@@ -100,7 +100,7 @@ public class GeometryDynamic extends ContentWidget
 			Texture texture = ImageUtils.loadTexture(DemoScene.texture);
 			texture.setWrapS(TextureWrapMode.REPEAT); 
 			texture.setWrapT(TextureWrapMode.REPEAT);
-			texture.getRepeat().set( 5.0f, 5.0f );
+			texture.getRepeat().set( 5.0, 5.0 );
 
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color3f(0x0044ff) );
@@ -121,11 +121,11 @@ public class GeometryDynamic extends ContentWidget
 		protected void onUpdate(double duration)
 		{			
 			for ( int i = 0, l = this.geometry.getVertices().size(); i < l; i ++ )
-				this.geometry.getVertices().get( i ).setY((float) (35.0 * Math.sin( i / 5.0 + ( duration * 0.01 + i ) / 7.0 )));
+				this.geometry.getVertices().get( i ).setY(35.0 * Math.sin( i / 5.0 + ( duration * 0.01 + i ) / 7.0 ));
 		
 			this.mesh.getGeometry().verticesNeedUpdate = true;
 			
-			this.controls.update( (float) ((Duration.currentTimeMillis() - this.oldTime) * 0.001) );
+			this.controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001);
 
 			this.oldTime = Duration.currentTimeMillis();
 		}

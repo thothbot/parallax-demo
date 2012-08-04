@@ -84,12 +84,12 @@ public final class EffectsLensFlares extends ContentWidget
 			controls = new FlyControls( getCamera(), getRenderer().getCanvas() );
 
 			controls.setMovementSpeed( 2500 );
-			controls.setRollSpeed( (float) (Math.PI / 6.0) );
+			controls.setRollSpeed( Math.PI / 6.0 );
 			controls.setAutoForward( false );
 			controls.setDragToLook( false );
 			
 			FogSimple fog = new FogSimple( 0x000000, 3500, 15000 );
-			fog.getColor().setHSV( 0.51f, 0.6f, 0.025f );
+			fog.getColor().setHSV( 0.51, 0.6, 0.025 );
 			getScene().setFog(fog);
 
 			// world
@@ -107,13 +107,13 @@ public final class EffectsLensFlares extends ContentWidget
 			{
 				Mesh mesh = new Mesh( cube, material );
 
-				mesh.getPosition().setX( (float) (8000 * ( 2.0 * Math.random() - 1.0 )) );
-				mesh.getPosition().setY( (float) (8000 * ( 2.0 * Math.random() - 1.0 )) );
-				mesh.getPosition().setZ( (float) (8000 * ( 2.0 * Math.random() - 1.0 )) );
+				mesh.getPosition().setX( 8000 * ( 2.0 * Math.random() - 1.0 ) );
+				mesh.getPosition().setY( 8000 * ( 2.0 * Math.random() - 1.0 ) );
+				mesh.getPosition().setZ( 8000 * ( 2.0 * Math.random() - 1.0 ) );
 
-				mesh.getRotation().setX( (float) (Math.random() * Math.PI) );
-				mesh.getRotation().setY( (float) (Math.random() * Math.PI) );
-				mesh.getRotation().setZ( (float) (Math.random() * Math.PI) );
+				mesh.getRotation().setX( Math.random() * Math.PI );
+				mesh.getRotation().setY( Math.random() * Math.PI );
+				mesh.getRotation().setZ( Math.random() * Math.PI );
 
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
@@ -124,21 +124,21 @@ public final class EffectsLensFlares extends ContentWidget
 			// lights
 
 			AmbientLight ambient = new AmbientLight( 0xffffff );
-			ambient.getColor().setHSV( 0.1f, 0.5f, 0.3f );
+			ambient.getColor().setHSV( 0.1, 0.5, 0.3 );
 			getScene().addChild( ambient );
 
 
-			DirectionalLight dirLight = new DirectionalLight( 0xffffff, 0.125f );
+			DirectionalLight dirLight = new DirectionalLight( 0xffffff, 0.125 );
 			dirLight.getPosition().set( 0, -1, 0 ).normalize();
 			getScene().addChild( dirLight );
 
-			dirLight.getColor().setHSV( 0.1f, 0.725f, 0.9f );
+			dirLight.getColor().setHSV( 0.1, 0.725, 0.9 );
 
 			// lens flares
 
-			addLight( 0.55f, 0.825f, 0.99f, 5000, 0, -1000 );
-			addLight( 0.08f, 0.825f, 0.99f,    0, 0, -1000 );
-			addLight( 0.995f, 0.025f, 0.99f, 5000, 5000, -1000 );
+			addLight( 0.55, 0.825, 0.99, 5000, 0, -1000 );
+			addLight( 0.08, 0.825, 0.99,    0, 0, -1000 );
+			addLight( 0.995, 0.025, 0.99, 5000, 5000, -1000 );
 
 			// renderer
 			getRenderer().setMaxLights(8);
@@ -150,9 +150,9 @@ public final class EffectsLensFlares extends ContentWidget
 			this.oldTime = Duration.currentTimeMillis();
 		}
 		
-		private void addLight( float h, float s, float v, float x, float y, float z ) 
+		private void addLight( double h, double s, double v, double x, double y, double z ) 
 		{
-			PointLight light = new PointLight( 0xffffff, 1.5f, 4500 );
+			PointLight light = new PointLight( 0xffffff, 1.5, 4500 );
 			light.getPosition().set( x, y, z );
 			getScene().addChild( light );
 
@@ -160,26 +160,26 @@ public final class EffectsLensFlares extends ContentWidget
 
 			Color3f flareColor = new Color3f( 0xffffff );
 			flareColor.copy( light.getColor() );
-			ColorUtils.adjustHSV( flareColor, 0, -0.5f, 0.5f );
+			ColorUtils.adjustHSV( flareColor, 0, -0.5, 0.5 );
 
-			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0f, Material.BLENDING.ADDITIVE, flareColor );
+			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0, Material.BLENDING.ADDITIVE, flareColor );
 
-			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare2, 512, 0.0f, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );
 
-			lensFlare.add( textureFlare3, 60,  0.6f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare3, 70,  0.7f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare3, 120, 0.9f, Material.BLENDING.ADDITIVE );
-			lensFlare.add( textureFlare3, 70,  1.0f, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 60,  0.6, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 70,  0.7, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 120, 0.9, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 70,  1.0, Material.BLENDING.ADDITIVE );
 
 			lensFlare.setUpdateCallback(new LensFlare.Callback() {
 
 				@Override
 				public void update() {
 
-					float vecX = -lensFlare.getPositionScreen().getX() * 2f;
-					float vecY = -lensFlare.getPositionScreen().getY() * 2f;
+					double vecX = -lensFlare.getPositionScreen().getX() * 2.0;
+					double vecY = -lensFlare.getPositionScreen().getY() * 2.0;
 
 					for( int f = 0; f < lensFlare.getLensFlares().size(); f++ ) 
 					{
@@ -192,7 +192,7 @@ public final class EffectsLensFlares extends ContentWidget
 					}
 
 					lensFlare.getLensFlares().get( 2 ).y += 0.025;
-					lensFlare.getLensFlares().get( 3 ).rotation = (float) (lensFlare.getPositionScreen().getX() * 0.5f + 45 * Math.PI / 180);
+					lensFlare.getLensFlares().get( 3 ).rotation = lensFlare.getPositionScreen().getX() * 0.5 + 45.0 * Math.PI / 180.0;
 				}
 			});
 
@@ -209,7 +209,7 @@ public final class EffectsLensFlares extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			controls.update( (float) ((Duration.currentTimeMillis() - this.oldTime) * 0.001) );
+			controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001 );
 			this.oldTime = Duration.currentTimeMillis();
 		}
 	}

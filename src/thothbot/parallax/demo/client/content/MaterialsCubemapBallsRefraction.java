@@ -111,7 +111,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color3f(0xffffff) );
 			material.setEnvMap( textureCube );
-			material.setRefractionRatio( 0.95f );
+			material.setRefractionRatio( 0.95 );
 
 			this.speres = new ArrayList<Mesh>();
 			
@@ -119,11 +119,11 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			{
 				Mesh mesh = new Mesh( geometry, material );
 
-				mesh.getPosition().setX( (float) (Math.random() * 10000.0 - 5000.0) );
-				mesh.getPosition().setY( (float) (Math.random() * 10000.0 - 5000.0) );
-				mesh.getPosition().setZ( (float) (Math.random() * 10000.0 - 5000.0) );
+				mesh.getPosition().setX( Math.random() * 10000.0 - 5000.0 );
+				mesh.getPosition().setY( Math.random() * 10000.0 - 5000.0 );
+				mesh.getPosition().setZ( Math.random() * 10000.0 - 5000.0 );
 
-				float scale = (float) (Math.random() * 3.0 + 1.0);
+				double scale = Math.random() * 3.0 + 1.0;
 				mesh.getScale().set(scale);
 
 				getScene().addChild( mesh );
@@ -161,12 +161,12 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 
 			for ( int i = 0, il = this.speres.size(); i < il; i ++ ) 
 			{
-				this.speres.get(i).getPosition().setX( (float) (5000.0 * Math.cos( timer + i )) );
-				this.speres.get(i).getPosition().setY( (float) (5000.0 * Math.sin( timer + i * 1.1 )) );
+				this.speres.get(i).getPosition().setX(5000.0 * Math.cos( timer + i ) );
+				this.speres.get(i).getPosition().setY(5000.0 * Math.sin( timer + i * 1.1 ) );
 			}
 
-			getCamera().getPosition().addX((float) (( mouseX - getCamera().getPosition().getX() ) * 0.05) );
-			getCamera().getPosition().addY((float) (( - mouseY - getCamera().getPosition().getY() ) * 0.05) );
+			getCamera().getPosition().addX(( mouseX - getCamera().getPosition().getX() ) * 0.05 );
+			getCamera().getPosition().addY(( - mouseY - getCamera().getPosition().getY() ) * 0.05 );
 
 			getCamera().lookAt( getScene().getPosition() );
 			this.cameraCube.getRotation().copy( getCamera().getRotation() );

@@ -72,7 +72,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		
 		private Mesh mesh;
 		
-		private float r = 0.0f;
+		private double r = 0.0;
 
 		@Override
 		protected void loadCamera()
@@ -80,23 +80,23 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			Canvas3d canvas = getRenderer().getCanvas();
 			
 			setCamera(new PerspectiveCamera( 
-					50f, 
-					0.5f * canvas.getAspectRation(), 
-					1f, 
-					10000f ));
+					50, 
+					0.5 * canvas.getAspectRation(), 
+					1, 
+					10000 ));
 			
 			this.cameraPerspective = new PerspectiveCamera( 
-					50f, 
-					canvas.getAspectRation() * 0.5f, 
-					150f, 
-					1000f );
+					50, 
+					canvas.getAspectRation() * 0.5, 
+					150, 
+					1000 );
 			
-			this.cameraOrtho = new OrthographicCamera( 0.5f * canvas.getWidth() / - 2f, 
-					0.5f * canvas.getWidth() / 2f, 
-					canvas.getHeight() / 2f, 
-					canvas.getHeight() / - 2f, 
-					150f, 
-					1000f );
+			this.cameraOrtho = new OrthographicCamera( 0.5 * canvas.getWidth() / - 2.0, 
+					0.5 * canvas.getWidth() / 2.0, 
+					canvas.getHeight() / 2.0, 
+					canvas.getHeight() / - 2.0, 
+					150, 
+					1000 );
 		}
 		
 		
@@ -106,12 +106,12 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			super.onResize();
 			Canvas3d canvas = getRenderer().getCanvas();
 
-			cameraPerspective.setAspectRatio(0.5f * canvas.getAspectRation());
+			cameraPerspective.setAspectRatio(0.5 * canvas.getAspectRation());
 
-			cameraOrtho.setLeft(- 0.5f * canvas.getWidth() / 2.0f );
-			cameraOrtho.setRight( 0.5f * canvas.getWidth() / 2.0f );
-			cameraOrtho.setTop( canvas.getHeight() / 2.0f );
-			cameraOrtho.setBottom(- canvas.getHeight() / 2.0f );
+			cameraOrtho.setLeft(- 0.5 * canvas.getWidth() / 2.0 );
+			cameraOrtho.setRight( 0.5 * canvas.getWidth() / 2.0 );
+			cameraOrtho.setTop( canvas.getHeight() / 2.0 );
+			cameraOrtho.setBottom(- canvas.getHeight() / 2.0 );
 			cameraOrtho.updateProjectionMatrix();
 		}
 
@@ -133,8 +133,8 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			
 			// counteract different front orientation of cameras vs rig
 	
-			cameraOrtho.getRotation().setY((float) Math.PI);
-			cameraPerspective.getRotation().setY((float) Math.PI);
+			cameraOrtho.getRotation().setY(Math.PI);
+			cameraPerspective.getRotation().setY(Math.PI);
 	
 			this.cameraRig = new Object3D();
 	
@@ -172,9 +172,9 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			for ( int i = 0; i < 10000; i ++ ) 
 			{
 				Vector3f vertex = new Vector3f();
-				vertex.setX(Mathematics.randFloatSpread( 3000f ));
-				vertex.setY(Mathematics.randFloatSpread( 3000f ));
-				vertex.setZ(Mathematics.randFloatSpread( 3000f ));
+				vertex.setX(Mathematics.randFloatSpread( 3000 ));
+				vertex.setY(Mathematics.randFloatSpread( 3000 ));
+				vertex.setZ(Mathematics.randFloatSpread( 3000 ));
 	
 				geometry.getVertices().add( vertex );
 			}
@@ -198,17 +198,16 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		@Override
 		protected void onUpdate(double duration)
 		{
-			mesh.getPosition().setX((float) (700f * Math.cos( r )));
-			mesh.getPosition().setZ((float) (700f * Math.sin( r )));
-			mesh.getPosition().setY((float) (700f * Math.sin( r )));
+			mesh.getPosition().setX(700.0 * Math.cos( r ));
+			mesh.getPosition().setZ(700.0 * Math.sin( r ));
+			mesh.getPosition().setY(700.0 * Math.sin( r ));
 
-			mesh.getChildren().get( 0 ).getPosition().setX((float) (70f * Math.cos( 2.0 * r )));
-			mesh.getChildren().get( 0 ).getPosition().setZ((float) (70f * Math.sin( r )));
+			mesh.getChildren().get( 0 ).getPosition().setX(70.0 * Math.cos( 2.0 * r ));
+			mesh.getChildren().get( 0 ).getPosition().setZ(70.0 * Math.sin( r ));
 
 			if ( activeCamera.equals(cameraPerspective) ) 
 			{
-				
-				cameraPerspective.setFieldOfView((float) (35.0 + 30.0 * Math.sin( 0.5 * r )));
+				cameraPerspective.setFieldOfView(35.0 + 30.0 * Math.sin( 0.5 * r ));
 				cameraPerspective.setFar(mesh.getPosition().length());
 				cameraPerspective.updateProjectionMatrix();
 
@@ -216,11 +215,9 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				cameraPerspectiveHelper.getLine().setVisible(true);
 
 				cameraOrthoHelper.getLine().setVisible(false);
-
 			} 
 			else 
 			{
-
 				cameraOrtho.setFar(mesh.getPosition().length());
 				cameraOrtho.updateProjectionMatrix();
 
@@ -228,7 +225,6 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				cameraOrthoHelper.getLine().setVisible(true);
 
 				cameraPerspectiveHelper.getLine().setVisible(false);
-
 			}
 
 			cameraRig.lookAt( mesh.getPosition() );
@@ -241,7 +237,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			getRenderer().setViewport( getRenderer().getCanvas().getWidth()/2, 0, 
 					getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getWidth() );
 
-			r += 0.01f;
+			r += 0.01;
 		}
 	}
 	

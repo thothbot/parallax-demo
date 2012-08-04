@@ -66,11 +66,11 @@ public final class TrackballEarth extends ContentWidget
 		private static final String moon          = "./static/textures/planets/moon_1024.jpg";
 		
 		static final int radius = 6371;
-		static final float tilt = 0.41f;
-		static final float rotationSpeed = 0.1f;
+		static final double tilt = 0.41;
+		static final double rotationSpeed = 0.1;
 
-		static final float cloudsScale = 1.005f;
-		static final float moonScale = 0.23f;
+		static final double cloudsScale = 1.005;
+		static final double moonScale = 0.23;
 		
 		Mesh meshPlanet;
 		Mesh meshClouds;
@@ -98,13 +98,13 @@ public final class TrackballEarth extends ContentWidget
 			getScene().addChild(getCamera());
 
 			this.control = new TrackballControl( getCamera(), getRenderer().getCanvas() );
-			this.control.setPanSpeed(0.2f);
-			this.control.setDynamicDampingFactor(0.3f);
-			this.control.setMinDistance(radius * 1.1f);
-			this.control.setMaxDistance(radius * 100f);
+			this.control.setPanSpeed(0.2);
+			this.control.setDynamicDampingFactor(0.3);
+			this.control.setMinDistance(radius * 1.1);
+			this.control.setMaxDistance(radius * 100);
 
 			DirectionalLight dirLight = new DirectionalLight( 0xFFFFFF );
-			dirLight.getPosition().set( -1f, 0f, 1f ).normalize();
+			dirLight.getPosition().set( -1, 0, 1 ).normalize();
 			getScene().addChild( dirLight );
 
 			Texture planetTexture   = ImageUtils.loadTexture( earthAtmos );
@@ -117,7 +117,7 @@ public final class TrackballEarth extends ContentWidget
 			Map<String, Uniform> uniforms = UniformsUtils.clone( shader.getUniforms() );
 
 			uniforms.get("tNormal").setTexture( normalTexture );
-			uniforms.get("uNormalScale").setValue( 0.85f );
+			uniforms.get("uNormalScale").setValue( 0.85 );
 
 			uniforms.get("tDiffuse").setTexture( planetTexture );
 			uniforms.get("tSpecular").setTexture( specularTexture );
@@ -130,7 +130,7 @@ public final class TrackballEarth extends ContentWidget
 			((Color3f)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
 			((Color3f)uniforms.get("uAmbientColor").getValue()).setHex( 0x000000 );
 
-			uniforms.get("uShininess").setValue( 20f );
+			uniforms.get("uShininess").setValue( 20 );
 
 			((Color3f)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
 			((Color3f)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
@@ -173,7 +173,7 @@ public final class TrackballEarth extends ContentWidget
 			
 
 			this.meshMoon = new Mesh( geometry, materialMoon );
-			meshMoon.getPosition().set( radius * 5.0f, 0, 0 );
+			meshMoon.getPosition().set( radius * 5.0, 0, 0 );
 			meshMoon.getScale().set( moonScale );
 			getScene().addChild( meshMoon );
 
@@ -186,9 +186,9 @@ public final class TrackballEarth extends ContentWidget
 			{
 
 				Vector3f vertex = new Vector3f();
-				vertex.setX( (float) (Math.random() * 2.0 - 1.0) );
-				vertex.setY( (float) (Math.random() * 2.0 - 1.0) );
-				vertex.setZ( (float) (Math.random() * 2.0 - 1.0) );
+				vertex.setX( Math.random() * 2.0 - 1.0 );
+				vertex.setY( Math.random() * 2.0 - 1.0 );
+				vertex.setZ( Math.random() * 2.0 - 1.0 );
 				vertex.multiply( radius );
 
 				starsGeometry.getVertices().add( vertex );
@@ -237,11 +237,11 @@ public final class TrackballEarth extends ContentWidget
 			{
 				ParticleSystem stars = new ParticleSystem( starsGeometry, starsMaterials.get( i % 6 ) );
 
-				stars.getRotation().setX( (float) (Math.random() * 6.0) );
-				stars.getRotation().setY( (float) (Math.random() * 6.0) );
-				stars.getRotation().setZ( (float) (Math.random() * 6.0) );
+				stars.getRotation().setX( Math.random() * 6.0 );
+				stars.getRotation().setY( Math.random() * 6.0 );
+				stars.getRotation().setZ( Math.random() * 6.0 );
 
-				float s = i * 10.0f;
+				double s = i * 10.0;
 				stars.getScale().set( s );
 
 				stars.setMatrixAutoUpdate(false);
@@ -267,17 +267,17 @@ public final class TrackballEarth extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			float delta = (float) ((Duration.currentTimeMillis() - this.oldTime) * 0.001);
+			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
 
 			meshPlanet.getRotation().addY( rotationSpeed * delta );
-			meshClouds.getRotation().addY( 1.25f * rotationSpeed * delta );
+			meshClouds.getRotation().addY( 1.25 * rotationSpeed * delta );
 
-			float angle = delta * rotationSpeed;
+			double angle = delta * rotationSpeed;
 
 			meshMoon.setPosition( new Vector3f(
-				(float)(Math.cos( angle ) * meshMoon.getPosition().getX() - Math.sin( angle ) * meshMoon.getPosition().getZ()),
+				Math.cos( angle ) * meshMoon.getPosition().getX() - Math.sin( angle ) * meshMoon.getPosition().getZ(),
 				0,
-				(float)(Math.sin( angle ) * meshMoon.getPosition().getX() + Math.cos( angle ) * meshMoon.getPosition().getZ())
+				Math.sin( angle ) * meshMoon.getPosition().getX() + Math.cos( angle ) * meshMoon.getPosition().getZ()
 			));
 			meshMoon.getRotation().addY( - angle );
 

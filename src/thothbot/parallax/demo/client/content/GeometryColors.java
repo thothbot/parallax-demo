@@ -133,17 +133,17 @@ public class GeometryColors extends ContentWidget
 					Vector3f p = geometry.getVertices().get( vertexIndex );
 
 					Color3f color = new Color3f( 0xffffff );
-					color.setHSV( ( p.getY() / radius + 1.0f ) / 2.0f, 1.0f, 1.0f );
+					color.setHSV( ( p.getY() / radius * 1.0 + 1.0 ) / 2.0, 1.0, 1.0 );
 
 					geometry.getFaces().get( i ).getVertexColors().add(color);
 
 					Color3f color2 = new Color3f( 0xffffff );
-					color2.setHSV( 0.0f, ( (float)p.getY() / radius + 1.0f ) / 2.0f, 1.0f );
+					color2.setHSV( 0.0f, ( p.getY() / radius * 1.0 + 1.0 ) / 2.0, 1.0 );
 
 					geometry2.getFaces().get( i ).getVertexColors().add(color);
 
 					Color3f color3 = new Color3f( 0xffffff );
-					color3.setHSV( (0.125f * (float)vertexIndex/geometry.getVertices().size()), 1.0f, 1.0f );
+					color3.setHSV( (0.125 * vertexIndex / geometry.getVertices().size() * 1.0), 1.0, 1.0 );
 
 					geometry3.getFaces().get( i ).getVertexColors().add(color3);
 				}
@@ -165,17 +165,17 @@ public class GeometryColors extends ContentWidget
 
 			DimensionalObject group1 = SceneUtils.createMultiMaterialObject( geometry, materials );
 			group1.getPosition().setX(-400);
-			group1.getRotation().setX(-1.87f);
+			group1.getRotation().setX(-1.87);
 			getScene().addChild( group1 );
 
 			DimensionalObject group2 = SceneUtils.createMultiMaterialObject( geometry2, materials );
 			group2.getPosition().setX(400);
-			group2.getRotation().setX(0f);
+			group2.getRotation().setX(0);
 			getScene().addChild( group2 );
 
 			DimensionalObject group3 = SceneUtils.createMultiMaterialObject( geometry3, materials );
 			group3.getPosition().setX(0);
-			group3.getRotation().setX(0f);
+			group3.getRotation().setX(0);
 			getScene().addChild( group3 );
 		}
 		
@@ -187,8 +187,8 @@ public class GeometryColors extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX(( - mouseX - getRenderer().getCanvas().getWidth()/2.5f - getCamera().getPosition().getX()) );
-			getCamera().getPosition().addY(( mouseY - getRenderer().getCanvas().getHeight()/2.5f- getCamera().getPosition().getY()) );
+			getCamera().getPosition().addX(( - mouseX - getRenderer().getCanvas().getWidth()/2.5 - getCamera().getPosition().getX()) );
+			getCamera().getPosition().addY(( mouseY - getRenderer().getCanvas().getHeight()/2.5- getCamera().getPosition().getY()) );
 
 			getCamera().lookAt( getScene().getPosition());
 		}

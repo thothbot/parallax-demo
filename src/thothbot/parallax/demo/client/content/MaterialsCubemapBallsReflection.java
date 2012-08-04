@@ -117,11 +117,11 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			{
 				Mesh mesh = new Mesh( geometry, material );
 
-				mesh.getPosition().setX( (float) (Math.random() * 10000.0 - 5000.0) );
-				mesh.getPosition().setY( (float) (Math.random() * 10000.0 - 5000.0) );
-				mesh.getPosition().setZ( (float) (Math.random() * 10000.0 - 5000.0) );
+				mesh.getPosition().setX( Math.random() * 10000.0 - 5000.0 );
+				mesh.getPosition().setY( Math.random() * 10000.0 - 5000.0 );
+				mesh.getPosition().setZ( Math.random() * 10000.0 - 5000.0 );
 
-				float scale = (float) (Math.random() * 3.0 + 1.0);
+				double scale = Math.random() * 3.0 + 1.0;
 				mesh.getScale().set(scale);
 
 				getScene().addChild( mesh );
@@ -159,12 +159,12 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 			for ( int i = 0, il = this.sphere.size(); i < il; i ++ ) 
 			{
-				this.sphere.get(i).getPosition().setX( (float) (5000.0 * Math.cos( timer + i )) );
-				this.sphere.get(i).getPosition().setY( (float) (5000.0 * Math.sin( timer + i * 1.1 )) );
+				this.sphere.get(i).getPosition().setX( 5000.0 * Math.cos( timer + i ) );
+				this.sphere.get(i).getPosition().setY( 5000.0 * Math.sin( timer + i * 1.1 ) );
 			}
 
-			getCamera().getPosition().addX((float) (( mouseX - getCamera().getPosition().getX() ) * 0.05) );
-			getCamera().getPosition().addY((float) (( - mouseY - getCamera().getPosition().getY() ) * 0.05) );
+			getCamera().getPosition().addX(( mouseX - getCamera().getPosition().getX() ) * 0.05 );
+			getCamera().getPosition().addY(( - mouseY - getCamera().getPosition().getY() ) * 0.05 );
 
 			getCamera().lookAt( getScene().getPosition() );
 

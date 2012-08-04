@@ -89,7 +89,7 @@ public class Geometries extends ContentWidget
 			getScene().addChild( new AmbientLight( 0x404040 ) );
 	
 			DirectionalLight light = new DirectionalLight( 0xffffff );
-			light.getPosition().set( 0, 1f, 0 );
+			light.getPosition().set( 0, 1, 0 );
 			getScene().addChild( light );
 			
 			List<Material> materials = new ArrayList<Material>();
@@ -138,7 +138,7 @@ public class Geometries extends ContentWidget
 			List<Vector3f> points = new ArrayList<Vector3f>();
 	
 			for ( int i = 0; i < 50; i ++ )
-				points.add( new Vector3f( (float) (Math.sin( i * 0.2 ) * 15f + 50f), 0f, (float)(( i - 5f ) * 2f )) );
+				points.add( new Vector3f( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
 	
 			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
 			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
@@ -156,10 +156,10 @@ public class Geometries extends ContentWidget
 	
 			AxisHelper object11 = new AxisHelper();
 			object11.getPosition().set( 200, 0, -200 );
-			object11.getScale().set(0.5f);
+			object11.getScale().set(0.5);
 			getScene().addChild( object11 );
 			
-			ArrowHelper object12 = new ArrowHelper( new Vector3f( 0f, 1f, 0f ), new Vector3f( 0f, 0f, 0f ), 50 );
+			ArrowHelper object12 = new ArrowHelper( new Vector3f( 0, 1, 0 ), new Vector3f( 0, 0, 0 ), 50 );
 			object12.getPosition().set( 300, 0, 300 );
 			getScene().addChild( object12 );
 		}
@@ -172,8 +172,8 @@ public class Geometries extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().setX((float) (Math.cos( duration * 0.0001 ) * 800.0f));
-			getCamera().getPosition().setZ((float) (Math.sin( duration * 0.0001 ) * 800.0f));
+			getCamera().getPosition().setX(Math.cos( duration * 0.0001 ) * 800.0);
+			getCamera().getPosition().setZ(Math.sin( duration * 0.0001 ) * 800.0);
 
 			getCamera().lookAt( getScene().getPosition() );
 
@@ -181,8 +181,8 @@ public class Geometries extends ContentWidget
 			{
 				DimensionalObject object = getScene().getChildren().get( i );
 
-				object.getRotation().addX(0.01f);
-				object.getRotation().addY(0.005f);
+				object.getRotation().addX(0.01);
+				object.getRotation().addY(0.005);
 			}
 		}
 	}

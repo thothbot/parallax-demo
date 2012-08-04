@@ -71,7 +71,7 @@ public final class GeometryHierarchy extends ContentWidget
 		{
 			getCamera().getPosition().setZ(500);
 			getScene().addChild(getCamera());
-			getScene().setFog(new FogSimple( 0xffffff, 1f, 10000f));
+			getScene().setFog(new FogSimple( 0xffffff, 1, 10000));
 
 			Cube geometry = new Cube( 100, 100, 100 );
 			MeshNormalMaterial material = new MeshNormalMaterial();
@@ -81,12 +81,12 @@ public final class GeometryHierarchy extends ContentWidget
 			for ( int i = 0; i < 1000; i ++ ) 
 			{
 				Mesh mesh = new Mesh( geometry, material );
-				mesh.getPosition().setX( (float) (Math.random() * 2000.0 - 1000.0) );
-				mesh.getPosition().setY( (float) (Math.random() * 2000.0 - 1000.0) );
-				mesh.getPosition().setZ( (float) (Math.random() * 2000.0 - 1000.0));
+				mesh.getPosition().setX( Math.random() * 2000.0 - 1000.0 );
+				mesh.getPosition().setY( Math.random() * 2000.0 - 1000.0 );
+				mesh.getPosition().setZ( Math.random() * 2000.0 - 1000.0 );
 
-				mesh.getRotation().setX( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
-				mesh.getRotation().setY( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
+				mesh.getRotation().setX( Math.random() * 360.0 * ( Math.PI / 180.0 ) );
+				mesh.getRotation().setY( Math.random() * 360.0 * ( Math.PI / 180.0 ) );
 
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
@@ -110,12 +110,12 @@ public final class GeometryHierarchy extends ContentWidget
 		{
 			double time = duration * 0.001;
 
-			float rx = (float) (Math.sin( time * 0.7 ) * 0.5);
-			float ry = (float) (Math.sin( time * 0.3 ) * 0.5);
-			float rz = (float) (Math.sin( time * 0.2 ) * 0.5);
+			double rx = Math.sin( time * 0.7 ) * 0.5;
+			double ry = Math.sin( time * 0.3 ) * 0.5;
+			double rz = Math.sin( time * 0.2 ) * 0.5;
 
-			getCamera().getPosition().addX(( mouseX - getCamera().getPosition().getX() ) * .05f);
-			getCamera().getPosition().addY(( - mouseY - getCamera().getPosition().getY() ) * .05f);
+			getCamera().getPosition().addX(( mouseX - getCamera().getPosition().getX() ) * .05);
+			getCamera().getPosition().addY(( - mouseY - getCamera().getPosition().getY() ) * .05);
 
 			getCamera().lookAt( getScene().getPosition() );
 

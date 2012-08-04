@@ -100,7 +100,7 @@ public class CustomAttributesParticles extends ContentWidget
 			this.attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3f>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
-			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0f));
+			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
 			
@@ -113,15 +113,15 @@ public class CustomAttributesParticles extends ContentWidget
 			shaderMaterial.setDepthTest(false);
 			shaderMaterial.setTransparent( true );
 					
-			float radius = 200f;
+			double radius = 200;
 			Geometry geometry = new Geometry();
 	
 			for ( int i = 0; i < 10000; i++ ) 
 			{
 				Vector3f vertex = new Vector3f();
-				vertex.setX((float) (Math.random() * 2.0 - 1.0));
-				vertex.setY((float) (Math.random() * 2.0 - 1.0));
-				vertex.setZ((float) (Math.random() * 2.0 - 1.0));
+				vertex.setX(Math.random() * 2.0 - 1.0);
+				vertex.setY(Math.random() * 2.0 - 1.0);
+				vertex.setZ(Math.random() * 2.0 - 1.0);
 				vertex.multiply( radius );
 	
 				geometry.getVertices().add( vertex );
@@ -131,18 +131,18 @@ public class CustomAttributesParticles extends ContentWidget
 			this.sphere.setDynamic(true);
 			
 			List<Vector3f> vertices = sphere.getGeometry().getVertices();
-			List<Float> values_size = (List<Float>) attributes.get("size").getValue();
+			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
 			List<Color3f> values_color = (List<Color3f>) attributes.get("customColor").getValue();
 	
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
-				values_size.add( v, 10f);
+				values_size.add( v, 10.0);
 				values_color.add( v, new Color3f( 0xffaa00 ));
 	
 				if ( vertices.get( v ).getX() < 0 )
-					values_color.get( v ).setHSV( 0.5f + 0.1f * ( v / (float)vertices.size() ), 0.7f, 0.9f );
+					values_color.get( v ).setHSV( 0.5 + 0.1 * ( v / vertices.size() * 1.0 ), 0.7, 0.9 );
 				else
-					values_color.get( v ).setHSV( 0.0f + 0.1f * ( v / (float)vertices.size() ), 0.9f, 0.9f );
+					values_color.get( v ).setHSV( 0.0 + 0.1 * ( v / vertices.size() * 1.0 ), 0.9, 0.9 );
 			}
 	
 			getScene().addChild( sphere );
@@ -159,12 +159,12 @@ public class CustomAttributesParticles extends ContentWidget
 		{
 			double time = duration * 0.005;
 
-			this.sphere.getRotation().setZ((float) (0.01 * time));
+			this.sphere.getRotation().setZ(0.01 * time);
 
 			for( int i = 0; i < this.attributes.get("size").getValue().size(); i++ ) 
 			{
-				List<Float> value = (List<Float>) this.attributes.get("size").getValue(); 
-				value.set( i, (float)(14f + 13f * Math.sin( 0.1f * i + time )));
+				List<Double> value = (List<Double>) this.attributes.get("size").getValue(); 
+				value.set( i, 14.0 + 13.0 * Math.sin( 0.1 * i + time ));
 			}
 
 			this.attributes.get("size").needsUpdate = true;

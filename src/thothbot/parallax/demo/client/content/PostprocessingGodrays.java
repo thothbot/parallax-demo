@@ -57,7 +57,7 @@ public final class PostprocessingGodrays extends ContentWidget
 	{
 
 		private static final String model = "./static/models/obj/tree/tree.js";
-		private static final float orbitRadius = 200.0f;
+		private static final double orbitRadius = 200.0;
 		
 		private static final int bgColor = 0x000511;
 		private static final int sunColor = 0xffee00;
@@ -144,11 +144,11 @@ public final class PostprocessingGodrays extends ContentWidget
 		{
 			double time = duration / 4000.0;
 
-			this.sphereMesh.getPosition().setX( (float) (orbitRadius * Math.cos( time )) );
-			this.sphereMesh.getPosition().setZ( (float) (orbitRadius * Math.sin( time ) - 100) );
+			this.sphereMesh.getPosition().setX( orbitRadius * Math.cos( time ) );
+			this.sphereMesh.getPosition().setZ( orbitRadius * Math.sin( time ) - 100.0 );
 
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * 0.036f );
-			getCamera().getPosition().addY( ( - ( mouseY ) - getCamera().getPosition().getY() ) * 0.036f );
+			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * 0.036 );
+			getCamera().getPosition().addY( ( - ( mouseY ) - getCamera().getPosition().getY() ) * 0.036 );
 
 			getCamera().lookAt( getScene().getPosition() );
 			

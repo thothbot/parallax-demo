@@ -66,7 +66,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		
 		public boolean onMouseDown = false;
 		
-		public float fov = 70f;
+		public double fov = 70;
 
 		public double lat = 0; 
 		public double lon = 0;
@@ -105,7 +105,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			mesh.getScale().setX( -1 );
 			getScene().addChild( mesh );
 
-			this.cubeCamera = new CubeCamera( 1f, 1000f, 256 );
+			this.cubeCamera = new CubeCamera( 1, 1000, 256 );
 			this.cubeCamera.getRenderTarget().setMinFilter( TextureMinFilter.LINEAR_MIPMAP_LINEAR );
 			getScene().addChild( cubeCamera );
 
@@ -136,32 +136,32 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			this.phi = ( 90 - lat ) * Math.PI / 180.0;
 			this.theta = this.lon * Math.PI / 180.0;
 
-			this.sphere.getPosition().setX( (float) (Math.sin( duration * 0.001 ) * 30.0) );
-			this.sphere.getPosition().setY( (float) (Math.sin( duration * 0.0011 ) * 30.0) );
-			this.sphere.getPosition().setZ( (float) (Math.sin( duration * 0.0012 ) * 30.0) );
+			this.sphere.getPosition().setX(Math.sin( duration * 0.001 ) * 30.0 );
+			this.sphere.getPosition().setY(Math.sin( duration * 0.0011 ) * 30.0 );
+			this.sphere.getPosition().setZ(Math.sin( duration * 0.0012 ) * 30.0 );
 
-			this.sphere.getRotation().addX( 0.02f );
-			this.sphere.getRotation().addY( 0.03f );
+			this.sphere.getRotation().addX( 0.02 );
+			this.sphere.getRotation().addY( 0.03 );
 
-			this.cube.getPosition().setX( (float) (Math.sin( duration * 0.001 + 2.0 ) * 30.0) );
-			this.cube.getPosition().setY( (float) (Math.sin( duration * 0.0011 + 2.0 ) * 30.0) );
-			this.cube.getPosition().setZ( (float) (Math.sin( duration * 0.0012 + 2.0 ) * 30.0) );
+			this.cube.getPosition().setX(Math.sin( duration * 0.001 + 2.0 ) * 30.0 );
+			this.cube.getPosition().setY(Math.sin( duration * 0.0011 + 2.0 ) * 30.0 );
+			this.cube.getPosition().setZ(Math.sin( duration * 0.0012 + 2.0 ) * 30.0 );
 
-			this.cube.getRotation().addX( 0.02f );
-			this.cube.getRotation().addY( 0.03f );
+			this.cube.getRotation().addX( 0.02 );
+			this.cube.getRotation().addY( 0.03 );
 
-			this.torus.getPosition().setX( (float) (Math.sin( duration * 0.001 + 4.0 ) * 30.0) );
-			this.torus.getPosition().setY( (float) (Math.sin( duration * 0.0011 + 4.0 ) * 30.0) );
-			this.torus.getPosition().setZ( (float) (Math.sin( duration * 0.0012 + 4.0 ) * 30.0) );
+			this.torus.getPosition().setX(Math.sin( duration * 0.001 + 4.0 ) * 30.0 );
+			this.torus.getPosition().setY(Math.sin( duration * 0.0011 + 4.0 ) * 30.0 );
+			this.torus.getPosition().setZ(Math.sin( duration * 0.0012 + 4.0 ) * 30.0 );
 
-			this.torus.getRotation().addX( 0.02f );
-			this.torus.getRotation().addY( 0.03f );
+			this.torus.getRotation().addX( 0.02 );
+			this.torus.getRotation().addY( 0.03 );
 
-			getCamera().getPosition().setX( (float) (100.0 * Math.sin( phi ) * Math.cos( theta )) );
-			getCamera().getPosition().setY( (float) (100.0 * Math.cos( phi )) );
-			getCamera().getPosition().setZ( (float) (100.0 * Math.sin( phi ) * Math.sin( theta )) );
+			getCamera().getPosition().setX(100.0 * Math.sin( phi ) * Math.cos( theta ) );
+			getCamera().getPosition().setY(100.0 * Math.cos( phi ) );
+			getCamera().getPosition().setZ(100.0 * Math.sin( phi ) * Math.sin( theta ) );
 
-			getCamera().lookAt( new Vector3f( 0.0f, 0.0f, 0.0f ) );
+			getCamera().lookAt( new Vector3f( 0.0, 0.0, 0.0 ) );
 
 			this.sphere.setVisible(false); // *cough*
 
@@ -186,7 +186,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			@Override
 			public void onMouseWheel(MouseWheelEvent event) {
 				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-				rs.fov -= event.getDeltaY() * 1.0f;
+				rs.fov -= event.getDeltaY() * 1.0;
 				rs.getCamera().getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getCanvas().getAspectRation(), 1, 1100);
 			}
 		});

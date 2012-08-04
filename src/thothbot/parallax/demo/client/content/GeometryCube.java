@@ -82,8 +82,8 @@ public class GeometryCube extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			this.mesh.getRotation().setX(this.mesh.getRotation().getX() + 0.005f);
-			this.mesh.getRotation().setY(this.mesh.getRotation().getY() + 0.01f);
+			this.mesh.getRotation().setX(this.mesh.getRotation().getX() + 0.005);
+			this.mesh.getRotation().setY(this.mesh.getRotation().getY() + 0.01);
 		}
 	}
 		

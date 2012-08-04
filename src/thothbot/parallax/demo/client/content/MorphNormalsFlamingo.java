@@ -70,7 +70,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			getCamera().getPosition().setY(200);
 			getScene().addChild(getCamera());
 			
-			DirectionalLight light = new DirectionalLight( 0xffffff, 1.3f );
+			DirectionalLight light = new DirectionalLight( 0xffffff, 1.3 );
 			light.getPosition().set( 1, 1, 1 );
 			getScene().addChild( light );
 
@@ -84,7 +84,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 						json.getAnimation().setDuration(3000);
 
 						Mesh mesh = json.getMesh();
-						mesh.getScale().set(2f);
+						mesh.getScale().set(2);
 						mesh.getPosition().set(0);
 
 						getScene().addChild(mesh);
@@ -113,8 +113,8 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			this.oldTime = Duration.currentTimeMillis();
 			double theta = duration * 0.01;
 
-			getCamera().getPosition().setX( (float) (radius * Math.sin( theta * Math.PI / 360.0 )) );
-			getCamera().getPosition().setZ( (float) (radius * Math.cos( theta * Math.PI / 360.0 )) );
+			getCamera().getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
+			getCamera().getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
 
 			getCamera().lookAt( getScene().getPosition() );
 

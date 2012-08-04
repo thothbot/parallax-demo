@@ -54,7 +54,7 @@ public final class MorphTargetsHorse extends ContentWidget
 		
 		static final int aminationDuration = 1000;
 		static final int keyframes = 15;
-		static final float interpolation = (float)aminationDuration / keyframes;
+		static final double interpolation = (double)aminationDuration / keyframes;
 		
 		int lastKeyframe = 0;
 		int currentKeyframe = 0;
@@ -95,7 +95,7 @@ public final class MorphTargetsHorse extends ContentWidget
 						json.getAnimation().setDuration(3000);
 
 						mesh = json.getMesh();
-						mesh.getScale().set(1.5f);
+						mesh.getScale().set(1.5);
 
 						getScene().addChild(mesh);
 					}
@@ -117,8 +117,8 @@ public final class MorphTargetsHorse extends ContentWidget
 		{
 			double theta = duration * 0.02;
 
-			getCamera().getPosition().setX( (float) (radius * Math.sin( theta * Math.PI / 360.0 )) );
-			getCamera().getPosition().setZ( (float) (radius * Math.cos( theta * Math.PI / 360.0 )) );
+			getCamera().getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
+			getCamera().getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
 
 			getCamera().lookAt( target );
 
@@ -131,18 +131,18 @@ public final class MorphTargetsHorse extends ContentWidget
 
 				if ( keyframe != currentKeyframe ) 
 				{
-					mesh.getMorphTargetInfluences().set( lastKeyframe, 0f );
-					mesh.getMorphTargetInfluences().set( currentKeyframe, 1f );
-					mesh.getMorphTargetInfluences().set( keyframe, 0f );
+					mesh.getMorphTargetInfluences().set( lastKeyframe, 0.0 );
+					mesh.getMorphTargetInfluences().set( currentKeyframe, 1.0 );
+					mesh.getMorphTargetInfluences().set( keyframe, 0.0 );
 
 					lastKeyframe = currentKeyframe;
 					currentKeyframe = keyframe;
 				}
 
 				mesh.getMorphTargetInfluences().set( keyframe, 
-						(float)( time % interpolation ) / interpolation);
+						(double)( time % interpolation ) / interpolation);
 				mesh.getMorphTargetInfluences().set( lastKeyframe,
-						1f - mesh.getMorphTargetInfluences().get( keyframe ));
+						1.0 - mesh.getMorphTargetInfluences().get( keyframe ));
 			}
 		}
 	}

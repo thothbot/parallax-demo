@@ -103,7 +103,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 			attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3f>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
-			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0f));
+			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(texture)));
 	
@@ -122,7 +122,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 	
 			this.vc1 = geometry.getVertices().size();
 	
-			Cube geometry2 = new Cube( 0.8f * radius, 0.8f * radius, 0.8f * radius, 10, 10, 10 );
+			Cube geometry2 = new Cube( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 );
 	
 			GeometryUtils.merge( geometry, geometry2 );
 	
@@ -133,7 +133,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 //			sphere.sortParticles = true;
 	
 			List<Vector3f> vertices = sphere.getGeometry().getVertices();
-			List<Float> values_size = (List<Float>) attributes.get("size").getValue();
+			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
 			List<Color3f> values_color = (List<Color3f>) attributes.get("customColor").getValue();
 		
 			for( int v = 0; v < vertices.size(); v++ ) 
@@ -142,13 +142,13 @@ public class CustomAttributesParticles2 extends ContentWidget
 	
 				if ( v < vc1 ) 
 				{	
-					values_size.add( v, 10f);
-					values_color.get( v ).setHSV( 0.01f + 0.1f * ( v / (float)vc1 ), 0.99f, ( vertices.get( v ).getY() + radius ) / ( 2.0f *radius ) );
+					values_size.add( v, 10.0);
+					values_color.get( v ).setHSV( 0.01 + 0.1 * ( v / vc1 * 1.0 ), 0.99, ( vertices.get( v ).getY() + radius ) / ( 2.0 *radius ) );
 				} 
 				else 
 				{
-					values_size.add( v, 40f);
-					values_color.get( v ).setHSV( 0.6f, 0.75f, 0.5f + vertices.get( v ).getY() / ( 0.8f * radius ) );
+					values_size.add( v, 40.0);
+					values_color.get( v ).setHSV( 0.6, 0.75, 0.5 + vertices.get( v ).getY() / ( 0.8 * radius ) );
 				}
 	
 			}
@@ -167,14 +167,14 @@ public class CustomAttributesParticles2 extends ContentWidget
 		{
 			double time = duration * 0.005;
 
-			sphere.getRotation().setY((float) (0.02 * time));
-			sphere.getRotation().setZ((float) (0.02 * time));
+			sphere.getRotation().setY(0.02 * time);
+			sphere.getRotation().setZ(0.02 * time);
 			
 			for( int i = 0; i < attributes.get("size").getValue().size(); i++ ) 
 			{
-				List<Float> value = (List<Float>) attributes.get("size").getValue(); 
+				List<Double> value = (List<Double>) attributes.get("size").getValue(); 
 				if(i < vc1 )
-					value.set( i, (float)(16f + 12f * Math.sin( 0.1 * i + time )));
+					value.set( i, 16.0 + 12.0 * Math.sin( 0.1 * i + time ));
 			}
 			
 			attributes.get("size").needsUpdate = true;

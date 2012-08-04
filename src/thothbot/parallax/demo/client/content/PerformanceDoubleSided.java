@@ -93,26 +93,25 @@ public final class PerformanceDoubleSided extends ContentWidget
 			material.setShininess( 100 );
 			material.setEnvMap( reflectionCube );
 			material.setCombine( Texture.OPERATIONS.MIX );
-			material.setReflectivity( 0.1f );
+			material.setReflectivity( 0.1 );
 			material.setPerPixel(true);
 			material.setWrapAround(true); 
-			material.getWrapRGB().set( 0.5f, 0.5f, 0.5f );
+			material.getWrapRGB().set( 0.5, 0.5, 0.5 );
 
-			Sphere geometry = new Sphere( 1, 32, 16, 0f, (float)Math.PI );
+			Sphere geometry = new Sphere( 1, 32, 16, 0, (double)Math.PI );
 
 			for ( int i = 0; i < 5000; i ++ ) 
 			{
-
 				Mesh mesh = new Mesh( geometry, material );
 
-				mesh.getPosition().setX( (float) (Math.random() * 10000.0 - 5000.0) );
-				mesh.getPosition().setY( (float) (Math.random() * 10000.0 - 5000.0) );
-				mesh.getPosition().setZ( (float) (Math.random() * 10000.0 - 5000.0) );
+				mesh.getPosition().setX( Math.random() * 10000.0 - 5000.0 );
+				mesh.getPosition().setY( Math.random() * 10000.0 - 5000.0 );
+				mesh.getPosition().setZ( Math.random() * 10000.0 - 5000.0 );
 
-				mesh.getRotation().setX( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
-				mesh.getRotation().setY( (float) (Math.random() * 360.0 * ( Math.PI / 180.0 )) );
+				mesh.getRotation().setX( Math.random() * 360.0 * ( Math.PI / 180.0 ) );
+				mesh.getRotation().setY( Math.random() * 360.0 * ( Math.PI / 180.0 ) );
 				
-				float scale =  (float) (Math.random() * 50.0 + 100.0);
+				double scale =  Math.random() * 50.0 + 100.0;
 				mesh.getScale().set( scale );
 
 				mesh.setMatrixAutoUpdate(false);
@@ -136,8 +135,8 @@ public final class PerformanceDoubleSided extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05f );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05f );
+			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
+			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05 );
 
 			getCamera().lookAt( getScene().getPosition() );
 		}

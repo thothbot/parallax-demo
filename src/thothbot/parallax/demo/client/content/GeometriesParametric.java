@@ -78,7 +78,7 @@ public class GeometriesParametric extends ContentWidget
 			getScene().addChild( new AmbientLight( 0x404040 ) );
 	
 			DirectionalLight light = new DirectionalLight( 0xffffff );
-			light.getPosition().set( 0, 0, 1f );
+			light.getPosition().set( 0, 0, 1 );
 			getScene().addChild( light );
 			
 			List<Material> materials = new ArrayList<Material>();
@@ -91,7 +91,7 @@ public class GeometriesParametric extends ContentWidget
 			bmaterial.setColor( new Color3f(0xffffff) );
 			bmaterial.setWireframe( true );
 			bmaterial.setTransparent(true);
-			bmaterial.setOpacity( 0.1f );
+			bmaterial.setOpacity( 0.1 );
 			materials.add(bmaterial);
 			
 			// Klein Bottle
@@ -127,8 +127,8 @@ public class GeometriesParametric extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().setX((float) (Math.cos( duration * 0.0001 ) * 800.0f));
-			getCamera().getPosition().setZ((float) (Math.sin( duration * 0.0001 ) * 800.0f));
+			getCamera().getPosition().setX(Math.cos( duration * 0.0001 ) * 800.0);
+			getCamera().getPosition().setZ(Math.sin( duration * 0.0001 ) * 800.0);
 
 			getCamera().lookAt( getScene().getPosition() );
 
@@ -136,8 +136,8 @@ public class GeometriesParametric extends ContentWidget
 			{
 				DimensionalObject object = getScene().getChildren().get( i );
 
-				object.getRotation().addX(0.01f);
-				object.getRotation().addY(0.005f);
+				object.getRotation().addX(0.01);
+				object.getRotation().addY(0.005);
 			}
 		}
 	}

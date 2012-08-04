@@ -99,10 +99,10 @@ public final class LoaderCollada extends ContentWidget
 
 			LineBasicMaterial line_material = new LineBasicMaterial();
 			line_material.setColor(new Color3f(0xcccccc));
-			line_material.setOpacity(0.2f);
+			line_material.setOpacity(0.2);
 			
 			Geometry geometry = new Geometry();
-			float floor = -0.04f, step = 1.0f, size = 14.0f;
+			double floor = -0.04, step = 1.0, size = 14.0;
 
 			for ( int i = 0; i <= size / step * 2; i ++ ) 
 			{
@@ -129,9 +129,9 @@ public final class LoaderCollada extends ContentWidget
 			getScene().addChild( new AmbientLight( 0xcccccc ) );
 
 			DirectionalLight directionalLight = new DirectionalLight(0xeeeeee );
-			directionalLight.getPosition().setX( (float) (Math.random() - 0.5) );
-			directionalLight.getPosition().setY( (float) (Math.random() - 0.5) );
-			directionalLight.getPosition().setZ( (float) (Math.random() - 0.5) );
+			directionalLight.getPosition().setX( Math.random() - 0.5 );
+			directionalLight.getPosition().setY( Math.random() - 0.5 );
+			directionalLight.getPosition().setZ( Math.random() - 0.5 );
 			directionalLight.getPosition().normalize();
 			getScene().addChild( directionalLight );
 
@@ -150,15 +150,15 @@ public final class LoaderCollada extends ContentWidget
 		{
 			double timer = duration * 0.0005;
 
-			getCamera().getPosition().setX( (float) (Math.cos( timer ) * 10.0) );
-			getCamera().getPosition().setY( 2.0f );
-			getCamera().getPosition().setZ( (float) (Math.sin( timer ) * 10.0) );
+			getCamera().getPosition().setX( Math.cos( timer ) * 10.0 );
+			getCamera().getPosition().setY( 2.0 );
+			getCamera().getPosition().setZ( Math.sin( timer ) * 10.0 );
 
 			getCamera().lookAt( getScene().getPosition() );
 
-			this.particleLight.getPosition().setX( (float) (Math.sin( timer * 4 ) * 3009.0) );
-			this.particleLight.getPosition().setY( (float) (Math.cos( timer * 5 ) * 4000.0) );
-			this.particleLight.getPosition().setZ( (float) (Math.cos( timer * 4 ) * 3009.0) );
+			this.particleLight.getPosition().setX( Math.sin( timer * 4 ) * 3009.0 );
+			this.particleLight.getPosition().setY( Math.cos( timer * 5 ) * 4000.0 );
+			this.particleLight.getPosition().setZ( Math.cos( timer * 4 ) * 3009.0 );
 		}
 	}
 		

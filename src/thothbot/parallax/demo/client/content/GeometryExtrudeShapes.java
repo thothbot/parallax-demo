@@ -140,7 +140,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 //			List<Vector3f> randomPoints = new ArrayList<Vector3f>();
 //
 //			for (int i=0; i<10; i++)
-//				randomPoints.add(new Vector3f((float)Math.random() * 200.0f, (float)Math.random() * 200.0f, (float)Math.random() * 200.0f ));
+//				randomPoints.add(new Vector3f((double)Math.random() * 200.0f, (double)Math.random() * 200.0f, (double)Math.random() * 200.0f ));
 //
 //			CurveSpline3D randomSpline =  new CurveSpline3D(randomPoints);
 			
@@ -160,7 +160,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 
 			// Circle
 
-			float circleRadius = 4f;
+			double circleRadius = 4f;
 			Shape circleShape = new Shape();
 			circleShape.moveTo( 0, circleRadius );
 			circleShape.quadraticCurveTo( circleRadius, circleRadius, circleRadius, 0 );
@@ -168,8 +168,8 @@ public class GeometryExtrudeShapes extends ContentWidget
 			circleShape.quadraticCurveTo( -circleRadius, -circleRadius, -circleRadius, 0 );
 			circleShape.quadraticCurveTo( -circleRadius, circleRadius, 0, circleRadius);
 
-			float rectLength = 12f;
-			float rectWidth = 4f;
+			double rectLength = 12f;
+			double rectWidth = 4f;
 
 			Shape rectShape = new Shape();
 
@@ -182,17 +182,17 @@ public class GeometryExtrudeShapes extends ContentWidget
 			// Smiley
 
 			Shape smileyShape = new Shape();
-			smileyShape.moveTo( 80f, 40f );
-			smileyShape.arc( 40f, 40f, 40f, 0.0f, (float)(Math.PI * 2.0), false );
+			smileyShape.moveTo( 80, 40 );
+			smileyShape.arc( 40, 40, 40, 0.0, Math.PI * 2.0, false );
 
 			Path smileyEye1Path = new Path();
 			smileyEye1Path.moveTo( 35, 20 );
-			smileyEye1Path.arc( 25f, 20f, 10f, 0.0f, (float)(Math.PI * 2.0), true );
+			smileyEye1Path.arc( 25, 20, 10, 0.0, Math.PI * 2.0, true );
 			smileyShape.getHoles().add( smileyEye1Path );
 
 			Path smileyEye2Path = new Path();
 			smileyEye2Path.moveTo( 65, 20 );
-			smileyEye2Path.arc( 55f, 20f, 10f, 0.0f, (float)(Math.PI * 2.0), true );
+			smileyEye2Path.arc( 55, 20, 10, 0.0, Math.PI * 2.0, true );
 			smileyShape.getHoles().add( smileyEye2Path );
 
 			Path smileyMouthPath = new Path();
@@ -211,9 +211,9 @@ public class GeometryExtrudeShapes extends ContentWidget
 			for (int i = 0; i < starPoints * 2; i++) 
 			{
 				l = (Mathematics.isEven(i)) ? 5.0 : 10.0; 
-				double a = i / (double)starPoints * Math.PI;
+				double a = i / starPoints * Math.PI;
 
-				pts.add(new Vector2f((float)(Math.cos(a) * l), (float)(Math.sin(a) * l )));
+				pts.add(new Vector2f(Math.cos(a) * l, Math.sin(a) * l ));
 			}
 
 			Shape starShape = new Shape(pts);
@@ -232,25 +232,25 @@ public class GeometryExtrudeShapes extends ContentWidget
 //					1f);  
 		}
 		
-		private void addGeometry( Geometry geometry, Color3f color, float x, float y, float z, float rx, float ry, float rz, float s ) 
+		private void addGeometry( Geometry geometry, Color3f color, double x, double y, double z, double rx, double ry, double rz, double s ) 
 		{
 			// 3d shape
 			MeshLambertMaterial ml = new MeshLambertMaterial();
 			ml.setColor(color);
-			ml.setOpacity( 0.2f );
+			ml.setOpacity( 0.2 );
 			ml.setTransparent(true);
 
 			MeshBasicMaterial mb = new MeshBasicMaterial();
 			mb.setColor( new Color3f(0x000000) );
 			mb.setWireframe( true );
-			mb.setOpacity( 0.3f );
+			mb.setOpacity( 0.3 );
 
 			List<Material> materials= new ArrayList<Material>();
 			materials.add(ml);
 			materials.add(mb);
 			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, materials );     
 
-			mesh.getPosition().set( x, y, z - 75.0f );
+			mesh.getPosition().set( x, y, z - 75.0 );
 
 			mesh.getScale().set( s );
 

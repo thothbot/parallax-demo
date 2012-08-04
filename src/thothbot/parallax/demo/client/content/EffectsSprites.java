@@ -80,9 +80,9 @@ public final class EffectsSprites extends ContentWidget
 				sprite.setUseScreenCoordinates(false);
 				sprite.setColor(new Color3f(0xffffff));
 
-				sprite.getPosition().set( (float)Math.random() - 0.5f,
-						(float)Math.random() - 0.5f,
-						(float)Math.random() - 0.5f );
+				sprite.getPosition().set( Math.random() - 0.5,
+						Math.random() - 0.5,
+						Math.random() - 0.5 );
 
 				if( sprite.getPosition().getZ() < 0 ) 
 				{
@@ -90,9 +90,9 @@ public final class EffectsSprites extends ContentWidget
 				} 
 				else 
 				{
-					sprite.getColor().setHSV( (float)(0.5 * Math.random()), 0.8f, 0.9f );
+					sprite.getColor().setHSV(0.5 * Math.random(), 0.8, 0.9 );
 					sprite.getUvScale().set( 2, 2 );
-					sprite.getUvOffset().set( -0.5f, -0.5f );
+					sprite.getUvOffset().set( -0.5, -0.5 );
 				}
 
 				sprite.getPosition().normalize();
@@ -109,14 +109,14 @@ public final class EffectsSprites extends ContentWidget
 			sprite1.setMap(mapA);
 			sprite1.setAlignment(ALIGNMENT.TOP_LEFT);
 			sprite1.getPosition().set( 100, 100, 0 );
-			sprite1.setOpacity( 0.25f );
+			sprite1.setOpacity( 0.25 );
 			getScene().addChild( sprite1 );
 
 			Sprite sprite2 = new Sprite();
 			sprite2.setMap(mapA);
 			sprite2.setAlignment(ALIGNMENT.TOP_LEFT);
 			sprite2.getPosition().set( 150, 150, 2 );
-			sprite2.setOpacity( 0.5f );
+			sprite2.setOpacity( 0.5 );
 			getScene().addChild( sprite2 );
 
 			Sprite sprite3 = new Sprite();
@@ -140,18 +140,18 @@ public final class EffectsSprites extends ContentWidget
 			for ( int c = 0; c < group.getChildren().size(); c ++ ) 
 			{
 				Sprite sprite = (Sprite) group.getChildren().get(c);
-				float scale = (float) (Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.3 + 1.0);
+				double scale = Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.3 + 1.0;
 
-				sprite.setRotationFactor(sprite.getRotationFactor() +  0.1f * ( (float)c / group.getChildren().size() ) );
-				sprite.getScale().set( scale, scale, 1.0f );
+				sprite.setRotationFactor(sprite.getRotationFactor() +  0.1 * ( c / group.getChildren().size() * 1.0 ) );
+				sprite.getScale().set( scale, scale, 1.0 );
 
 				if ( !sprite.getMap().equals( mapC ) )
-					sprite.setOpacity( (float) (Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.4 + 0.6) );
+					sprite.setOpacity( Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.4 + 0.6 );
 			}
 
-			group.getRotation().setX( (float) (time * 0.5) );
-			group.getRotation().setY( (float) (time * 0.75) );
-			group.getRotation().setZ( (float) (time * 1.0) );
+			group.getRotation().setX( time * 0.5 );
+			group.getRotation().setY( time * 0.75);
+			group.getRotation().setZ( time * 1.0 );
 		}
 	}
 		

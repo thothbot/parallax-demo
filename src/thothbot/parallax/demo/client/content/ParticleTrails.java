@@ -76,9 +76,9 @@ public final class ParticleTrails extends ContentWidget
 			for ( int i = 0; i < 2000; i ++ ) 
 			{
 				Vector3f vertex = new Vector3f();
-				vertex.setX((float) (Math.random() * 4000.0 - 2000.0));
-				vertex.setY((float) (Math.random() * 4000.0 - 2000.0));
-				vertex.setZ((float) (Math.random() * 4000.0 - 2000.0));
+				vertex.setX(Math.random() * 4000.0 - 2000.0);
+				vertex.setY(Math.random() * 4000.0 - 2000.0);
+				vertex.setZ(Math.random() * 4000.0 - 2000.0);
 				geometry.getVertices().add( vertex );
 
 				geometry.getColors().add( new Color3f( colors[ (int) Math.floor( Math.random() * colors.length ) ] ) );
@@ -107,8 +107,8 @@ public final class ParticleTrails extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05f );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05f );
+			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
+			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05 );
 
 			getCamera().lookAt( getScene().getPosition() );
 		}

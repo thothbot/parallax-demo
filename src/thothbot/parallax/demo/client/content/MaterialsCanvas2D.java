@@ -95,20 +95,20 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			Geometry geometry = new Geometry();
 			
-			float floor = -75, step = 25;
+			double floor = -75, step = 25;
 
 			for ( int i = 0; i <= 40; i ++ ) 
 			{
-				geometry.getVertices().add( new Vector3f( - 500f, floor, i * step - 500f ) );
-				geometry.getVertices().add( new Vector3f(   500f, floor, i * step - 500f ) );
+				geometry.getVertices().add( new Vector3f( - 500, floor, i * step - 500 ) );
+				geometry.getVertices().add( new Vector3f(   500, floor, i * step - 500 ) );
 
-				geometry.getVertices().add( new Vector3f( i * step - 500f, floor, -500f ) );
-				geometry.getVertices().add( new Vector3f( i * step - 500f, floor,  500f ) );
+				geometry.getVertices().add( new Vector3f( i * step - 500, floor, -500 ) );
+				geometry.getVertices().add( new Vector3f( i * step - 500, floor,  500 ) );
 			}
 
 			LineBasicMaterial line_material = new LineBasicMaterial();
 			line_material.setColor( new Color3f( 0xffffff) );
-			line_material.setOpacity( 0.2f );
+			line_material.setOpacity( 0.2 );
 
 			Line line = new Line( geometry, line_material, Line.TYPE.PIECES );
 			getScene().addChild( line );
@@ -135,7 +135,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			mpOpt.setAmbient( new Color3f(0x030303) );
 			mpOpt.setColor( new Color3f(0xdddddd) );
 			mpOpt.setSpecular( new Color3f(0x009900) );
-			mpOpt.setShininess( 30f );
+			mpOpt.setShininess( 30 );
 			mpOpt.setShading( Material.SHADING.FLAT );
 			materials.add( mpOpt );
 			
@@ -180,9 +180,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 			mpOpt1.setEmissive( new Color3f(0xffff00) );
 			mpOpt1.setColor( new Color3f(0x000000) );
 			mpOpt1.setSpecular( new Color3f(0x666666) );
-			mpOpt1.setShininess( 10f );
+			mpOpt1.setShininess( 10 );
 			mpOpt1.setShading( Material.SHADING.SMOOTH );
-			mpOpt1.setOpacity( 0.9f );
+			mpOpt1.setOpacity( 0.9 );
 			mpOpt1.setTransparent(true);
 			materials.add( mpOpt1 );
 
@@ -227,12 +227,12 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 				Mesh sphere = new Mesh( geometryMesh, material );
 
-				sphere.getPosition().setX(( i % 4 ) * 200f - 400f);
-				sphere.getPosition().setZ((float) (Math.floor( i / 4.0 ) * 200f - 200f));
+				sphere.getPosition().setX(( i % 4 ) * 200.0 - 400.0);
+				sphere.getPosition().setZ(Math.floor( i / 4.0 ) * 200.0 - 200.0);
 
-				sphere.getRotation().setX((float) (Math.random() * 200.0 - 100.0));
-				sphere.getRotation().setY((float) (Math.random() * 200.0 - 100.0));
-				sphere.getRotation().setZ((float) (Math.random() * 200.0 - 100.0));
+				sphere.getRotation().setX(Math.random() * 200.0 - 100.0);
+				sphere.getRotation().setY(Math.random() * 200.0 - 100.0);
+				sphere.getRotation().setZ(Math.random() * 200.0 - 100.0);
 
 				this.objects.add( sphere );
 
@@ -249,11 +249,11 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			getScene().addChild( new AmbientLight( 0x111111 ) );
 
-			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 0.125f );
+			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 0.125 );
 
-			directionalLight.getPosition().setX( (float) (Math.random() - 0.5) );
-			directionalLight.getPosition().setY( (float) (Math.random() - 0.5) );
-			directionalLight.getPosition().setZ( (float) (Math.random() - 0.5) );
+			directionalLight.getPosition().setX( Math.random() - 0.5 );
+			directionalLight.getPosition().setY( Math.random() - 0.5 );
+			directionalLight.getPosition().setZ( Math.random() - 0.5 );
 
 			directionalLight.getPosition().normalize();
 
@@ -299,8 +299,8 @@ public final class MaterialsCanvas2D extends ContentWidget
 		{
 			double timer = 0.0001 * duration;
 
-			getCamera().getPosition().setX( (float) (Math.cos( timer ) * 1000.0) );
-			getCamera().getPosition().setZ( (float) (Math.sin( timer ) * 1000.0) );
+			getCamera().getPosition().setX( Math.cos( timer ) * 1000.0 );
+			getCamera().getPosition().setZ( Math.sin( timer ) * 1000.0 );
 
 			getCamera().lookAt( getScene().getPosition() );
 
@@ -308,25 +308,25 @@ public final class MaterialsCanvas2D extends ContentWidget
 			{
 				Mesh object = this.objects.get(i);
 
-				object.getRotation().addX(0.01f);
-				object.getRotation().addY(0.005f);
+				object.getRotation().addX(0.01);
+				object.getRotation().addY(0.005);
 
 				Material material = this.materials.get( i ); 
 				if(i > 9 && material instanceof MeshPhongMaterial)
 				{
 					((MeshPhongMaterial)material).getEmissive()
-						.setHSV( 0.54f, 1.0f, (float) (0.7 * ( 0.5 + 0.5 * Math.sin( 35 * timer ) )) );	
+						.setHSV( 0.54, 1.0, 0.7 * ( 0.5 + 0.5 * Math.sin( 35 * timer ) ) );	
 				}
 				else if(i > 9 && material instanceof MeshLambertMaterial)
 				{
 					((MeshLambertMaterial)material).getEmissive()
-						.setHSV( 0.04f, 1.0f, (float) (0.7 * ( 0.5 + 0.5 * Math.cos( 35 * timer ) )) );	
+						.setHSV( 0.04, 1.0, 0.7 * ( 0.5 + 0.5 * Math.cos( 35 * timer ) ) );	
 				}
 			}
 			
-			this.particleLight.getPosition().setX( (float) (Math.sin( timer * 7 ) * 300.0) );
-			this.particleLight.getPosition().setY( (float) (Math.cos( timer * 5 ) * 400.0) );
-			this.particleLight.getPosition().setZ( (float) (Math.cos( timer * 3 ) * 300.0));
+			this.particleLight.getPosition().setX(Math.sin( timer * 7 ) * 300.0 );
+			this.particleLight.getPosition().setY(Math.cos( timer * 5 ) * 400.0 );
+			this.particleLight.getPosition().setZ(Math.cos( timer * 3 ) * 300.0 );
 
 			this.pointLight.getPosition().setX( particleLight.getPosition().getX() );
 			this.pointLight.getPosition().setY( particleLight.getPosition().getY() );
