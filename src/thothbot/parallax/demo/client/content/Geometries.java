@@ -102,7 +102,7 @@ public class Geometries extends ContentWidget
 			bmaterial.setColor( new Color3(0xffffff) );
 			bmaterial.setWireframe(true);
 			bmaterial.setTransparent(true);
-			bmaterial.setOpacity( 0.1f );
+			bmaterial.setOpacity( 0.1 );
 			materials.add(bmaterial);
 	
 			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new Cube( 100, 100, 100, 4, 4, 4 ), materials );

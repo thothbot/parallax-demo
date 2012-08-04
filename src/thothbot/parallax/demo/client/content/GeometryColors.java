@@ -133,17 +133,17 @@ public class GeometryColors extends ContentWidget
 					Vector3 p = geometry.getVertices().get( vertexIndex );
 
 					Color3 color = new Color3( 0xffffff );
-					color.setHSV( ( p.getY() / radius * 1.0 + 1.0 ) / 2.0, 1.0, 1.0 );
+					color.setHSV( ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0, 1.0 );
 
 					geometry.getFaces().get( i ).getVertexColors().add(color);
 
 					Color3 color2 = new Color3( 0xffffff );
-					color2.setHSV( 0.0f, ( p.getY() / radius * 1.0 + 1.0 ) / 2.0, 1.0 );
+					color2.setHSV( 0.0, ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0 );
 
 					geometry2.getFaces().get( i ).getVertexColors().add(color);
 
 					Color3 color3 = new Color3( 0xffffff );
-					color3.setHSV( (0.125 * vertexIndex / geometry.getVertices().size() * 1.0), 1.0, 1.0 );
+					color3.setHSV( (0.125 * vertexIndex / (double)geometry.getVertices().size()), 1.0, 1.0 );
 
 					geometry3.getFaces().get( i ).getVertexColors().add(color3);
 				}

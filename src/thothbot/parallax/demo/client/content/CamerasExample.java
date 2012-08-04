@@ -172,9 +172,9 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			for ( int i = 0; i < 10000; i ++ ) 
 			{
 				Vector3 vertex = new Vector3();
-				vertex.setX(Mathematics.randFloatSpread( 3000 ));
-				vertex.setY(Mathematics.randFloatSpread( 3000 ));
-				vertex.setZ(Mathematics.randFloatSpread( 3000 ));
+				vertex.setX(Mathematics.randFloatSpread( 3000.0 ));
+				vertex.setY(Mathematics.randFloatSpread( 3000.0 ));
+				vertex.setZ(Mathematics.randFloatSpread( 3000.0 ));
 	
 				geometry.getVertices().add( vertex );
 			}

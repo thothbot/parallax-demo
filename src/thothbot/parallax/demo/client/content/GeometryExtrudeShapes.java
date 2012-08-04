@@ -160,7 +160,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 
 			// Circle
 
-			double circleRadius = 4f;
+			double circleRadius = 4.0;
 			Shape circleShape = new Shape();
 			circleShape.moveTo( 0, circleRadius );
 			circleShape.quadraticCurveTo( circleRadius, circleRadius, circleRadius, 0 );
@@ -168,8 +168,8 @@ public class GeometryExtrudeShapes extends ContentWidget
 			circleShape.quadraticCurveTo( -circleRadius, -circleRadius, -circleRadius, 0 );
 			circleShape.quadraticCurveTo( -circleRadius, circleRadius, 0, circleRadius);
 
-			double rectLength = 12f;
-			double rectWidth = 4f;
+			double rectLength = 12.0;
+			double rectWidth = 4.0;
 
 			Shape rectShape = new Shape();
 
@@ -219,17 +219,17 @@ public class GeometryExtrudeShapes extends ContentWidget
 			Shape starShape = new Shape(pts);
 			ExtrudeGeometry circle3d = starShape.extrude( extrudeParameters ); //circleShape rectShape smileyShape starShape
 
-//			Tube tube = new Tube((CurvePath) extrudeParameters.extrudePath, 150, 4.0f, 5, false, true);     
+//			Tube tube = new Tube((CurvePath) extrudeParameters.extrudePath, 150, 4.0, 5, false, true);     
 
 //			addGeometry( circle3d, new Color3(0xff1111),  
-//					-100f, 0f, 0f,     
-//					0f, 0f, 0f, 
-//					1f);
+//					-100f, 0, 0,     
+//					0, 0, 0, 
+//					1);
 
 //			addGeometry( tube, new Color3(0x00ff11),  
-//					0f, 0f, 0f,     
-//					0f, 0f, 0f, 
-//					1f);  
+//					0, 0, 0,     
+//					0, 0, 0, 
+//					1);  
 		}
 		
 		private void addGeometry( Geometry geometry, Color3 color, double x, double y, double z, double rx, double ry, double rz, double s ) 

@@ -86,10 +86,10 @@ public final class ParticleTrails extends ContentWidget
 			}
 
 			ParticleBasicMaterial material = new ParticleBasicMaterial();
-			material.setSize( 1f );
+			material.setSize( 1.0 );
 			material.setVertexColors(  Material.COLORS.VERTEX );
 			material.setDepthTest( false );
-			material.setOpacity( 0.5f );
+			material.setOpacity( 0.5 );
 			material.setSizeAttenuation(false);
 
 			ParticleSystem mesh = new ParticleSystem( geometry, material );

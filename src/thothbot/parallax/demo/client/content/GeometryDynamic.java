@@ -82,7 +82,7 @@ public class GeometryDynamic extends ContentWidget
 			getCamera().getPosition().setY(200);
 			getScene().addChild(getCamera());
 
-			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007f ));
+			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007 ));
 
 			this.controls = new FirstPersonControl( getCamera(), getRenderer().getCanvas() );
 			controls.setMovementSpeed(500);

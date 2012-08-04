@@ -105,7 +105,7 @@ public final class GeometryLinesColors extends ContentWidget
 				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400 );
 
 				colors3.add( new Color3( 0xffffff ));
-				colors3.get( i ).setHSV( i / points.size() * 1.0, 1.0, 1.0 );
+				colors3.get( i ).setHSV( i / (double)points.size(), 1.0, 1.0 );
 			}
 
 			geometry2.setVertices(geometry.getVertices()); 
@@ -122,7 +122,7 @@ public final class GeometryLinesColors extends ContentWidget
 			material.setLinewidth(3);
 			material.setOpacity(1);
 
-			double scale = 0.3f;
+			double scale = 0.3;
 			double d = 225;
 
 			material.setVertexColors(COLORS.VERTEX);
@@ -181,7 +181,7 @@ public final class GeometryLinesColors extends ContentWidget
 				int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7 ) 
 		{
 
-			double half = side / 2.0f;
+			double half = side / 2.0;
 
 			List<Vector3> vec_s = Arrays.asList(
 					new Vector3( center.getX() - half, center.getY() + half, center.getZ() - half ),
