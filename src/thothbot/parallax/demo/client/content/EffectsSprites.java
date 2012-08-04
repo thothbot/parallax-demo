@@ -140,7 +140,7 @@ public final class EffectsSprites extends ContentWidget
 			for ( int c = 0; c < group.getChildren().size(); c ++ ) 
 			{
 				Sprite sprite = (Sprite) group.getChildren().get(c);
-				double scale = Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.3 + 1.0;
+				double scale = Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.3 + 0.5;
 
 				sprite.setRotationFactor(sprite.getRotationFactor() +  0.1 * ( c / (double)group.getChildren().size() ) );
 				sprite.getScale().set( scale, scale, 1.0 );

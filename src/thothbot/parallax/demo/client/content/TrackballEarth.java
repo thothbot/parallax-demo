@@ -130,7 +130,7 @@ public final class TrackballEarth extends ContentWidget
 			((Color3)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
 			((Color3)uniforms.get("uAmbientColor").getValue()).setHex( 0x000000 );
 
-			uniforms.get("uShininess").setValue( 20 );
+			uniforms.get("uShininess").setValue( 20.0 );
 
 			((Color3)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
 			((Color3)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
