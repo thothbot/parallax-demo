@@ -25,7 +25,7 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
@@ -89,7 +89,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 			reflectionCube.setFormat(PixelFormat.RGB);
 
 			MeshPhongMaterial material = new MeshPhongMaterial();
-			material.setSpecular( new Color3f(0xffffff) );
+			material.setSpecular( new Color3(0xffffff) );
 			material.setShininess( 100 );
 			material.setEnvMap( reflectionCube );
 			material.setCombine( Texture.OPERATIONS.MIX );

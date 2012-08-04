@@ -31,7 +31,7 @@ import thothbot.parallax.core.client.shader.ShaderCubeMap;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -108,7 +108,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			CubeTexture textureCube = ImageUtils.loadTextureCube( textures );
 			
 			MeshBasicMaterial material = new MeshBasicMaterial();
-			material.setColor( new Color3f(0xffffff) );
+			material.setColor( new Color3(0xffffff) );
 			material.setEnvMap( textureCube );
 			
 			this.sphere = new ArrayList<Mesh>();

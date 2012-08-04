@@ -27,10 +27,10 @@ import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector2f;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector2;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
@@ -88,23 +88,23 @@ public final class GeometryLinesColors extends ContentWidget
 			Geometry geometry = new Geometry();
 			Geometry geometry2 = new Geometry();
 			Geometry geometry3 = new Geometry();
-			List<Vector3f> points = hilbert3D( new Vector3f( 0,0,0 ), 200.0, 2, 0, 1, 2, 3, 4, 5, 6, 7 );
+			List<Vector3> points = hilbert3D( new Vector3( 0,0,0 ), 200.0, 2, 0, 1, 2, 3, 4, 5, 6, 7 );
 
-			List<Color3f> colors = new ArrayList<Color3f>(); 
-			List<Color3f> colors2 = new ArrayList<Color3f>();
-			List<Color3f> colors3 = new ArrayList<Color3f>();
+			List<Color3> colors = new ArrayList<Color3>(); 
+			List<Color3> colors2 = new ArrayList<Color3>();
+			List<Color3> colors3 = new ArrayList<Color3>();
 
 			for ( int i = 0; i < points.size(); i ++ ) 
 			{
 				geometry.getVertices().add( points.get( i ) );
 
-				colors.add( new Color3f( 0xffffff ) );
+				colors.add( new Color3( 0xffffff ) );
 				colors.get( i ).setHSV( 0.6, ( 200 + points.get( i ).getX() ) / 400, 1.0 );
 
-				colors2.add( new Color3f( 0xffffff ) );
+				colors2.add( new Color3( 0xffffff ) );
 				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400 );
 
-				colors3.add( new Color3f( 0xffffff ));
+				colors3.add( new Color3( 0xffffff ));
 				colors3.get( i ).setHSV( i / points.size() * 1.0, 1.0, 1.0 );
 			}
 
@@ -118,7 +118,7 @@ public final class GeometryLinesColors extends ContentWidget
 			// lines
 
 			LineBasicMaterial material = new LineBasicMaterial();
-			material.setColor(new Color3f(0xffffff));
+			material.setColor(new Color3(0xffffff));
 			material.setLinewidth(3);
 			material.setOpacity(1);
 
@@ -151,7 +151,7 @@ public final class GeometryLinesColors extends ContentWidget
 			effectScreen.setRenderToScreen(true);
 			
 			effectFXAA = new ShaderPass( new ShaderFxaa() );
-			((Vector2f)effectFXAA.getUniforms().get("resolution").getValue()).set( 
+			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
 					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
 
 			composer = new EffectComposer( getRenderer() );
@@ -169,7 +169,7 @@ public final class GeometryLinesColors extends ContentWidget
 		{
 			super.onResize();
 
-			((Vector2f)effectFXAA.getUniforms().get("resolution").getValue()).set( 
+			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
 					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
 		}
 		
@@ -177,30 +177,30 @@ public final class GeometryLinesColors extends ContentWidget
 		 * Port of Processing Java code by Thomas Diewald
 		 * <a href="http://www.openprocessing.org/visuals/?visualID=15599">openprocessing.org</a>
 		 */
-		private List<Vector3f> hilbert3D( Vector3f center, double side, int iterations, 
+		private List<Vector3> hilbert3D( Vector3 center, double side, int iterations, 
 				int v0, int v1, int v2, int v3, int v4, int v5, int v6, int v7 ) 
 		{
 
 			double half = side / 2.0f;
 
-			List<Vector3f> vec_s = Arrays.asList(
-					new Vector3f( center.getX() - half, center.getY() + half, center.getZ() - half ),
-					new Vector3f( center.getX() - half, center.getY() + half, center.getZ() + half ),
-					new Vector3f( center.getX() - half, center.getY() - half, center.getZ() + half ),
-					new Vector3f( center.getX() - half, center.getY() - half, center.getZ() - half ),
-					new Vector3f( center.getX() + half, center.getY() - half, center.getZ() - half ),
-					new Vector3f( center.getX() + half, center.getY() - half, center.getZ() + half ),
-					new Vector3f( center.getX() + half, center.getY() + half, center.getZ() + half ),
-					new Vector3f( center.getX() + half, center.getY() + half, center.getZ() - half )
+			List<Vector3> vec_s = Arrays.asList(
+					new Vector3( center.getX() - half, center.getY() + half, center.getZ() - half ),
+					new Vector3( center.getX() - half, center.getY() + half, center.getZ() + half ),
+					new Vector3( center.getX() - half, center.getY() - half, center.getZ() + half ),
+					new Vector3( center.getX() - half, center.getY() - half, center.getZ() - half ),
+					new Vector3( center.getX() + half, center.getY() - half, center.getZ() - half ),
+					new Vector3( center.getX() + half, center.getY() - half, center.getZ() + half ),
+					new Vector3( center.getX() + half, center.getY() + half, center.getZ() + half ),
+					new Vector3( center.getX() + half, center.getY() + half, center.getZ() - half )
 			);
 
-			List<Vector3f> vec = Arrays.asList( 
+			List<Vector3> vec = Arrays.asList( 
 					vec_s.get( v0 ), vec_s.get( v1 ), vec_s.get( v2 ), vec_s.get( v3 ), 
 					vec_s.get( v4 ), vec_s.get( v5 ), vec_s.get( v6 ), vec_s.get( v7 ) );
 
 			if( --iterations >= 0 ) 
 			{
-				List<Vector3f> tmp = new ArrayList<Vector3f>();
+				List<Vector3> tmp = new ArrayList<Vector3>();
 				tmp.addAll(hilbert3D ( vec.get( 0 ), half, iterations, v0, v3, v4, v7, v6, v5, v2, v1 ));
 				tmp.addAll(hilbert3D ( vec.get( 1 ), half, iterations, v0, v7, v6, v1, v2, v5, v4, v3 ) );
 				tmp.addAll(hilbert3D ( vec.get( 2 ), half, iterations, v0, v7, v6, v1, v2, v5, v4, v3 ) );

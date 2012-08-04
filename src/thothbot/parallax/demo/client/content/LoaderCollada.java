@@ -21,9 +21,9 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -98,7 +98,7 @@ public final class LoaderCollada extends ContentWidget
 			// Grid
 
 			LineBasicMaterial line_material = new LineBasicMaterial();
-			line_material.setColor(new Color3f(0xcccccc));
+			line_material.setColor(new Color3(0xcccccc));
 			line_material.setOpacity(0.2);
 			
 			Geometry geometry = new Geometry();
@@ -107,11 +107,11 @@ public final class LoaderCollada extends ContentWidget
 			for ( int i = 0; i <= size / step * 2; i ++ ) 
 			{
 
-				geometry.getVertices().add( new Vector3f( - size, floor, i * step - size ) );
-				geometry.getVertices().add( new Vector3f(   size, floor, i * step - size ) );
+				geometry.getVertices().add( new Vector3( - size, floor, i * step - size ) );
+				geometry.getVertices().add( new Vector3(   size, floor, i * step - size ) );
 
-				geometry.getVertices().add( new Vector3f( i * step - size, floor, -size ) );
-				geometry.getVertices().add( new Vector3f( i * step - size, floor,  size ) );
+				geometry.getVertices().add( new Vector3( i * step - size, floor, -size ) );
+				geometry.getVertices().add( new Vector3( i * step - size, floor,  size ) );
 
 			}
 
@@ -119,7 +119,7 @@ public final class LoaderCollada extends ContentWidget
 			getScene().addChild( line );
 
 			MeshBasicMaterial sMaterial = new MeshBasicMaterial();
-			sMaterial.setColor(new Color3f(0xffffff));
+			sMaterial.setColor(new Color3(0xffffff));
 			
 			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), sMaterial );
 			getScene().addChild( this.particleLight );

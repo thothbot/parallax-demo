@@ -27,10 +27,10 @@ import java.util.List;
 
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -99,15 +99,15 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			for ( int i = 0; i <= 40; i ++ ) 
 			{
-				geometry.getVertices().add( new Vector3f( - 500, floor, i * step - 500 ) );
-				geometry.getVertices().add( new Vector3f(   500, floor, i * step - 500 ) );
+				geometry.getVertices().add( new Vector3( - 500, floor, i * step - 500 ) );
+				geometry.getVertices().add( new Vector3(   500, floor, i * step - 500 ) );
 
-				geometry.getVertices().add( new Vector3f( i * step - 500, floor, -500 ) );
-				geometry.getVertices().add( new Vector3f( i * step - 500, floor,  500 ) );
+				geometry.getVertices().add( new Vector3( i * step - 500, floor, -500 ) );
+				geometry.getVertices().add( new Vector3( i * step - 500, floor,  500 ) );
 			}
 
 			LineBasicMaterial line_material = new LineBasicMaterial();
-			line_material.setColor( new Color3f( 0xffffff) );
+			line_material.setColor( new Color3( 0xffffff) );
 			line_material.setOpacity( 0.2 );
 
 			Line line = new Line( geometry, line_material, Line.TYPE.PIECES );
@@ -127,14 +127,14 @@ public final class MaterialsCanvas2D extends ContentWidget
 			materials.add( mlOpt );
 			
 			MeshLambertMaterial mlOpt1 = new MeshLambertMaterial();
-			mlOpt1.setColor( new Color3f(0xdddddd) );
+			mlOpt1.setColor( new Color3(0xdddddd) );
 			mlOpt1.setShading( Material.SHADING.FLAT );
 			materials.add( mlOpt1 );
 			
 			MeshPhongMaterial mpOpt = new MeshPhongMaterial();
-			mpOpt.setAmbient( new Color3f(0x030303) );
-			mpOpt.setColor( new Color3f(0xdddddd) );
-			mpOpt.setSpecular( new Color3f(0x009900) );
+			mpOpt.setAmbient( new Color3(0x030303) );
+			mpOpt.setColor( new Color3(0xdddddd) );
+			mpOpt.setSpecular( new Color3(0x009900) );
 			mpOpt.setShininess( 30 );
 			mpOpt.setShading( Material.SHADING.FLAT );
 			materials.add( mpOpt );
@@ -142,13 +142,13 @@ public final class MaterialsCanvas2D extends ContentWidget
 			materials.add( new MeshNormalMaterial() );
 			
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
-			mbOpt.setColor( new Color3f(0xffaa00) );
+			mbOpt.setColor( new Color3(0xffaa00) );
 			mbOpt.setTransparent( true );
 			mbOpt.setBlending( Material.BLENDING.ADDITIVE );
 			materials.add( mbOpt );
 
 			MeshLambertMaterial mlOpt2 = new MeshLambertMaterial();
-			mlOpt2.setColor( new Color3f(0xdddddd) );
+			mlOpt2.setColor( new Color3(0xdddddd) );
 			mlOpt2.setShading( Material.SHADING.SMOOTH );
 			materials.add( mlOpt2 );
 			
@@ -162,24 +162,24 @@ public final class MaterialsCanvas2D extends ContentWidget
 			materials.add( mnOpt );
 			
 			MeshBasicMaterial mbOpt1 = new MeshBasicMaterial();
-			mbOpt1.setColor( new Color3f(0x00ffaa) );
+			mbOpt1.setColor( new Color3(0x00ffaa) );
 			mbOpt1.setWireframe(true);
 			materials.add( mbOpt1 );
 
 			materials.add( new MeshDepthMaterial() );
 
 			MeshLambertMaterial mlOpt3 = new MeshLambertMaterial();
-			mlOpt3.setColor( new Color3f(0x666666) );
-			mlOpt3.setEmissive( new Color3f(0xff0000) );
-			mlOpt3.setAmbient( new Color3f(0x000000) );
+			mlOpt3.setColor( new Color3(0x666666) );
+			mlOpt3.setEmissive( new Color3(0xff0000) );
+			mlOpt3.setAmbient( new Color3(0x000000) );
 			mlOpt3.setShading( Material.SHADING.SMOOTH );
 			materials.add( mlOpt3 );
 			
 			MeshPhongMaterial mpOpt1 = new MeshPhongMaterial();
-			mpOpt1.setAmbient( new Color3f(0x000000) );
-			mpOpt1.setEmissive( new Color3f(0xffff00) );
-			mpOpt1.setColor( new Color3f(0x000000) );
-			mpOpt1.setSpecular( new Color3f(0x666666) );
+			mpOpt1.setAmbient( new Color3(0x000000) );
+			mpOpt1.setEmissive( new Color3(0xffff00) );
+			mpOpt1.setColor( new Color3(0x000000) );
+			mpOpt1.setSpecular( new Color3(0x666666) );
 			mpOpt1.setShininess( 10 );
 			mpOpt1.setShading( Material.SHADING.SMOOTH );
 			mpOpt1.setOpacity( 0.9 );
@@ -241,7 +241,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			}
 			
 			MeshBasicMaterial mbOpt3 = new MeshBasicMaterial();
-			mbOpt3.setColor( new Color3f(0xffffff) );
+			mbOpt3.setColor( new Color3(0xffffff) );
 			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), mbOpt3 );
 			getScene().addChild( this.particleLight );
 

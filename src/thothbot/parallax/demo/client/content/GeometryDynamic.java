@@ -27,7 +27,7 @@ import thothbot.parallax.core.client.controls.FirstPersonControl;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.geometries.Plane;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -103,7 +103,7 @@ public class GeometryDynamic extends ContentWidget
 			texture.getRepeat().set( 5.0, 5.0 );
 
 			MeshBasicMaterial material = new MeshBasicMaterial();
-			material.setColor( new Color3f(0x0044ff) );
+			material.setColor( new Color3(0x0044ff) );
 			material.setMap( texture );
 
 			this.mesh = new Mesh( this.geometry, material );

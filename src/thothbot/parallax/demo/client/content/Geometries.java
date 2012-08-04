@@ -27,8 +27,8 @@ import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Cylinder;
 import thothbot.parallax.core.shared.geometries.Icosahedron;
@@ -95,11 +95,11 @@ public class Geometries extends ContentWidget
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
 			lmaterial.setMap( ImageUtils.loadTexture(texture) );
-			lmaterial.setAmbient( new Color3f(0xbbbbbb) );
+			lmaterial.setAmbient( new Color3(0xbbbbbb) );
 			materials.add(lmaterial);	
 			
 			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
-			bmaterial.setColor( new Color3f(0xffffff) );
+			bmaterial.setColor( new Color3(0xffffff) );
 			bmaterial.setWireframe(true);
 			bmaterial.setTransparent(true);
 			bmaterial.setOpacity( 0.1f );
@@ -135,10 +135,10 @@ public class Geometries extends ContentWidget
 			object7.getPosition().set( 0, 0, 0 );
 			getScene().addChild( object7 );
 		
-			List<Vector3f> points = new ArrayList<Vector3f>();
+			List<Vector3> points = new ArrayList<Vector3>();
 	
 			for ( int i = 0; i < 50; i ++ )
-				points.add( new Vector3f( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
+				points.add( new Vector3( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
 	
 			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
 			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
@@ -159,7 +159,7 @@ public class Geometries extends ContentWidget
 			object11.getScale().set(0.5);
 			getScene().addChild( object11 );
 			
-			ArrowHelper object12 = new ArrowHelper( new Vector3f( 0, 1, 0 ), new Vector3f( 0, 0, 0 ), 50 );
+			ArrowHelper object12 = new ArrowHelper( new Vector3( 0, 1, 0 ), new Vector3( 0, 0, 0 ), 50 );
 			object12.getPosition().set( 300, 0, 300 );
 			getScene().addChild( object12 );
 		}

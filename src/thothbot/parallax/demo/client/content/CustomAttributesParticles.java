@@ -30,9 +30,9 @@ import java.util.Map;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.shader.Uniform;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.core.WebGLCustomAttribute;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -97,11 +97,11 @@ public class CustomAttributesParticles extends ContentWidget
 
 			this.attributes = new HashMap<String, WebGLCustomAttribute>();
 			this.attributes.put("size", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.F, new ArrayList<Integer>()));
-			this.attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3f>()));
+			this.attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
-			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
+			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
 			
 			ShaderMaterial shaderMaterial = new ShaderMaterial();
@@ -118,7 +118,7 @@ public class CustomAttributesParticles extends ContentWidget
 	
 			for ( int i = 0; i < 10000; i++ ) 
 			{
-				Vector3f vertex = new Vector3f();
+				Vector3 vertex = new Vector3();
 				vertex.setX(Math.random() * 2.0 - 1.0);
 				vertex.setY(Math.random() * 2.0 - 1.0);
 				vertex.setZ(Math.random() * 2.0 - 1.0);
@@ -130,14 +130,14 @@ public class CustomAttributesParticles extends ContentWidget
 			this.sphere = new ParticleSystem( geometry, shaderMaterial );
 			this.sphere.setDynamic(true);
 			
-			List<Vector3f> vertices = sphere.getGeometry().getVertices();
+			List<Vector3> vertices = sphere.getGeometry().getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
-			List<Color3f> values_color = (List<Color3f>) attributes.get("customColor").getValue();
+			List<Color3> values_color = (List<Color3>) attributes.get("customColor").getValue();
 	
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
 				values_size.add( v, 10.0);
-				values_color.add( v, new Color3f( 0xffaa00 ));
+				values_color.add( v, new Color3( 0xffaa00 ));
 	
 				if ( vertices.get( v ).getX() < 0 )
 					values_color.get( v ).setHSV( 0.5 + 0.1 * ( v / vertices.size() * 1.0 ), 0.7, 0.9 );

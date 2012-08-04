@@ -23,9 +23,9 @@ import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
@@ -75,13 +75,13 @@ public final class ParticleTrails extends ContentWidget
 
 			for ( int i = 0; i < 2000; i ++ ) 
 			{
-				Vector3f vertex = new Vector3f();
+				Vector3 vertex = new Vector3();
 				vertex.setX(Math.random() * 4000.0 - 2000.0);
 				vertex.setY(Math.random() * 4000.0 - 2000.0);
 				vertex.setZ(Math.random() * 4000.0 - 2000.0);
 				geometry.getVertices().add( vertex );
 
-				geometry.getColors().add( new Color3f( colors[ (int) Math.floor( Math.random() * colors.length ) ] ) );
+				geometry.getColors().add( new Color3( colors[ (int) Math.floor( Math.random() * colors.length ) ] ) );
 
 			}
 

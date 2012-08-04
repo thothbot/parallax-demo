@@ -24,7 +24,7 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -90,7 +90,7 @@ public final class PostprocessingGodrays extends ContentWidget
 			MeshDepthMaterial materialDepth = new MeshDepthMaterial();
 
 			MeshBasicMaterial materialScene = new MeshBasicMaterial();
-			materialScene.setColor(new Color3f(0x000000));
+			materialScene.setColor(new Color3(0x000000));
 			materialScene.setShading(Material.SHADING.FLAT);
 
 			// tree

@@ -28,12 +28,12 @@ import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Mathematics;
-import thothbot.parallax.core.shared.core.Vector2f;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector2;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.curves.CurveSpline3D;
 import thothbot.parallax.core.shared.curves.CurveSplineClosed3D;
 import thothbot.parallax.core.shared.curves.Path;
@@ -94,62 +94,62 @@ public class GeometryExtrudeShapes extends ContentWidget
 			
 			//Closed
 			CurveSpline3D extrudeBend = new CurveSpline3D(Arrays.asList( 
-					new Vector3f( 30, 12, 83),
-					new Vector3f( 40, 20, 67),
-					new Vector3f( 60, 40, 99),
-					new Vector3f( 10, 60, 49),
-					new Vector3f( 25, 80, 40)));
+					new Vector3( 30, 12, 83),
+					new Vector3( 40, 20, 67),
+					new Vector3( 60, 40, 99),
+					new Vector3( 10, 60, 49),
+					new Vector3( 25, 80, 40)));
 
 			CurveSpline3D pipeSpline = new CurveSpline3D(Arrays.asList( 
-					new Vector3f(0, 10, -10), 
-					new Vector3f(10, 0, -10), 
-					new Vector3f(20, 0, 0), 
-					new Vector3f(30, 0, 10), 
-					new Vector3f(30, 0, 20), 
-					new Vector3f(20, 0, 30), 
-					new Vector3f(10, 0, 30), 
-					new Vector3f(0, 0, 30), 
-					new Vector3f(-10, 10, 30), 
-					new Vector3f(-10, 20, 30), 
-					new Vector3f(0, 30, 30), 
-					new Vector3f(10, 30, 30), 
-					new Vector3f(20, 30, 15), 
-					new Vector3f(10, 30, 10), 
-					new Vector3f(0, 30, 10), 
-					new Vector3f(-10, 20, 10), 
-					new Vector3f(-10, 10, 10), 
-					new Vector3f(0, 0, 10), 
-					new Vector3f(10, -10, 10), 
-					new Vector3f(20, -15, 10), 
-					new Vector3f(30, -15, 10), 
-					new Vector3f(40, -15, 10), 
-					new Vector3f(50, -15, 10), 
-					new Vector3f(60, 0, 10), 
-					new Vector3f(70, 0, 0), 
-					new Vector3f(80, 0, 0), 
-					new Vector3f(90, 0, 0),
-					new Vector3f(100, 0, 0)));
+					new Vector3(0, 10, -10), 
+					new Vector3(10, 0, -10), 
+					new Vector3(20, 0, 0), 
+					new Vector3(30, 0, 10), 
+					new Vector3(30, 0, 20), 
+					new Vector3(20, 0, 30), 
+					new Vector3(10, 0, 30), 
+					new Vector3(0, 0, 30), 
+					new Vector3(-10, 10, 30), 
+					new Vector3(-10, 20, 30), 
+					new Vector3(0, 30, 30), 
+					new Vector3(10, 30, 30), 
+					new Vector3(20, 30, 15), 
+					new Vector3(10, 30, 10), 
+					new Vector3(0, 30, 10), 
+					new Vector3(-10, 20, 10), 
+					new Vector3(-10, 10, 10), 
+					new Vector3(0, 0, 10), 
+					new Vector3(10, -10, 10), 
+					new Vector3(20, -15, 10), 
+					new Vector3(30, -15, 10), 
+					new Vector3(40, -15, 10), 
+					new Vector3(50, -15, 10), 
+					new Vector3(60, 0, 10), 
+					new Vector3(70, 0, 0), 
+					new Vector3(80, 0, 0), 
+					new Vector3(90, 0, 0),
+					new Vector3(100, 0, 0)));
 
 			CurveSplineClosed3D sampleClosedSpline = new CurveSplineClosed3D(Arrays.asList( 
-					new Vector3f(0, -40, -40),
-					new Vector3f(0, 40, -40),
-					new Vector3f(0, 140, -40),
-					new Vector3f(0, 40, 40),
-					new Vector3f(0, -40, 40)));
+					new Vector3(0, -40, -40),
+					new Vector3(0, 40, -40),
+					new Vector3(0, 140, -40),
+					new Vector3(0, 40, 40),
+					new Vector3(0, -40, 40)));
 
-//			List<Vector3f> randomPoints = new ArrayList<Vector3f>();
+//			List<Vector3> randomPoints = new ArrayList<Vector3>();
 //
 //			for (int i=0; i<10; i++)
-//				randomPoints.add(new Vector3f((double)Math.random() * 200.0f, (double)Math.random() * 200.0f, (double)Math.random() * 200.0f ));
+//				randomPoints.add(new Vector3((double)Math.random() * 200.0f, (double)Math.random() * 200.0f, (double)Math.random() * 200.0f ));
 //
 //			CurveSpline3D randomSpline =  new CurveSpline3D(randomPoints);
 			
 			CurveSpline3D randomSpline = new CurveSpline3D(Arrays.asList( 
-					new Vector3f(-40, -40, 0),
-					new Vector3f(40, -40, 0),
-					new Vector3f( 140, -40, 0),
-					new Vector3f(40, 40, 0),
-					new Vector3f(-40, 40, 20)));
+					new Vector3(-40, -40, 0),
+					new Vector3(40, -40, 0),
+					new Vector3( 140, -40, 0),
+					new Vector3(40, 40, 0),
+					new Vector3(-40, 40, 20)));
 
 			ExtrudeGeometry.ExtrudeGeometryParameters extrudeParameters = new ExtrudeGeometry.ExtrudeGeometryParameters();
 			extrudeParameters.amount = 200;
@@ -205,7 +205,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 
 			smileyShape.getHoles().add( smileyMouthPath );
 
-			List<Vector2f> pts = new ArrayList<Vector2f>();
+			List<Vector2> pts = new ArrayList<Vector2>();
 			int starPoints = 5;
 			double l;
 			for (int i = 0; i < starPoints * 2; i++) 
@@ -213,7 +213,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 				l = (Mathematics.isEven(i)) ? 5.0 : 10.0; 
 				double a = i / starPoints * Math.PI;
 
-				pts.add(new Vector2f(Math.cos(a) * l, Math.sin(a) * l ));
+				pts.add(new Vector2(Math.cos(a) * l, Math.sin(a) * l ));
 			}
 
 			Shape starShape = new Shape(pts);
@@ -221,18 +221,18 @@ public class GeometryExtrudeShapes extends ContentWidget
 
 //			Tube tube = new Tube((CurvePath) extrudeParameters.extrudePath, 150, 4.0f, 5, false, true);     
 
-//			addGeometry( circle3d, new Color3f(0xff1111),  
+//			addGeometry( circle3d, new Color3(0xff1111),  
 //					-100f, 0f, 0f,     
 //					0f, 0f, 0f, 
 //					1f);
 
-//			addGeometry( tube, new Color3f(0x00ff11),  
+//			addGeometry( tube, new Color3(0x00ff11),  
 //					0f, 0f, 0f,     
 //					0f, 0f, 0f, 
 //					1f);  
 		}
 		
-		private void addGeometry( Geometry geometry, Color3f color, double x, double y, double z, double rx, double ry, double rz, double s ) 
+		private void addGeometry( Geometry geometry, Color3 color, double x, double y, double z, double rx, double ry, double rz, double s ) 
 		{
 			// 3d shape
 			MeshLambertMaterial ml = new MeshLambertMaterial();
@@ -241,7 +241,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 			ml.setTransparent(true);
 
 			MeshBasicMaterial mb = new MeshBasicMaterial();
-			mb.setColor( new Color3f(0x000000) );
+			mb.setColor( new Color3(0x000000) );
 			mb.setWireframe( true );
 			mb.setOpacity( 0.3 );
 

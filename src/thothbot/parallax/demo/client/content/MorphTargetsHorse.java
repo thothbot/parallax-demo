@@ -22,7 +22,7 @@ package thothbot.parallax.demo.client.content;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -50,7 +50,7 @@ public final class MorphTargetsHorse extends ContentWidget
 		static final int radius = 600;
 		
 		Mesh mesh;
-		Vector3f target = new Vector3f(0, 150, 0);
+		Vector3 target = new Vector3(0, 150, 0);
 		
 		static final int aminationDuration = 1000;
 		static final int keyframes = 15;

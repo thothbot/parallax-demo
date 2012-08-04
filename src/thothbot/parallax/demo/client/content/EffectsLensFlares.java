@@ -23,7 +23,7 @@ import thothbot.parallax.core.client.controls.FlyControls;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
+import thothbot.parallax.core.shared.core.Color3;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -97,9 +97,9 @@ public final class EffectsLensFlares extends ContentWidget
 			int s = 250;
 			Cube cube = new Cube( s, s, s );
 			MeshPhongMaterial material = new MeshPhongMaterial();
-			material.setColor(new Color3f(0xffffff));
-			material.setAmbient(new Color3f(0xffffff));
-			material.setSpecular(new Color3f(0xffffff));
+			material.setColor(new Color3(0xffffff));
+			material.setAmbient(new Color3(0xffffff));
+			material.setSpecular(new Color3(0xffffff));
 			material.setShininess(50);
 			material.setPerPixel(true);
 			
@@ -158,7 +158,7 @@ public final class EffectsLensFlares extends ContentWidget
 
 			light.getColor().setHSV( h, s, v );
 
-			Color3f flareColor = new Color3f( 0xffffff );
+			Color3 flareColor = new Color3( 0xffffff );
 			flareColor.copy( light.getColor() );
 			ColorUtils.adjustHSV( flareColor, 0, -0.5, 0.5 );
 

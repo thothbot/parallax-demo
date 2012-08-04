@@ -31,8 +31,8 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shader.Uniform;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3f;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.core.WebGLCustomAttribute;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Sphere;
@@ -100,11 +100,11 @@ public class CustomAttributesParticles2 extends ContentWidget
 
 			this.attributes = new HashMap<String, WebGLCustomAttribute>();
 			attributes.put("size", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.F, new ArrayList<Integer>()));
-			attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3f>()));
+			attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
-			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3f( 0xffffff )));
+			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(texture)));
 	
 			uniforms.get("texture").getTexture().setWrapS(TextureWrapMode.REPEAT);
@@ -132,13 +132,13 @@ public class CustomAttributesParticles2 extends ContentWidget
 			// TODO: Fix this
 //			sphere.sortParticles = true;
 	
-			List<Vector3f> vertices = sphere.getGeometry().getVertices();
+			List<Vector3> vertices = sphere.getGeometry().getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
-			List<Color3f> values_color = (List<Color3f>) attributes.get("customColor").getValue();
+			List<Color3> values_color = (List<Color3>) attributes.get("customColor").getValue();
 		
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
-				values_color.add( v, new Color3f( 0xffffff ));
+				values_color.add( v, new Color3( 0xffffff ));
 	
 				if ( v < vc1 ) 
 				{	

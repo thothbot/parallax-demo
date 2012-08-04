@@ -27,7 +27,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.CubeCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Vector3f;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.geometries.TorusKnot;
@@ -161,7 +161,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getCamera().getPosition().setY(100.0 * Math.cos( phi ) );
 			getCamera().getPosition().setZ(100.0 * Math.sin( phi ) * Math.sin( theta ) );
 
-			getCamera().lookAt( new Vector3f( 0.0, 0.0, 0.0 ) );
+			getCamera().lookAt( new Vector3( 0.0, 0.0, 0.0 ) );
 
 			this.sphere.setVisible(false); // *cough*
 
