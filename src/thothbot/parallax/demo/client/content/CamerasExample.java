@@ -27,7 +27,7 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.Camera;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Mathematics;
 import thothbot.parallax.core.shared.core.Vector3;
@@ -146,21 +146,21 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			//
 	
 			MeshBasicMaterial  bopt0 = new MeshBasicMaterial();
-			bopt0.setColor( new Color3(0xffffff) );
+			bopt0.setColor( new Color(0xffffff) );
 			bopt0.setWireframe(true);
 			
 			this.mesh = new Mesh( new Sphere( 100, 16, 8 ), bopt0);
 			getScene().addChild( mesh );
 	
 			MeshBasicMaterial  bopt1 = new MeshBasicMaterial();
-			bopt1.setColor( new Color3(0x00ff00) );
+			bopt1.setColor( new Color(0x00ff00) );
 			bopt1.setWireframe(true);
 			Mesh mesh2 = new Mesh( new Sphere( 50, 16, 8 ), bopt1);
 			mesh2.getPosition().setY(150);
 			mesh.addChild( mesh2 );
 	
 			MeshBasicMaterial  bopt2 = new MeshBasicMaterial();
-			bopt2.setColor( new Color3(0x0000ff) );
+			bopt2.setColor( new Color(0x0000ff) );
 			Mesh mesh3 = new Mesh( new Sphere( 5, 16, 8 ), bopt2);
 			mesh3.getPosition().setZ(150);
 			cameraRig.addChild( mesh3 );
@@ -180,7 +180,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			}
 			
 			ParticleBasicMaterial popt = new ParticleBasicMaterial();
-			popt.setColor( new Color3(0xDDDDDD) );
+			popt.setColor( new Color(0xDDDDDD) );
 	
 			ParticleSystem particles = new ParticleSystem( geometry, popt );
 			getScene().addChild( particles );

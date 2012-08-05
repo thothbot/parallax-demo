@@ -28,7 +28,7 @@ import java.util.List;
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Face4;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -132,17 +132,17 @@ public class GeometryColors extends ContentWidget
 
 					Vector3 p = geometry.getVertices().get( vertexIndex );
 
-					Color3 color = new Color3( 0xffffff );
+					Color color = new Color( 0xffffff );
 					color.setHSV( ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0, 1.0 );
 
 					geometry.getFaces().get( i ).getVertexColors().add(color);
 
-					Color3 color2 = new Color3( 0xffffff );
+					Color color2 = new Color( 0xffffff );
 					color2.setHSV( 0.0, ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0 );
 
-					geometry2.getFaces().get( i ).getVertexColors().add(color);
+					geometry2.getFaces().get( i ).getVertexColors().add(color2);
 
-					Color3 color3 = new Color3( 0xffffff );
+					Color color3 = new Color( 0xffffff );
 					color3.setHSV( (0.125 * vertexIndex / (double)geometry.getVertices().size()), 1.0, 1.0 );
 
 					geometry3.getFaces().get( i ).getVertexColors().add(color3);
@@ -151,13 +151,13 @@ public class GeometryColors extends ContentWidget
 
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
-			lmaterial.setColor( new Color3(0xffffff) );
+			lmaterial.setColor( new Color(0xffffff) );
 			lmaterial.setShading( Material.SHADING.FLAT );
 			lmaterial.setVertexColors( Material.COLORS.VERTEX );
 			materials.add(lmaterial);
 
 			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
-			bmaterial.setColor( new Color3(0x000000) );
+			bmaterial.setColor( new Color(0x000000) );
 			bmaterial.setShading( Material.SHADING.FLAT );
 			bmaterial.setWireframe(true);
 			bmaterial.setTransparent( true );

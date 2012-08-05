@@ -27,7 +27,7 @@ import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.core.Vector3;
@@ -90,21 +90,21 @@ public final class GeometryLinesColors extends ContentWidget
 			Geometry geometry3 = new Geometry();
 			List<Vector3> points = hilbert3D( new Vector3( 0,0,0 ), 200.0, 2, 0, 1, 2, 3, 4, 5, 6, 7 );
 
-			List<Color3> colors = new ArrayList<Color3>(); 
-			List<Color3> colors2 = new ArrayList<Color3>();
-			List<Color3> colors3 = new ArrayList<Color3>();
+			List<Color> colors = new ArrayList<Color>(); 
+			List<Color> colors2 = new ArrayList<Color>();
+			List<Color> colors3 = new ArrayList<Color>();
 
 			for ( int i = 0; i < points.size(); i ++ ) 
 			{
 				geometry.getVertices().add( points.get( i ) );
 
-				colors.add( new Color3( 0xffffff ) );
+				colors.add( new Color( 0xffffff ) );
 				colors.get( i ).setHSV( 0.6, ( 200 + points.get( i ).getX() ) / 400, 1.0 );
 
-				colors2.add( new Color3( 0xffffff ) );
+				colors2.add( new Color( 0xffffff ) );
 				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400 );
 
-				colors3.add( new Color3( 0xffffff ));
+				colors3.add( new Color( 0xffffff ));
 				colors3.get( i ).setHSV( i / (double)points.size(), 1.0, 1.0 );
 			}
 
@@ -118,7 +118,7 @@ public final class GeometryLinesColors extends ContentWidget
 			// lines
 
 			LineBasicMaterial material = new LineBasicMaterial();
-			material.setColor(new Color3(0xffffff));
+			material.setColor(new Color(0xffffff));
 			material.setLinewidth(3);
 			material.setOpacity(1);
 

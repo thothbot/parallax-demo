@@ -28,7 +28,7 @@ import thothbot.parallax.core.client.shader.ShaderNormalMap;
 import thothbot.parallax.core.client.shader.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Sphere;
@@ -126,15 +126,15 @@ public final class TrackballEarth extends ContentWidget
 			uniforms.get("enableDiffuse").setValue( 1 );
 			uniforms.get("enableSpecular").setValue( 1 );
 
-			((Color3)uniforms.get("uDiffuseColor").getValue()).setHex( 0xffffff );
-			((Color3)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
-			((Color3)uniforms.get("uAmbientColor").getValue()).setHex( 0x000000 );
+			((Color)uniforms.get("uDiffuseColor").getValue()).setHex( 0xffffff );
+			((Color)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
+			((Color)uniforms.get("uAmbientColor").getValue()).setHex( 0x000000 );
 
 			uniforms.get("uShininess").setValue( 20.0 );
 
-			((Color3)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
-			((Color3)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
-			((Color3)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
+			((Color)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
+			((Color)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
+			((Color)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
 
 			ShaderMaterial materialNormalMap = new ShaderMaterial(); 
 			materialNormalMap.setFragmentShaderSource( shader.getFragmentSource() );
@@ -156,7 +156,7 @@ public final class TrackballEarth extends ContentWidget
 
 			// clouds
 			MeshLambertMaterial materialClouds = new MeshLambertMaterial();
-			materialClouds.setColor( new Color3(0xffffff) );
+			materialClouds.setColor( new Color(0xffffff) );
 			materialClouds.setMap( cloudsTexture );
 			materialClouds.setTransparent(true);
 
@@ -168,7 +168,7 @@ public final class TrackballEarth extends ContentWidget
 
 			// moon
 			MeshPhongMaterial materialMoon = new MeshPhongMaterial();
-			materialMoon.setColor( new Color3(0xffffff) );
+			materialMoon.setColor( new Color(0xffffff) );
 			materialMoon.setMap( moonTexture );
 			
 
@@ -196,7 +196,7 @@ public final class TrackballEarth extends ContentWidget
 			}
 
 			ParticleBasicMaterial pbOpt = new ParticleBasicMaterial();
-			pbOpt.setColor( new Color3(0x555555) );
+			pbOpt.setColor( new Color(0x555555) );
 			pbOpt.setSize( 2 );
 			pbOpt.setSizeAttenuation(false);
 			
@@ -204,31 +204,31 @@ public final class TrackballEarth extends ContentWidget
 			starsMaterials.add(pbOpt);
 			
 			ParticleBasicMaterial pbOpt1 = new ParticleBasicMaterial();
-			pbOpt1.setColor( new Color3(0x555555) );
+			pbOpt1.setColor( new Color(0x555555) );
 			pbOpt1.setSize( 1 );
 			pbOpt1.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt1);
 			
 			ParticleBasicMaterial pbOpt2 = new ParticleBasicMaterial();
-			pbOpt2.setColor( new Color3(0x333333) );
+			pbOpt2.setColor( new Color(0x333333) );
 			pbOpt2.setSize( 2 );
 			pbOpt2.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt2);
 			
 			ParticleBasicMaterial pbOpt3 = new ParticleBasicMaterial();
-			pbOpt3.setColor( new Color3(0x3a3a3a) );
+			pbOpt3.setColor( new Color(0x3a3a3a) );
 			pbOpt3.setSize( 1 );
 			pbOpt3.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt3);
 			
 			ParticleBasicMaterial pbOpt4 = new ParticleBasicMaterial();
-			pbOpt4.setColor( new Color3(0x1a1a1a) );
+			pbOpt4.setColor( new Color(0x1a1a1a) );
 			pbOpt4.setSize( 2 );
 			pbOpt4.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt4);
 			
 			ParticleBasicMaterial pbOpt5 = new ParticleBasicMaterial();
-			pbOpt5.setColor( new Color3(0x1a1a1a) );
+			pbOpt5.setColor( new Color(0x1a1a1a) );
 			pbOpt5.setSize( 1 );
 			pbOpt5.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt5);				

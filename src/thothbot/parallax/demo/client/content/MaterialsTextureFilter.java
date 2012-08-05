@@ -26,7 +26,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.Plane;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -118,7 +118,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 
 			Texture textureCanvas2 = new Texture( canvas, Texture.MAPPING_MODE.UV, TextureWrapMode.REPEAT, TextureWrapMode.REPEAT, TextureMagFilter.NEAREST, TextureMinFilter.NEAREST);
 			MeshBasicMaterial materialCanvas2 = new MeshBasicMaterial();
-			materialCanvas2.setColor(new Color3(0xffccaa));
+			materialCanvas2.setColor(new Color(0xffccaa));
 			materialCanvas2.setMap(textureCanvas2);
 
 			textureCanvas2.setNeedsUpdate(true);
@@ -142,12 +142,12 @@ public final class MaterialsTextureFilter extends ContentWidget
 			} );
 			
 			materialPainting = new MeshBasicMaterial();
-			materialPainting.setColor(new Color3(0xffffff));
+			materialPainting.setColor(new Color(0xffffff));
 			materialPainting.setMap(texturePainting);
 			
 			texturePainting2 = new Texture();
 			materialPainting2 = new MeshBasicMaterial();
-			materialPainting2.setColor(new Color3(0xffccaa));
+			materialPainting2.setColor(new Color(0xffccaa));
 			materialPainting2.setMap(texturePainting2);
 
 			texturePainting2.setMinFilter(TextureMinFilter.NEAREST);
@@ -187,7 +187,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			zscene.addChild( zmesh );
 
 			MeshBasicMaterial mb = new MeshBasicMaterial();
-			mb.setColor(new Color3(0x000000));
+			mb.setColor(new Color(0x000000));
 			mb.setPolygonOffset(true);
 			mb.setPolygonOffsetFactor(1);
 			mb.setPolygonOffsetUnits(5);
@@ -200,7 +200,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			zscene.addChild( meshFrame );
 
 			MeshBasicMaterial mb2 = new MeshBasicMaterial();
-			mb2.setColor(new Color3(0x000000));
+			mb2.setColor(new Color(0x000000));
 			mb2.setOpacity(0.75);
 			mb2.setTransparent(true);
 			Mesh meshShadow = new Mesh( geometry, mb2 );

@@ -21,7 +21,7 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.objects.Sprite;
 import thothbot.parallax.core.shared.objects.Sprite.ALIGNMENT;
@@ -78,7 +78,7 @@ public final class EffectsSprites extends ContentWidget
 				Sprite sprite = new Sprite();
 				sprite.setMap(mapC);
 				sprite.setUseScreenCoordinates(false);
-				sprite.setColor(new Color3(0xffffff));
+				sprite.setColor(new Color(0xffffff));
 
 				sprite.getPosition().set( Math.random() - 0.5,
 						Math.random() - 0.5,

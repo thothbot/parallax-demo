@@ -28,7 +28,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Mathematics;
@@ -221,18 +221,18 @@ public class GeometryExtrudeShapes extends ContentWidget
 
 //			Tube tube = new Tube((CurvePath) extrudeParameters.extrudePath, 150, 4.0, 5, false, true);     
 
-//			addGeometry( circle3d, new Color3(0xff1111),  
+//			addGeometry( circle3d, new Color(0xff1111),  
 //					-100f, 0, 0,     
 //					0, 0, 0, 
 //					1);
 
-//			addGeometry( tube, new Color3(0x00ff11),  
+//			addGeometry( tube, new Color(0x00ff11),  
 //					0, 0, 0,     
 //					0, 0, 0, 
 //					1);  
 		}
 		
-		private void addGeometry( Geometry geometry, Color3 color, double x, double y, double z, double rx, double ry, double rz, double s ) 
+		private void addGeometry( Geometry geometry, Color color, double x, double y, double z, double rx, double ry, double rz, double s ) 
 		{
 			// 3d shape
 			MeshLambertMaterial ml = new MeshLambertMaterial();
@@ -241,7 +241,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 			ml.setTransparent(true);
 
 			MeshBasicMaterial mb = new MeshBasicMaterial();
-			mb.setColor( new Color3(0x000000) );
+			mb.setColor( new Color(0x000000) );
 			mb.setWireframe( true );
 			mb.setOpacity( 0.3 );
 

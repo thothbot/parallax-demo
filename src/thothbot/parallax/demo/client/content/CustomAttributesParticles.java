@@ -30,7 +30,7 @@ import java.util.Map;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.shader.Uniform;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.core.WebGLCustomAttribute;
@@ -97,11 +97,11 @@ public class CustomAttributesParticles extends ContentWidget
 
 			this.attributes = new HashMap<String, WebGLCustomAttribute>();
 			this.attributes.put("size", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.F, new ArrayList<Integer>()));
-			this.attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color3>()));
+			this.attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
-			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color3( 0xffffff )));
+			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
 			
 			ShaderMaterial shaderMaterial = new ShaderMaterial();
@@ -132,12 +132,12 @@ public class CustomAttributesParticles extends ContentWidget
 			
 			List<Vector3> vertices = sphere.getGeometry().getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
-			List<Color3> values_color = (List<Color3>) attributes.get("customColor").getValue();
+			List<Color> values_color = (List<Color>) attributes.get("customColor").getValue();
 	
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
 				values_size.add( v, 10.0);
-				values_color.add( v, new Color3( 0xffaa00 ));
+				values_color.add( v, new Color( 0xffaa00 ));
 	
 				if ( vertices.get( v ).getX() < 0 )
 					values_color.get( v ).setHSV( 0.5 + 0.1 * ( v / (double)vertices.size() ), 0.7, 0.9 );

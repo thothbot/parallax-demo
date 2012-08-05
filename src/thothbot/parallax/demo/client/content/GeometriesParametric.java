@@ -27,7 +27,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color3;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.parametric.Klein;
 import thothbot.parallax.core.shared.geometries.parametric.Mobius;
 import thothbot.parallax.core.shared.lights.AmbientLight;
@@ -84,11 +84,11 @@ public class GeometriesParametric extends ContentWidget
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
 			lmaterial.setMap( ImageUtils.loadTexture(texture) );
-			lmaterial.setAmbient( new Color3(0xbbbbbb) );
+			lmaterial.setAmbient( new Color(0xbbbbbb) );
 			materials.add(lmaterial);	
 			
 			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
-			bmaterial.setColor( new Color3(0xffffff) );
+			bmaterial.setColor( new Color(0xffffff) );
 			bmaterial.setWireframe( true );
 			bmaterial.setTransparent(true);
 			bmaterial.setOpacity( 0.1 );
