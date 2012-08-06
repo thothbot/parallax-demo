@@ -99,12 +99,12 @@ public final class GeometryLinesColors extends ContentWidget
 				geometry.getVertices().add( points.get( i ) );
 
 				colors.add( new Color( 0xffffff ) );
-				colors.get( i ).setHSV( 0.6, ( 200 + points.get( i ).getX() ) / 400, 1.0 );
+				colors.get( i ).setHSV( 0.6, ( 200 + points.get( i ).getX() ) / 400.0, 1.0 );
 
 				colors2.add( new Color( 0xffffff ) );
-				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400 );
+				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400.0 );
 
-				colors3.add( new Color( 0xffffff ));
+				colors3.add( new Color( 0xffffff ) );
 				colors3.get( i ).setHSV( i / (double)points.size(), 1.0, 1.0 );
 			}
 
@@ -137,31 +137,31 @@ public final class GeometryLinesColors extends ContentWidget
 			line2.getPosition().set(0, 0, 0);
 			getScene().addChild( line2 );
 			
-			Line line3 = new Line( geometry2,  material );
+			Line line3 = new Line( geometry3,  material );
 			line3.getScale().set(scale * 1.5);
 			line3.getPosition().set(d, 0, 0);
 			getScene().addChild( line3 );
 			
 			//
 
-			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
-			BloomPass effectBloom = new BloomPass( 1.3 );
-			
-			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
-			effectScreen.setRenderToScreen(true);
-			
-			effectFXAA = new ShaderPass( new ShaderFxaa() );
-			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
-					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
+//			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
+//			BloomPass effectBloom = new BloomPass( 1.3 );
+//			
+//			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
+//			effectScreen.setRenderToScreen(true);
+//			
+//			effectFXAA = new ShaderPass( new ShaderFxaa() );
+//			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
+//					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
+//
+//			composer = new EffectComposer( getRenderer() );
+//
+//			composer.addPass( renderModel );
+//			composer.addPass( effectFXAA );
+//			composer.addPass( effectBloom );
+//			composer.addPass( effectScreen );
 
-			composer = new EffectComposer( getRenderer() );
-
-			composer.addPass( renderModel );
-			composer.addPass( effectFXAA );
-			composer.addPass( effectBloom );
-			composer.addPass( effectScreen );
-
-			getRenderer().setAutoClear(false);
+//			getRenderer().setAutoClear(false);
 		}
 		
 		@Override
@@ -236,8 +236,8 @@ public final class GeometryLinesColors extends ContentWidget
 					object.getRotation().setY( duration * 0.0005 * ( (i % 2 > 0) ? 1.0 : -1.0 ) );
 			}
 
-			getRenderer().clear(false, false, false);
-			composer.render();
+//			getRenderer().clear(false, false, false);
+//			composer.render();
 		}
 	}
 		
