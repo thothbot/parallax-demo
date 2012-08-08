@@ -21,6 +21,9 @@ package thothbot.parallax.demo.client.content;
 
 import java.util.Arrays;
 
+import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
@@ -33,15 +36,19 @@ import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.Line;
+import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.client.content.GeometryHierarchy.DemoScene;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -54,6 +61,10 @@ public final class GeometryShapes extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		Object3D parent;
+		
+		int mouseX = 0, mouseY = 0;
+		
 		@Override
 		protected void loadCamera()
 		{
@@ -76,17 +87,9 @@ public final class GeometryShapes extends ContentWidget
 			light.getPosition().set( 0, 0, 1 );
 			getScene().addChild( light );
 
-			Object3D parent = new Object3D();
-			parent.getPosition().setY( 50 );
+			this.parent = new Object3D();
+			this.parent.getPosition().setY( 50 );
 			getScene().addChild( parent );
-			
-			Shape triangleShape = new Shape();
-			triangleShape.moveTo(  80, 20 );
-			triangleShape.lineTo(  40, 80 );
-			triangleShape.lineTo( 120, 80 );
-			triangleShape.lineTo(  80, 20 ); // close path
-
-//			var extrudeSettings = {	amount: 20,  bevelEnabled: true, bevelSegments: 2, steps: 2 };
 			
 			ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings = new ExtrudeGeometry.ExtrudeGeometryParameters();
 			extrudeSettings.amount = 20;
@@ -94,14 +97,76 @@ public final class GeometryShapes extends ContentWidget
 			extrudeSettings.bevelSegments = 2;
 			extrudeSettings.steps = 2;
 			
-			Geometry triangle3d = triangleShape.extrude( extrudeSettings );
-			Geometry trianglePoints = triangleShape.createPointsGeometry();
-			Geometry triangleSpacedPoints = triangleShape.createSpacedPointsGeometry();
+			// Triangle
 			
-			addGeometry( parent, triangle3d, trianglePoints, triangleSpacedPoints, new Color(0xffee00), -180, 0, 0, 0, 0, 0, 1 );
+			Shape triangleShape = new Shape();
+			triangleShape.moveTo(  80, 20 );
+			triangleShape.lineTo(  40, 80 );
+			triangleShape.lineTo( 120, 80 );
+			triangleShape.lineTo(  80, 20 ); // close path
+
+			addGeometry(
+					triangleShape.extrude( extrudeSettings ), 
+					triangleShape.createPointsGeometry(), 
+					triangleShape.createSpacedPointsGeometry(), 
+					new Color(0xffee00), -180, 0, 0, 0, 0, 0, 1 );
+			
+			// Square
+
+			int sqLength = 80;
+
+			Shape squareShape = new Shape();
+			squareShape.moveTo( 0,0 );
+			squareShape.lineTo( 0, sqLength );
+			squareShape.lineTo( sqLength, sqLength );
+			squareShape.lineTo( sqLength, 0 );
+			squareShape.lineTo( 0, 0 );
+			
+			addGeometry(
+					squareShape.extrude( extrudeSettings ), 
+					squareShape.createPointsGeometry(), 
+					squareShape.createSpacedPointsGeometry(),
+					new Color(0x0055ff), 150, 100, 0, 0, 0, 0, 1 );
+			
+			// Circle
+
+			int circleRadius = 40;
+			Shape circleShape = new Shape();
+			circleShape.moveTo( 0, circleRadius );
+			circleShape.quadraticCurveTo( circleRadius, circleRadius, circleRadius, 0 );
+			circleShape.quadraticCurveTo( circleRadius, -circleRadius, 0, -circleRadius );
+			circleShape.quadraticCurveTo( -circleRadius, -circleRadius, -circleRadius, 0 );
+			circleShape.quadraticCurveTo( -circleRadius, circleRadius, 0, circleRadius );
+			
+			addGeometry(
+					circleShape.extrude( extrudeSettings ), 
+					circleShape.createPointsGeometry(), 
+					circleShape.createSpacedPointsGeometry(),				
+					new Color(0x00ff11), 120, 250, 0, 0, 0, 0, 1 );
+			
+			// Heart
+			// From http://blog.burlock.org/html5/130-paths
+
+			int x = 0, y = 0;
+
+			Shape heartShape = new Shape(); 
+
+			heartShape.moveTo( x + 25, y + 25 );
+			heartShape.bezierCurveTo( x + 25, y + 25, x + 20, y, x, y );
+			heartShape.bezierCurveTo( x - 30, y, x - 30, y + 35,x - 30,y + 35 );
+			heartShape.bezierCurveTo( x - 30, y + 55, x - 10, y + 77, x + 25, y + 95 );
+			heartShape.bezierCurveTo( x + 60, y + 77, x + 80, y + 55, x + 80, y + 35 );
+			heartShape.bezierCurveTo( x + 80, y + 35, x + 80, y, x + 50, y );
+			heartShape.bezierCurveTo( x + 35, y, x + 25, y + 25, x + 25, y + 25 );
+			
+			addGeometry( 
+					heartShape.extrude( extrudeSettings ), 
+					heartShape.createPointsGeometry(),
+					heartShape.createSpacedPointsGeometry(),	
+					new Color(0xff1100), 0, 100, 0, Math.PI, 0, 0, 1 );
 		}
 		
-		private void addGeometry(Object3D parent, Geometry geometry, Geometry points, Geometry spacedPoints, Color color, 
+		private void addGeometry(Geometry geometry, Geometry points, Geometry spacedPoints, Color color, 
 				double x, double y, double z, double rx, double ry, double rz, double s 
 		) {
 
@@ -116,10 +181,11 @@ public final class GeometryShapes extends ContentWidget
 			meshMat2.setTransparent(true);
 			
 			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, Arrays.asList( meshMat1, meshMat2 ) );
+			
 			mesh.getPosition().set( x, y, z - 75.0 );
 			mesh.getRotation().set( rx, ry, rz );
 			mesh.getScale().set( s );
-			parent.addChild( mesh );
+			this.parent.addChild( mesh );
 
 			// solid line
 
@@ -131,7 +197,7 @@ public final class GeometryShapes extends ContentWidget
 			line1.getPosition().set( x, y, z + 25.0 );
 			line1.getRotation().set( rx, ry, rz );
 			line1.getScale().set( s );
-			parent.addChild( line1 );
+			this.parent.addChild( line1 );
 
 			// transparent line from real points
 
@@ -143,7 +209,7 @@ public final class GeometryShapes extends ContentWidget
 			line2.getPosition().set( x, y, z + 75.0 );
 			line2.getRotation().set( rx, ry, rz );
 			line2.getScale().set( s );
-			parent.addChild( line2 );
+			this.parent.addChild( line2 );
 
 			// vertices from real points
 
@@ -157,7 +223,7 @@ public final class GeometryShapes extends ContentWidget
 			particles.getPosition().set( x, y, z + 75.0 );
 			particles.getRotation().set( rx, ry, rz );
 			particles.getScale().set( s );
-			parent.addChild( particles );
+			this.parent.addChild( particles );
 
 			// transparent line from equidistance sampled points
 
@@ -169,7 +235,7 @@ public final class GeometryShapes extends ContentWidget
 			line3.getPosition().set( x, y, z + 100.0 );
 			line3.getRotation().set( rx, ry, rz );
 			line3.getScale().set( s );
-			parent.addChild( line3 );
+			this.parent.addChild( line3 );
 
 			// equidistance sampled points
 
@@ -183,7 +249,7 @@ public final class GeometryShapes extends ContentWidget
 			particles2.getPosition().set( x, y, z + 100.0 );
 			particles2.getRotation().set( rx, ry, rz );
 			particles2.getScale().set( s );
-			parent.addChild( particles2 );
+			this.parent.addChild( particles2 );
 		}
 		
 		@Override
@@ -194,12 +260,37 @@ public final class GeometryShapes extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			this.parent.getRotation().addY( ( this.mouseX - parent.getRotation().getY() ) * 0.0005 );
 		}
 	}
 		
 	public GeometryShapes() 
 	{
 		super("Cube and texture", "Drag mouse to spin. This example based on the three.js example.");
+	}
+//	
+//	@Override
+//	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+//	{
+//		super.loadRenderingPanelAttributes(renderingPanel);
+//		renderingPanel.setBackground(0xf0f0f0);
+//	}
+	
+	@Override
+	public void onAnimationReady(AnimationReadyEvent event)
+	{
+		super.onAnimationReady(event);
+
+		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		      @Override
+		      public void onMouseMove(MouseMoveEvent event)
+		      {
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
+		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
+//		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);
+		      }
+		});
 	}
 	
 	@Override
