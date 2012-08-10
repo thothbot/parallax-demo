@@ -103,8 +103,6 @@ public final class GeometryShapes extends ContentWidget
 			extrudeSettings.bevelSegments = 2;
 			extrudeSettings.steps = 2;
 			
-			splineShape(extrudeSettings);
-			california(extrudeSettings);
 			triangle(extrudeSettings);
 			square(extrudeSettings);
 			circle(extrudeSettings);
@@ -113,6 +111,8 @@ public final class GeometryShapes extends ContentWidget
 			roundedRectangle(extrudeSettings);
 			fish(extrudeSettings);
 			smile(extrudeSettings);
+			splineShape(extrudeSettings);
+			california(extrudeSettings);
 		}
 		
 		private void splineShape(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
@@ -136,8 +136,8 @@ public final class GeometryShapes extends ContentWidget
 			ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings1 = new ExtrudeGeometry.ExtrudeGeometryParameters(); 
 			extrudeSettings1.extrudePath = apath;
 			extrudeSettings1.steps = 20;
-			
-			addGeometry( 
+
+			addGeometry(
 					splineShape.extrude( extrudeSettings1 ), 
 					splineShape.createPointsGeometry(), 
 					splineShape.createSpacedPointsGeometry(),
@@ -366,7 +366,7 @@ public final class GeometryShapes extends ContentWidget
 			meshMat2.setWireframe(true);
 			meshMat2.setTransparent(true);
 			
-			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, Arrays.asList( meshMat1, meshMat2 ) );
+			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, Arrays.asList( meshMat1 ) );
 			
 			mesh.getPosition().set( x, y, z - 75.0 );
 			mesh.getRotation().set( rx, ry, rz );
