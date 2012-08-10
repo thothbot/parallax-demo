@@ -452,7 +452,7 @@ public final class GeometryShapes extends ContentWidget
 		
 	public GeometryShapes() 
 	{
-		super("Cube and texture", "Drag mouse to spin. This example based on the three.js example.");
+		super("Shapes and curves", "Drag mouse to spin. This example based on the three.js example.");
 	}
 	
 	@Override
