@@ -264,6 +264,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(LinesSphere.class));
 			category.addExample(new GeometryShapes(),
 					RunAsyncCode.runAsyncCode(GeometryShapes.class));
+			category.addExample(new GeometryExtrudeSplines(),
+					RunAsyncCode.runAsyncCode(GeometryExtrudeSplines.class));
 		}
 		
 		// Materials
