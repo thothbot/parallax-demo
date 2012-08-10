@@ -19,7 +19,9 @@
 
 package thothbot.parallax.demo.client.content;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
@@ -28,6 +30,10 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector2;
+import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.curves.CurveSpline3D;
+import thothbot.parallax.core.shared.curves.Path;
 import thothbot.parallax.core.shared.curves.Shape;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
@@ -63,7 +69,7 @@ public final class GeometryShapes extends ContentWidget
 	{
 		Object3D parent;
 		
-		int mouseX = 0, mouseY = 0;
+		int mouseX = 0;
 		
 		@Override
 		protected void loadCamera()
@@ -80,7 +86,7 @@ public final class GeometryShapes extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set( 0, 150, 500 );
+			getCamera().getPosition().set( 0, 180, 500 );
 			getScene().addChild(getCamera());
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
@@ -97,8 +103,88 @@ public final class GeometryShapes extends ContentWidget
 			extrudeSettings.bevelSegments = 2;
 			extrudeSettings.steps = 2;
 			
-			// Triangle
+			splineShape(extrudeSettings);
+			california(extrudeSettings);
+			triangle(extrudeSettings);
+			square(extrudeSettings);
+			circle(extrudeSettings);
+			arcCircle(extrudeSettings);
+			heart(extrudeSettings);
+			roundedRectangle(extrudeSettings);
+			fish(extrudeSettings);
+			smile(extrudeSettings);
+		}
+		
+		private void splineShape(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
+			List<Vector2> splinepts = new ArrayList<Vector2>();
+			splinepts.add( new Vector2 ( 350, 100 ) );
+			splinepts.add( new Vector2 ( 400, 450 ) );
+			splinepts.add( new Vector2 ( -140, 350 ) );
+			splinepts.add( new Vector2 ( 0, 0 ) );
+
+			Shape splineShape = new Shape();
+			splineShape.moveTo( 0, 0 );
+			splineShape.splineThru( splinepts );
+		
+			CurveSpline3D apath = new CurveSpline3D();
+			apath.points.add(new Vector3(-50, 150, 10));
+			apath.points.add(new Vector3(-20, 180, 20));
+			apath.points.add(new Vector3(40, 220, 50));
+			apath.points.add(new Vector3(200, 290, 100));
+
+			ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings1 = new ExtrudeGeometry.ExtrudeGeometryParameters(); 
+			extrudeSettings1.extrudePath = apath;
+			extrudeSettings1.steps = 20;
 			
+			addGeometry( 
+					splineShape.extrude( extrudeSettings1 ), 
+					splineShape.createPointsGeometry(), 
+					splineShape.createSpacedPointsGeometry(),
+					new Color(0x888888), -50, -100, -50, 0, 0, 0, 0.2 );
+		}
+		
+		private void california(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
+			List<Vector2> californiaPts = new ArrayList<Vector2>();
+
+			californiaPts.add( new Vector2 ( 610, 320 ) );
+			californiaPts.add( new Vector2 ( 450, 300 ) );
+			californiaPts.add( new Vector2 ( 392, 392 ) );
+			californiaPts.add( new Vector2 ( 266, 438 ) );
+			californiaPts.add( new Vector2 ( 190, 570 ) );
+			californiaPts.add( new Vector2 ( 190, 600 ) );
+			californiaPts.add( new Vector2 ( 160, 620 ) );
+			californiaPts.add( new Vector2 ( 160, 650 ) );
+			californiaPts.add( new Vector2 ( 180, 640 ) );
+			californiaPts.add( new Vector2 ( 165, 680 ) );
+			californiaPts.add( new Vector2 ( 150, 670 ) );
+			californiaPts.add( new Vector2 (  90, 737 ) );
+			californiaPts.add( new Vector2 (  80, 795 ) );
+			californiaPts.add( new Vector2 (  50, 835 ) );
+			californiaPts.add( new Vector2 (  64, 870 ) );
+			californiaPts.add( new Vector2 (  60, 945 ) );
+			californiaPts.add( new Vector2 ( 300, 945 ) );
+			californiaPts.add( new Vector2 ( 300, 743 ) );
+			californiaPts.add( new Vector2 ( 600, 473 ) );
+			californiaPts.add( new Vector2 ( 626, 425 ) );
+			californiaPts.add( new Vector2 ( 600, 370 ) );
+			californiaPts.add( new Vector2 ( 610, 320 ) );
+
+			Shape californiaShape = new Shape( californiaPts );
+
+			extrudeSettings.bevelEnabled = false;
+			extrudeSettings.steps = 20;
+			
+			addGeometry( 
+					new ExtrudeGeometry( californiaShape, extrudeSettings ), 
+					californiaShape.createPointsGeometry(), 
+					californiaShape.createSpacedPointsGeometry( 100 ),	
+					new Color(0xffaa00), -300, -100, 0, 0, 0, 0, 0.25 );
+		}
+
+		private void triangle(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
 			Shape triangleShape = new Shape();
 			triangleShape.moveTo(  80, 20 );
 			triangleShape.lineTo(  40, 80 );
@@ -110,9 +196,10 @@ public final class GeometryShapes extends ContentWidget
 					triangleShape.createPointsGeometry(), 
 					triangleShape.createSpacedPointsGeometry(), 
 					new Color(0xffee00), -180, 0, 0, 0, 0, 0, 1 );
-			
-			// Square
+		}
 
+		private void square(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
 			int sqLength = 80;
 
 			Shape squareShape = new Shape();
@@ -127,9 +214,10 @@ public final class GeometryShapes extends ContentWidget
 					squareShape.createPointsGeometry(), 
 					squareShape.createSpacedPointsGeometry(),
 					new Color(0x0055ff), 150, 100, 0, 0, 0, 0, 1 );
-			
-			// Circle
+		}
 
+		private void circle(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
 			int circleRadius = 40;
 			Shape circleShape = new Shape();
 			circleShape.moveTo( 0, circleRadius );
@@ -143,8 +231,28 @@ public final class GeometryShapes extends ContentWidget
 					circleShape.createPointsGeometry(), 
 					circleShape.createSpacedPointsGeometry(),				
 					new Color(0x00ff11), 120, 250, 0, 0, 0, 0, 1 );
+		}
+
+		private void arcCircle(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
+			Shape arcShape = new Shape();
+			arcShape.moveTo( 50, 10 );
+			arcShape.arc( 10, 10, 40, 0, Math.PI*2, false );
+
+			Path holePath = new Path();
+			holePath.moveTo( 20, 10 );
+			holePath.arc( 10, 10, 10, 0, Math.PI*2, true );
+			arcShape.getHoles().add( holePath );
 			
-			// Heart
+			addGeometry( 
+					arcShape.extrude( extrudeSettings ), 
+					arcShape.createPointsGeometry(), 
+					arcShape.createSpacedPointsGeometry(),
+					new Color(0xbb4422), 150, 0, 0, 0, 0, 0, 1 );
+		}
+
+		private void heart(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
 			// From http://blog.burlock.org/html5/130-paths
 
 			int x = 0, y = 0;
@@ -158,12 +266,90 @@ public final class GeometryShapes extends ContentWidget
 			heartShape.bezierCurveTo( x + 60, y + 77, x + 80, y + 55, x + 80, y + 35 );
 			heartShape.bezierCurveTo( x + 80, y + 35, x + 80, y, x + 50, y );
 			heartShape.bezierCurveTo( x + 35, y, x + 25, y + 25, x + 25, y + 25 );
-			
+
 			addGeometry( 
 					heartShape.extrude( extrudeSettings ), 
 					heartShape.createPointsGeometry(),
 					heartShape.createSpacedPointsGeometry(),	
 					new Color(0xff1100), 0, 100, 0, Math.PI, 0, 0, 1 );
+		}
+
+		private void fish(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
+			int x = 0, y = 0;
+			
+			Shape fishShape = new Shape();
+
+			fishShape.moveTo(x, y);
+			fishShape.quadraticCurveTo(x + 50, y - 80, x + 90, y - 10);
+			fishShape.quadraticCurveTo(x + 100, y - 10, x + 115, y - 40);
+			fishShape.quadraticCurveTo(x + 115, y, x + 115, y + 40);
+			fishShape.quadraticCurveTo(x + 100, y + 10, x + 90, y + 10);
+			fishShape.quadraticCurveTo(x + 50, y + 80, x, y);
+			
+			addGeometry( 
+					fishShape.extrude( extrudeSettings ), 
+					fishShape.createPointsGeometry(),
+					fishShape.createSpacedPointsGeometry(),
+					new Color(0x222222), -60, 200, 0, 0, 0, 0, 1 );
+		}
+		
+		private void smile(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
+			Shape smileyShape = new Shape();
+			smileyShape.moveTo( 80, 40 );
+			smileyShape.arc( 40, 40, 40, 0, Math.PI*2, false );
+
+			Path smileyEye1Path = new Path();
+			smileyEye1Path.moveTo( 35, 20 );
+			smileyEye1Path.arc( 25, 20, 10, 0, Math.PI*2, true );
+			smileyShape.getHoles().add( smileyEye1Path );
+
+			Path smileyEye2Path = new Path();
+			smileyEye2Path.moveTo( 65, 20 );
+			smileyEye2Path.arc( 55, 20, 10, 0, Math.PI*2, true );
+			smileyShape.getHoles().add( smileyEye2Path );
+
+			Path smileyMouthPath = new Path();
+
+			smileyMouthPath.moveTo( 20, 40 );
+			smileyMouthPath.quadraticCurveTo( 40, 60, 60, 40 );
+			smileyMouthPath.bezierCurveTo( 70, 45, 70, 50, 60, 60 );
+			smileyMouthPath.quadraticCurveTo( 40, 80, 20, 60 );
+			smileyMouthPath.quadraticCurveTo( 5, 50, 20, 40 );
+
+			smileyShape.getHoles().add( smileyMouthPath );
+			
+			addGeometry( 
+					smileyShape.extrude( extrudeSettings ), 
+					smileyShape.createPointsGeometry(), 
+					smileyShape.createSpacedPointsGeometry(),
+					new Color(0xee00ff), -270, 250, 0, Math.PI, 0, 0, 1 );
+		}
+		
+		private void roundedRectangle(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
+		{
+			Shape roundedRectShape = new Shape();
+			roundedRect( roundedRectShape, 0, 0, 50, 50, 20 );
+
+			addGeometry( 
+					roundedRectShape.extrude( extrudeSettings ), 
+					roundedRectShape.createPointsGeometry(), 
+					roundedRectShape.createSpacedPointsGeometry(),	
+					new Color(0x005500), -150, 150, 0, 0, 0, 0, 1 );
+		}
+		
+		private void roundedRect( Shape ctx, double x, double y, double width, double height, double radius )
+		{
+			ctx.moveTo( x, y + radius );
+			ctx.lineTo( x, y + height - radius );
+			ctx.quadraticCurveTo( x, y + height, x + radius, y + height );
+			ctx.lineTo( x + width - radius, y + height) ;
+			ctx.quadraticCurveTo( x + width, y + height, x + width, y + height - radius );
+			ctx.lineTo( x + width, y + radius );
+			ctx.quadraticCurveTo( x + width, y, x + width - radius, y );
+			ctx.lineTo( x + radius, y );
+			ctx.quadraticCurveTo( x, y, x, y + radius );
 		}
 		
 		private void addGeometry(Geometry geometry, Geometry points, Geometry spacedPoints, Color color, 
@@ -260,7 +446,7 @@ public final class GeometryShapes extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			this.parent.getRotation().addY( ( this.mouseX - parent.getRotation().getY() ) * 0.0005 );
+			this.parent.getRotation().addY( ( this.mouseX - parent.getRotation().getY() ) * 0.00001 );
 		}
 	}
 		
@@ -268,13 +454,13 @@ public final class GeometryShapes extends ContentWidget
 	{
 		super("Cube and texture", "Drag mouse to spin. This example based on the three.js example.");
 	}
-//	
-//	@Override
-//	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
-//	{
-//		super.loadRenderingPanelAttributes(renderingPanel);
-//		renderingPanel.setBackground(0xf0f0f0);
-//	}
+	
+	@Override
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xf0f0f0);
+	}
 	
 	@Override
 	public void onAnimationReady(AnimationReadyEvent event)
@@ -288,7 +474,6 @@ public final class GeometryShapes extends ContentWidget
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
-//		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);
 		      }
 		});
 	}
