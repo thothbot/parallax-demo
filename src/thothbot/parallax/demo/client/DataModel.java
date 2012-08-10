@@ -21,7 +21,11 @@ package thothbot.parallax.demo.client;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
+import com.google.gwt.safecss.shared.SafeStyles;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
@@ -57,12 +61,15 @@ public class DataModel implements TreeViewModel
 	 * The cell used to render examples.
 	 */
 	private static class ContentWidgetCell extends AbstractCell<ContentWidget> 
-	{
+	{    
 		@Override
 		public void render(Context context, ContentWidget value, SafeHtmlBuilder sb) 
 		{
 			if (value != null) 
-				sb.appendEscaped(value.getName());
+			{
+				sb.appendHtmlConstant("<img class='menuIcon' src='" + value.getIcon().getSafeUri().asString() + "'/>");
+				sb.appendHtmlConstant("<span>" + value.getName() + "</span>");
+			}
 		}
 	}
 
