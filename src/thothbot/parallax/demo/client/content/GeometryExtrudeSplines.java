@@ -54,6 +54,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
@@ -86,12 +92,13 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		double scale;
 		boolean isDebug;
 		boolean isLookAhead;
+		boolean isShowCameraHelper;
 		
 		Vector3 binormal = new Vector3();
 		Vector3 normal = new Vector3();
 		
-		int targetRotation = 0;
-	    int targetRotationOnMouseDown = 0;
+		double targetRotation = 0;
+	    double targetRotationOnMouseDown = 0;
 
 	    int mouseX = 0;
 	    int mouseXOnMouseDown = 0;
@@ -134,12 +141,12 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			addTube();
 
 			// Debug point
-			cameraEye = new Mesh(new Sphere(5), new MeshBasicMaterial({
-				color: 0xdddddd
-			}));
+			MeshBasicMaterial pMaterial = new MeshBasicMaterial();
+			pMaterial.setColor(new Color(0xdddddd));
+			this.cameraEye = new Mesh(new Sphere(5), pMaterial);
 
-			cameraHelper.children[0].visible = showCameraHelper;
-			cameraEye.visible = showCameraHelper;
+			this.cameraHelper.getChildren().get(0).setVisible(isShowCameraHelper);
+			this.cameraEye.setVisible(isShowCameraHelper);
 
 			parent.addChild(cameraEye);
 
@@ -148,27 +155,20 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			parent.addChild(splineCamera);
 		}
 		
-		private void addTube() 
-		{
-		      var value = document.getElementById('dropdown').value;
-		      
-		      var segments = parseInt(document.getElementById('segments').value);
-		      closed2 = document.getElementById('closed').checked;
-		      debug = document.getElementById('debug').checked;
+	    public void animateCamera(boolean toggle) 
+	    {
+	        if (toggle) {
+	          animation = !animation;
+	          document.getElementById('animation').value = 'Camera Spline Animation View: ' + (animation? 'ON': 'OFF');
+	        }
+	        
+	        lookAhead = document.getElementById('lookAhead').checked;
 
-		      var radiusSegments = parseInt(document.getElementById('radiusSegments').value);
+	        showCameraHelper = document.getElementById('cameraHelper').checked;
 
-		      console.log('adding tube', value, closed2, debug, radiusSegments);
-		      if (tubeMesh) parent.remove(tubeMesh);
-
-		      extrudePath = splines[value];
-		      
-		      tube = new Tube(extrudePath, segments, 2, radiusSegments, closed2, debug);
-
-		      addGeometry(tube, 0xff00ff);
-		      setScale();
-		    
-		}
+	        cameraHelper.children[0].visible = showCameraHelper;
+	        cameraEye.visible = showCameraHelper;
+	      }
 		
 		public void setScale(double scale) 
 		{
@@ -230,6 +230,28 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		             new Vector3(0, 40, 40), new Vector3(0, -40, 40) )));
 			      
 		    return retval;
+		}
+		
+		private void addTube() 
+		{
+		      var value = document.getElementById('dropdown').value;
+		      
+		      var segments = parseInt(document.getElementById('segments').value);
+		      closed2 = document.getElementById('closed').checked;
+		      debug = document.getElementById('debug').checked;
+
+		      var radiusSegments = parseInt(document.getElementById('radiusSegments').value);
+
+		      console.log('adding tube', value, closed2, debug, radiusSegments);
+		      if (tubeMesh) parent.remove(tubeMesh);
+
+		      extrudePath = splines[value];
+		      
+		      tube = new Tube(extrudePath, segments, 2, radiusSegments, closed2, debug);
+
+		      addGeometry(tube, 0xff00ff);
+		      setScale();
+		    
 		}
 				
 		@Override
@@ -299,7 +321,26 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		final DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		
+		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		      @Override
+		      public void onMouseMove(MouseMoveEvent event)
+		      {
+		    	  	rs.mouseX = (event.getX() - renderingPanel.getRenderer().getCanvas().getWidth() / 2 ); 
+		    	  	rs.targetRotation = rs.targetRotationOnMouseDown + (rs.mouseX - rs.mouseXOnMouseDown) * 0.02;
+		      }
+		});
+		
+		this.renderingPanel.getRenderer().getCanvas().addMouseDownHandler(new MouseDownHandler() {
+
+			@Override
+			public void onMouseDown(MouseDownEvent event) {
+				rs.mouseXOnMouseDown = event.getX() - renderingPanel.getRenderer().getCanvas().getWidth() / 2;
+				rs.targetRotationOnMouseDown = rs.targetRotation;
+
+			}
+		});
 		
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("common-panel", true);
@@ -309,10 +350,19 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		this.renderingPanel.setWidgetTopHeight(panel, 1, Unit.PX, 10, Unit.EM);
 		
 		Element br = DOM.createElement("br");
+
 		// Splines
 		panel.add(new InlineLabel("Spline:"));
 		
 		ListBox splines = new ListBox();
+		splines.addChangeHandler(new ChangeHandler() {
+			
+			@Override
+			public void onChange(ChangeEvent event) {
+				rs.addTube();
+			}
+		});
+
 		for(String key: rs.splines().keySet())
 			splines.addItem(key, key);
 		
@@ -321,7 +371,16 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		// Scale
 		panel.add(new InlineLabel("Scale:"));
 
-		ListBox scale = new ListBox();
+		final ListBox scale = new ListBox();
+		scale.addChangeHandler(new ChangeHandler() {
+			
+			@Override
+			public void onChange(ChangeEvent event) {
+				int selectedIndex = scale.getSelectedIndex();
+				rs.setScale( Integer.parseInt( scale.getValue(selectedIndex)) );
+			}
+		});
+
 		for(String key: Arrays.asList("1", "2", "4", "6", "10"))
 			scale.addItem(key, key);
 
@@ -332,7 +391,15 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		// Extrusion Segments
 		panel.add(new InlineLabel("Extrusion Segments:"));
 		
-		ListBox extrusionSegments = new ListBox();
+		final ListBox extrusionSegments = new ListBox();
+		extrusionSegments.addChangeHandler(new ChangeHandler() {
+			
+			@Override
+			public void onChange(ChangeEvent event) {
+				rs.addTube();
+			}
+		});
+
 		for(String key: Arrays.asList("50", "100", "200", "400"))
 			extrusionSegments.addItem(key, key);
 		
@@ -343,7 +410,15 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		// Radius Segments
 		panel.add(new InlineLabel("Radius Segments:"));
 		
-		ListBox radiusSegments = new ListBox();
+		final ListBox radiusSegments = new ListBox();
+		radiusSegments.addChangeHandler(new ChangeHandler() {
+			
+			@Override
+			public void onChange(ChangeEvent event) {
+				rs.addTube();	
+			}
+		});
+
 		for(String key: Arrays.asList("1", "2", "3", "4", "5", "6", "8", "12"))
 			radiusSegments.addItem(key, key);
 		
@@ -354,28 +429,66 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		// Debug normals
 		panel.add(new InlineLabel("Debug normals:"));
 		CheckBox isDebugNormals = new CheckBox(); 
+		isDebugNormals.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				rs.addTube();
+			}
+		});
+
 		panel.add(isDebugNormals);
 		
 		// Closed
 		panel.add(new InlineLabel("Closed:"));
-		CheckBox isClosed = new CheckBox(); 
+		CheckBox isClosed = new CheckBox();
+		isClosed.setValue(true);
+		isClosed.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				rs.addTube();
+			}
+		});
+
 		panel.add(isClosed);
 		
 		panel.getElement().appendChild(br);
 		
 		// Camera Spline Animation View
-		panel.add(new Button("Camera Spline Animation View: OFF"));
+		panel.add(new Button("Camera Spline Animation View: OFF", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				rs.animateCamera();
+			}
+		}));
 		
 		panel.getElement().appendChild(br);
 		
 		// Look Ahead
 		panel.add(new InlineLabel("Look Ahead:"));
 		CheckBox isLookAhead = new CheckBox(); 
+		isLookAhead.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				rs.animateCamera();				
+			}
+		});
+		
 		panel.add(isLookAhead);
 		
 		// Camera Helper
 		panel.add(new InlineLabel("Camera Helper:"));
 		CheckBox isCameraHelper = new CheckBox(); 
+		isCameraHelper.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				rs.animateCamera();				
+			}
+		});
 		panel.add(isCameraHelper);
 	}
 	
