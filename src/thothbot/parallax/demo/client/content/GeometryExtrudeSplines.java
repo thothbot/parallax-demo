@@ -45,7 +45,11 @@ import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
+import com.google.gwt.user.client.ui.ListBox;
 
 public final class GeometryExtrudeSplines extends ContentWidget 
 {
@@ -132,12 +136,73 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
+		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		
 		FlowPanel panel = new FlowPanel();
 		panel.setStyleName("common-panel", true);
-		panel.setStyleName("debug-panel", true);
+		panel.setStyleName("corner-panel", true);
 		this.renderingPanel.add(panel);
 		this.renderingPanel.setWidgetLeftWidth(panel, 1, Unit.PX, 25, Unit.EM);
 		this.renderingPanel.setWidgetTopHeight(panel, 1, Unit.PX, 10, Unit.EM);
+		
+		// Splines
+		panel.add(new InlineLabel("Spline:"));
+		
+		ListBox splines = new ListBox();
+		for(String key: rs.splines().keySet())
+			splines.addItem(key, key);
+		
+		panel.add(splines);
+		
+		// Scale
+		panel.add(new InlineLabel("Scale:"));
+
+		ListBox scale = new ListBox();
+		for(String key: Arrays.asList("1", "2", "4", "6", "10"))
+			scale.addItem(key, key);
+
+		panel.add(scale);
+		
+		// Extrusion Segments
+		panel.add(new InlineLabel("Extrusion Segments:"));
+		
+		ListBox extrusionSegments = new ListBox();
+		for(String key: Arrays.asList("50", "100", "200", "400"))
+			extrusionSegments.addItem(key, key);
+		
+		panel.add(extrusionSegments);
+		
+		// Radius Segments
+		panel.add(new InlineLabel("Radius Segments:"));
+		
+		ListBox radiusSegments = new ListBox();
+		for(String key: Arrays.asList("1", "2", "3", "4", "5", "6", "8", "12"))
+			radiusSegments.addItem(key, key);
+		
+		panel.add(radiusSegments);
+		
+		// Debug normals
+		panel.add(new InlineLabel("Debug normals:"));
+		CheckBox isDebugNormals = new CheckBox(); 
+		panel.add(isDebugNormals);
+		
+		// Closed
+		panel.add(new InlineLabel("Closed:"));
+		CheckBox isClosed = new CheckBox(); 
+		panel.add(isClosed);
+		
+		// Camera Spline Animation View
+		panel.add(new Button("Camera Spline Animation View: OFF"));
+		
+		// Look Ahead
+		panel.add(new InlineLabel("Look Ahead:"));
+		CheckBox isLookAhead = new CheckBox(); 
+		panel.add(isLookAhead);
+		
+		// Camera Helper
+		panel.add(new InlineLabel("Camera Helper:"));
+		CheckBox isCameraHelper = new CheckBox(); 
+		panel.add(isCameraHelper);
 	}
 	
 	@Override
