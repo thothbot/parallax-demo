@@ -19,14 +19,11 @@
 
 package thothbot.parallax.demo.client.content;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.widget.Debugger;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -34,7 +31,20 @@ import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.curves.Curve;
 import thothbot.parallax.core.shared.curves.CurveSpline3D;
 import thothbot.parallax.core.shared.curves.CurveSplineClosed3D;
-import thothbot.parallax.core.shared.curves.parametric.*;
+import thothbot.parallax.core.shared.curves.parametric.CurveCinquefoilKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot4a;
+import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot4b;
+import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot5a;
+import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot5c;
+import thothbot.parallax.core.shared.curves.parametric.CurveFigureEightPolynomialKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveGrannyKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveHeart;
+import thothbot.parallax.core.shared.curves.parametric.CurveHelix;
+import thothbot.parallax.core.shared.curves.parametric.CurveKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveTorusKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveTrefoilKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveTrefoilPolynomialKnot;
+import thothbot.parallax.core.shared.curves.parametric.CurveViviani;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.geometries.Tube;
 import thothbot.parallax.core.shared.helpers.CameraHelper;
@@ -47,7 +57,6 @@ import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.GeometryColors.DemoScene;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -89,10 +98,16 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		PerspectiveCamera splineCamera;
 		CameraHelper cameraHelper;
 		
-		double scale;
-		boolean isDebug;
-		boolean isLookAhead;
-		boolean isShowCameraHelper;
+		// Default
+		Curve extrudePath = splines().get("GrannyKnot");
+		int extrusionSegments = 50;
+		int radiusSegments = 1;
+		double scale = 1;
+		boolean isClosed = true;
+		boolean isDebug = false;
+		boolean isLookAhead = false;
+		boolean isShowCameraHelper = false;
+		boolean isCameraAnimation = false;
 		
 		Vector3 binormal = new Vector3();
 		Vector3 normal = new Vector3();
@@ -102,6 +117,41 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 	    int mouseX = 0;
 	    int mouseXOnMouseDown = 0;
+		
+		public Map<String, Curve> splines()
+		{
+			Map<String, Curve> retval = new HashMap<String, Curve>();
+			retval.put("GrannyKnot", new CurveGrannyKnot());
+			retval.put("HeartCurve", new CurveHeart(3.5));
+			retval.put("VivianiCurve", new CurveViviani(70));
+			retval.put("KnotCurve", new CurveKnot());
+			retval.put("HelixCurve", new CurveHelix());
+			retval.put("TrefoilKnot", new CurveTrefoilKnot());
+			retval.put("TorusKnot", new CurveTorusKnot(20));
+			retval.put("CinquefoilKnot", new CurveCinquefoilKnot(20));
+			retval.put("TrefoilPolynomialKnot", new CurveTrefoilPolynomialKnot(14));
+			retval.put("FigureEightPolynomialKnot", new CurveFigureEightPolynomialKnot());
+			retval.put("DecoratedTorusKnot4a", new CurveDecoratedTorusKnot4a());
+			retval.put("DecoratedTorusKnot4b", new CurveDecoratedTorusKnot4b());
+		    retval.put("DecoratedTorusKnot5a", new CurveDecoratedTorusKnot5a());
+		    retval.put("DecoratedTorusKnot5c", new CurveDecoratedTorusKnot5c());
+		    retval.put("PipeSpline", new CurveSpline3D(Arrays.asList(
+		             new Vector3(0, 10, -10), new Vector3(10, 0, -10), new Vector3(20, 0, 0), 
+		             new Vector3(30, 0, 10), new Vector3(30, 0, 20), new Vector3(20, 0, 30), 
+		             new Vector3(10, 0, 30), new Vector3(0, 0, 30), new Vector3(-10, 10, 30), 
+		             new Vector3(-10, 20, 30), new Vector3(0, 30, 30), new Vector3(10, 30, 30), 
+		             new Vector3(20, 30, 15), new Vector3(10, 30, 10), new Vector3(0, 30, 10), 
+		             new Vector3(-10, 20, 10), new Vector3(-10, 10, 10), new Vector3(0, 0, 10), 
+		             new Vector3(10, -10, 10), new Vector3(20, -15, 10), new Vector3(30, -15, 10), 
+		             new Vector3(40, -15, 10), new Vector3(50, -15, 10), new Vector3(60, 0, 10), 
+		             new Vector3(70, 0, 0), new Vector3(80, 0, 0), new Vector3(90, 0, 0), 
+		             new Vector3(100, 0, 0))));
+		    retval.put("SampleClosedSpline",  new CurveSplineClosed3D(Arrays.asList(
+		             new Vector3(0, -40, -40), new Vector3(0, 40, -40), new Vector3(0, 140, -40),
+		             new Vector3(0, 40, 40), new Vector3(0, -40, 40) )));
+			      
+		    return retval;
+		}
 		
 		@Override
 		protected void loadCamera()
@@ -155,28 +205,85 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			parent.addChild(splineCamera);
 		}
 		
-	    public void animateCamera(boolean toggle) 
+	    public void animateCamera(boolean toggle, boolean lookAhead, boolean showCameraHelper) 
 	    {
-	        if (toggle) {
-	          animation = !animation;
-	          document.getElementById('animation').value = 'Camera Spline Animation View: ' + (animation? 'ON': 'OFF');
-	        }
-	        
-	        lookAhead = document.getElementById('lookAhead').checked;
-
-	        showCameraHelper = document.getElementById('cameraHelper').checked;
-
-	        cameraHelper.children[0].visible = showCameraHelper;
-	        cameraEye.visible = showCameraHelper;
-	      }
+	        cameraHelper.getChildren().get(0).setVisible( showCameraHelper );
+	        cameraEye.setVisible( showCameraHelper );
+	    }
 		
-		public void setScale(double scale) 
+		public void setScale(double scale)
 		{
-			this.scale = scale; 
-			tubeMesh.getScale().set(this.scale);
+			this.scale = scale;
+			setScale();
+		}
+		
+		public void setSpline(String spline)
+		{
+			this.extrudePath = splines().get(spline);
+			addTube();
+		}
+		
+		public void setExtrusionSegments(int extrusionSegments)
+		{
+			this.extrusionSegments = extrusionSegments;
+			addTube();
+		}
+		
+		public void setRadiusSegments(int radiusSegments)
+		{
+			this.radiusSegments = radiusSegments;
+			addTube();
+		}
+		
+		public void setDebug(boolean isDebug)
+		{
+			this.isDebug = isDebug; 
+			addTube();
+		}
+		
+		public void setClosed(boolean isClosed)
+		{
+			this.isClosed = isClosed;
+			addTube();
+		}
+		
+		public void setLookAhead(boolean isLookAhead)
+		{
+			this.isLookAhead = isLookAhead;
+		}
+		
+		public void setShowCameraHelper(boolean isShowCameraHelper)
+		{
+			this.isShowCameraHelper = isShowCameraHelper;
+		}
+		
+		public boolean isCameraAnimation()
+		{
+			return this.isCameraAnimation;
+		}
+		
+		public void setCameraAnimation(boolean isCameraAnimation)
+		{
+			this.isCameraAnimation = isCameraAnimation;
 		}
 
-	    public void addGeometry(Geometry geometry, Color color) 
+		private void setScale() 
+		{ 
+			tubeMesh.getScale().set(this.scale);
+		}
+		
+		private void addTube() 
+		{
+			if (tubeMesh != null) 
+				parent.removeChild(tubeMesh);
+
+			tube = new Tube(this.extrudePath, this.extrusionSegments, 2.0, this.radiusSegments, this.isClosed, this.isDebug);
+
+			addGeometry(tube, new Color(0xff00ff));
+			setScale();
+		}
+
+	    private void addGeometry(Geometry geometry, Color color) 
 	    {
 	    	MeshLambertMaterial material1 = new MeshLambertMaterial();
 	    	material1.setColor(color);
@@ -191,68 +298,11 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	    	// 3d shape
 	    	tubeMesh = (Mesh) SceneUtils.createMultiMaterialObject(geometry, Arrays.asList(material1, material2));
 
-	    	if (geometry.debug) 
-	    		tubeMesh.add(geometry.debug);
+//	    	if (geometry.debug) 
+//	    		tubeMesh.add(geometry.debug);
 
 	    	parent.addChild(tubeMesh);
 	    }
-		
-		public Map<String, Curve> splines()
-		{
-			Map<String, Curve> retval = new HashMap<String, Curve>();
-			retval.put("GrannyKnot", new CurveGrannyKnot());
-			retval.put("HeartCurve", new CurveHeart(3.5));
-			retval.put("VivianiCurve", new CurveViviani(70));
-			retval.put("KnotCurve", new CurveKnot());
-			retval.put("HelixCurve", new CurveHelix());
-			retval.put("TrefoilKnot", new CurveTrefoilKnot());
-			retval.put("TorusKnot", new CurveTorusKnot(20));
-			retval.put("CinquefoilKnot", new CurveCinquefoilKnot(20));
-			retval.put("TrefoilPolynomialKnot", new CurveTrefoilPolynomialKnot(14));
-			retval.put("FigureEightPolynomialKnot", new CurveFigureEightPolynomialKnot());
-			retval.put("DecoratedTorusKnot4a", new CurveDecoratedTorusKnot4a());
-			retval.put("DecoratedTorusKnot4b", new CurveDecoratedTorusKnot4b());
-		    retval.put("DecoratedTorusKnot5a", new CurveDecoratedTorusKnot5a());
-		    retval.put("DecoratedTorusKnot5c", new CurveDecoratedTorusKnot5c());
-		    retval.put("PipeSpline", new CurveSpline3D(Arrays.asList(
-		             new Vector3(0, 10, -10), new Vector3(10, 0, -10), new Vector3(20, 0, 0), 
-		             new Vector3(30, 0, 10), new Vector3(30, 0, 20), new Vector3(20, 0, 30), 
-		             new Vector3(10, 0, 30), new Vector3(0, 0, 30), new Vector3(-10, 10, 30), 
-		             new Vector3(-10, 20, 30), new Vector3(0, 30, 30), new Vector3(10, 30, 30), 
-		             new Vector3(20, 30, 15), new Vector3(10, 30, 10), new Vector3(0, 30, 10), 
-		             new Vector3(-10, 20, 10), new Vector3(-10, 10, 10), new Vector3(0, 0, 10), 
-		             new Vector3(10, -10, 10), new Vector3(20, -15, 10), new Vector3(30, -15, 10), 
-		             new Vector3(40, -15, 10), new Vector3(50, -15, 10), new Vector3(60, 0, 10), 
-		             new Vector3(70, 0, 0), new Vector3(80, 0, 0), new Vector3(90, 0, 0), 
-		             new Vector3(100, 0, 0))));
-		    retval.put("SampleClosedSpline",  new CurveSplineClosed3D(Arrays.asList(
-		             new Vector3(0, -40, -40), new Vector3(0, 40, -40), new Vector3(0, 140, -40),
-		             new Vector3(0, 40, 40), new Vector3(0, -40, 40) )));
-			      
-		    return retval;
-		}
-		
-		private void addTube() 
-		{
-		      var value = document.getElementById('dropdown').value;
-		      
-		      var segments = parseInt(document.getElementById('segments').value);
-		      closed2 = document.getElementById('closed').checked;
-		      debug = document.getElementById('debug').checked;
-
-		      var radiusSegments = parseInt(document.getElementById('radiusSegments').value);
-
-		      console.log('adding tube', value, closed2, debug, radiusSegments);
-		      if (tubeMesh) parent.remove(tubeMesh);
-
-		      extrudePath = splines[value];
-		      
-		      tube = new Tube(extrudePath, segments, 2, radiusSegments, closed2, debug);
-
-		      addGeometry(tube, 0xff00ff);
-		      setScale();
-		    
-		}
 				
 		@Override
 		protected void onStop()
@@ -354,17 +404,17 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		// Splines
 		panel.add(new InlineLabel("Spline:"));
 		
-		ListBox splines = new ListBox();
+		final ListBox splines = new ListBox();
 		splines.addChangeHandler(new ChangeHandler() {
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.addTube();
+				rs.setSpline(splines.getValue(splines.getSelectedIndex()));
 			}
 		});
 
 		for(String key: rs.splines().keySet())
-			splines.addItem(key, key);
+			splines.addItem(key);
 		
 		panel.add(splines);
 			
@@ -376,8 +426,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				int selectedIndex = scale.getSelectedIndex();
-				rs.setScale( Integer.parseInt( scale.getValue(selectedIndex)) );
+				rs.setScale( Integer.parseInt( scale.getValue(scale.getSelectedIndex())) );
 			}
 		});
 
@@ -396,7 +445,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.addTube();
+				rs.setExtrusionSegments(Integer.parseInt( extrusionSegments.getValue(extrusionSegments.getSelectedIndex()) ));
 			}
 		});
 
@@ -415,7 +464,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.addTube();	
+				rs.setRadiusSegments(Integer.parseInt( radiusSegments.getValue(radiusSegments.getSelectedIndex()) ));	
 			}
 		});
 
@@ -428,12 +477,12 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		// Debug normals
 		panel.add(new InlineLabel("Debug normals:"));
-		CheckBox isDebugNormals = new CheckBox(); 
+		final CheckBox isDebugNormals = new CheckBox(); 
 		isDebugNormals.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.addTube();
+				rs.setDebug(isDebugNormals.getValue());
 			}
 		});
 
@@ -441,13 +490,13 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		// Closed
 		panel.add(new InlineLabel("Closed:"));
-		CheckBox isClosed = new CheckBox();
+		final CheckBox isClosed = new CheckBox();
 		isClosed.setValue(true);
 		isClosed.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.addTube();
+				rs.setClosed(isClosed.getValue());
 			}
 		});
 
@@ -455,25 +504,29 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		panel.getElement().appendChild(br);
 		
-		// Camera Spline Animation View
-		panel.add(new Button("Camera Spline Animation View: OFF", new ClickHandler() {
+		final Button animation = new Button("Camera Spline Animation View: OFF");
+		animation.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.animateCamera();
+				rs.setCameraAnimation(!rs.isCameraAnimation());
+				animation.setText("Camera Spline Animation View: " + (rs.isCameraAnimation() ? "ON" : "OFF"));
 			}
-		}));
+		});
+
+		// Camera Spline Animation View
+		panel.add(animation);
 		
 		panel.getElement().appendChild(br);
 		
 		// Look Ahead
 		panel.add(new InlineLabel("Look Ahead:"));
-		CheckBox isLookAhead = new CheckBox(); 
+		final CheckBox isLookAhead = new CheckBox(); 
 		isLookAhead.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.animateCamera();				
+				rs.setLookAhead(isLookAhead.getValue());				
 			}
 		});
 		
@@ -481,12 +534,12 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		// Camera Helper
 		panel.add(new InlineLabel("Camera Helper:"));
-		CheckBox isCameraHelper = new CheckBox(); 
+		final CheckBox isCameraHelper = new CheckBox(); 
 		isCameraHelper.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.animateCamera();				
+				rs.setShowCameraHelper(isCameraHelper.getValue());				
 			}
 		});
 		panel.add(isCameraHelper);
