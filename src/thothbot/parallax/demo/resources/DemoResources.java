@@ -92,6 +92,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_geometry_shapes.jpg")
 	ImageResource exampleGeometryShapes();
 	
+	@Source("images/example_geometry_extrude_splines.jpg")
+	ImageResource exampleGeometryExtrudeSplines();
+	
 	@Source("images/example_lines_sphere.jpg")
 	ImageResource exampleLinesSphere();
 	

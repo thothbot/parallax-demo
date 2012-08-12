@@ -24,6 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -91,23 +94,23 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	{
 
 		Object3D parent;
-		Mesh tubeMesh;
+		Object3D tubeMesh;
 		Tube tube;
 		Mesh cameraEye;
 		
+		PerspectiveCamera mainCamera;
 		PerspectiveCamera splineCamera;
 		CameraHelper cameraHelper;
 		
 		// Default
 		Curve extrudePath = splines().get("GrannyKnot");
-		int extrusionSegments = 50;
-		int radiusSegments = 1;
-		double scale = 1;
+		int extrusionSegments = 100;
+		int radiusSegments = 3;
+		double scale = 4;
 		boolean isClosed = true;
 		boolean isDebug = false;
 		boolean isLookAhead = false;
 		boolean isShowCameraHelper = false;
-		boolean isCameraAnimation = false;
 		
 		Vector3 binormal = new Vector3();
 		Vector3 normal = new Vector3();
@@ -155,15 +158,16 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		@Override
 		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							0.01, // near
-							1000 // far 
-					)); 
+		{		
+			mainCamera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					0.01, // near
+					1000 // far 
+			);
 			
+			setCamera(mainCamera); 
+
 			splineCamera = new PerspectiveCamera(
 					84, // fov
 					getRenderer().getCanvas().getAspectRation(), // aspect 
@@ -172,6 +176,16 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			);
 			
 			cameraHelper = new CameraHelper(splineCamera);
+		}
+		
+		@Override
+		protected void onResize() 
+		{
+			super.onResize();
+			Canvas3d canvas = getRenderer().getCanvas();
+
+			mainCamera.setAspectRatio(canvas.getAspectRation());
+			splineCamera.setAspectRatio(canvas.getAspectRation());
 		}
 
 		@Override
@@ -204,12 +218,6 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			splineCamera.addChild(cameraHelper);
 			parent.addChild(splineCamera);
 		}
-		
-	    public void animateCamera(boolean toggle, boolean lookAhead, boolean showCameraHelper) 
-	    {
-	        cameraHelper.getChildren().get(0).setVisible( showCameraHelper );
-	        cameraEye.setVisible( showCameraHelper );
-	    }
 		
 		public void setScale(double scale)
 		{
@@ -255,18 +263,29 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		public void setShowCameraHelper(boolean isShowCameraHelper)
 		{
 			this.isShowCameraHelper = isShowCameraHelper;
+			
+			animateCamera();
 		}
 		
 		public boolean isCameraAnimation()
 		{
-			return this.isCameraAnimation;
+			return getCamera().equals(splineCamera);
 		}
 		
-		public void setCameraAnimation(boolean isCameraAnimation)
+		public void setCameraAnimation()
 		{
-			this.isCameraAnimation = isCameraAnimation;
+			if(getCamera().equals(splineCamera))
+				setCamera(mainCamera);
+			else
+				setCamera(splineCamera);
 		}
 
+		private void animateCamera() 
+	    {
+	        cameraHelper.getChildren().get(0).setVisible( this.isShowCameraHelper );
+	        cameraEye.setVisible( this.isShowCameraHelper );
+	    }
+		
 		private void setScale() 
 		{ 
 			tubeMesh.getScale().set(this.scale);
@@ -287,7 +306,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	    {
 	    	MeshLambertMaterial material1 = new MeshLambertMaterial();
 	    	material1.setColor(color);
-	    	material1.setOpacity(isDebug ? 0.2 : 0.8);
+	    	material1.setOpacity(this.isDebug ? 0.2 : 0.8);
 	    	material1.setTransparent(true);
 	    	
 	    	MeshBasicMaterial material2 = new MeshBasicMaterial();
@@ -296,12 +315,11 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	    	material2.setWireframe(true);
 	    	
 	    	// 3d shape
-	    	tubeMesh = (Mesh) SceneUtils.createMultiMaterialObject(geometry, Arrays.asList(material1, material2));
+	    	this.tubeMesh = (Object3D) SceneUtils.createMultiMaterialObject(geometry, Arrays.asList(material1, material2));
+	    	
+    		this.tubeMesh.addChild(geometry.getDebug());
 
-//	    	if (geometry.debug) 
-//	    		tubeMesh.add(geometry.debug);
-
-	    	parent.addChild(tubeMesh);
+	    	this.parent.addChild(this.tubeMesh);
 	    }
 				
 		@Override
@@ -313,51 +331,47 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		protected void onUpdate(double duration)
 		{
 			// Try Animate Camera Along Spline
-			double time = Duration.currentTimeMillis();
 			double looptime = 20 * 1000;
-			double t = (int) ((time % looptime) / looptime);
+			double t = ((duration % looptime) / looptime);
 
-			Vector3 pos = (Vector3) tube.getPath().getPointAt(t);
-			pos.multiply(this.scale);
+			Vector3 pos = (Vector3) this.tube.getPath().getPointAt(t);
+			pos.multiply( this.scale );
 
 			// interpolation
-			int segments = tube.getTangents().size();
+			int segments = this.tube.getTangents().size();
 			double pickt = t * segments;
 			int pick = (int) Math.floor(pickt);
 			int pickNext = (pick + 1) % segments;
 
-			binormal.sub(tube.getBinormals().get(pickNext), tube.getBinormals().get(pick));
-			binormal.multiply(pickt - pick).add(tube.getBinormals().get(pick));
+			this.binormal.sub( this.tube.getBinormals().get( pickNext ), this.tube.getBinormals().get( pick ) );
+			this.binormal.multiply( pickt - (double)pick ).add( this.tube.getBinormals().get(pick) );
 
-			Vector3 dir = (Vector3) tube.getPath().getTangentAt(t);
+			Vector3 dir = (Vector3) this.tube.getPath().getTangentAt(t);
 
 			double offset = 15;
 
-			normal.copy(binormal).cross(dir);
+			this.normal.copy( this.binormal ).cross( dir );
 
 			// We move on a offset on its binormal
-			pos.add(normal.clone().multiply(offset));
+			pos.add( this.normal.clone().multiply( offset ) );
 
-			splineCamera.setPosition( pos );
-			cameraEye.setPosition( pos );
+			this.splineCamera.setPosition( pos );
+			this.cameraEye.setPosition( pos );
 
-
-			// Camera Orientation 1 - default look at
-			// splineCamera.lookAt(lookAt);
-
-			// Using arclength for stablization in look ahead.
-			Vector3 lookAt = (Vector3) tube.getPath().getPointAt((t + 30 / (double)tube.getPath().getLength()) % 1).multiply(scale);
+			// Using arclength for stabilization in look ahead.
+			Vector3 lookAt = (Vector3) this.tube.getPath().getPointAt(
+					( t + 30 / (double)this.tube.getPath().getLength()) % 1 ).multiply(this.scale);
 
 			// Camera Orientation 2 - up orientation via normal
-			if (! isLookAhead)
-				lookAt.copy(pos).add(dir);
+			if ( !this.isLookAhead )
+				lookAt.copy( pos ).add( dir );
 
-			splineCamera.getMatrix().lookAt(splineCamera.getPosition(), lookAt, normal);
-			splineCamera.getRotation().getRotationFromMatrix(splineCamera.getMatrix());
+			this.splineCamera.getMatrix().lookAt( this.splineCamera.getPosition(), lookAt, this.normal );
+			this.splineCamera.getRotation().getRotationFromMatrix( this.splineCamera.getMatrix() );
 
-			cameraHelper.update();
+			this.cameraHelper.update();
 
-			parent.getRotation().addY( (targetRotation - parent.getRotation().getY()) * 0.05 );
+			this.parent.getRotation().addY( ( this.targetRotation - this.parent.getRotation().getY() ) * 0.05 );
 		}
 	}
 		
@@ -367,11 +381,18 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	}
 	
 	@Override
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xf0f0f0);
+	}
+	
+	@Override
 	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
 
-		final DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		final DemoScene rs = (DemoScene) this.renderingPanel.getAnimatedScene();
 		
 		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
@@ -432,6 +453,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		for(String key: Arrays.asList("1", "2", "4", "6", "10"))
 			scale.addItem(key, key);
+		scale.setItemSelected(2, true);
 
 		panel.add(scale);
 		
@@ -450,7 +472,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		});
 
 		for(String key: Arrays.asList("50", "100", "200", "400"))
-			extrusionSegments.addItem(key, key);
+			extrusionSegments.addItem(key);
+		extrusionSegments.setItemSelected(1, true);
 		
 		panel.add(extrusionSegments);
 		
@@ -470,6 +493,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		for(String key: Arrays.asList("1", "2", "3", "4", "5", "6", "8", "12"))
 			radiusSegments.addItem(key, key);
+		radiusSegments.setItemSelected(2, true);
 		
 		panel.add(radiusSegments);
 		
@@ -509,7 +533,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.setCameraAnimation(!rs.isCameraAnimation());
+				rs.setCameraAnimation();
 				animation.setText("Camera Spline Animation View: " + (rs.isCameraAnimation() ? "ON" : "OFF"));
 			}
 		});
@@ -554,7 +578,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleDefault();
+		return Demo.resources.exampleGeometryExtrudeSplines();
 	}
 	
 	@Override
