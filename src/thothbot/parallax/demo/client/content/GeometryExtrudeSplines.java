@@ -26,7 +26,6 @@ import java.util.Map;
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -61,7 +60,6 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
-import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Element;
@@ -125,7 +123,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		{
 			Map<String, Curve> retval = new HashMap<String, Curve>();
 			retval.put("GrannyKnot", new CurveGrannyKnot());
-			retval.put("HeartCurve", new CurveHeart(3.5));
+			retval.put("HeartCurve", new CurveHeart(3.5)); // ?
 			retval.put("VivianiCurve", new CurveViviani(70));
 			retval.put("KnotCurve", new CurveKnot());
 			retval.put("HelixCurve", new CurveHelix());
@@ -139,19 +137,19 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		    retval.put("DecoratedTorusKnot5a", new CurveDecoratedTorusKnot5a());
 		    retval.put("DecoratedTorusKnot5c", new CurveDecoratedTorusKnot5c());
 		    retval.put("PipeSpline", new CurveSpline3D(Arrays.asList(
-		             new Vector3(0, 10, -10), new Vector3(10, 0, -10), new Vector3(20, 0, 0), 
-		             new Vector3(30, 0, 10), new Vector3(30, 0, 20), new Vector3(20, 0, 30), 
-		             new Vector3(10, 0, 30), new Vector3(0, 0, 30), new Vector3(-10, 10, 30), 
-		             new Vector3(-10, 20, 30), new Vector3(0, 30, 30), new Vector3(10, 30, 30), 
-		             new Vector3(20, 30, 15), new Vector3(10, 30, 10), new Vector3(0, 30, 10), 
+		             new Vector3(0, 10, -10),  new Vector3(10, 0, -10),  new Vector3(20, 0, 0), 
+		             new Vector3(30, 0, 10),   new Vector3(30, 0, 20),   new Vector3(20, 0, 30), 
+		             new Vector3(10, 0, 30),   new Vector3(0, 0, 30),    new Vector3(-10, 10, 30), 
+		             new Vector3(-10, 20, 30), new Vector3(0, 30, 30),   new Vector3(10, 30, 30), 
+		             new Vector3(20, 30, 15),  new Vector3(10, 30, 10),  new Vector3(0, 30, 10), 
 		             new Vector3(-10, 20, 10), new Vector3(-10, 10, 10), new Vector3(0, 0, 10), 
 		             new Vector3(10, -10, 10), new Vector3(20, -15, 10), new Vector3(30, -15, 10), 
 		             new Vector3(40, -15, 10), new Vector3(50, -15, 10), new Vector3(60, 0, 10), 
-		             new Vector3(70, 0, 0), new Vector3(80, 0, 0), new Vector3(90, 0, 0), 
+		             new Vector3(70, 0, 0),    new Vector3(80, 0, 0),    new Vector3(90, 0, 0), 
 		             new Vector3(100, 0, 0))));
-		    retval.put("SampleClosedSpline",  new CurveSplineClosed3D(Arrays.asList(
+		    retval.put("SampleClosedSpline",  new CurveSplineClosed3D(Arrays.asList( //?
 		             new Vector3(0, -40, -40), new Vector3(0, 40, -40), new Vector3(0, 140, -40),
-		             new Vector3(0, 40, 40), new Vector3(0, -40, 40) )));
+		             new Vector3(0, 40, 40),   new Vector3(0, -40, 40) )));
 			      
 		    return retval;
 		}

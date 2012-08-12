@@ -99,7 +99,7 @@ public class IndexWidget extends ScrollPanel
 		examplePanel.add(new Image(example.getIcon()));
 		
 		Label name = new Label(example.getName());
-		name.setHorizontalAlignment(HasAlignment.ALIGN_CENTER);  
+		name.setStyleName("text");
 		examplePanel.add(name);
 
 		examplesInfo.add(examplePanel);

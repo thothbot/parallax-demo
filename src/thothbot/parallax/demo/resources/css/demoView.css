@@ -13,23 +13,45 @@
 
 .indexGroupName {
 	padding-top: 20px;
-	padding-bottom: 10px;
+	padding-bottom: 2px;
 	font-size: 16px;
+	font-weight: bold;
+	border-bottom: 1px solid #E0E0E0;
+	color: #503030;
 }
 
 .indexExamplePanel {
 	display: inline;
 	float: left;
 	border: 1px solid #FFFFFF;
-	padding: 5px;
-	margin: 10px;
+	position:relative;
+	padding: 2px;
+	margin: 2px;
+}
+
+.indexExamplePanel image {
+	position:relative;
+}
+
+.indexExamplePanel .text {
+	background-color: #CCC;
+	border-top: 1px solid white;
+	position:absolute;
+	opacity: 0.5;
+    bottom: 6px;
+    right: 2px;
+    left: 2px;
+    padding: 3px;
+    text-align: center;
 }
 
 .indexExamplePanel:HOVER {
 	cursor: hand;
 	cursor: pointer;
-	background-color: #EEEEEE;
-	border: 1px solid #999999;
+}
+
+.indexExamplePanel:HOVER .text {
+	opacity: 1.0;
 }
 
 .menuIcon {
