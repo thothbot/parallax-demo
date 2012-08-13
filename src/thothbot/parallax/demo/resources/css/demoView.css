@@ -21,16 +21,18 @@
 }
 
 .indexExamplePanel {
+	height: 133px;
 	display: inline;
 	float: left;
-	border: 1px solid #FFFFFF;
+	border: 1px solid #BBB;
 	position:relative;
-	padding: 2px;
-	margin: 2px;
+	margin: 3px;
 }
 
-.indexExamplePanel image {
+.indexExamplePanel img {
 	position:relative;
+	padding: 0px;
+	margin: 0px;
 }
 
 .indexExamplePanel .text {
@@ -38,9 +40,9 @@
 	border-top: 1px solid white;
 	position:absolute;
 	opacity: 0.5;
-    bottom: 6px;
-    right: 2px;
-    left: 2px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
     padding: 3px;
     text-align: center;
 }
@@ -48,10 +50,11 @@
 .indexExamplePanel:HOVER {
 	cursor: hand;
 	cursor: pointer;
+	border: 1px solid #777;
 }
 
 .indexExamplePanel:HOVER .text {
-	opacity: 1.0;
+	opacity: 0.9;
 }
 
 .menuIcon {
