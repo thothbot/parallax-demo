@@ -134,10 +134,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			ShaderCubeMap shader = new ShaderCubeMap();
 			shader.getUniforms().get("tCube").setTexture( textureCube ); 
 
-			ShaderMaterial sMaterial = new ShaderMaterial();
-			sMaterial.setFragmentShaderSource( shader.getFragmentSource() );
-			sMaterial.setVertexShaderSource( shader.getVertexSource() );
-			sMaterial.setUniforms( shader.getUniforms() );
+			ShaderMaterial sMaterial = new ShaderMaterial(shader.getVertexSource(), shader.getFragmentSource());
 			sMaterial.setDepthWrite( false );
 			
 			Mesh mesh = new Mesh( new Cube( 100, 100, 100 ), sMaterial );

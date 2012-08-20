@@ -136,10 +136,7 @@ public final class TrackballEarth extends ContentWidget
 			((Color)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
 			((Color)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
 
-			ShaderMaterial materialNormalMap = new ShaderMaterial(); 
-			materialNormalMap.setFragmentShaderSource( shader.getFragmentSource() );
-			materialNormalMap.setVertexShaderSource( shader.getVertexSource() );
-			materialNormalMap.setUniforms( uniforms );
+			ShaderMaterial materialNormalMap = new ShaderMaterial(shader.getVertexSource(), shader.getFragmentSource()); 
 			materialNormalMap.setLights(true);
 			
 

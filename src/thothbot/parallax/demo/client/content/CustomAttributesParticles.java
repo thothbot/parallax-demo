@@ -29,11 +29,11 @@ import java.util.Map;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.shader.Uniform;
+import thothbot.parallax.core.client.shader.Attribute;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.core.WebGLCustomAttribute;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
@@ -75,7 +75,7 @@ public class CustomAttributesParticles extends ContentWidget
 	{	
 		private static final String texture = "./static/textures/sprites/spark1.png";
 		
-		Map<String, WebGLCustomAttribute> attributes;
+		Map<String, Attribute> attributes;
 		ParticleSystem sphere;
 
 		@Override
@@ -95,20 +95,19 @@ public class CustomAttributesParticles extends ContentWidget
 			getCamera().getPosition().setZ(300);
 			getScene().addChild(getCamera());
 
-			this.attributes = new HashMap<String, WebGLCustomAttribute>();
-			this.attributes.put("size", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.F, new ArrayList<Integer>()));
-			this.attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color>()));
+			this.attributes = new HashMap<String, Attribute>();
+			this.attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
+			this.attributes.put("customColor", new Attribute(Attribute.TYPE.C, new ArrayList<Color>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
 			
-			ShaderMaterial shaderMaterial = new ShaderMaterial();
-			shaderMaterial.setUniforms(uniforms);
+			ShaderMaterial shaderMaterial = new ShaderMaterial(
+					Resources.INSTANCE.vertexShader().getText(), 
+					Resources.INSTANCE.fragmetShader().getText());
 			shaderMaterial.setAttributes(attributes);
-			shaderMaterial.setVertexShaderSource( Resources.INSTANCE.vertexShader().getText() );
-			shaderMaterial.setFragmentShaderSource( Resources.INSTANCE.fragmetShader().getText() );
 			shaderMaterial.setBlending( Material.BLENDING.ADDITIVE );
 			shaderMaterial.setDepthTest(false);
 			shaderMaterial.setTransparent( true );

@@ -30,10 +30,10 @@ import java.util.Map;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shader.Uniform;
+import thothbot.parallax.core.client.shader.Attribute;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.core.WebGLCustomAttribute;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -77,7 +77,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 	{	
 		private static final String texture = "./static/textures/sprites/disc.png";
 		
-		Map<String, WebGLCustomAttribute> attributes;
+		Map<String, Attribute> attributes;
 		ParticleSystem sphere;
 		int vc1;
 
@@ -98,9 +98,9 @@ public class CustomAttributesParticles2 extends ContentWidget
 			getCamera().getPosition().setZ(300);
 			getScene().addChild(getCamera());
 
-			this.attributes = new HashMap<String, WebGLCustomAttribute>();
-			attributes.put("size", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.F, new ArrayList<Integer>()));
-			attributes.put("customColor", new WebGLCustomAttribute(WebGLCustomAttribute.TYPE.C, new ArrayList<Color>()));
+			this.attributes = new HashMap<String, Attribute>();
+			attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
+			attributes.put("customColor", new Attribute(Attribute.TYPE.C, new ArrayList<Color>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
@@ -110,11 +110,11 @@ public class CustomAttributesParticles2 extends ContentWidget
 			uniforms.get("texture").getTexture().setWrapS(TextureWrapMode.REPEAT);
 			uniforms.get("texture").getTexture().setWrapT(TextureWrapMode.REPEAT);
 	
-			ShaderMaterial shaderMaterial = new ShaderMaterial();
-			shaderMaterial.setUniforms(uniforms);
+			ShaderMaterial shaderMaterial = new ShaderMaterial(
+					Resources.INSTANCE.vertexShader().getText(),
+					Resources.INSTANCE.fragmetShader().getText()
+					);
 			shaderMaterial.setAttributes(attributes);
-			shaderMaterial.setVertexShaderSource( Resources.INSTANCE.vertexShader().getText() );
-			shaderMaterial.setFragmentShaderSource( Resources.INSTANCE.fragmetShader().getText() );
 			
 			int radius = 100, segments = 68, rings = 38;
 			
