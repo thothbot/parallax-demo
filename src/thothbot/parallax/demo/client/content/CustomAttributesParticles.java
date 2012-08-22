@@ -107,7 +107,7 @@ public class CustomAttributesParticles extends ContentWidget
 			ShaderMaterial shaderMaterial = new ShaderMaterial(
 					Resources.INSTANCE.vertexShader().getText(), 
 					Resources.INSTANCE.fragmetShader().getText());
-			shaderMaterial.setAttributes(attributes);
+			shaderMaterial.getShader().setAttributes(attributes);
 			shaderMaterial.setBlending( Material.BLENDING.ADDITIVE );
 			shaderMaterial.setDepthTest(false);
 			shaderMaterial.setTransparent( true );
