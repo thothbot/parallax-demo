@@ -38,12 +38,12 @@ import thothbot.parallax.core.shared.objects.Line;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.postprocessing.client.BloomPass;
-import thothbot.parallax.postprocessing.client.EffectComposer;
-import thothbot.parallax.postprocessing.client.RenderPass;
-import thothbot.parallax.postprocessing.client.ShaderPass;
-import thothbot.parallax.postprocessing.client.shader.ShaderFxaa;
-import thothbot.parallax.postprocessing.client.shader.ShaderScreen;
+import thothbot.parallax.plugin.postprocessing.client.BloomPass;
+import thothbot.parallax.plugin.postprocessing.client.EffectComposer;
+import thothbot.parallax.plugin.postprocessing.client.RenderPass;
+import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
+import thothbot.parallax.plugin.postprocessing.client.shader.ShaderFxaa;
+import thothbot.parallax.plugin.postprocessing.client.shader.ShaderScreen;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
