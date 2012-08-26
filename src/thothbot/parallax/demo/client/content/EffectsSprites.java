@@ -29,6 +29,7 @@ import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugin.sprite.Sprite;
 import thothbot.parallax.plugin.sprite.Sprite.ALIGNMENT;
+import thothbot.parallax.plugin.sprite.SpritePlugin;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -71,6 +72,7 @@ public final class EffectsSprites extends ContentWidget
 			int amount = 200;
 			int radius = 500;
 			
+			new SpritePlugin(getRenderer(), getScene());
 			group = new Object3D();
 
 			for( int a = 0; a < amount; a ++ ) 
@@ -99,7 +101,6 @@ public final class EffectsSprites extends ContentWidget
 				sprite.getPosition().multiply( radius );
 
 				group.addChild( sprite );
-
 			}
 
 			getScene().addChild( group );

@@ -21,7 +21,6 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.controls.FlyControls;
 import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.Cube;
@@ -39,6 +38,7 @@ import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugin.lensflare.LensFlare;
 import thothbot.parallax.plugin.lensflare.LensFlare.LensSprite;
+import thothbot.parallax.plugin.lensflare.LensFlarePlugin;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -81,6 +81,7 @@ public final class EffectsLensFlares extends ContentWidget
 			getCamera().getPosition().setZ(250);
 			getScene().addChild(getCamera());
 			
+			new LensFlarePlugin(getRenderer(), getScene());
 			controls = new FlyControls( getCamera(), getRenderer().getCanvas() );
 
 			controls.setMovementSpeed( 2500 );
