@@ -113,8 +113,10 @@ public final class TrackballEarth extends ContentWidget
 			Texture specularTexture = ImageUtils.loadTexture( earthSpecular );
 			Texture moonTexture     = ImageUtils.loadTexture( moon );
 
-			ShaderNormalMap shader = new ShaderNormalMap();
-			Map<String, Uniform> uniforms = UniformsUtils.clone( shader.getUniforms() );
+			ShaderMaterial materialNormalMap = new ShaderMaterial(new ShaderNormalMap()); 
+			materialNormalMap.setLights(true);
+			
+			Map<String, Uniform> uniforms = materialNormalMap.getShader().getUniforms();
 
 			uniforms.get("tNormal").setTexture( normalTexture );
 			uniforms.get("uNormalScale").setValue( 0.85 );
@@ -135,10 +137,6 @@ public final class TrackballEarth extends ContentWidget
 			((Color)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
 			((Color)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
 			((Color)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
-
-			ShaderMaterial materialNormalMap = new ShaderMaterial(shader.getVertexSource(), shader.getFragmentSource()); 
-			materialNormalMap.setLights(true);
-			
 
 			// planet
 

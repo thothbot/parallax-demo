@@ -115,6 +115,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 					Resources.INSTANCE.fragmetShader().getText()
 					);
 			shaderMaterial.getShader().setAttributes(attributes);
+			shaderMaterial.getShader().setUniforms(uniforms);
 			
 			int radius = 100, segments = 68, rings = 38;
 			

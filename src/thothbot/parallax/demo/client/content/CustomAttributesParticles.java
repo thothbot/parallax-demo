@@ -103,18 +103,20 @@ public class CustomAttributesParticles extends ContentWidget
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
-			
+
 			ShaderMaterial shaderMaterial = new ShaderMaterial(
 					Resources.INSTANCE.vertexShader().getText(), 
 					Resources.INSTANCE.fragmetShader().getText());
 			shaderMaterial.getShader().setAttributes(attributes);
+			shaderMaterial.getShader().setUniforms(uniforms);
+
 			shaderMaterial.setBlending( Material.BLENDING.ADDITIVE );
 			shaderMaterial.setDepthTest(false);
 			shaderMaterial.setTransparent( true );
-					
+
 			double radius = 200;
 			Geometry geometry = new Geometry();
-	
+
 			for ( int i = 0; i < 10000; i++ ) 
 			{
 				Vector3 vertex = new Vector3();
@@ -122,17 +124,17 @@ public class CustomAttributesParticles extends ContentWidget
 				vertex.setY(Math.random() * 2.0 - 1.0);
 				vertex.setZ(Math.random() * 2.0 - 1.0);
 				vertex.multiply( radius );
-	
+
 				geometry.getVertices().add( vertex );
 			}
-	
+
 			this.sphere = new ParticleSystem( geometry, shaderMaterial );
 			this.sphere.setDynamic(true);
-			
+
 			List<Vector3> vertices = sphere.getGeometry().getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
 			List<Color> values_color = (List<Color>) attributes.get("customColor").getValue();
-	
+
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
 				values_size.add( v, 10.0);
@@ -143,9 +145,8 @@ public class CustomAttributesParticles extends ContentWidget
 				else
 					values_color.get( v ).setHSV( 0.0 + 0.1 * ( v / (double)vertices.size() ), 0.9, 0.9 );
 			}
-	
-			getScene().addChild( sphere );
 
+			getScene().addChild( sphere );
 		}
 		
 		@Override
