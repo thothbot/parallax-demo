@@ -23,12 +23,12 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.objects.Object3D;
-import thothbot.parallax.core.shared.objects.Sprite;
-import thothbot.parallax.core.shared.objects.Sprite.ALIGNMENT;
 import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.plugin.sprite.Sprite;
+import thothbot.parallax.plugin.sprite.Sprite.ALIGNMENT;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
