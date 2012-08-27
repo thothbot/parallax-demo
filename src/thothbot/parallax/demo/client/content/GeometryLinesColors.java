@@ -39,7 +39,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugin.postprocessing.client.BloomPass;
-import thothbot.parallax.plugin.postprocessing.client.EffectComposer;
+import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
 import thothbot.parallax.plugin.postprocessing.client.shader.ShaderFxaa;
@@ -63,7 +63,7 @@ public final class GeometryLinesColors extends ContentWidget
 		public int mouseX;
 		public int mouseY;
 		
-		private EffectComposer composer;
+		private Postprocessing composer;
 		
 		ShaderPass effectFXAA;
 		
@@ -144,24 +144,24 @@ public final class GeometryLinesColors extends ContentWidget
 			
 			//
 
-//			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
-//			BloomPass effectBloom = new BloomPass( 1.3 );
-//			
-//			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
-//			effectScreen.setRenderToScreen(true);
-//			
-//			effectFXAA = new ShaderPass( new ShaderFxaa() );
-//			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
-//					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
-//
-//			composer = new EffectComposer( getRenderer() );
-//
-//			composer.addPass( renderModel );
-//			composer.addPass( effectFXAA );
-//			composer.addPass( effectBloom );
-//			composer.addPass( effectScreen );
+			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
+			BloomPass effectBloom = new BloomPass( 1.3 );
 
-//			getRenderer().setAutoClear(false);
+			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
+			effectScreen.setRenderToScreen(true);
+
+			effectFXAA = new ShaderPass( new ShaderFxaa() );
+			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
+					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
+
+			composer = new Postprocessing( getRenderer(), getScene() );
+
+			composer.addPass( renderModel );
+			composer.addPass( effectFXAA );
+			composer.addPass( effectBloom );
+			composer.addPass( effectScreen );
+
+			getRenderer().setAutoClear(false);
 		}
 		
 		@Override
@@ -172,7 +172,7 @@ public final class GeometryLinesColors extends ContentWidget
 			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
 					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
 		}
-		
+
 		/**
 		 * Port of Processing Java code by Thomas Diewald
 		 * <a href="http://www.openprocessing.org/visuals/?visualID=15599">openprocessing.org</a>
@@ -236,8 +236,7 @@ public final class GeometryLinesColors extends ContentWidget
 					object.getRotation().setY( duration * 0.0005 * ( (i % 2 > 0) ? 1.0 : -1.0 ) );
 			}
 
-//			getRenderer().clear(false, false, false);
-//			composer.render();
+			getRenderer().clear(false, false, false);
 		}
 	}
 		

@@ -258,8 +258,6 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
 			category.addExample(new CamerasExample(),
 					RunAsyncCode.runAsyncCode(CamerasExample.class));
-			category.addExample(new GeometryLinesColors(),
-					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
 			category.addExample(new LinesSphere(),
 					RunAsyncCode.runAsyncCode(LinesSphere.class));
 			category.addExample(new GeometryShapes(),
@@ -324,16 +322,24 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(LoaderCollada.class));
 		}
 		
+		// Plugins
+		{
+			Category category = new Category("Plugins");
+			categoriesList.add(category);
+			category.addExample(new GeometryLinesColors(),
+					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
+			category.addExample(new EffectsLensFlares(),
+					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
+			category.addExample(new EffectsSprites(),
+					RunAsyncCode.runAsyncCode(EffectsSprites.class));
+		}
+
 		// Performance
 		{
 			Category category = new Category("Performance");
 			categoriesList.add(category);
 			category.addExample(new PerformanceDoubleSided(),
 					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
-			category.addExample(new EffectsLensFlares(),
-					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
-			category.addExample(new EffectsSprites(),
-					RunAsyncCode.runAsyncCode(EffectsSprites.class));
 		}
 	}
 }

@@ -34,7 +34,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.Json;
-import thothbot.parallax.plugin.postprocessing.client.EffectComposer;
+import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
 import thothbot.parallax.plugin.postprocessing.client.shader.ShaderScreen;
@@ -67,7 +67,7 @@ public final class PostprocessingGodrays extends ContentWidget
 		
 		Mesh sphereMesh;
 		
-		private EffectComposer composer;
+		private Postprocessing composer;
 		
 		@Override
 		protected void loadCamera()
