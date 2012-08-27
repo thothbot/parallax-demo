@@ -29,7 +29,6 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
@@ -42,7 +41,6 @@ import thothbot.parallax.plugin.postprocessing.client.BloomPass;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.postprocessing.client.shader.ShaderFxaa;
 import thothbot.parallax.plugin.postprocessing.client.shader.ShaderScreen;
 
 import com.google.gwt.core.client.GWT;
@@ -150,27 +148,13 @@ public final class GeometryLinesColors extends ContentWidget
 			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
 			effectScreen.setRenderToScreen(true);
 
-			effectFXAA = new ShaderPass( new ShaderFxaa() );
-			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
-					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
-
 			composer = new Postprocessing( getRenderer(), getScene() );
 
 			composer.addPass( renderModel );
-			composer.addPass( effectFXAA );
 			composer.addPass( effectBloom );
 			composer.addPass( effectScreen );
 
 			getRenderer().setAutoClear(false);
-		}
-		
-		@Override
-		protected void onResize() 
-		{
-			super.onResize();
-
-			((Vector2)effectFXAA.getUniforms().get("resolution").getValue()).set( 
-					1.0 / getRenderer().getCanvas().getWidth(), 1.0 / getRenderer().getCanvas().getHeight());
 		}
 
 		/**

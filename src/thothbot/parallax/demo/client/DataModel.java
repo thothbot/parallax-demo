@@ -315,12 +315,12 @@ public class DataModel implements TreeViewModel
 		}
 		
 		// Loaders
-		{
-			Category category = new Category("Loaders");
-			categoriesList.add(category);
-			category.addExample(new LoaderCollada(),
-					RunAsyncCode.runAsyncCode(LoaderCollada.class));
-		}
+//		{
+//			Category category = new Category("Loaders");
+//			categoriesList.add(category);
+//			category.addExample(new LoaderCollada(),
+//					RunAsyncCode.runAsyncCode(LoaderCollada.class));
+//		}
 		
 		// Plugins
 		{
