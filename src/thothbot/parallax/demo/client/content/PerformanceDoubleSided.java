@@ -144,7 +144,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 		
 	public PerformanceDoubleSided() 
 	{
-		super("Double sided objects", "This example based on the three.js example.");
+		super("Performance: Double sided", "This example based on the three.js example.");
 	}
 	
 	@Override

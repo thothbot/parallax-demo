@@ -270,6 +270,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Materials");
 			categoriesList.add(category);
+			category.addExample(new MaterialsWireframe(),
+					RunAsyncCode.runAsyncCode(MaterialsWireframe.class));
 			category.addExample(new MaterialsCanvas2D(),
 					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
 			category.addExample(new MaterialsCubemapBallsReflection(),
@@ -334,9 +336,9 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(EffectsSprites.class));
 		}
 
-		// Performance
+		// Miscellaneous
 		{
-			Category category = new Category("Performance");
+			Category category = new Category("Miscellaneous");
 			categoriesList.add(category);
 			category.addExample(new PerformanceDoubleSided(),
 					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
