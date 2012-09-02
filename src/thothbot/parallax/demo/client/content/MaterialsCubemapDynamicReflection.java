@@ -161,7 +161,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getCamera().getPosition().setY(100.0 * Math.cos( phi ) );
 			getCamera().getPosition().setZ(100.0 * Math.sin( phi ) * Math.sin( theta ) );
 
-			getCamera().lookAt( new Vector3( 0.0, 0.0, 0.0 ) );
+			getCamera().lookAt( getScene().getPosition() );
 
 			this.sphere.setVisible(false); // *cough*
 

@@ -127,9 +127,11 @@ public final class MaterialsTextureFilter extends ContentWidget
 			geometry = new Plane( 100, 100 );
 
 			meshCanvas = new Mesh( geometry, materialCanvas );
+			meshCanvas.getRotation().setX( - Math.PI / 2.0 );
 			meshCanvas.getScale().set( 1000 );
 
 			meshCanvas2 = new Mesh( geometry, materialCanvas2 );
+			meshCanvas2.getRotation().setX( - Math.PI / 2.0 );
 			meshCanvas2.getScale().set( 1000 );
 
 			// PAINTING
@@ -203,11 +205,13 @@ public final class MaterialsTextureFilter extends ContentWidget
 			mb2.setColor(new Color(0x000000));
 			mb2.setOpacity(0.75);
 			mb2.setTransparent(true);
-			Mesh meshShadow = new Mesh( geometry, mb2 );
 
+			Mesh meshShadow = new Mesh( geometry, mb2 );
+			meshShadow.getPosition().setY( - 1.1 * image.getOffsetHeight()/ 2.0 );
 			meshShadow.getPosition().setZ( - 1.1 * image.getOffsetHeight()/ 2.0 );
+			meshShadow.getRotation().setX( - Math.PI / 2 );
 			meshShadow.getScale().setX( 1.1 * image.getOffsetWidth() / 100.0 );
-			meshShadow.getScale().setZ( 1.1 * image.getOffsetHeight() / 100.0 );
+			meshShadow.getScale().setY( 1.1 * image.getOffsetHeight() / 100.0 );
 			zscene.addChild( meshShadow );
 
 			meshShadow.getPosition().setY( - 1.1 * image.getOffsetHeight() / 2.0 );

@@ -26,10 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.parametric.Klein;
 import thothbot.parallax.core.shared.geometries.parametric.Mobius;
+import thothbot.parallax.core.shared.geometries.parametric.Mobius3d;
+import thothbot.parallax.core.shared.geometries.parametric.Plane;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
@@ -56,7 +60,7 @@ public class GeometriesParametric extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-		private static final String texture = "./static/textures/ash_uvgrid01.jpg";
+		private static final String image = "./static/textures/ash_uvgrid01.jpg";
 		
 		@Override
 		protected void loadCamera()
@@ -81,11 +85,18 @@ public class GeometriesParametric extends ContentWidget
 			light.getPosition().set( 0, 0, 1 );
 			getScene().addChild( light );
 			
+			Texture texture = ImageUtils.loadTexture(image);
+			texture.setWrapS(TextureWrapMode.REPEAT);
+			texture.setWrapT(TextureWrapMode.REPEAT);
+			texture.setAnisotropy(16);
+			
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
-			lmaterial.setMap( ImageUtils.loadTexture(texture) );
+			lmaterial.setMap( texture );
 			lmaterial.setAmbient( new Color(0xbbbbbb) );
+			lmaterial.setSide(Material.SIDE.DOUBLE);
 			materials.add(lmaterial);	
+			
 			
 			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
 			bmaterial.setColor( new Color(0xffffff) );
@@ -96,27 +107,24 @@ public class GeometriesParametric extends ContentWidget
 			
 			// Klein Bottle
 			DimensionalObject object1 = SceneUtils.createMultiMaterialObject(new Klein(20, 20), materials );
-			Mesh Meshobject1 = (Mesh) object1.getChildren().get(0);
-			Meshobject1.setDoubleSided(true);
 			object1.getPosition().set( 0, 0, 0 );
 			object1.getScale().multiply(20);
 			getScene().addChild( object1 );
 			
 			// Mobius Strip
-			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Mobius(20,20), materials );
+			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Mobius(20, 20), materials );
 			object2.getPosition().set( 10, 0, 0 );
 			object2.getScale().multiply(100);
 			getScene().addChild( object2 );
 			
-//			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new com.alexusachev.lib.geometries.parametric.Plane(200, 200, 10,10), materials );
-//			object3.getPosition().set( 10, 0, 0 );
-//			object3.getScale().multiply(100);
-//			scene.addChild( object3 );
-//			
-//			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
-//			object4.getPosition().set( 10, 0, 0 );
-//			object4.getScale().multiply(100);
-//			scene.addChild( object4 );
+			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Plane(200, 200, 10, 20), materials );
+			object3.getPosition().set( 10, 0, 0 );
+			getScene().addChild( object3 );
+			
+			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
+			object4.getPosition().set( 10, 0, 0 );
+			object4.getScale().multiply(100);
+			getScene().addChild( object4 );
 		}
 		
 		@Override

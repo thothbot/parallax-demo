@@ -28,6 +28,7 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.lights.PointLight;
+import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.ImageUtils;
@@ -97,6 +98,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 			material.setPerPixel(true);
 			material.setWrapAround(true); 
 			material.getWrapRGB().set( 0.5, 0.5, 0.5 );
+			material.setSide(Material.SIDE.DOUBLE);
 
 			Sphere geometry = new Sphere( 1, 32, 16, 0, (double)Math.PI );
 
@@ -116,8 +118,6 @@ public final class PerformanceDoubleSided extends ContentWidget
 
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
-
-				mesh.setDoubleSided(true);
 
 				getScene().addChild( mesh );
 			}

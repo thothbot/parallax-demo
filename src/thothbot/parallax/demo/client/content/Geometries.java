@@ -26,9 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.geometries.Circle;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Cylinder;
 import thothbot.parallax.core.shared.geometries.Icosahedron;
@@ -67,7 +70,7 @@ public class Geometries extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-		private static final String texture = "./static/textures/ash_uvgrid01.jpg";
+		private static final String image = "./static/textures/ash_uvgrid01.jpg";
 		
 		@Override
 		protected void loadCamera()
@@ -92,10 +95,16 @@ public class Geometries extends ContentWidget
 			light.getPosition().set( 0, 1, 0 );
 			getScene().addChild( light );
 			
+			Texture texture = ImageUtils.loadTexture(image);
+			texture.setWrapS(TextureWrapMode.REPEAT);
+			texture.setWrapT(TextureWrapMode.REPEAT);
+			texture.setAnisotropy(16);
+
 			List<Material> materials = new ArrayList<Material>();
 			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
-			lmaterial.setMap( ImageUtils.loadTexture(texture) );
+			lmaterial.setMap( texture );
 			lmaterial.setAmbient( new Color(0xbbbbbb) );
+			lmaterial.setSide(Material.SIDE.DOUBLE);
 			materials.add(lmaterial);	
 			
 			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
@@ -127,9 +136,12 @@ public class Geometries extends ContentWidget
 			
 			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new Plane( 100, 100, 4, 4 ), materials );
 			Mesh Meshobject6 = (Mesh) object6.getChildren().get(0);
-			Meshobject6.setDoubleSided(true);
 			object6.getPosition().set( -200, 0, 0 );
 			getScene().addChild( object6 );
+			
+			DimensionalObject object6a = SceneUtils.createMultiMaterialObject( new Circle( 50, 10, 0, Math.PI ), materials );
+			object6a.getRotation().setX( Math.PI / 2.0 );
+			object6.addChild( object6a );
 			
 			DimensionalObject object7 = SceneUtils.createMultiMaterialObject( new Sphere( 75, 20, 10 ), materials );
 			object7.getPosition().set( 0, 0, 0 );
@@ -142,7 +154,6 @@ public class Geometries extends ContentWidget
 	
 			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
 			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
-			Meshobject8.setDoubleSided(true);
 			object8.getPosition().set( 200, 0, 0 );
 			getScene().addChild( object8 );
 			
