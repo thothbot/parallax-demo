@@ -41,7 +41,6 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -113,11 +112,10 @@ public final class MaterialsWireframe extends ContentWidget
 			// wireframe using gl.TRIANGLES (interpreted as quads)
 
 			Attribute attributesQuads = new Attribute(Attribute.TYPE.V4, setupAttributes( geometryQuads ));
-			attributesQuads.boundTo = "faceVertices";
+			attributesQuads.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 
 			ShaderMaterial materialQuads = new ShaderMaterial(Resources.INSTANCE);
 			materialQuads.getShader().addAttributes("center", attributesQuads);
-
 
 			meshQuads = new Mesh( geometryQuads, materialQuads );
 			meshQuads.getPosition().setX(300);
@@ -126,7 +124,7 @@ public final class MaterialsWireframe extends ContentWidget
 			// wireframe using gl.TRIANGLES (interpreted as triangles)
 
 			Attribute attributesTris = new Attribute(Attribute.TYPE.V4, setupAttributes( geometryTris ));
-			attributesTris.boundTo = "faceVertices";
+			attributesTris.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 			
 			ShaderMaterial materialTris = new ShaderMaterial(Resources.INSTANCE);
 			materialTris.getShader().addAttributes("center", attributesTris);
@@ -140,11 +138,11 @@ public final class MaterialsWireframe extends ContentWidget
 			Sphere mixedGeometry = new Sphere( size / 2.0, 32, 16 );
 
 			Attribute attributesMixed = new Attribute(Attribute.TYPE.V4, setupAttributes( mixedGeometry ));
-			attributesMixed.boundTo = "faceVertices";
-			
+			attributesMixed.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
+
 			ShaderMaterial materialMixed = new ShaderMaterial(Resources.INSTANCE);
 			materialMixed.getShader().addAttributes("center", attributesMixed);
-			
+
 			meshMixed = new Mesh( mixedGeometry, materialMixed );
 			meshMixed.getPosition().setX(0);
 			getScene().addChild( meshMixed );
@@ -159,7 +157,7 @@ public final class MaterialsWireframe extends ContentWidget
 			{
 				Face3 face = geometry.getFaces().get( f );
 
-				if ( face instanceof Face3 ) 
+				if ( face.getClass() == Face3.class ) 
 				{
 					values.add(f, Arrays.asList(
 							new Vector4( 1, 0, 0, 0 ), 
@@ -175,7 +173,7 @@ public final class MaterialsWireframe extends ContentWidget
 							new Vector4( 0, 0, 0, 1 ) ));
 				}
 			}
-			
+
 			return values;
 		}
 
