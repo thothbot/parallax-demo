@@ -118,13 +118,13 @@ public class GeometriesParametric extends ContentWidget
 			getScene().addChild( object2 );
 			
 			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Plane(200, 200, 10, 20), materials );
-			object3.getPosition().set( 10, 0, 0 );
+			object3.getPosition().set( 20, 0, 0 );
 			getScene().addChild( object3 );
 			
-			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
-			object4.getPosition().set( 10, 0, 0 );
-			object4.getScale().multiply(100);
-			getScene().addChild( object4 );
+//			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
+//			object4.getPosition().set( 10, 0, 0 );
+//			object4.getScale().multiply(100);
+//			getScene().addChild( object4 );
 		}
 		
 		@Override

@@ -28,6 +28,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
+import thothbot.parallax.core.shared.core.Matrix4;
 import thothbot.parallax.core.shared.geometries.Plane;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -89,6 +90,7 @@ public class GeometryDynamic extends ContentWidget
 			controls.setLookSpeed(0.1);
 
 			this.geometry = new Plane( 20000, 20000, worldWidth - 1, worldDepth - 1 );
+			this.geometry.applyMatrix(new Matrix4().makeRotationX( - Math.PI / 2.0 ));
 			this.geometry.setDynamic( true );
 
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )

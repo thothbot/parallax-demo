@@ -94,16 +94,19 @@ public class GeometryColors extends ContentWidget
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );
 			mesh1.getPosition().setY(-250);
+			mesh1.getRotation().setX(- Math.PI / 2.0);
 			getScene().addChild( mesh1 );
 
 			Mesh mesh2 = new Mesh( shadowGeo, shadowMaterial );
 			mesh2.getPosition().setY(-250);
 			mesh2.getPosition().setX(-400);
+			mesh2.getRotation().setX(- Math.PI / 2.0);
 			getScene().addChild( mesh2 );
 
 			Mesh mesh3 = new Mesh( shadowGeo, shadowMaterial );
 			mesh3.getPosition().setY(-250);
 			mesh3.getPosition().setX(400);
+			mesh3.getRotation().setX(- Math.PI / 2.0);
 			getScene().addChild( mesh3 );
 			
 			int radius = 200;
