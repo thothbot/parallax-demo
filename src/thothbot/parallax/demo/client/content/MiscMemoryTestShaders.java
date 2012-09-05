@@ -83,10 +83,9 @@ public final class MiscMemoryTestShaders extends ContentWidget
 
 			Sphere geometry = new Sphere( 15, 64, 32 );
 			meshes = new ArrayList<Mesh>();
-			
+
 			for ( int i = 0; i < N; i ++ ) 
 			{
-
 				ShaderMaterial material = new ShaderMaterial(Resources.INSTANCE);
 				generateFragmentShader(material.getShader());
 
@@ -100,16 +99,16 @@ public final class MiscMemoryTestShaders extends ContentWidget
 
 				meshes.add( mesh );
 			}
-			
+
 			getRenderer().setClearColorHex(0xeeeeee);
 		}
-		
+
 		private void generateFragmentShader(Shader shader) 
 		{
 			String vector = Math.random() + "," + Math.random() + "," + Math.random();
 			shader.setFragmentSource(Shader.updateShaderSource(shader.getFragmentSource(), vector));
 		}
-		
+
 		@Override
 		protected void onStop()
 		{			
@@ -148,7 +147,7 @@ public final class MiscMemoryTestShaders extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleDefault();
+		return Demo.resources.exampleMiscMemoryTestShaders();
 	}
 	
 	@Override

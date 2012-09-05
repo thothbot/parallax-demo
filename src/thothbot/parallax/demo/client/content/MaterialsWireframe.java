@@ -217,7 +217,7 @@ public final class MaterialsWireframe extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleDefault();
+		return Demo.resources.exampleMaterialsWireframe();
 	}
 	
 	@Override

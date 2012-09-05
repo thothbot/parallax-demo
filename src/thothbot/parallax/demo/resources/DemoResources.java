@@ -98,6 +98,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_lines_sphere.jpg")
 	ImageResource exampleLinesSphere();
 	
+	@Source("images/example_materials_wireframe.jpg")
+	ImageResource exampleMaterialsWireframe();
+	
 	@Source("images/example_materials_canvas2d.jpg")
 	ImageResource exampleMaterialsCanvas2D();
 	
@@ -142,4 +145,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_misc_memory_test_geometry.jpg")
 	ImageResource exampleMiscMemoryTestGeometry();
+	
+	@Source("images/example_misc_memory_test_shaders.jpg")
+	ImageResource exampleMiscMemoryTestShaders();
 }
