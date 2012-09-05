@@ -346,6 +346,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MiscLookAt.class));
 			category.addExample(new MiscMemoryTestGeometries(),
 					RunAsyncCode.runAsyncCode(MiscMemoryTestGeometries.class));
+			category.addExample(new MiscMemoryTestShaders(),
+					RunAsyncCode.runAsyncCode(MiscMemoryTestShaders.class));
 		}
 	}
 }
