@@ -342,6 +342,8 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 			category.addExample(new PerformanceDoubleSided(),
 					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
+			category.addExample(new MiscLookAt(),
+					RunAsyncCode.runAsyncCode(MiscLookAt.class));
 		}
 	}
 }

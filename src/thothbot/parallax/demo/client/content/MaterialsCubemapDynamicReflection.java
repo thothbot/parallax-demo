@@ -27,7 +27,6 @@ import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.CubeCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.geometries.Sphere;
 import thothbot.parallax.core.shared.geometries.TorusKnot;
