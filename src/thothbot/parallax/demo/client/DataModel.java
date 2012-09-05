@@ -344,6 +344,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
 			category.addExample(new MiscLookAt(),
 					RunAsyncCode.runAsyncCode(MiscLookAt.class));
+			category.addExample(new MiscMemoryTestGeometries(),
+					RunAsyncCode.runAsyncCode(MiscMemoryTestGeometries.class));
 		}
 	}
 }

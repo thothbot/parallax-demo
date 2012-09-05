@@ -139,4 +139,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_misc_lookat.jpg")
 	ImageResource exampleMiscLookAt();
+	
+	@Source("images/example_misc_memory_test_geometry.jpg")
+	ImageResource exampleMiscMemoryTestGeometry();
 }
