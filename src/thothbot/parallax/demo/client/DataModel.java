@@ -19,17 +19,6 @@
 
 package thothbot.parallax.demo.client;
 
-import com.google.gwt.cell.client.AbstractCell;
-import com.google.gwt.core.client.prefetch.RunAsyncCode;
-import com.google.gwt.safecss.shared.SafeStyles;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.SelectionModel;
-import com.google.gwt.view.client.TreeViewModel;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,7 +26,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import thothbot.parallax.demo.client.content.*;
+import thothbot.parallax.demo.client.content.CamerasExample;
+import thothbot.parallax.demo.client.content.CustomAttributesParticles;
+import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
+import thothbot.parallax.demo.client.content.EffectsLensFlares;
+import thothbot.parallax.demo.client.content.EffectsSprites;
+import thothbot.parallax.demo.client.content.Geometries;
+import thothbot.parallax.demo.client.content.GeometriesParametric;
+import thothbot.parallax.demo.client.content.GeometryColors;
+import thothbot.parallax.demo.client.content.GeometryCube;
+import thothbot.parallax.demo.client.content.GeometryDynamic;
+import thothbot.parallax.demo.client.content.GeometryExtrudeSplines;
+import thothbot.parallax.demo.client.content.GeometryHierarchy;
+import thothbot.parallax.demo.client.content.GeometryLinesColors;
+import thothbot.parallax.demo.client.content.GeometryShapes;
+import thothbot.parallax.demo.client.content.LinesSphere;
+import thothbot.parallax.demo.client.content.MaterialsCanvas2D;
+import thothbot.parallax.demo.client.content.MaterialsCubemapBallsReflection;
+import thothbot.parallax.demo.client.content.MaterialsCubemapBallsRefraction;
+import thothbot.parallax.demo.client.content.MaterialsCubemapDynamicReflection;
+import thothbot.parallax.demo.client.content.MaterialsTextureFilter;
+import thothbot.parallax.demo.client.content.MaterialsTextures;
+import thothbot.parallax.demo.client.content.MaterialsWireframe;
+import thothbot.parallax.demo.client.content.MiscLookAt;
+import thothbot.parallax.demo.client.content.MiscMemoryTestGeometries;
+import thothbot.parallax.demo.client.content.MiscMemoryTestShaders;
+import thothbot.parallax.demo.client.content.MorphNormalsFlamingo;
+import thothbot.parallax.demo.client.content.MorphTargetsHorse;
+import thothbot.parallax.demo.client.content.ParticleTrails;
+import thothbot.parallax.demo.client.content.PerformanceDoubleSided;
+import thothbot.parallax.demo.client.content.TrackballEarth;
+
+import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.core.client.prefetch.RunAsyncCode;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.TreeViewModel;
 
 /**
  * The {@link TreeViewModel} used by the main menu.
@@ -274,6 +299,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsWireframe.class));
 			category.addExample(new MaterialsCanvas2D(),
 					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
+			category.addExample(new MaterialsTextures(),
+					RunAsyncCode.runAsyncCode(MaterialsTextures.class));
 			category.addExample(new MaterialsCubemapBallsReflection(),
 					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsReflection.class));
 			category.addExample(new MaterialsCubemapBallsRefraction(),

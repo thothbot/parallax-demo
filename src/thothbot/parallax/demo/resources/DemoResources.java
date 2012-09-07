@@ -104,6 +104,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_materials_canvas2d.jpg")
 	ImageResource exampleMaterialsCanvas2D();
 	
+	@Source("images/example_materials_textures.jpg")
+	ImageResource exampleMaterialsTextures();
+	
 	@Source("images/example_materials_cubemap_balls_reflection.jpg")
 	ImageResource exampleMaterialsCubemapBallsReflection();
 	
