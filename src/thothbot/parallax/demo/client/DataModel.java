@@ -45,6 +45,7 @@ import thothbot.parallax.demo.client.content.MaterialsCanvas2D;
 import thothbot.parallax.demo.client.content.MaterialsCubemapBallsReflection;
 import thothbot.parallax.demo.client.content.MaterialsCubemapBallsRefraction;
 import thothbot.parallax.demo.client.content.MaterialsCubemapDynamicReflection;
+import thothbot.parallax.demo.client.content.MaterialsCubemapFresnel;
 import thothbot.parallax.demo.client.content.MaterialsTextureFilter;
 import thothbot.parallax.demo.client.content.MaterialsTextures;
 import thothbot.parallax.demo.client.content.MaterialsWireframe;
@@ -302,6 +303,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
 			category.addExample(new MaterialsTextures(),
 					RunAsyncCode.runAsyncCode(MaterialsTextures.class));
+			category.addExample(new MaterialsCubemapFresnel(),
+					RunAsyncCode.runAsyncCode(MaterialsCubemapFresnel.class));
 			category.addExample(new MaterialsCubemapBallsReflection(),
 					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsReflection.class));
 			category.addExample(new MaterialsCubemapBallsRefraction(),
