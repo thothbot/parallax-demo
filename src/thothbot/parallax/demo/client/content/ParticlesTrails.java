@@ -40,7 +40,7 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public final class ParticleTrails extends ContentWidget 
+public final class ParticlesTrails extends ContentWidget 
 {
 
 	/*
@@ -114,7 +114,7 @@ public final class ParticleTrails extends ContentWidget
 		}
 	}
 
-	public ParticleTrails() 
+	public ParticlesTrails() 
 	{
 		super("Particle Trails", "Use mouse. This example based on the three.js example.");
 	}
@@ -158,7 +158,7 @@ public final class ParticleTrails extends ContentWidget
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
-		GWT.runAsync(ParticleTrails.class, new RunAsyncCallback() 
+		GWT.runAsync(ParticlesTrails.class, new RunAsyncCallback() 
 		{
 			public void onFailure(Throwable caught)
 			{

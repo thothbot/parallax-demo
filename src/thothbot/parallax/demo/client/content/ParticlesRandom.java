@@ -139,7 +139,7 @@ public final class ParticlesRandom extends ContentWidget
 			{
 				ParticleBasicMaterial material = materials.get(i);
 				ColorUtils.HSV hsv = ColorUtils.rgbToHsv( material.getColor() );
-				material.getColor().setHSV( ((double)( 360 * ( hsv.hue + time ) % 360 ) / 360.0), hsv.saturation, hsv.value );
+				material.getColor().setHSV( Math.abs(Math.sin( hsv.hue + time )), hsv.saturation, hsv.value );
 			}
 		}
 	}
