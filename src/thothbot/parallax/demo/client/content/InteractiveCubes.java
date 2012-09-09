@@ -31,14 +31,11 @@ import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.Cube;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.GeometryHierarchy.DemoScene;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -119,6 +116,7 @@ public final class InteractiveCubes extends ContentWidget
 			}
 
 			projector = new Projector();
+			getRenderer().setClearColorHex(0xeeeeee);
 			getRenderer().setSortObjects(false);
 		}
 		
@@ -199,7 +197,7 @@ public final class InteractiveCubes extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleDefault();
+		return Demo.resources.exampleInteractiveCubes();
 	}
 	
 	@Override
