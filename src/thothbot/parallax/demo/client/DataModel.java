@@ -40,6 +40,7 @@ import thothbot.parallax.demo.client.content.GeometryExtrudeSplines;
 import thothbot.parallax.demo.client.content.GeometryHierarchy;
 import thothbot.parallax.demo.client.content.GeometryLinesColors;
 import thothbot.parallax.demo.client.content.GeometryShapes;
+import thothbot.parallax.demo.client.content.InteractiveCubes;
 import thothbot.parallax.demo.client.content.LinesSphere;
 import thothbot.parallax.demo.client.content.MaterialsCanvas2D;
 import thothbot.parallax.demo.client.content.MaterialsCubemapBallsReflection;
@@ -293,6 +294,14 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometryExtrudeSplines.class));
 		}
 		
+		// Interactivity 
+		{
+			Category category = new Category("Interactivity");
+			categoriesList.add(category);
+			category.addExample(new InteractiveCubes(),
+					RunAsyncCode.runAsyncCode(InteractiveCubes.class));
+		}
+
 		// Materials
 		{
 			Category category = new Category("Materials");
