@@ -99,7 +99,6 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 					1000 );
 		}
 		
-		
 		@Override
 		protected void onResize() 
 		{

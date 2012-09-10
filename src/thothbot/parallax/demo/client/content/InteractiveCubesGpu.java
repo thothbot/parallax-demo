@@ -99,6 +99,15 @@ public final class InteractiveCubesGpu extends ContentWidget
 		}
 
 		@Override
+		protected void onResize() 
+		{
+			super.onResize();
+			Canvas3d canvas = getRenderer().getCanvas();
+			pickingTexture.setWidth(canvas.getWidth());
+			pickingTexture.setHeight(canvas.getHeight());
+		}
+
+		@Override
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1000);
@@ -114,7 +123,8 @@ public final class InteractiveCubesGpu extends ContentWidget
 			controls.setDynamicDampingFactor(0.3);
 
 			pickingScene = new Scene();
-			pickingTexture = new RenderTargetTexture(window.innerWidth, window.innerHeight);
+			Canvas3d canvas = getRenderer().getCanvas();
+			pickingTexture = new RenderTargetTexture(canvas.getWidth(), canvas.getHeight());
 			pickingTexture.setGenerateMipmaps(false);
 
 			getScene().addChild( new AmbientLight( 0x555555 ) );
