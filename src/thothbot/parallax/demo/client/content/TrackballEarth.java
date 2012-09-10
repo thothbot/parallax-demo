@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import thothbot.parallax.core.client.controls.TrackballControl;
+import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.shader.ShaderNormalMap;
 import thothbot.parallax.core.client.shader.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
@@ -75,7 +75,7 @@ public final class TrackballEarth extends ContentWidget
 		Mesh meshClouds;
 		Mesh meshMoon;
 		
-		private TrackballControl control;
+		private TrackballControls control;
 		private double oldTime;
 		
 		@Override
@@ -96,7 +96,7 @@ public final class TrackballEarth extends ContentWidget
 			getCamera().getPosition().setZ(radius * 7);
 			getScene().addChild(getCamera());
 
-			this.control = new TrackballControl( getCamera(), getRenderer().getCanvas() );
+			this.control = new TrackballControls( getCamera(), getRenderer().getCanvas() );
 			this.control.setPanSpeed(0.2);
 			this.control.setDynamicDampingFactor(0.3);
 			this.control.setMinDistance(radius * 1.1);

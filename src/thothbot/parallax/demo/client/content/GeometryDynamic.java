@@ -23,7 +23,7 @@
 package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.controls.FirstPersonControl;
+import thothbot.parallax.core.client.controls.FirstPersonControls;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -54,7 +54,7 @@ public class GeometryDynamic extends ContentWidget
 	{
 		private static final String texture = "./static/textures/water.jpg";
 		
-		FirstPersonControl controls;
+		FirstPersonControls controls;
 		Plane geometry;
 		Mesh mesh;
 		
@@ -85,7 +85,7 @@ public class GeometryDynamic extends ContentWidget
 
 			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007 ));
 
-			this.controls = new FirstPersonControl( getCamera(), getRenderer().getCanvas() );
+			this.controls = new FirstPersonControls( getCamera(), getRenderer().getCanvas() );
 			controls.setMovementSpeed(500);
 			controls.setLookSpeed(0.1);
 
