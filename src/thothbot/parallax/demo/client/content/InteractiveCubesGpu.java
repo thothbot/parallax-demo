@@ -229,7 +229,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 				int n = (f.getClass() == Face3.class) ? 3 : 4;
 				for(int j = 0; j < n; j++)
 				{
-					f.getVertexColors().set( j, c );
+					f.getVertexColors().add( c );
 				}
 			}
 		}
