@@ -73,7 +73,7 @@ public final class ParticlesRandom extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1000);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			getScene().setFog( new FogExp2( 0x000000, 0.0007 ));
 			
@@ -106,7 +106,7 @@ public final class ParticlesRandom extends ContentWidget
 				particles.getRotation().setY( Math.random() * 6 );
 				particles.getRotation().setZ( Math.random() * 6 );
 
-				getScene().addChild( particles );
+				getScene().add( particles );
 			}
 		}
 		

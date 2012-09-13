@@ -88,7 +88,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1500);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			this.scene2 = new Scene();
 
@@ -167,8 +167,8 @@ public final class MaterialsTextureFilter extends ContentWidget
 			texturePainting2.setImage(texture.getImage());
 			texturePainting2.setNeedsUpdate(true);
 
-			getScene().addChild( meshCanvas );
-			scene2.addChild( meshCanvas2 );
+			getScene().add( meshCanvas );
+			scene2.add( meshCanvas2 );
 
 			Plane geometry = new Plane( 100, 100 );
 			Mesh mesh = new Mesh( geometry, materialPainting );
@@ -183,7 +183,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			zmesh.getScale().setX( image.getOffsetWidth() / 100.0 ) ;
 			zmesh.getScale().setY( image.getOffsetHeight() / 100.0 );
 
-			zscene.addChild( zmesh );
+			zscene.add( zmesh );
 
 			MeshBasicMaterial mb = new MeshBasicMaterial();
 			mb.setColor(new Color(0x000000));
@@ -196,7 +196,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			meshFrame.getScale().setX( 1.1 * image.getOffsetWidth() / 100 );
 			meshFrame.getScale().setY( 1.1 * image.getOffsetHeight() / 100 );
 
-			zscene.addChild( meshFrame );
+			zscene.add( meshFrame );
 
 			MeshBasicMaterial mb2 = new MeshBasicMaterial();
 			mb2.setColor(new Color(0x000000));
@@ -209,7 +209,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			meshShadow.getRotation().setX( - Math.PI / 2 );
 			meshShadow.getScale().setX( 1.1 * image.getOffsetWidth() / 100.0 );
 			meshShadow.getScale().setY( 1.1 * image.getOffsetHeight() / 100.0 );
-			zscene.addChild( meshShadow );
+			zscene.add( meshShadow );
 
 			meshShadow.getPosition().setY( - 1.1 * image.getOffsetHeight() / 2.0 );
 

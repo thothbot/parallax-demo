@@ -87,15 +87,15 @@ public final class GeometryShapes extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set( 0, 180, 500 );
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
-			getScene().addChild( light );
+			getScene().add( light );
 
 			this.parent = new Object3D();
 			this.parent.getPosition().setY( 50 );
-			getScene().addChild( parent );
+			getScene().add( parent );
 			
 			ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings = new ExtrudeGeometry.ExtrudeGeometryParameters();
 			extrudeSettings.amount = 20;
@@ -371,7 +371,7 @@ public final class GeometryShapes extends ContentWidget
 			mesh.getPosition().set( x, y, z - 75.0 );
 			mesh.getRotation().set( rx, ry, rz );
 			mesh.getScale().set( s );
-			this.parent.addChild( mesh );
+			this.parent.add( mesh );
 
 			// solid line
 
@@ -383,7 +383,7 @@ public final class GeometryShapes extends ContentWidget
 			line1.getPosition().set( x, y, z + 25.0 );
 			line1.getRotation().set( rx, ry, rz );
 			line1.getScale().set( s );
-			this.parent.addChild( line1 );
+			this.parent.add( line1 );
 
 			// transparent line from real points
 
@@ -395,7 +395,7 @@ public final class GeometryShapes extends ContentWidget
 			line2.getPosition().set( x, y, z + 75.0 );
 			line2.getRotation().set( rx, ry, rz );
 			line2.getScale().set( s );
-			this.parent.addChild( line2 );
+			this.parent.add( line2 );
 
 			// vertices from real points
 
@@ -409,7 +409,7 @@ public final class GeometryShapes extends ContentWidget
 			particles.getPosition().set( x, y, z + 75.0 );
 			particles.getRotation().set( rx, ry, rz );
 			particles.getScale().set( s );
-			this.parent.addChild( particles );
+			this.parent.add( particles );
 
 			// transparent line from equidistance sampled points
 
@@ -421,7 +421,7 @@ public final class GeometryShapes extends ContentWidget
 			line3.getPosition().set( x, y, z + 100.0 );
 			line3.getRotation().set( rx, ry, rz );
 			line3.getScale().set( s );
-			this.parent.addChild( line3 );
+			this.parent.add( line3 );
 
 			// equidistance sampled points
 
@@ -435,7 +435,7 @@ public final class GeometryShapes extends ContentWidget
 			particles2.getPosition().set( x, y, z + 100.0 );
 			particles2.getRotation().set( rx, ry, rz );
 			particles2.getScale().set( s );
-			this.parent.addChild( particles2 );
+			this.parent.add( particles2 );
 		}
 		
 		@Override

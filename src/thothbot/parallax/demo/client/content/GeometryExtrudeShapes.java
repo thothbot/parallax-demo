@@ -82,15 +82,15 @@ public class GeometryExtrudeShapes extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set(0, 150, 500);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
-			getScene().addChild( light );
+			getScene().add( light );
 
 			this.parentObject = new Object3D();
 			this.parentObject.getPosition().setY(50);
-			getScene().addChild( this.parentObject );
+			getScene().add( this.parentObject );
 			
 			//Closed
 			CurveSpline3D extrudeBend = new CurveSpline3D(Arrays.asList( 
@@ -257,7 +257,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 //			if (geometry.debug) 
 //				mesh.add(geometry.debug);
 
-			this.parentObject.addChild( mesh );
+			this.parentObject.add( mesh );
 		}
 		
 		@Override

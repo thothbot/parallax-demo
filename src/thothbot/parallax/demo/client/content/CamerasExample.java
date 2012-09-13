@@ -118,13 +118,13 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(2500);
-			getScene().addChild( getCamera() );
+			getScene().add( getCamera() );
 					
 			this.cameraPerspectiveHelper = new CameraHelper( this.cameraPerspective );
-			this.cameraPerspective.addChild( this.cameraPerspectiveHelper );
+			this.cameraPerspective.add( this.cameraPerspectiveHelper );
 
 			this.cameraOrthoHelper = new CameraHelper( this.cameraOrtho );
-			this.cameraOrtho.addChild( this.cameraOrthoHelper );
+			this.cameraOrtho.add( this.cameraOrthoHelper );
 	
 			//
 			
@@ -137,10 +137,10 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	
 			this.cameraRig = new Object3D();
 	
-			cameraRig.addChild( cameraPerspective );
-			cameraRig.addChild( cameraOrtho );
+			cameraRig.add( cameraPerspective );
+			cameraRig.add( cameraOrtho );
 	
-			getScene().addChild( cameraRig );
+			getScene().add( cameraRig );
 			
 			//
 	
@@ -149,20 +149,20 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			bopt0.setWireframe(true);
 			
 			this.mesh = new Mesh( new Sphere( 100, 16, 8 ), bopt0);
-			getScene().addChild( mesh );
+			getScene().add( mesh );
 	
 			MeshBasicMaterial  bopt1 = new MeshBasicMaterial();
 			bopt1.setColor( new Color(0x00ff00) );
 			bopt1.setWireframe(true);
 			Mesh mesh2 = new Mesh( new Sphere( 50, 16, 8 ), bopt1);
 			mesh2.getPosition().setY(150);
-			mesh.addChild( mesh2 );
+			mesh.add( mesh2 );
 	
 			MeshBasicMaterial  bopt2 = new MeshBasicMaterial();
 			bopt2.setColor( new Color(0x0000ff) );
 			Mesh mesh3 = new Mesh( new Sphere( 5, 16, 8 ), bopt2);
 			mesh3.getPosition().setZ(150);
-			cameraRig.addChild( mesh3 );
+			cameraRig.add( mesh3 );
 	
 			//
 			
@@ -182,7 +182,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			popt.setColor( new Color(0xDDDDDD) );
 	
 			ParticleSystem particles = new ParticleSystem( geometry, popt );
-			getScene().addChild( particles );
+			getScene().add( particles );
 	
 			//
 	

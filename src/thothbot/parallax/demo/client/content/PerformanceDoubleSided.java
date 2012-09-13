@@ -72,19 +72,19 @@ public final class PerformanceDoubleSided extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(3200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			PointLight light = new PointLight( 0x0011ff, 1, 5500 );
 			light.getPosition().set( 4000, 0, 0 );
-			getScene().addChild( light );
+			getScene().add( light );
 
 			PointLight light2 = new PointLight( 0xff1100, 1, 5500 );
 			light2.getPosition().set( -4000, 0, 0 );
-			getScene().addChild( light2 );
+			getScene().add( light2 );
 
 			PointLight light3 = new PointLight( 0xffaa00, 2, 3000 );
 			light3.getPosition().set( 0, 0, 0 );
-			getScene().addChild( light3 );
+			getScene().add( light3 );
 
 			Texture reflectionCube = ImageUtils.loadTextureCube( textures );
 			reflectionCube.setFormat(PixelFormat.RGB);
@@ -119,7 +119,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
 
-				getScene().addChild( mesh );
+				getScene().add( mesh );
 			}
 
 //			renderer.gammaInput = true;

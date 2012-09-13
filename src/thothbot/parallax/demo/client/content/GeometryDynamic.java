@@ -81,7 +81,7 @@ public class GeometryDynamic extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setY(200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007 ));
 
@@ -109,7 +109,7 @@ public class GeometryDynamic extends ContentWidget
 			material.setMap( texture );
 
 			this.mesh = new Mesh( this.geometry, material );
-			getScene().addChild( this.mesh );
+			getScene().add( this.mesh );
 			
 			this.oldTime = Duration.currentTimeMillis();
 		}

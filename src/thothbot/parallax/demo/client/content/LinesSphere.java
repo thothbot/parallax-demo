@@ -91,7 +91,7 @@ public final class LinesSphere extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1000);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			List<ExampleData> parameters = new ArrayList<ExampleData>();
 			parameters.add(new ExampleData( 0.25, 0xff7700, 1.00, 2));
@@ -140,7 +140,7 @@ public final class LinesSphere extends ContentWidget
 
 				line.getRotation().setY( Math.random() * Math.PI );
 				line.updateMatrix();
-				getScene().addChild( line );
+				getScene().add( line );
 			}
 		}
 		

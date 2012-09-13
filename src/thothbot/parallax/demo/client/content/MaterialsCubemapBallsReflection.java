@@ -99,10 +99,10 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(3200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			this.sceneCube = new Scene();
-			sceneCube.addChild( cameraCube );
+			sceneCube.add( cameraCube );
 
 			Sphere geometry = new Sphere( 100, 32, 16 );
 
@@ -125,7 +125,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 				double scale = Math.random() * 3.0 + 1.0;
 				mesh.getScale().set(scale);
 
-				getScene().addChild( mesh );
+				getScene().add( mesh );
 
 				this.sphere.add( mesh );
 			}
@@ -138,7 +138,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 			sMaterial.setSide(Material.SIDE.BACK);
 			
 			Mesh mesh = new Mesh( new Cube( 100, 100, 100 ), sMaterial );
-			sceneCube.addChild( mesh );
+			sceneCube.add( mesh );
 			
 			getRenderer().setAutoClear(false);
 		}

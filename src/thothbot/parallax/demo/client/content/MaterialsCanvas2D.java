@@ -90,7 +90,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set(0, 200, 800);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			// Grid
 
@@ -112,7 +112,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			line_material.setOpacity( 0.2 );
 
 			Line line = new Line( geometry, line_material, Line.TYPE.PIECES );
-			getScene().addChild( line );
+			getScene().add( line );
 
 			// Materials
 
@@ -237,18 +237,18 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 				this.objects.add( sphere );
 
-				getScene().addChild( sphere );
+				getScene().add( sphere );
 
 			}
 			
 			MeshBasicMaterial mbOpt3 = new MeshBasicMaterial();
 			mbOpt3.setColor( new Color(0xffffff) );
 			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), mbOpt3 );
-			getScene().addChild( this.particleLight );
+			getScene().add( this.particleLight );
 
 			// Lights
 
-			getScene().addChild( new AmbientLight( 0x111111 ) );
+			getScene().add( new AmbientLight( 0x111111 ) );
 
 			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 0.125 );
 
@@ -258,10 +258,10 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			directionalLight.getPosition().normalize();
 
-			getScene().addChild( directionalLight );
+			getScene().add( directionalLight );
 
 			this.pointLight = new PointLight( 0xffffff );
-			getScene().addChild( pointLight );
+			getScene().add( pointLight );
 		}
 		
 		private CanvasElement generateTexture() 

@@ -68,11 +68,11 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setY(200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff, 1.3 );
 			light.getPosition().set( 1, 1, 1 );
-			getScene().addChild( light );
+			getScene().add( light );
 
 			this.json = new Json();
 			try
@@ -87,7 +87,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 						mesh.getScale().set(2);
 						mesh.getPosition().set(0);
 
-						getScene().addChild(mesh);
+						getScene().add(mesh);
 					}
 				});
 			}

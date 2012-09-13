@@ -93,7 +93,7 @@ public class CustomAttributesParticles extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(300);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			this.attributes = new HashMap<String, Attribute>();
 			this.attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
@@ -146,7 +146,7 @@ public class CustomAttributesParticles extends ContentWidget
 					values_color.get( v ).setHSV( 0.0 + 0.1 * ( v / (double)vertices.size() ), 0.9, 0.9 );
 			}
 
-			getScene().addChild( sphere );
+			getScene().add( sphere );
 		}
 		
 		@Override

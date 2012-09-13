@@ -67,7 +67,7 @@ public final class EffectsSprites extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1500);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			int amount = 200;
 			int radius = 500;
@@ -100,10 +100,10 @@ public final class EffectsSprites extends ContentWidget
 				sprite.getPosition().normalize();
 				sprite.getPosition().multiply( radius );
 
-				group.addChild( sprite );
+				group.add( sprite );
 			}
 
-			getScene().addChild( group );
+			getScene().add( group );
 
 			// add 2d-sprites 
 			Sprite sprite1 = new Sprite();
@@ -111,21 +111,21 @@ public final class EffectsSprites extends ContentWidget
 			sprite1.setAlignment(ALIGNMENT.TOP_LEFT);
 			sprite1.getPosition().set( 100, 100, 0 );
 			sprite1.setOpacity( 0.25 );
-			getScene().addChild( sprite1 );
+			getScene().add( sprite1 );
 
 			Sprite sprite2 = new Sprite();
 			sprite2.setMap(mapA);
 			sprite2.setAlignment(ALIGNMENT.TOP_LEFT);
 			sprite2.getPosition().set( 150, 150, 2 );
 			sprite2.setOpacity( 0.5 );
-			getScene().addChild( sprite2 );
+			getScene().add( sprite2 );
 
 			Sprite sprite3 = new Sprite();
 			sprite3.setMap(mapA);
 			sprite3.setAlignment(ALIGNMENT.TOP_LEFT);
 			sprite3.getPosition().set( 200, 200, 3 );
 			sprite3.setOpacity(1);
-			getScene().addChild( sprite3 );
+			getScene().add( sprite3 );
 		}
 		
 		@Override

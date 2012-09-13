@@ -94,7 +94,7 @@ public final class TrackballEarth extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(radius * 7);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			this.control = new TrackballControls( getCamera(), getRenderer().getCanvas() );
 			this.control.setPanSpeed(0.2);
@@ -104,7 +104,7 @@ public final class TrackballEarth extends ContentWidget
 
 			DirectionalLight dirLight = new DirectionalLight( 0xFFFFFF );
 			dirLight.getPosition().set( -1, 0, 1 ).normalize();
-			getScene().addChild( dirLight );
+			getScene().add( dirLight );
 
 			Texture planetTexture   = ImageUtils.loadTexture( earthAtmos );
 			Texture cloudsTexture   = ImageUtils.loadTexture( earthClouds );
@@ -145,7 +145,7 @@ public final class TrackballEarth extends ContentWidget
 			this.meshPlanet = new Mesh( geometry, materialNormalMap );
 			meshPlanet.getRotation().setY( 0 );
 			meshPlanet.getRotation().setZ( tilt );
-			getScene().addChild( meshPlanet );
+			getScene().add( meshPlanet );
 
 
 			// clouds
@@ -157,7 +157,7 @@ public final class TrackballEarth extends ContentWidget
 			this.meshClouds = new Mesh( geometry, materialClouds );
 			meshClouds.getScale().set( cloudsScale );
 			meshClouds.getRotation().setZ( tilt );
-			getScene().addChild( meshClouds );
+			getScene().add( meshClouds );
 
 
 			// moon
@@ -169,7 +169,7 @@ public final class TrackballEarth extends ContentWidget
 			this.meshMoon = new Mesh( geometry, materialMoon );
 			meshMoon.getPosition().set( radius * 5.0, 0, 0 );
 			meshMoon.getScale().set( moonScale );
-			getScene().addChild( meshMoon );
+			getScene().add( meshMoon );
 
 
 			// stars
@@ -241,7 +241,7 @@ public final class TrackballEarth extends ContentWidget
 				stars.setMatrixAutoUpdate(false);
 				stars.updateMatrix();
 
-				getScene().addChild( stars );
+				getScene().add( stars );
 			}
 			
 			getRenderer().setSortObjects(false);

@@ -65,7 +65,7 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 		}
 		
@@ -79,7 +79,7 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 		{
 			if(mesh != null)
 			{
-				getScene().removeChild( mesh );
+				getScene().remove( mesh );
 				getRenderer().deallocateObject( mesh );
 			}
 
@@ -97,7 +97,7 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 
 			mesh = new Mesh( geometry, material );
 
-			getScene().addChild( mesh );
+			getScene().add( mesh );
 		}
 		
 		private CanvasElement generateTexture() 

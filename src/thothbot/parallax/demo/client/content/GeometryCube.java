@@ -63,7 +63,7 @@ public class GeometryCube extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(400);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			Cube geometry = new Cube( 200, 200, 200 );
 
@@ -71,7 +71,7 @@ public class GeometryCube extends ContentWidget
 			material.setMap( ImageUtils.loadTexture(texture) );
 
 			this.mesh = new Mesh(geometry, material);
-			getScene().addChild(mesh);
+			getScene().add(mesh);
 		}
 		
 		@Override

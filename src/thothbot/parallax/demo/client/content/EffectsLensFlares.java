@@ -79,7 +79,7 @@ public final class EffectsLensFlares extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(250);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			new LensFlarePlugin(getRenderer(), getScene());
 			controls = new FlyControls( getCamera(), getRenderer().getCanvas() );
@@ -119,19 +119,19 @@ public final class EffectsLensFlares extends ContentWidget
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
 
-				getScene().addChild( mesh );
+				getScene().add( mesh );
 			}
 
 			// lights
 
 			AmbientLight ambient = new AmbientLight( 0xffffff );
 			ambient.getColor().setHSV( 0.1, 0.5, 0.3 );
-			getScene().addChild( ambient );
+			getScene().add( ambient );
 
 
 			DirectionalLight dirLight = new DirectionalLight( 0xffffff, 0.125 );
 			dirLight.getPosition().set( 0, -1, 0 ).normalize();
-			getScene().addChild( dirLight );
+			getScene().add( dirLight );
 
 			dirLight.getColor().setHSV( 0.1, 0.725, 0.9 );
 
@@ -155,7 +155,7 @@ public final class EffectsLensFlares extends ContentWidget
 		{
 			PointLight light = new PointLight( 0xffffff, 1.5, 4500 );
 			light.getPosition().set( x, y, z );
-			getScene().addChild( light );
+			getScene().add( light );
 
 			light.getColor().setHSV( h, s, v );
 
@@ -199,7 +199,7 @@ public final class EffectsLensFlares extends ContentWidget
 
 			lensFlare.setPosition(light.getPosition());
 
-			getScene().addChild( lensFlare );
+			getScene().add( lensFlare );
 		}
 		
 		@Override

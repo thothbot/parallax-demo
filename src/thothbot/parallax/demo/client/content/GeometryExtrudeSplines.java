@@ -190,15 +190,15 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set(0, 50, 500);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			DirectionalLight light = new DirectionalLight(0xffffff);
 			light.getPosition().set(0, 0, 1);
-			getScene().addChild(light);
+			getScene().add(light);
 
 			parent = new Object3D();
 			parent.getPosition().setY(100);
-			getScene().addChild(parent);
+			getScene().add(parent);
 
 			addTube();
 
@@ -210,11 +210,11 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			this.cameraHelper.getChildren().get(0).setVisible(isShowCameraHelper);
 			this.cameraEye.setVisible(isShowCameraHelper);
 
-			parent.addChild(cameraEye);
+			parent.add(cameraEye);
 
 			cameraHelper.getScale().multiply(0.1);
-			splineCamera.addChild(cameraHelper);
-			parent.addChild(splineCamera);
+			splineCamera.add(cameraHelper);
+			parent.add(splineCamera);
 		}
 		
 		public void setScale(double scale)
@@ -292,7 +292,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		private void addTube() 
 		{
 			if (tubeMesh != null) 
-				parent.removeChild(tubeMesh);
+				parent.remove(tubeMesh);
 
 			tube = new Tube(this.extrudePath, this.extrusionSegments, 2.0, this.radiusSegments, this.isClosed, this.isDebug);
 
@@ -315,9 +315,9 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	    	// 3d shape
 	    	this.tubeMesh = (Object3D) SceneUtils.createMultiMaterialObject(geometry, Arrays.asList(material1, material2));
 	    	
-    		this.tubeMesh.addChild(geometry.getDebug());
+    		this.tubeMesh.add(geometry.getDebug());
 
-	    	this.parent.addChild(this.tubeMesh);
+	    	this.parent.add(this.tubeMesh);
 	    }
 				
 		@Override

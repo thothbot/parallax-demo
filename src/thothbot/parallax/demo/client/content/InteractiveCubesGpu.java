@@ -111,7 +111,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1000);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			controls = new TrackballControls( getCamera(), getRenderer().getCanvas()  );
 			controls.setRotateSpeed(1.0);
@@ -127,24 +127,24 @@ public final class InteractiveCubesGpu extends ContentWidget
 			pickingTexture = new RenderTargetTexture(canvas.getWidth(), canvas.getHeight());
 			pickingTexture.setGenerateMipmaps(false);
 
-			getScene().addChild( new AmbientLight( 0x555555 ) );
+			getScene().add( new AmbientLight( 0x555555 ) );
 
 			SpotLight light = new SpotLight( 0xffffff, 1.5 );
 			
 			light.getPosition().set( 0, 500, 2000 );
-			light.castShadow = true;
+			light.setCastShadow(true);
 
-			light.shadowCameraNear = 200;
-			light.shadowCameraFar = ((PerspectiveCamera)getCamera()).getFar();
-			light.shadowCameraFov = 50;
+			light.setShadowCameraNear(200);
+			light.setShadowCameraFar(((PerspectiveCamera)getCamera()).getFar());
+			light.setShadowCameraFov(50);
 
-			light.shadowBias = -0.00022;
-			light.shadowDarkness = 0.5;
+			light.setShadowBias(-0.00022);
+			light.setShadowDarkness(0.5);
 
-			light.shadowMapWidth = 1024;
-			light.shadowMapHeight = 1024;
+			light.setShadowMapWidth(1024);
+			light.setShadowMapHeight(1024);
 
-			getScene().addChild( light );
+			getScene().add( light );
 
 			Geometry geometry = new Geometry();
 			Geometry pickingGeometry = new Geometry();
@@ -206,14 +206,14 @@ public final class InteractiveCubesGpu extends ContentWidget
 			Mesh drawnObject = new Mesh(geometry, defaultMaterial);
 			//drawnObject.castShadow = true;
 			//drawnObject.receiveShadow = true;
-			getScene().addChild(drawnObject);
+			getScene().add(drawnObject);
 
-			pickingScene.addChild(new Mesh(pickingGeometry, pickingMaterial));
+			pickingScene.add(new Mesh(pickingGeometry, pickingMaterial));
 
 			MeshLambertMaterial highlightBoxMaterial = new MeshLambertMaterial();
 			highlightBoxMaterial.setColor(new Color(0xffff00));
 			highlightBox = new Mesh( new Cube(1, 1, 1), highlightBoxMaterial );
-			getScene().addChild( highlightBox );
+			getScene().add( highlightBox );
 
 			projector = new Projector();
 			getRenderer().setClearColorHex(0xeeeeee);

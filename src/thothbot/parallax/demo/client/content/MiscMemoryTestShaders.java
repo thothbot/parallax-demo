@@ -79,7 +79,7 @@ public final class MiscMemoryTestShaders extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(2000);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			Sphere geometry = new Sphere( 15, 64, 32 );
 			meshes = new ArrayList<Mesh>();
@@ -95,7 +95,7 @@ public final class MiscMemoryTestShaders extends ContentWidget
 				mesh.getPosition().setY( ( 0.5 - Math.random() ) * 1000 );
 				mesh.getPosition().setZ( ( 0.5 - Math.random() ) * 1000 );
 
-				getScene().addChild( mesh );
+				getScene().add( mesh );
 
 				meshes.add( mesh );
 			}

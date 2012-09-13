@@ -96,7 +96,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(300);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			this.attributes = new HashMap<String, Attribute>();
 			attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
@@ -154,7 +154,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 	
 			}
 	
-			getScene().addChild( sphere );
+			getScene().add( sphere );
 
 		}
 		

@@ -77,13 +77,13 @@ public class GeometriesParametric extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setY(400);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
-			getScene().addChild( new AmbientLight( 0x404040 ) );
+			getScene().add( new AmbientLight( 0x404040 ) );
 	
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
-			getScene().addChild( light );
+			getScene().add( light );
 			
 			Texture texture = ImageUtils.loadTexture(image);
 			texture.setWrapS(TextureWrapMode.REPEAT);
@@ -109,17 +109,17 @@ public class GeometriesParametric extends ContentWidget
 			DimensionalObject object1 = SceneUtils.createMultiMaterialObject(new Klein(20, 20), materials );
 			object1.getPosition().set( 0, 0, 0 );
 			object1.getScale().multiply(20);
-			getScene().addChild( object1 );
+			getScene().add( object1 );
 			
 			// Mobius Strip
 			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Mobius(20, 20), materials );
 			object2.getPosition().set( 10, 0, 0 );
 			object2.getScale().multiply(100);
-			getScene().addChild( object2 );
+			getScene().add( object2 );
 			
 			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Plane(200, 200, 10, 20), materials );
 			object3.getPosition().set( 20, 0, 0 );
-			getScene().addChild( object3 );
+			getScene().add( object3 );
 			
 //			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
 //			object4.getPosition().set( 10, 0, 0 );

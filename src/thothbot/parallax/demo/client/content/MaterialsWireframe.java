@@ -90,7 +90,7 @@ public final class MaterialsWireframe extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(800);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			double size = 150;
 
@@ -107,7 +107,7 @@ public final class MaterialsWireframe extends ContentWidget
 
 			meshLines = new Mesh( geometryLines, materialLines );
 			meshLines.getPosition().setX(0);
-			getScene().addChild( meshLines );
+			getScene().add( meshLines );
 
 			// wireframe using gl.TRIANGLES (interpreted as quads)
 
@@ -119,7 +119,7 @@ public final class MaterialsWireframe extends ContentWidget
 
 			meshQuads = new Mesh( geometryQuads, materialQuads );
 			meshQuads.getPosition().setX(300);
-			getScene().addChild( meshQuads );
+			getScene().add( meshQuads );
 
 			// wireframe using gl.TRIANGLES (interpreted as triangles)
 
@@ -131,7 +131,7 @@ public final class MaterialsWireframe extends ContentWidget
 
 			meshTris = new Mesh( geometryTris, materialTris );
 			meshTris.getPosition().setX(-300);
-			getScene().addChild( meshTris );
+			getScene().add( meshTris );
 
 			// wireframe using gl.TRIANGLES (mixed triangles and quads)
 
@@ -145,7 +145,7 @@ public final class MaterialsWireframe extends ContentWidget
 
 			meshMixed = new Mesh( mixedGeometry, materialMixed );
 			meshMixed.getPosition().setX(0);
-			getScene().addChild( meshMixed );
+			getScene().add( meshMixed );
 
 		}
 		

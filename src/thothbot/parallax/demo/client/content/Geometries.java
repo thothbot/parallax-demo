@@ -87,13 +87,13 @@ public class Geometries extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setY(400);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
-			getScene().addChild( new AmbientLight( 0x404040 ) );
+			getScene().add( new AmbientLight( 0x404040 ) );
 	
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 1, 0 );
-			getScene().addChild( light );
+			getScene().add( light );
 			
 			Texture texture = ImageUtils.loadTexture(image);
 			texture.setWrapS(TextureWrapMode.REPEAT);
@@ -116,36 +116,36 @@ public class Geometries extends ContentWidget
 	
 			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new Cube( 100, 100, 100, 4, 4, 4 ), materials );
 			object1.getPosition().set( -200, 0, 400 );
-			getScene().addChild( object1 );
+			getScene().add( object1 );
 			
 			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Cylinder( 25, 75, 100, 40, 5 ), materials );
 			object2.getPosition().set( 0, 0, 400 );
-			getScene().addChild( object2 );
+			getScene().add( object2 );
 			
 			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Icosahedron( 75, 1 ), materials );
 			object3.getPosition().set( -200, 0, 200 );
-			getScene().addChild( object3 );
+			getScene().add( object3 );
 			
 			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Octahedron( 75, 2 ), materials );
 			object4.getPosition().set( 0, 0, 200 );
-			getScene().addChild( object4 );
+			getScene().add( object4 );
 			
 			DimensionalObject object5 = SceneUtils.createMultiMaterialObject( new Tetrahedron( 75, 0 ), materials );
 			object5.getPosition().set( 200, 0, 200 );
-			getScene().addChild( object5 );
+			getScene().add( object5 );
 			
 			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new Plane( 100, 100, 4, 4 ), materials );
 			Mesh Meshobject6 = (Mesh) object6.getChildren().get(0);
 			object6.getPosition().set( -200, 0, 0 );
-			getScene().addChild( object6 );
+			getScene().add( object6 );
 			
 			DimensionalObject object6a = SceneUtils.createMultiMaterialObject( new Circle( 50, 10, 0, Math.PI ), materials );
 			object6a.getRotation().setX( Math.PI / 2.0 );
-			object6.addChild( object6a );
+			object6.add( object6a );
 			
 			DimensionalObject object7 = SceneUtils.createMultiMaterialObject( new Sphere( 75, 20, 10 ), materials );
 			object7.getPosition().set( 0, 0, 0 );
-			getScene().addChild( object7 );
+			getScene().add( object7 );
 		
 			List<Vector3> points = new ArrayList<Vector3>();
 	
@@ -155,24 +155,24 @@ public class Geometries extends ContentWidget
 			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
 			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
 			object8.getPosition().set( 200, 0, 0 );
-			getScene().addChild( object8 );
+			getScene().add( object8 );
 			
 			DimensionalObject object9 = SceneUtils.createMultiMaterialObject( new Torus( 50, 20, 20, 20 ), materials );
 			object9.getPosition().set( -200, 0, -200 );
-			getScene().addChild( object9 );
+			getScene().add( object9 );
 
 			DimensionalObject object10 = SceneUtils.createMultiMaterialObject( new TorusKnot( 50, 10, 50, 20 ), materials );
 			object10.getPosition().set( 0, 0, -200 );
-			getScene().addChild( object10 );
+			getScene().add( object10 );
 	
 			AxisHelper object11 = new AxisHelper();
 			object11.getPosition().set( 200, 0, -200 );
 			object11.getScale().set(0.5);
-			getScene().addChild( object11 );
+			getScene().add( object11 );
 			
 			ArrowHelper object12 = new ArrowHelper( new Vector3( 0, 1, 0 ), new Vector3( 0, 0, 0 ), 50 );
 			object12.getPosition().set( 300, 0, 300 );
-			getScene().addChild( object12 );
+			getScene().add( object12 );
 		}
 		
 		@Override

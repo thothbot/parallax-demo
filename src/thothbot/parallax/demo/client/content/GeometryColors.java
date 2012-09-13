@@ -82,11 +82,11 @@ public class GeometryColors extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(2000);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
-			getScene().addChild( light );
+			getScene().add( light );
 			
 			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
 			shadowMaterial.setMap( ImageUtils.loadTexture(texture) );
@@ -95,19 +95,19 @@ public class GeometryColors extends ContentWidget
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );
 			mesh1.getPosition().setY(-250);
 			mesh1.getRotation().setX(- Math.PI / 2.0);
-			getScene().addChild( mesh1 );
+			getScene().add( mesh1 );
 
 			Mesh mesh2 = new Mesh( shadowGeo, shadowMaterial );
 			mesh2.getPosition().setY(-250);
 			mesh2.getPosition().setX(-400);
 			mesh2.getRotation().setX(- Math.PI / 2.0);
-			getScene().addChild( mesh2 );
+			getScene().add( mesh2 );
 
 			Mesh mesh3 = new Mesh( shadowGeo, shadowMaterial );
 			mesh3.getPosition().setY(-250);
 			mesh3.getPosition().setX(400);
 			mesh3.getRotation().setX(- Math.PI / 2.0);
-			getScene().addChild( mesh3 );
+			getScene().add( mesh3 );
 			
 			int radius = 200;
 			
@@ -169,17 +169,17 @@ public class GeometryColors extends ContentWidget
 			DimensionalObject group1 = SceneUtils.createMultiMaterialObject( geometry, materials );
 			group1.getPosition().setX(-400);
 			group1.getRotation().setX(-1.87);
-			getScene().addChild( group1 );
+			getScene().add( group1 );
 
 			DimensionalObject group2 = SceneUtils.createMultiMaterialObject( geometry2, materials );
 			group2.getPosition().setX(400);
 			group2.getRotation().setX(0);
-			getScene().addChild( group2 );
+			getScene().add( group2 );
 
 			DimensionalObject group3 = SceneUtils.createMultiMaterialObject( geometry3, materials );
 			group3.getPosition().setX(0);
 			group3.getRotation().setX(0);
-			getScene().addChild( group3 );
+			getScene().add( group3 );
 		}
 		
 		@Override

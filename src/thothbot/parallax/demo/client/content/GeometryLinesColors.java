@@ -81,7 +81,7 @@ public final class GeometryLinesColors extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(700);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			Geometry geometry = new Geometry();
 			Geometry geometry2 = new Geometry();
@@ -128,17 +128,17 @@ public final class GeometryLinesColors extends ContentWidget
 			Line line = new Line( geometry,  material );
 			line.getScale().set(scale * 1.5);
 			line.getPosition().set(-d, 0, 0);
-			getScene().addChild( line );
+			getScene().add( line );
 			
 			Line line2 = new Line( geometry2,  material );
 			line2.getScale().set(scale * 1.5);
 			line2.getPosition().set(0, 0, 0);
-			getScene().addChild( line2 );
+			getScene().add( line2 );
 			
 			Line line3 = new Line( geometry3,  material );
 			line3.getScale().set(scale * 1.5);
 			line3.getPosition().set(d, 0, 0);
-			getScene().addChild( line3 );
+			getScene().add( line3 );
 			
 			//
 

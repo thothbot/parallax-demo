@@ -71,7 +71,7 @@ public final class LoaderCollada extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set(2, 2, 3);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			Collada collada = new Collada();
 			try
@@ -116,28 +116,28 @@ public final class LoaderCollada extends ContentWidget
 			}
 
 			Line line = new Line( geometry, line_material, Line.TYPE.PIECES);
-			getScene().addChild( line );
+			getScene().add( line );
 
 			MeshBasicMaterial sMaterial = new MeshBasicMaterial();
 			sMaterial.setColor(new Color(0xffffff));
 			
 			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), sMaterial );
-			getScene().addChild( this.particleLight );
+			getScene().add( this.particleLight );
 
 			// Lights
 
-			getScene().addChild( new AmbientLight( 0xcccccc ) );
+			getScene().add( new AmbientLight( 0xcccccc ) );
 
 			DirectionalLight directionalLight = new DirectionalLight(0xeeeeee );
 			directionalLight.getPosition().setX( Math.random() - 0.5 );
 			directionalLight.getPosition().setY( Math.random() - 0.5 );
 			directionalLight.getPosition().setZ( Math.random() - 0.5 );
 			directionalLight.getPosition().normalize();
-			getScene().addChild( directionalLight );
+			getScene().add( directionalLight );
 
 			PointLight pointLight = new PointLight( 0xffffff, 4, 0 );
 			pointLight.setPosition( this.particleLight.getPosition() );
-			getScene().addChild( pointLight );
+			getScene().add( pointLight );
 		}
 		
 		@Override

@@ -81,15 +81,15 @@ public final class InteractiveCubes extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set( 0, 300, 500 );
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff, 2 );
 			light.getPosition().set( 1 ).normalize();
-			getScene().addChild( light );
+			getScene().add( light );
 
 			DirectionalLight light2 = new DirectionalLight( 0xffffff );
 			light2.getPosition().set( -1 ).normalize();
-			getScene().addChild( light2 );
+			getScene().add( light2 );
 
 			Cube geometry = new Cube( 20, 20, 20 );
 
@@ -111,7 +111,7 @@ public final class InteractiveCubes extends ContentWidget
 				object.getScale().setY( Math.random() * 2 + 1 );
 				object.getScale().setZ( Math.random() * 2 + 1 );
 
-				getScene().addChild( object );
+				getScene().add( object );
 
 			}
 

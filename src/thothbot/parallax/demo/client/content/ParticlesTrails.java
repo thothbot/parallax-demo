@@ -68,7 +68,7 @@ public final class ParticlesTrails extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().set(100000, 0, 3200 );
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			int[] colors = {0x000000, 0xff0080, 0x8000ff, 0xffffff};
 			Geometry geometry = new Geometry();
@@ -93,7 +93,7 @@ public final class ParticlesTrails extends ContentWidget
 			material.setSizeAttenuation(false);
 
 			ParticleSystem mesh = new ParticleSystem( geometry, material );
-			getScene().addChild( mesh );
+			getScene().add( mesh );
 
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);

@@ -85,7 +85,7 @@ public final class PostprocessingGodrays extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			MeshDepthMaterial materialDepth = new MeshDepthMaterial();
 
@@ -110,7 +110,7 @@ public final class PostprocessingGodrays extends ContentWidget
 						mesh.setMatrixAutoUpdate(false);
 						mesh.updateMatrix();
 
-						getScene().addChild(mesh);
+						getScene().add(mesh);
 					}
 				});
 			}
@@ -125,7 +125,7 @@ public final class PostprocessingGodrays extends ContentWidget
 			this.sphereMesh = new Mesh( geo, materialScene );
 			this.sphereMesh.getScale().set( 20 );
 
-			getScene().addChild( this.sphereMesh );
+			getScene().add( this.sphereMesh );
 
 			//
 					

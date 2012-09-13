@@ -70,12 +70,12 @@ public final class MiscLookAt extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(3200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			MeshNormalMaterial material = new MeshNormalMaterial();
 			material.setShading(Material.SHADING.SMOOTH);
 			sphere = new Mesh( new Sphere( 100, 20, 20 ), material );
-			getScene().addChild( sphere );
+			getScene().add( sphere );
 
 			Cylinder geometry = new Cylinder( 0, 10, 100, 3, 1 );
 			geometry.applyMatrix( new Matrix4().setRotationFromEuler( new Vector3( Math.PI / 2, Math.PI, 0 ) ) );
@@ -89,7 +89,7 @@ public final class MiscLookAt extends ContentWidget
 				mesh2.getPosition().setY( Math.random() * 4000 - 2000 );
 				mesh2.getPosition().setZ( Math.random() * 4000 - 2000 );
 				mesh2.getScale().set( Math.random() * 4.0 + 2.0 );
-				getScene().addChild( mesh2 );
+				getScene().add( mesh2 );
 			}
 
 			getScene().setMatrixAutoUpdate(false);

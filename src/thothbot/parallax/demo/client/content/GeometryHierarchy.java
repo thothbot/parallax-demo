@@ -70,7 +70,7 @@ public final class GeometryHierarchy extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(500);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			getScene().setFog(new FogSimple( 0xffffff, 1, 10000));
 
 			Cube geometry = new Cube( 100, 100, 100 );
@@ -91,10 +91,10 @@ public final class GeometryHierarchy extends ContentWidget
 				mesh.setMatrixAutoUpdate(false);
 				mesh.updateMatrix();
 
-				group.addChild( mesh );
+				group.add( mesh );
 			}
 
-			getScene().addChild( group );
+			getScene().add( group );
 
 			getRenderer().setSortObjects(false);
 			getRenderer().setClearColorHex(0xeeeeee);

@@ -77,7 +77,7 @@ public final class MaterialsTextures extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setY(200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			objects = new ArrayList<Mesh>();
 
@@ -245,24 +245,24 @@ public final class MaterialsTextures extends ContentWidget
 
 				objects.add( sphere );
 
-				getScene().addChild( sphere );
+				getScene().add( sphere );
 			}
 
 			MeshBasicMaterial particleLightMaterial = new MeshBasicMaterial();
 			particleLightMaterial.setColor(new Color(0xffffff));
 			particleLight = new Mesh( new Sphere( 4, 8, 8 ), particleLightMaterial );
-			getScene().addChild( particleLight );
+			getScene().add( particleLight );
 
 			// Lights
 
-			getScene().addChild( new AmbientLight( 0x444444 ) );
+			getScene().add( new AmbientLight( 0x444444 ) );
 
 			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 1 );
 			directionalLight.getPosition().set( 1 ).normalize();
-			getScene().addChild( directionalLight );
+			getScene().add( directionalLight );
 
 			PointLight pointLight = new PointLight( 0xffffff, 2, 800 );
-			getScene().addChild( pointLight );
+			getScene().add( pointLight );
 
 			((MeshBasicMaterial)particleLight.getMaterial()).setColor( pointLight.getColor() );
 			pointLight.setPosition( particleLight.getPosition() );

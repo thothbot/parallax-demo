@@ -75,15 +75,15 @@ public final class MorphTargetsHorse extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setY(300);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			DirectionalLight light = new DirectionalLight( 0xefefff, 2 );
 			light.getPosition().set( 1, 1, 1 ).normalize();
-			getScene().addChild( light );
+			getScene().add( light );
 
 			DirectionalLight light1 = new DirectionalLight( 0xffefef, 2 );
 			light1.getPosition().set( -1, -1, -1 ).normalize();
-			getScene().addChild( light1 );
+			getScene().add( light1 );
 
 			final Json json = new Json();
 			try
@@ -97,7 +97,7 @@ public final class MorphTargetsHorse extends ContentWidget
 						mesh = json.getMesh();
 						mesh.getScale().set(1.5);
 
-						getScene().addChild(mesh);
+						getScene().add(mesh);
 					}
 				});
 			}

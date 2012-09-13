@@ -95,10 +95,10 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(3200);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 
 			this.sceneCube = new Scene();
-			sceneCube.addChild( cameraCube );
+			sceneCube.add( cameraCube );
 
 			Sphere geometry = new Sphere( 100, 32, 16 );
 
@@ -121,7 +121,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 
 				mesh.getScale().set( Math.random() * 3 + 1 );
 
-				getScene().addChild( mesh );
+				getScene().add( mesh );
 
 				spheres.add( mesh );
 			}
@@ -136,7 +136,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 			sMaterial.setSide(Material.SIDE.BACK);
 
 			Mesh mesh = new Mesh( new Cube( 100000, 100000, 100000 ), sMaterial );
-			sceneCube.addChild( mesh );
+			sceneCube.add( mesh );
 
 			//
 
