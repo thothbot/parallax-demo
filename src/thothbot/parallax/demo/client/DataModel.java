@@ -269,9 +269,9 @@ public class DataModel implements TreeViewModel
 	{
 		List<Category> categoriesList = categories.getList();
 
-		// Geometry.
+		// Geometries.
 		{
-			Category category = new Category("Geometry");
+			Category category = new Category("Geometries");
 			categoriesList.add(category);
 			category.addExample(new GeometryCube(), 
 					RunAsyncCode.runAsyncCode(GeometryCube.class));
