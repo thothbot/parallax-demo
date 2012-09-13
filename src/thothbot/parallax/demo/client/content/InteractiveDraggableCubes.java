@@ -19,10 +19,20 @@
 
 package thothbot.parallax.demo.client.content;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Color;
+import thothbot.parallax.core.shared.core.Projector;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -41,7 +51,10 @@ public final class InteractiveDraggableCubes extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		List<Mesh> objects;
+		
 		TrackballControls controls;
+		Projector projector;
 		
 		@Override
 		protected void loadCamera()
@@ -88,71 +101,50 @@ public final class InteractiveDraggableCubes extends ContentWidget
 
 			getScene().add( light );
 
-			var geometry = new THREE.CubeGeometry( 40, 40, 40 );
+			CubeGeometry geometry = new CubeGeometry( 40, 40, 40 );
 
-			for ( var i = 0; i < 200; i ++ ) {
+			objects = new ArrayList<Mesh>();
+			for ( int i = 0; i < 200; i ++ ) 
+			{
+				MeshLambertMaterial material1 = new MeshLambertMaterial();
+				material1.setColor(new Color((int)(Math.random() * 0xfffff)));
+				material1.setAmbient(material1.getColor());
+				Mesh object = new Mesh( geometry, material1 );
 
-				var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+				object.getPosition().setX( Math.random() * 1000 - 500 );
+				object.getPosition().setY( Math.random() * 600 - 300 );
+				object.getPosition().setZ( Math.random() * 800 - 400 );
 
-				object.material.ambient = object.material.color;
+				object.getRotation().setX( ( Math.random() * 360 ) * Math.PI / 180 );
+				object.getRotation().setY( ( Math.random() * 360 ) * Math.PI / 180 ); 
+				object.getRotation().setZ( ( Math.random() * 360 ) * Math.PI / 180 );
 
-				object.position.x = Math.random() * 1000 - 500;
-				object.position.y = Math.random() * 600 - 300;
-				object.position.z = Math.random() * 800 - 400;
+				object.getScale().setX( Math.random() * 2 + 1 );
+				object.getScale().setY( Math.random() * 2 + 1 );
+				object.getScale().setZ( Math.random() * 2 + 1 );
 
-				object.rotation.x = ( Math.random() * 360 ) * Math.PI / 180;
-				object.rotation.y = ( Math.random() * 360 ) * Math.PI / 180;
-				object.rotation.z = ( Math.random() * 360 ) * Math.PI / 180;
+//				object.castShadow = true;
+//				object.receiveShadow = true;
 
-				object.scale.x = Math.random() * 2 + 1;
-				object.scale.y = Math.random() * 2 + 1;
-				object.scale.z = Math.random() * 2 + 1;
+				getScene().add( object );
 
-				object.castShadow = true;
-				object.receiveShadow = true;
-
-				scene.add( object );
-
-				objects.push( object );
-
+				objects.add( object );
 			}
 
-			plane = new THREE.Mesh( new THREE.PlaneGeometry( 2000, 2000, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true, wireframe: true } ) );
-			plane.visible = false;
-			scene.add( plane );
+			MeshBasicMaterial material2 = new MeshBasicMaterial();
+			material2.setColor(new Color(0x000000));
+			material2.setOpacity(0.25);
+			material2.setTransparent(true);
+			material2.setWireframe(true);
+			Mesh plane = new Mesh( new PlaneGeometry( 2000, 2000, 8, 8 ), material2 );
+			plane.setVisible(false);
+			getScene().add( plane );
 
-			projector = new THREE.Projector();
+			projector = new Projector();
 
-			renderer = new THREE.WebGLRenderer( { antialias: true } );
-			renderer.sortObjects = false;
-			renderer.setSize( window.innerWidth, window.innerHeight );
-
-			renderer.shadowMapEnabled = true;
-			renderer.shadowMapSoft = true;
-
-			container.appendChild( renderer.domElement );
-
-			var info = document.createElement( 'div' );
-			info.style.position = 'absolute';
-			info.style.top = '10px';
-			info.style.width = '100%';
-			info.style.textAlign = 'center';
-			info.innerHTML = '<a href="http://github.com/mrdoob/three.js" target="_blank">three.js</a> webgl - draggable cubes';
-			container.appendChild( info );
-
-			stats = new Stats();
-			stats.domElement.style.position = 'absolute';
-			stats.domElement.style.top = '0px';
-			container.appendChild( stats.domElement );
-
-			renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
-			renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
-			renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
-
-			//
-
-			window.addEventListener( 'resize', onWindowResize, false );
-
+			getRenderer().setSortObjects(false);
+			getRenderer().setShadowMapEnabled(true);
+			getRenderer().setShadowMapSoft(true);
 		}
 		
 		@Override
