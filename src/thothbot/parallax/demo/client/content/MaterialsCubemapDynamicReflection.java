@@ -27,9 +27,9 @@ import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.CubeCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Sphere;
-import thothbot.parallax.core.shared.geometries.TorusKnot;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
+import thothbot.parallax.core.shared.geometries.TorusKnotGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.ImageUtils;
@@ -100,7 +100,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
 			mbOpt.setMap( texture );
 			
-			Mesh mesh = new Mesh( new Sphere( 500, 60, 40 ), mbOpt );
+			Mesh mesh = new Mesh( new SphereGeometry( 500, 60, 40 ), mbOpt );
 			mesh.getScale().setX( -1 );
 			getScene().add( mesh );
 
@@ -111,13 +111,13 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			MeshBasicMaterial material = new MeshBasicMaterial(); 
 			material.setEnvMap( cubeCamera.getRenderTarget() );
 			
-			sphere = new Mesh( new Sphere( 20, 60, 40 ), material );
+			sphere = new Mesh( new SphereGeometry( 20, 60, 40 ), material );
 			getScene().add( sphere );
 
-			cube = new Mesh( new Cube( 20, 20, 20 ), material );
+			cube = new Mesh( new CubeGeometry( 20, 20, 20 ), material );
 			getScene().add( cube );
 
-			torus = new Mesh( new TorusKnot( 20, 5, 100, 100 ), material );
+			torus = new Mesh( new TorusKnotGeometry( 20, 5, 100, 100 ), material );
 			getScene().add( torus );
 		}
 		

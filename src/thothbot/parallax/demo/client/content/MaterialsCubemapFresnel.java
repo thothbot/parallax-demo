@@ -25,12 +25,12 @@ import java.util.List;
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
-import thothbot.parallax.core.client.shader.ShaderCubeMap;
-import thothbot.parallax.core.client.shader.ShaderFresnel;
+import thothbot.parallax.core.client.shaders.ShaderCubeMap;
+import thothbot.parallax.core.client.shaders.ShaderFresnel;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -100,7 +100,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 			this.sceneCube = new Scene();
 			sceneCube.add( cameraCube );
 
-			Sphere geometry = new Sphere( 100, 32, 16 );
+			SphereGeometry geometry = new SphereGeometry( 100, 32, 16 );
 
 			CubeTexture textureCube = ImageUtils.loadTextureCube( textures );
 			textureCube.setFormat(PixelFormat.RGB);
@@ -135,7 +135,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 			ShaderMaterial sMaterial = new ShaderMaterial(shaderCube);
 			sMaterial.setSide(Material.SIDE.BACK);
 
-			Mesh mesh = new Mesh( new Cube( 100000, 100000, 100000 ), sMaterial );
+			Mesh mesh = new Mesh( new CubeGeometry( 100000, 100000, 100000 ), sMaterial );
 			sceneCube.add( mesh );
 
 			//
@@ -175,7 +175,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 		
 	public MaterialsCubemapFresnel() 
 	{
-		super("Cube Fresnel shader", "This example based on the three.js example.");
+		super("CubeGeometry Fresnel shader", "This example based on the three.js example.");
 	}
 	
 	@Override

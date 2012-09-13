@@ -31,17 +31,17 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Circle;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Cylinder;
-import thothbot.parallax.core.shared.geometries.Icosahedron;
-import thothbot.parallax.core.shared.geometries.Lathe;
-import thothbot.parallax.core.shared.geometries.Octahedron;
-import thothbot.parallax.core.shared.geometries.Plane;
-import thothbot.parallax.core.shared.geometries.Sphere;
-import thothbot.parallax.core.shared.geometries.Tetrahedron;
-import thothbot.parallax.core.shared.geometries.Torus;
-import thothbot.parallax.core.shared.geometries.TorusKnot;
+import thothbot.parallax.core.shared.geometries.CircleGeometry;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.CylinderGeometry;
+import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
+import thothbot.parallax.core.shared.geometries.LatheGeometry;
+import thothbot.parallax.core.shared.geometries.OctahedronGeometry;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
+import thothbot.parallax.core.shared.geometries.TetrahedronGeometry;
+import thothbot.parallax.core.shared.geometries.TorusGeometry;
+import thothbot.parallax.core.shared.geometries.TorusKnotGeometry;
 import thothbot.parallax.core.shared.helpers.ArrowHelper;
 import thothbot.parallax.core.shared.helpers.AxisHelper;
 import thothbot.parallax.core.shared.lights.AmbientLight;
@@ -114,36 +114,36 @@ public class Geometries extends ContentWidget
 			bmaterial.setOpacity( 0.1 );
 			materials.add(bmaterial);
 	
-			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new Cube( 100, 100, 100, 4, 4, 4 ), materials );
+			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new CubeGeometry( 100, 100, 100, 4, 4, 4 ), materials );
 			object1.getPosition().set( -200, 0, 400 );
 			getScene().add( object1 );
 			
-			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Cylinder( 25, 75, 100, 40, 5 ), materials );
+			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new CylinderGeometry( 25, 75, 100, 40, 5 ), materials );
 			object2.getPosition().set( 0, 0, 400 );
 			getScene().add( object2 );
 			
-			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Icosahedron( 75, 1 ), materials );
+			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new IcosahedronGeometry( 75, 1 ), materials );
 			object3.getPosition().set( -200, 0, 200 );
 			getScene().add( object3 );
 			
-			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Octahedron( 75, 2 ), materials );
+			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new OctahedronGeometry( 75, 2 ), materials );
 			object4.getPosition().set( 0, 0, 200 );
 			getScene().add( object4 );
 			
-			DimensionalObject object5 = SceneUtils.createMultiMaterialObject( new Tetrahedron( 75, 0 ), materials );
+			DimensionalObject object5 = SceneUtils.createMultiMaterialObject( new TetrahedronGeometry( 75, 0 ), materials );
 			object5.getPosition().set( 200, 0, 200 );
 			getScene().add( object5 );
 			
-			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new Plane( 100, 100, 4, 4 ), materials );
+			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new PlaneGeometry( 100, 100, 4, 4 ), materials );
 			Mesh Meshobject6 = (Mesh) object6.getChildren().get(0);
 			object6.getPosition().set( -200, 0, 0 );
 			getScene().add( object6 );
 			
-			DimensionalObject object6a = SceneUtils.createMultiMaterialObject( new Circle( 50, 10, 0, Math.PI ), materials );
+			DimensionalObject object6a = SceneUtils.createMultiMaterialObject( new CircleGeometry( 50, 10, 0, Math.PI ), materials );
 			object6a.getRotation().setX( Math.PI / 2.0 );
 			object6.add( object6a );
 			
-			DimensionalObject object7 = SceneUtils.createMultiMaterialObject( new Sphere( 75, 20, 10 ), materials );
+			DimensionalObject object7 = SceneUtils.createMultiMaterialObject( new SphereGeometry( 75, 20, 10 ), materials );
 			object7.getPosition().set( 0, 0, 0 );
 			getScene().add( object7 );
 		
@@ -152,16 +152,16 @@ public class Geometries extends ContentWidget
 			for ( int i = 0; i < 50; i ++ )
 				points.add( new Vector3( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
 	
-			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new Lathe( points, 20 ), materials );
+			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new LatheGeometry( points, 20 ), materials );
 			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
 			object8.getPosition().set( 200, 0, 0 );
 			getScene().add( object8 );
 			
-			DimensionalObject object9 = SceneUtils.createMultiMaterialObject( new Torus( 50, 20, 20, 20 ), materials );
+			DimensionalObject object9 = SceneUtils.createMultiMaterialObject( new TorusGeometry( 50, 20, 20, 20 ), materials );
 			object9.getPosition().set( -200, 0, -200 );
 			getScene().add( object9 );
 
-			DimensionalObject object10 = SceneUtils.createMultiMaterialObject( new TorusKnot( 50, 10, 50, 20 ), materials );
+			DimensionalObject object10 = SceneUtils.createMultiMaterialObject( new TorusKnotGeometry( 50, 10, 50, 20 ), materials );
 			object10.getPosition().set( 0, 0, -200 );
 			getScene().add( object10 );
 	

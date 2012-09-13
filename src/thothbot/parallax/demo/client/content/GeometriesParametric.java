@@ -30,10 +30,10 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
-import thothbot.parallax.core.shared.geometries.parametric.Klein;
-import thothbot.parallax.core.shared.geometries.parametric.Mobius;
-import thothbot.parallax.core.shared.geometries.parametric.Mobius3d;
-import thothbot.parallax.core.shared.geometries.parametric.Plane;
+import thothbot.parallax.core.shared.geometries.parametric.KleinParametricGeometry;
+import thothbot.parallax.core.shared.geometries.parametric.MobiusParametricGeometry;
+import thothbot.parallax.core.shared.geometries.parametric.Mobius3dParametricGeometry;
+import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
@@ -105,23 +105,23 @@ public class GeometriesParametric extends ContentWidget
 			bmaterial.setOpacity( 0.1 );
 			materials.add(bmaterial);
 			
-			// Klein Bottle
-			DimensionalObject object1 = SceneUtils.createMultiMaterialObject(new Klein(20, 20), materials );
+			// KleinParametricGeometry Bottle
+			DimensionalObject object1 = SceneUtils.createMultiMaterialObject(new KleinParametricGeometry(20, 20), materials );
 			object1.getPosition().set( 0, 0, 0 );
 			object1.getScale().multiply(20);
 			getScene().add( object1 );
 			
-			// Mobius Strip
-			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new Mobius(20, 20), materials );
+			// MobiusParametricGeometry Strip
+			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new MobiusParametricGeometry(20, 20), materials );
 			object2.getPosition().set( 10, 0, 0 );
 			object2.getScale().multiply(100);
 			getScene().add( object2 );
 			
-			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new Plane(200, 200, 10, 20), materials );
+			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new PlaneParametricGeometry(200, 200, 10, 20), materials );
 			object3.getPosition().set( 20, 0, 0 );
 			getScene().add( object3 );
 			
-//			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3d(20,20), materials );
+//			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new Mobius3dParametricGeometry(20,20), materials );
 //			object4.getPosition().set( 10, 0, 0 );
 //			object4.getScale().multiply(100);
 //			getScene().addChild( object4 );
@@ -154,7 +154,7 @@ public class GeometriesParametric extends ContentWidget
 	
 	public GeometriesParametric()
 	{
-		super("Parametric geometry", "Here are show how to generate geometric objects by custom function. This example based on the three.js example.");
+		super("ParametricGeometry geometry", "Here are show how to generate geometric objects by custom function. This example based on the three.js example.");
 	}
 
 	@Override

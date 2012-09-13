@@ -21,7 +21,7 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -86,7 +86,7 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 			if(texture != null)
 				getRenderer().deallocateTexture( texture );
 			
-			Sphere geometry = new Sphere( 50, (int)(Math.random() * 64), (int)(Math.random() * 32) );
+			SphereGeometry geometry = new SphereGeometry( 50, (int)(Math.random() * 64), (int)(Math.random() * 32) );
 
 			texture = new Texture( generateTexture() );
 			texture.setNeedsUpdate(true);

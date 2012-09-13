@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.shader.Uniform;
-import thothbot.parallax.core.client.shader.Attribute;
+import thothbot.parallax.core.client.shaders.Attribute;
+import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;

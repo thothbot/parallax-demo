@@ -27,14 +27,14 @@ import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
-import thothbot.parallax.core.client.shader.ShaderCubeMap;
+import thothbot.parallax.core.client.shaders.ShaderCubeMap;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -105,7 +105,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			this.sceneCube = new Scene();
 			sceneCube.add( cameraCube );
 
-			Sphere geometry = new Sphere( 100, 32, 16 );
+			SphereGeometry geometry = new SphereGeometry( 100, 32, 16 );
 
 			CubeTexture textureCube = ImageUtils.loadTextureCube( textures, Texture.MAPPING_MODE.CUBE_REFRACTION );
 			
@@ -138,7 +138,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			sMaterial.setDepthWrite( false );
 			sMaterial.setSide( Material.SIDE.BACK );
 			
-			Mesh mesh = new Mesh( new Cube( 100, 100, 100 ), sMaterial );
+			Mesh mesh = new Mesh( new CubeGeometry( 100, 100, 100 ), sMaterial );
 			sceneCube.add( mesh );
 			
 			getRenderer().setAutoClear(false);
@@ -172,7 +172,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 		
 	public MaterialsCubemapBallsRefraction() 
 	{
-		super("Cube refraction", "Drag mouse to move. This example based on the three.js example.");
+		super("CubeGeometry refraction", "Drag mouse to move. This example based on the three.js example.");
 	}
 	
 	@Override

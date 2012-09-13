@@ -25,7 +25,7 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshDepthMaterial;
@@ -37,7 +37,7 @@ import thothbot.parallax.loader.shared.Json;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.postprocessing.client.shader.ShaderScreen;
+import thothbot.parallax.plugin.postprocessing.client.shaders.ShaderScreen;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -121,7 +121,7 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			// sphere
 
-			Sphere geo = new Sphere( 1, 20, 10 );
+			SphereGeometry geo = new SphereGeometry( 1, 20, 10 );
 			this.sphereMesh = new Mesh( geo, materialScene );
 			this.sphereMesh.getScale().set( 20 );
 

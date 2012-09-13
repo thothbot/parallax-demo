@@ -158,7 +158,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 			extrudeParameters.steps = 150;
 			extrudeParameters.extrudePath = randomSpline;
 
-			// Circle
+			// CircleGeometry
 
 			double circleRadius = 4.0;
 			Shape circleShape = new Shape();
@@ -219,14 +219,14 @@ public class GeometryExtrudeShapes extends ContentWidget
 			Shape starShape = new Shape(pts);
 			ExtrudeGeometry circle3d = starShape.extrude( extrudeParameters ); //circleShape rectShape smileyShape starShape
 
-//			Tube tube = new Tube((CurvePath) extrudeParameters.extrudePath, 150, 4.0, 5, false, true);     
+//			TubeGeometry tubeGeometry = new TubeGeometry((CurvePath) extrudeParameters.extrudePath, 150, 4.0, 5, false, true);     
 
 //			addGeometry( circle3d, new Color(0xff1111),  
 //					-100f, 0, 0,     
 //					0, 0, 0, 
 //					1);
 
-//			addGeometry( tube, new Color(0x00ff11),  
+//			addGeometry( tubeGeometry, new Color(0x00ff11),  
 //					0, 0, 0,     
 //					0, 0, 0, 
 //					1);  

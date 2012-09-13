@@ -24,7 +24,7 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
@@ -121,7 +121,7 @@ public final class LoaderCollada extends ContentWidget
 			MeshBasicMaterial sMaterial = new MeshBasicMaterial();
 			sMaterial.setColor(new Color(0xffffff));
 			
-			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), sMaterial );
+			this.particleLight = new Mesh( new SphereGeometry( 4, 8, 8 ), sMaterial );
 			getScene().add( this.particleLight );
 
 			// Lights

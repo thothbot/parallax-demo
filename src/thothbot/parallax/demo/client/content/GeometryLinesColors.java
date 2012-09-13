@@ -41,7 +41,7 @@ import thothbot.parallax.plugin.postprocessing.client.BloomPass;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.postprocessing.client.shader.ShaderScreen;
+import thothbot.parallax.plugin.postprocessing.client.shaders.ShaderScreen;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;

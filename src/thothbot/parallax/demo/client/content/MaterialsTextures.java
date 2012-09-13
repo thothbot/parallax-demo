@@ -27,7 +27,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector2;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
@@ -231,13 +231,13 @@ public final class MaterialsTextures extends ContentWidget
 
 			// Spheres geometry
 
-			Sphere geometry_smooth = new Sphere( 70, 32, 16 );
-			Sphere geometry_flat = new Sphere( 70, 32, 16 );
+			SphereGeometry geometry_smooth = new SphereGeometry( 70, 32, 16 );
+			SphereGeometry geometry_flat = new SphereGeometry( 70, 32, 16 );
 
 			for ( int i = 0, l = materials.size(); i < l; i ++ ) 
 			{
 				Material material = materials.get( i );
-				Sphere geometry = (material.getShading() == Material.SHADING.FLAT) ? geometry_flat : geometry_smooth;
+				SphereGeometry geometry = (material.getShading() == Material.SHADING.FLAT) ? geometry_flat : geometry_smooth;
 				Mesh sphere = new Mesh( geometry, material );
 
 				sphere.getPosition().setX( ( i % 4 ) * 200 - 200 );
@@ -250,7 +250,7 @@ public final class MaterialsTextures extends ContentWidget
 
 			MeshBasicMaterial particleLightMaterial = new MeshBasicMaterial();
 			particleLightMaterial.setColor(new Color(0xffffff));
-			particleLight = new Mesh( new Sphere( 4, 8, 8 ), particleLightMaterial );
+			particleLight = new Mesh( new SphereGeometry( 4, 8, 8 ), particleLightMaterial );
 			getScene().add( particleLight );
 
 			// Lights

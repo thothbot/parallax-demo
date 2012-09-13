@@ -28,7 +28,7 @@ import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.core.Ray;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Cube;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.GeometryObject;
@@ -91,7 +91,7 @@ public final class InteractiveCubes extends ContentWidget
 			light2.getPosition().set( -1 ).normalize();
 			getScene().add( light2 );
 
-			Cube geometry = new Cube( 20, 20, 20 );
+			CubeGeometry geometry = new CubeGeometry( 20, 20, 20 );
 
 			for ( int i = 0; i < 500; i ++ ) 
 			{

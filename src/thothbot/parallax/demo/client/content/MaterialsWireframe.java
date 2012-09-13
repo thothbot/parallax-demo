@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import thothbot.parallax.core.client.shader.Attribute;
-import thothbot.parallax.core.client.shader.Shader;
+import thothbot.parallax.core.client.shaders.Attribute;
+import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector4;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -94,9 +94,9 @@ public final class MaterialsWireframe extends ContentWidget
 
 			double size = 150;
 
-			Cube geometryLines = new Cube( size, size, size );
-			Cube geometryQuads = new Cube( size, size, size );
-			Cube geometryTris = new Cube( size, size, size );
+			CubeGeometry geometryLines = new CubeGeometry( size, size, size );
+			CubeGeometry geometryQuads = new CubeGeometry( size, size, size );
+			CubeGeometry geometryTris = new CubeGeometry( size, size, size );
 
 			GeometryUtils.triangulateQuads( geometryTris );
 
@@ -135,7 +135,7 @@ public final class MaterialsWireframe extends ContentWidget
 
 			// wireframe using gl.TRIANGLES (mixed triangles and quads)
 
-			Sphere mixedGeometry = new Sphere( size / 2.0, 32, 16 );
+			SphereGeometry mixedGeometry = new SphereGeometry( size / 2.0, 32, 16 );
 
 			Attribute attributesMixed = new Attribute(Attribute.TYPE.V4, setupAttributes( mixedGeometry ));
 			attributesMixed.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );

@@ -28,7 +28,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector2;
-import thothbot.parallax.core.shared.geometries.Plane;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
@@ -63,7 +63,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 		
 		Scene scene2;
 		
-		Plane geometry;
+		PlaneGeometry geometry;
 		
 		Texture texturePainting2;
 		Mesh meshCanvas;
@@ -124,7 +124,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			textureCanvas2.setNeedsUpdate(true);
 			textureCanvas2.setRepeat(new Vector2(1000, 1000));
 
-			geometry = new Plane( 100, 100 );
+			geometry = new PlaneGeometry( 100, 100 );
 
 			meshCanvas = new Mesh( geometry, materialCanvas );
 			meshCanvas.getRotation().setX( - Math.PI / 2.0 );
@@ -170,7 +170,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			getScene().add( meshCanvas );
 			scene2.add( meshCanvas2 );
 
-			Plane geometry = new Plane( 100, 100 );
+			PlaneGeometry geometry = new PlaneGeometry( 100, 100 );
 			Mesh mesh = new Mesh( geometry, materialPainting );
 			Mesh mesh2 = new Mesh( geometry, materialPainting2 );
 

@@ -29,13 +29,13 @@ import java.util.Map;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.shader.Uniform;
-import thothbot.parallax.core.client.shader.Attribute;
+import thothbot.parallax.core.client.shaders.Attribute;
+import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Cube;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.utils.GeometryUtils;
@@ -119,11 +119,11 @@ public class CustomAttributesParticles2 extends ContentWidget
 			
 			int radius = 100, segments = 68, rings = 38;
 			
-			Sphere geometry = new Sphere( radius, segments, rings );
+			SphereGeometry geometry = new SphereGeometry( radius, segments, rings );
 	
 			this.vc1 = geometry.getVertices().size();
 	
-			Cube geometry2 = new Cube( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 );
+			CubeGeometry geometry2 = new CubeGeometry( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 );
 	
 			GeometryUtils.merge( geometry, geometry2 );
 	
@@ -186,7 +186,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 
 	public CustomAttributesParticles2() 
 	{
-		super("Sphere and cube", "Here are used custom shaders and sprites. This example based on the three.js example.");
+		super("SphereGeometry and cube", "Here are used custom shaders and sprites. This example based on the three.js example.");
 	}
 
 	@Override

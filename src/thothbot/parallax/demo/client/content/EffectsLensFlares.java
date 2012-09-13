@@ -23,7 +23,7 @@ import thothbot.parallax.core.client.controls.FlyControls;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
-import thothbot.parallax.core.shared.geometries.Cube;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
@@ -96,7 +96,7 @@ public final class EffectsLensFlares extends ContentWidget
 			// world
 
 			int s = 250;
-			Cube cube = new Cube( s, s, s );
+			CubeGeometry cubeGeometry = new CubeGeometry( s, s, s );
 			MeshPhongMaterial material = new MeshPhongMaterial();
 			material.setColor(new Color(0xffffff));
 			material.setAmbient(new Color(0xffffff));
@@ -106,7 +106,7 @@ public final class EffectsLensFlares extends ContentWidget
 			
 			for ( int i = 0; i < 3000; i ++ ) 
 			{
-				Mesh mesh = new Mesh( cube, material );
+				Mesh mesh = new Mesh( cubeGeometry, material );
 
 				mesh.getPosition().setX( 8000 * ( 2.0 * Math.random() - 1.0 ) );
 				mesh.getPosition().setY( 8000 * ( 2.0 * Math.random() - 1.0 ) );

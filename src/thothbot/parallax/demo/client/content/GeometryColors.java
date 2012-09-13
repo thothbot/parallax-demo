@@ -33,8 +33,8 @@ import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Face4;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Icosahedron;
-import thothbot.parallax.core.shared.geometries.Plane;
+import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -90,7 +90,7 @@ public class GeometryColors extends ContentWidget
 			
 			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
 			shadowMaterial.setMap( ImageUtils.loadTexture(texture) );
-			Geometry shadowGeo = new Plane( 300, 300, 1, 1 );
+			Geometry shadowGeo = new PlaneGeometry( 300, 300, 1, 1 );
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );
 			mesh1.getPosition().setY(-250);
@@ -111,9 +111,9 @@ public class GeometryColors extends ContentWidget
 			
 			int radius = 200;
 			
-			Geometry geometry  = new Icosahedron( radius, 1 );
-			Geometry geometry2 = new Icosahedron( radius, 1 );
-			Geometry geometry3 = new Icosahedron( radius, 1 );
+			Geometry geometry  = new IcosahedronGeometry( radius, 1 );
+			Geometry geometry2 = new IcosahedronGeometry( radius, 1 );
+			Geometry geometry3 = new IcosahedronGeometry( radius, 1 );
 			
 			for ( int i = 0; i < geometry.getFaces().size(); i ++ ) 
 			{

@@ -23,7 +23,7 @@
 package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.Cube;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.ImageUtils;
@@ -65,7 +65,7 @@ public class GeometryCube extends ContentWidget
 			getCamera().getPosition().setZ(400);
 			getScene().add(getCamera());
 
-			Cube geometry = new Cube( 200, 200, 200 );
+			CubeGeometry geometry = new CubeGeometry( 200, 200, 200 );
 
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setMap( ImageUtils.loadTexture(texture) );
@@ -89,7 +89,7 @@ public class GeometryCube extends ContentWidget
 		
 	public GeometryCube() 
 	{
-		super("Cube and texture", "Here are used cube geometry and mesh basic material with simple texture. This example based on the three.js example.");
+		super("CubeGeometry and texture", "Here are used cube geometry and mesh basic material with simple texture. This example based on the three.js example.");
 	}
 	
 	@Override

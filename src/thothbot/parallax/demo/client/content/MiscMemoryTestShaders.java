@@ -22,9 +22,9 @@ package thothbot.parallax.demo.client.content;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.shader.Shader;
+import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -81,7 +81,7 @@ public final class MiscMemoryTestShaders extends ContentWidget
 			getCamera().getPosition().setZ(2000);
 			getScene().add(getCamera());
 
-			Sphere geometry = new Sphere( 15, 64, 32 );
+			SphereGeometry geometry = new SphereGeometry( 15, 64, 32 );
 			meshes = new ArrayList<Mesh>();
 
 			for ( int i = 0; i < N; i ++ ) 

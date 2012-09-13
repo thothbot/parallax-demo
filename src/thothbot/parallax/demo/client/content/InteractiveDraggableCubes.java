@@ -59,7 +59,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 		protected void onStart()
 		{
 			getCamera().getPosition().setZ(1000);
-			getScene().addChild(getCamera());
+			getScene().add(getCamera());
 			
 			controls = new TrackballControls( getCamera(), getRenderer().getCanvas() );
 			controls.setRotateSpeed(1.0);
@@ -70,7 +70,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 			controls.setStaticMoving(true);
 			controls.setDynamicDampingFactor(0.3);
 
-			getScene().addChild( new AmbientLight( 0x505050 ) );
+			getScene().add( new AmbientLight( 0x505050 ) );
 
 			SpotLight light = new SpotLight( 0xffffff, 1.5 );
 			light.getPosition().set( 0, 500, 2000 );
@@ -86,7 +86,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 			light.setShadowMapWidth(2048);
 			light.setShadowMapHeight(2048);
 
-			getScene().addChild( light );
+			getScene().add( light );
 
 			var geometry = new THREE.CubeGeometry( 40, 40, 40 );
 

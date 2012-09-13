@@ -24,8 +24,8 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Matrix4;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Cylinder;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.CylinderGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshNormalMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -74,10 +74,10 @@ public final class MiscLookAt extends ContentWidget
 			
 			MeshNormalMaterial material = new MeshNormalMaterial();
 			material.setShading(Material.SHADING.SMOOTH);
-			sphere = new Mesh( new Sphere( 100, 20, 20 ), material );
+			sphere = new Mesh( new SphereGeometry( 100, 20, 20 ), material );
 			getScene().add( sphere );
 
-			Cylinder geometry = new Cylinder( 0, 10, 100, 3, 1 );
+			CylinderGeometry geometry = new CylinderGeometry( 0, 10, 100, 3, 1 );
 			geometry.applyMatrix( new Matrix4().setRotationFromEuler( new Vector3( Math.PI / 2, Math.PI, 0 ) ) );
 
 			MeshNormalMaterial material2 = new MeshNormalMaterial();

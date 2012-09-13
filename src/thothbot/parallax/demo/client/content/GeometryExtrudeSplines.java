@@ -47,8 +47,8 @@ import thothbot.parallax.core.shared.curves.parametric.CurveTorusKnot;
 import thothbot.parallax.core.shared.curves.parametric.CurveTrefoilKnot;
 import thothbot.parallax.core.shared.curves.parametric.CurveTrefoilPolynomialKnot;
 import thothbot.parallax.core.shared.curves.parametric.CurveViviani;
-import thothbot.parallax.core.shared.geometries.Sphere;
-import thothbot.parallax.core.shared.geometries.Tube;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
+import thothbot.parallax.core.shared.geometries.TubeGeometry;
 import thothbot.parallax.core.shared.helpers.CameraHelper;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -93,7 +93,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		Object3D parent;
 		Object3D tubeMesh;
-		Tube tube;
+		TubeGeometry tubeGeometry;
 		Mesh cameraEye;
 		
 		PerspectiveCamera mainCamera;
@@ -128,7 +128,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			retval.put("KnotCurve", new CurveKnot());
 			retval.put("HelixCurve", new CurveHelix());
 			retval.put("TrefoilKnot", new CurveTrefoilKnot());
-			retval.put("TorusKnot", new CurveTorusKnot(20));
+			retval.put("TorusKnotGeometry", new CurveTorusKnot(20));
 			retval.put("CinquefoilKnot", new CurveCinquefoilKnot(20));
 			retval.put("TrefoilPolynomialKnot", new CurveTrefoilPolynomialKnot(14));
 			retval.put("FigureEightPolynomialKnot", new CurveFigureEightPolynomialKnot());
@@ -205,7 +205,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			// Debug point
 			MeshBasicMaterial pMaterial = new MeshBasicMaterial();
 			pMaterial.setColor(new Color(0xdddddd));
-			this.cameraEye = new Mesh(new Sphere(5), pMaterial);
+			this.cameraEye = new Mesh(new SphereGeometry(5), pMaterial);
 
 			this.cameraHelper.getChildren().get(0).setVisible(isShowCameraHelper);
 			this.cameraEye.setVisible(isShowCameraHelper);
@@ -294,9 +294,9 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			if (tubeMesh != null) 
 				parent.remove(tubeMesh);
 
-			tube = new Tube(this.extrudePath, this.extrusionSegments, 2.0, this.radiusSegments, this.isClosed, this.isDebug);
+			tubeGeometry = new TubeGeometry(this.extrudePath, this.extrusionSegments, 2.0, this.radiusSegments, this.isClosed, this.isDebug);
 
-			addGeometry(tube, new Color(0xff00ff));
+			addGeometry(tubeGeometry, new Color(0xff00ff));
 			setScale();
 		}
 
@@ -332,19 +332,19 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			double looptime = 20 * 1000;
 			double t = ((duration % looptime) / looptime);
 
-			Vector3 pos = (Vector3) this.tube.getPath().getPointAt(t);
+			Vector3 pos = (Vector3) this.tubeGeometry.getPath().getPointAt(t);
 			pos.multiply( this.scale );
 
 			// interpolation
-			int segments = this.tube.getTangents().size();
+			int segments = this.tubeGeometry.getTangents().size();
 			double pickt = t * segments;
 			int pick = (int) Math.floor(pickt);
 			int pickNext = (pick + 1) % segments;
 
-			this.binormal.sub( this.tube.getBinormals().get( pickNext ), this.tube.getBinormals().get( pick ) );
-			this.binormal.multiply( pickt - (double)pick ).add( this.tube.getBinormals().get(pick) );
+			this.binormal.sub( this.tubeGeometry.getBinormals().get( pickNext ), this.tubeGeometry.getBinormals().get( pick ) );
+			this.binormal.multiply( pickt - (double)pick ).add( this.tubeGeometry.getBinormals().get(pick) );
 
-			Vector3 dir = (Vector3) this.tube.getPath().getTangentAt(t);
+			Vector3 dir = (Vector3) this.tubeGeometry.getPath().getTangentAt(t);
 
 			double offset = 15;
 
@@ -357,8 +357,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			this.cameraEye.setPosition( pos );
 
 			// Using arclength for stabilization in look ahead.
-			Vector3 lookAt = (Vector3) this.tube.getPath().getPointAt(
-					( t + 30 / (double)this.tube.getPath().getLength()) % 1 ).multiply(this.scale);
+			Vector3 lookAt = (Vector3) this.tubeGeometry.getPath().getPointAt(
+					( t + 30 / (double)this.tubeGeometry.getPath().getLength()) % 1 ).multiply(this.scale);
 
 			// Camera Orientation 2 - up orientation via normal
 			if ( !this.isLookAhead )

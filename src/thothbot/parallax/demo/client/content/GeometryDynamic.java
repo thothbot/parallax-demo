@@ -29,7 +29,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Matrix4;
-import thothbot.parallax.core.shared.geometries.Plane;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogExp2;
@@ -55,7 +55,7 @@ public class GeometryDynamic extends ContentWidget
 		private static final String texture = "./static/textures/water.jpg";
 		
 		FirstPersonControls controls;
-		Plane geometry;
+		PlaneGeometry geometry;
 		Mesh mesh;
 		
 		int worldWidth = 128;
@@ -89,7 +89,7 @@ public class GeometryDynamic extends ContentWidget
 			controls.setMovementSpeed(500);
 			controls.setLookSpeed(0.1);
 
-			this.geometry = new Plane( 20000, 20000, worldWidth - 1, worldDepth - 1 );
+			this.geometry = new PlaneGeometry( 20000, 20000, worldWidth - 1, worldDepth - 1 );
 			this.geometry.applyMatrix(new Matrix4().makeRotationX( - Math.PI / 2.0 ));
 			this.geometry.setDynamic( true );
 

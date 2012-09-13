@@ -32,7 +32,7 @@ import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
@@ -194,9 +194,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			// Spheres geometry
 
-			Sphere geometry_smooth = new Sphere( 70, 32, 16 );
-			Sphere geometry_flat = new Sphere( 70, 32, 16 );
-			Sphere geometry_pieces = new Sphere( 70, 32, 16 ); // Extra geometry to be broken down for MeshFaceMaterial
+			SphereGeometry geometry_smooth = new SphereGeometry( 70, 32, 16 );
+			SphereGeometry geometry_flat = new SphereGeometry( 70, 32, 16 );
+			SphereGeometry geometry_pieces = new SphereGeometry( 70, 32, 16 ); // Extra geometry to be broken down for MeshFaceMaterial
 
 			for ( int i = 0, l = geometry_pieces.getFaces().size(); i < l; i ++ ) 
 			{
@@ -243,7 +243,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			
 			MeshBasicMaterial mbOpt3 = new MeshBasicMaterial();
 			mbOpt3.setColor( new Color(0xffffff) );
-			this.particleLight = new Mesh( new Sphere( 4, 8, 8 ), mbOpt3 );
+			this.particleLight = new Mesh( new SphereGeometry( 4, 8, 8 ), mbOpt3 );
 			getScene().add( this.particleLight );
 
 			// Lights

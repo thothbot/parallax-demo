@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.Map;
 
 import thothbot.parallax.core.client.controls.TrackballControls;
-import thothbot.parallax.core.client.shader.ShaderNormalMap;
-import thothbot.parallax.core.client.shader.Uniform;
+import thothbot.parallax.core.client.shaders.ShaderNormalMap;
+import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.geometries.Sphere;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
@@ -139,7 +139,7 @@ public final class TrackballEarth extends ContentWidget
 
 			// planet
 
-			Sphere geometry = new Sphere( radius, 100, 50 );
+			SphereGeometry geometry = new SphereGeometry( radius, 100, 50 );
 			geometry.computeTangents();
 
 			this.meshPlanet = new Mesh( geometry, materialNormalMap );
