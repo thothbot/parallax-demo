@@ -98,6 +98,12 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_interactive_cubes.jpg")
 	ImageResource exampleInteractiveCubes();
 	
+	@Source("images/example_interactive_cubes_gpu.jpg")
+	ImageResource exampleInteractiveCubesGpu();
+	
+	@Source("images/example_interactive_draggable_cubes.jpg")
+	ImageResource exampleInteractiveDraggableCubes();
+	
 	@Source("images/example_lines_sphere.jpg")
 	ImageResource exampleLinesSphere();
 	
