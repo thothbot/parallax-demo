@@ -23,7 +23,6 @@ import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
-import thothbot.parallax.core.client.controls.TrackballControls.STATE;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
@@ -41,7 +40,6 @@ import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.geometries.GeometryHierarchy.DemoScene;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -53,8 +51,6 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -71,10 +67,21 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		private static final String texture = "./static/textures/square-outline-textured.png";
 		
 		Projector projector;
+		Ray ray;
+		
+		Mesh rollOverMesh;
+		Mesh plane;
+		
+		CubeGeometry cubeGeo;
+		MeshLambertMaterial cubeMaterial;
 		
 		Vector3 mouse2D;
+		Vector3 voxelPosition;
+		Vector3 tmpVec;
 		
-		public boolean isShiftDown, isCtrlDown;
+		boolean isShiftDown, isCtrlDown;
+		
+		double theta = 45;
 		
 		@Override
 		protected void loadCamera()
@@ -94,6 +101,11 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			getCamera().getPosition().setZ(800);
 			getScene().add(getCamera());
 
+			projector = new Projector();
+			mouse2D = new Vector3( 0, 10000, 0.5 );
+			voxelPosition = new Vector3();
+			tmpVec = new Vector3();
+			
 			// roll-over helpers
 
 			CubeGeometry rollOverGeo = new CubeGeometry( 50, 50, 50 );
@@ -101,32 +113,26 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			rollOverMaterial.setColor(new Color(0xff0000));
 			rollOverMaterial.setOpacity(0.5);
 			rollOverMaterial.setTransparent(true);
-			Mesh rollOverMesh = new Mesh( rollOverGeo, rollOverMaterial );
+			rollOverMesh = new Mesh( rollOverGeo, rollOverMaterial );
 			getScene().add( rollOverMesh );
 
 			// cubes
 
-			CubeGeometry cubeGeo = new CubeGeometry( 50, 50, 50 );
-			MeshLambertMaterial cubeMaterial = new MeshLambertMaterial();
+			cubeGeo = new CubeGeometry( 50, 50, 50 );
+			cubeMaterial = new MeshLambertMaterial();
 			cubeMaterial.setShading(SHADING.FLAT);
 			cubeMaterial.setMap(ImageUtils.loadTexture( texture ));
 			cubeMaterial.getColor().setHSV( 0.1, 0.7, 1.0 );
-			cubeMaterial.setAmbient(cubeMaterial.getColor());
-
-			// picking
-
-			projector = new Projector();
+			cubeMaterial.setAmbient(cubeMaterial.getColor());			
 
 			// grid
 
 			MeshBasicMaterial planeMaterial = new MeshBasicMaterial();
 			planeMaterial.setColor(new Color(0x555555));
 			planeMaterial.setWireframe(true);
-			Mesh plane = new Mesh( new PlaneGeometry( 1000, 1000, 20, 20 ), planeMaterial );
+			plane = new Mesh( new PlaneGeometry( 1000, 1000, 20, 20 ), planeMaterial );
 			plane.getRotation().setX( - Math.PI / 2 );
-			getScene().add( plane );
-
-			mouse2D = new Vector3( 0, 10000, 0.5 );
+			getScene().add( plane );	
 
 			// Lights
 
@@ -159,11 +165,11 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			if ( intersects.size() > 0 ) 
 			{
 
-				intersector = getRealIntersector( intersects );
-				if ( intersector ) 
+				Ray.Intersect intersector = getRealIntersector( intersects );
+				if ( intersector != null ) 
 				{
 					setVoxelPosition( intersector );
-					rollOverMesh.position = voxelPosition;
+					rollOverMesh.setPosition( voxelPosition );
 				}
 			}
 
@@ -171,6 +177,32 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			getCamera().getPosition().setZ( 1400 * Math.cos( theta * Math.PI / 360 ) );
 
 			getCamera().lookAt( getScene().getPosition() );
+		}
+		
+		public Ray.Intersect getRealIntersector( List<Ray.Intersect> intersects ) 
+		{
+			for( int i = 0; i < intersects.size(); i++ ) 
+			{
+				Ray.Intersect intersector = intersects.get( i );
+
+				if ( intersector.object != rollOverMesh ) 
+				{
+					return intersector;
+				}
+			}
+
+			return null;
+		}
+
+		public void  setVoxelPosition( Ray.Intersect intersector ) 
+		{
+			tmpVec.copy( intersector.face.getNormal() );
+
+			voxelPosition.add( intersector.point, intersector.object.getMatrixRotationWorld().multiplyVector3( tmpVec ) );
+
+			voxelPosition.setX( Math.floor( voxelPosition.getX() / 50 ) * 50 + 25 );
+			voxelPosition.setY( Math.floor( voxelPosition.getY() / 50 ) * 50 + 25 );
+			voxelPosition.setZ( Math.floor( voxelPosition.getZ() / 50 ) * 50 + 25 );
 		}
 	}
 		
@@ -197,28 +229,27 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		
-		var intersects = rs.ray.intersectObjects( scene.children );
+		List<Ray.Intersect> intersects = rs.ray.intersectObjects( rs.getScene().getChildren() );
 
-		if ( intersects.length > 0 ) 
+		if ( intersects.size() > 0 ) 
 		{
-			intersector = getRealIntersector( intersects );
+			Ray.Intersect intersector = rs.getRealIntersector( intersects );
 
 			// delete cube
 			if ( rs.isCtrlDown ) 
 			{
-				if ( intersector.object != plane ) 
+				if ( intersector.object != rs.plane ) 
 				{
-					scene.remove( intersector.object );
+					rs.getScene().remove( intersector.object );
 				}
 			}
 			// create cube
 			else 
 			{
-				intersector = getRealIntersector( intersects );
-				setVoxelPosition( intersector );
+				rs.setVoxelPosition( intersector );
 
-				Mesh voxel = new Mesh( cubeGeo, cubeMaterial );
-				voxel.getPosition().copy( voxelPosition );
+				Mesh voxel = new Mesh( rs.cubeGeo, rs.cubeMaterial );
+				voxel.getPosition().copy( rs.voxelPosition );
 				voxel.setMatrixAutoUpdate(false);
 				voxel.updateMatrix();
 				rs.getScene().add( voxel );

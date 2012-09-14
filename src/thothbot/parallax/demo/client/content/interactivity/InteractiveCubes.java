@@ -143,7 +143,7 @@ public final class InteractiveCubes extends ContentWidget
 
 			Ray ray = new Ray( getCamera().getPosition(), vector.sub( getCamera().getPosition() ).normalize() );
 
-			List<Ray.Intersect> intersects = ray.intersectObjects( (List<Object3D>)(ArrayList)getScene().getChildren() );
+			List<Ray.Intersect> intersects = ray.intersectObjects( getScene().getChildren() );
 
 			if ( intersects.size() > 0 ) 
 			{

@@ -193,7 +193,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 				return;
 			}
 
-			List<Ray.Intersect> intersects = ray.intersectObjects( (List<Object3D>)(ArrayList)objects );
+			List<Ray.Intersect> intersects = ray.intersectObjects( objects );
 
 			if ( intersects.size() > 0 ) 
 			{
