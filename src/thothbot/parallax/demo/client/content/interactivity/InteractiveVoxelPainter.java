@@ -98,7 +98,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(800);
+			getCamera().getPosition().set(1000, 800, 1000);
 			getScene().add(getCamera());
 
 			projector = new Projector();
