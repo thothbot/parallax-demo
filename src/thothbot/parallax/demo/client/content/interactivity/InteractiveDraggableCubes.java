@@ -22,28 +22,45 @@ package thothbot.parallax.demo.client.content.interactivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
+import thothbot.parallax.core.shared.core.Ray;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.client.content.interactivity.InteractiveCubes.Intersect;
+import thothbot.parallax.demo.client.content.interactivity.InteractiveCubesGpu.DemoScene;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class InteractiveDraggableCubes extends ContentWidget 
 {
+	class Intersect
+	{
+		public GeometryObject object;
+		public int currentHex;
+	}
+	
 	/*
 	 * Prepare Rendering Scene
 	 */
@@ -51,10 +68,17 @@ public final class InteractiveDraggableCubes extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		Vector3 offset = new Vector3(10, 10, 10);
+		int mouseX = 0, mouseY = 0;
+		
 		List<Mesh> objects;
+		Mesh plane;
 		
 		TrackballControls controls;
 		Projector projector;
+		
+		Intersect intersected;
+		Mesh selected;
 		
 		@Override
 		protected void loadCamera()
@@ -136,12 +160,13 @@ public final class InteractiveDraggableCubes extends ContentWidget
 			material2.setOpacity(0.25);
 			material2.setTransparent(true);
 			material2.setWireframe(true);
-			Mesh plane = new Mesh( new PlaneGeometry( 2000, 2000, 8, 8 ), material2 );
+			plane = new Mesh( new PlaneGeometry( 2000, 2000, 8, 8 ), material2 );
 			plane.setVisible(false);
 			getScene().add( plane );
 
 			projector = new Projector();
 
+			getRenderer().setClearColorHex(0xeeeeee);
 			getRenderer().setSortObjects(false);
 			getRenderer().setShadowMapEnabled(true);
 			getRenderer().setShadowMapSoft(true);
@@ -155,13 +180,69 @@ public final class InteractiveDraggableCubes extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			Vector3 vector = new Vector3( mouseX, mouseY, 0.5 );
+			projector.unprojectVector( vector, getCamera() );
 
+			Ray ray = new Ray( getCamera().getPosition(), vector.sub( getCamera().getPosition() ).normalize() );
+
+
+			if ( selected != null ) 
+			{
+				List<Ray.Intersect> intersects = ray.intersectObject( plane );
+				selected.getPosition().copy( intersects.get( 0 ).point.sub( offset ) );
+				return;
+			}
+
+			List<Ray.Intersect> intersects = ray.intersectObjects( (List<Object3D>)(ArrayList)objects );
+
+			if ( intersects.size() > 0 ) 
+			{
+				if ( intersected.object != intersects.get(0).object ) 
+				{
+					if ( intersected != null ) 
+						((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( intersected.currentHex );
+
+					intersected = new Intersect();
+					intersected.object = (GeometryObject) intersects.get(0).object;
+					intersected.currentHex = ((MeshLambertMaterial)intersected.object.getMaterial()).getColor().getHex();
+
+					plane.getPosition().copy( intersected.object.getPosition() );
+					plane.lookAt( getCamera().getPosition() );
+				}
+				getWidget().getElement().getStyle().setCursor(Cursor.POINTER);
+			} 
+			else 
+			{
+				if ( intersected != null) 
+					((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( intersected.currentHex );
+
+				intersected = null;
+
+				getWidget().getElement().getStyle().setCursor(Cursor.AUTO);
+			}
 		}
 	}
 		
 	public InteractiveDraggableCubes() 
 	{
 		super("Draggable cubes", "This example based on the three.js example.");
+	}
+	
+	@Override
+	public void onAnimationReady(AnimationReadyEvent event)
+	{
+		super.onAnimationReady(event);
+
+		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		      @Override
+		      public void onMouseMove(MouseMoveEvent event)
+		      {
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
+		    	  	rs.mouseX = (event.getX() / canvas.getWidth() ) * 2 - 1; 
+		    	  	rs.mouseY = - (event.getY() / canvas.getHeight() ) * 2 + 1;
+		      }
+		});
 	}
 	
 	@Override

@@ -19,6 +19,7 @@
 
 package thothbot.parallax.demo.client.content.interactivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
@@ -33,6 +34,7 @@ import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -141,7 +143,7 @@ public final class InteractiveCubes extends ContentWidget
 
 			Ray ray = new Ray( getCamera().getPosition(), vector.sub( getCamera().getPosition() ).normalize() );
 
-			List<Ray.Intersect> intersects = ray.intersectObjects( getScene().getChildren() );
+			List<Ray.Intersect> intersects = ray.intersectObjects( (List<Object3D>)(ArrayList)getScene().getChildren() );
 
 			if ( intersects.size() > 0 ) 
 			{
