@@ -43,6 +43,7 @@ import thothbot.parallax.demo.client.content.geometries.LinesSphere;
 import thothbot.parallax.demo.client.content.interactivity.InteractiveCubes;
 import thothbot.parallax.demo.client.content.interactivity.InteractiveCubesGpu;
 import thothbot.parallax.demo.client.content.interactivity.InteractiveDraggableCubes;
+import thothbot.parallax.demo.client.content.interactivity.InteractiveVoxelPainter;
 import thothbot.parallax.demo.client.content.materials.MaterialsCanvas2D;
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapBallsReflection;
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapBallsRefraction;
@@ -306,6 +307,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(InteractiveCubesGpu.class));
 			category.addExample(new InteractiveDraggableCubes(),
 					RunAsyncCode.runAsyncCode(InteractiveDraggableCubes.class));
+			category.addExample(new InteractiveVoxelPainter(),
+					RunAsyncCode.runAsyncCode(InteractiveVoxelPainter.class));
 		}
 
 		// Materials
