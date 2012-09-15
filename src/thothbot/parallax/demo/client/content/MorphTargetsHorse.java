@@ -88,10 +88,10 @@ public final class MorphTargetsHorse extends ContentWidget
 			final JsonLoader jsonLoader = new JsonLoader();
 			try
 			{
-				jsonLoader.load(model, new JsonLoader.Callback() {
+				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onLoaded() {																					
+					public void onModeLoad() {																					
 						jsonLoader.getAnimation().setDuration(3000);
 
 						mesh = jsonLoader.getMesh();

@@ -33,6 +33,7 @@ import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
@@ -63,6 +64,7 @@ import thothbot.parallax.plugin.postprocessing.client.shaders.LuminosityShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
@@ -96,6 +98,10 @@ public final class TerrainDynamic extends ContentWidget
 		private static final String diffuseImage1 = "./static/textures/terrain/grasslight-big.jpg";
 		private static final String diffuseImage2 = "./static/textures/terrain/backgrounddetailed6.jpg";
 		private static final String detailImage = "./static/textures/terrain/grasslight-big-nm.jpg";
+		
+		private static final String parrotModel = "./static/models/animated/parrot.js";
+		private static final String flamingoModel = "./static/models/animated/flamingo.js";
+		private static final String storkModel = "./static/models/animated/stork.js";
 		
 		OrthographicCamera cameraOrtho;
 		Scene sceneRenderTarget;
@@ -384,10 +390,31 @@ public final class TerrainDynamic extends ContentWidget
 
 			renderer.initWebGLObjects( scene );
 
-			JsonLoader loader = new JsonLoader();
+			JsonLoader jsonLoader = new JsonLoader();
 
 			var startX = -3000;
 
+			try
+			{
+				jsonLoader.load(parrotModel, new JsonLoader.Callback() {
+
+					@Override
+					public void onModeLoad() {																					
+						jsonLoader.getAnimation().setDuration(3000);
+
+						Mesh mesh = jsonLoader.getMesh();
+						mesh.getScale().set(2);
+						mesh.getPosition().set(0);
+
+						getScene().add(mesh);
+					}
+				});
+			}
+			catch (RequestException exception) 
+			{
+				Log.error("Error while loading JSON file.");
+			}
+			
 			loader.load( "models/animated/parrot.js", function( geometry ) {
 
 				morphColorsToFaceColors( geometry );

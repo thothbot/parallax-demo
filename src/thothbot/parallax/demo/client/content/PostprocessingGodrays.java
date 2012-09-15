@@ -97,10 +97,10 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			try
 			{
-				loader.load(model, new JsonLoader.Callback() {
+				loader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onLoaded() {																					
+					public void onModeLoad() {																					
 						Mesh mesh = loader.getMesh();
 						mesh.getPosition().set(0, -150, -150);
 						mesh.getScale().set(400);
