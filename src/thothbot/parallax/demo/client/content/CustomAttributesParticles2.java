@@ -54,7 +54,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class CustomAttributesParticles2 extends ContentWidget
 {
 	/*
-	 * Load texture
+	 * Load shaders
 	 */
 	@DemoSource
 	public interface Resources extends ClientBundle

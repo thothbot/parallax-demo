@@ -96,7 +96,7 @@ public class GeometryDynamic extends ContentWidget
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )
 				this.geometry.getVertices().get( i ).setY(35.0 * Math.sin( i/2.0 ));
 
-			this.geometry.computeFaceNormals(false);
+			this.geometry.computeFaceNormals();
 			this.geometry.computeVertexNormals();
 
 			Texture texture = ImageUtils.loadTexture(DemoScene.texture);

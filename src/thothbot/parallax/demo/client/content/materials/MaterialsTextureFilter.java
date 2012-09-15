@@ -135,10 +135,10 @@ public final class MaterialsTextureFilter extends ContentWidget
 			meshCanvas2.getScale().set( 1000 );
 
 			// PAINTING
-			Texture texturePainting = ImageUtils.loadTexture(texture, Texture.MAPPING_MODE.UV, new ImageUtils.Callback() {
+			Texture texturePainting = ImageUtils.loadTexture(texture, Texture.MAPPING_MODE.UV, new ImageUtils.ImageLoadHandler() {
 				
 				@Override
-				public void run(Texture texture) {
+				public void onImageLoad(Texture texture) {
 					callbackPainting(texture);
 				}
 			} );

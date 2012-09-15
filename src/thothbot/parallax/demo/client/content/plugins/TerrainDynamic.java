@@ -19,19 +19,25 @@
 
 package thothbot.parallax.demo.client.content.plugins;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
+import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Shader;
+import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -42,30 +48,64 @@ import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.scenes.Scene;
+import thothbot.parallax.core.shared.utils.ImageUtils;
+import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.client.content.CustomAttributesParticles2.Resources;
+import thothbot.parallax.demo.resources.TerrainShader;
 import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.loader.shared.MorphAnimation;
+import thothbot.parallax.plugin.postprocessing.client.shaders.LuminosityShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.TextResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class TerrainDynamic extends ContentWidget 
 {
+	
+	/*
+	 * Load shaders
+	 */
+	@DemoSource
+	public interface Resources extends Shader.DefaultResources
+	{
+		Resources INSTANCE = GWT.create(Resources.class);
+
+		@Source("../../../resources/shaders/terrain_dynamic_noise.fs")
+		TextResource fragmetShader();
+		
+		@Source("../../../resources/shaders/terrain_dynamic_noise.vs")
+		TextResource vertexShader();
+	}
+
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene 
+	class DemoScene extends DemoAnimatedScene implements ImageUtils.ImageLoadHandler
 	{
-
+		private static final String diffuseImage1 = "./static/textures/terrain/grasslight-big.jpg";
+		private static final String diffuseImage2 = "./static/textures/terrain/backgrounddetailed6.jpg";
+		private static final String detailImage = "./static/textures/terrain/grasslight-big-nm.jpg";
+		
 		OrthographicCamera cameraOrtho;
 		Scene sceneRenderTarget;
 		
+		Map<String, ShaderMaterial> mlib;
+		
 		TrackballControls controls;
+		
+		Mesh terrain;
+		Mesh quadTarget;
+		
+		int textureCounter;
 		
 		@Override
 		protected void loadCamera()
@@ -95,7 +135,6 @@ public final class TerrainDynamic extends ContentWidget
 			cameraOrtho.getPosition().setZ( 100 );
 //			getScene().add(getCamera());
 
-//			container = document.getElementById( 'container' );
 //			soundtrack = document.getElementById( "soundtrack" );
 
 			// SCENE (RENDER TARGET)
@@ -150,21 +189,12 @@ public final class TerrainDynamic extends ContentWidget
 			normalMap.setFormat(PixelFormat.RGB);
 
 			NormalMapShader normalShader = new NormalMapShader();
-//			uniformsNoise = {
-//
-//				time:   { type: "f", value: 1.0 },
-//				scale:  { type: "v2", value: new Vector2( 1.5, 1.5 ) },
-//				offset: { type: "v2", value: new Vector2( 0, 0 ) }
-//
-//			};
 
 			Map<String, Uniform> uniformsNormal = UniformsUtils.clone( normalShader.getUniforms() );
 
-			uniformsNormal.height.value = 0.05;
-			uniformsNormal.resolution.value.set( rx, ry );
-			uniformsNormal.heightMap.texture = heightMap;
-
-			var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+			uniformsNormal.get("height").setValue( 0.05 );
+			((Vector2)uniformsNormal.get("resolution").getValue()).set( rx, ry );
+			uniformsNormal.get("heightMap").setTexture( heightMap );
 
 			// TEXTURES
 
@@ -172,76 +202,91 @@ public final class TerrainDynamic extends ContentWidget
 			specularMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			specularMap.setMagFilter(TextureMagFilter.LINEAR);
 			specularMap.setFormat(PixelFormat.RGB);
+			specularMap.setWrapS(TextureWrapMode.REPEAT);
+			specularMap.setWrapT(TextureWrapMode.REPEAT);
 
-			Texture diffuseTexture1 = ImageUtils.loadTexture( "textures/terrain/grasslight-big.jpg", null, function () {
+			Texture diffuseTexture1 = ImageUtils.loadTexture( diffuseImage1, null, new ImageUtils.ImageLoadHandler() {
+				
+				@Override
+				public void onImageLoad(Texture texture) {
+					DemoScene.this.onImageLoad(texture);
+					DemoScene.this.applyShader( new LuminosityShader(), diffuseTexture1, specularMap );
+				}
+			});
 
-				loadTextures();
-				applyShader( THREE.ShaderExtras[ 'luminosity' ], diffuseTexture1, specularMap );
+			diffuseTexture1.setWrapS(TextureWrapMode.REPEAT);
+			diffuseTexture1.setWrapT(TextureWrapMode.REPEAT);
 
-			} );
+			Texture diffuseTexture2 = ImageUtils.loadTexture( diffuseImage2, null, this);
 
-			Texture diffuseTexture2 = ImageUtils.loadTexture( "textures/terrain/backgrounddetailed6.jpg", null, loadTextures );
-			Texture detailTexture = ImageUtils.loadTexture( "textures/terrain/grasslight-big-nm.jpg", null, loadTextures );
+			diffuseTexture2.setWrapS(TextureWrapMode.REPEAT);
+			diffuseTexture2.setWrapT(TextureWrapMode.REPEAT);
 
-			diffuseTexture1.wrapS = diffuseTexture1.wrapT = THREE.RepeatWrapping;
-			diffuseTexture2.wrapS = diffuseTexture2.wrapT = THREE.RepeatWrapping;
-			detailTexture.wrapS = detailTexture.wrapT = THREE.RepeatWrapping;
-			specularMap.wrapS = specularMap.wrapT = THREE.RepeatWrapping;
+			Texture detailTexture = ImageUtils.loadTexture( detailImage, null, this );
+			detailTexture.setWrapS(TextureWrapMode.REPEAT);
+			detailTexture.setWrapT(TextureWrapMode.REPEAT);
 
 			// TERRAIN SHADER
 
-			var terrainShader = THREE.ShaderTerrain[ "terrain" ];
+			TerrainShader terrainShader = new TerrainShader();
 
-			uniformsTerrain = THREE.UniformsUtils.clone( terrainShader.uniforms );
+			Map<String, Uniform> uniformsTerrain = UniformsUtils.clone( terrainShader.getUniforms() );
 
-			uniformsTerrain[ "tNormal" ].texture = normalMap;
-			uniformsTerrain[ "uNormalScale" ].value = 3.5;
+			uniformsTerrain.get( "tNormal" ).setTexture( normalMap );
+			uniformsTerrain.get( "uNormalScale" ).setValue( 3.5 );
 
-			uniformsTerrain[ "tDisplacement" ].texture = heightMap;
+			uniformsTerrain.get( "tDisplacement" ).setTexture( heightMap );
 
-			uniformsTerrain[ "tDiffuse1" ].texture = diffuseTexture1;
-			uniformsTerrain[ "tDiffuse2" ].texture = diffuseTexture2;
-			uniformsTerrain[ "tSpecular" ].texture = specularMap;
-			uniformsTerrain[ "tDetail" ].texture = detailTexture;
+			uniformsTerrain.get( "tDiffuse1" ).setTexture( diffuseTexture1 );
+			uniformsTerrain.get( "tDiffuse2" ).setTexture( diffuseTexture2 );
+			uniformsTerrain.get( "tSpecular" ).setTexture( specularMap );
+			uniformsTerrain.get( "tDetail" ).setTexture( detailTexture );
 
-			uniformsTerrain[ "enableDiffuse1" ].value = true;
-			uniformsTerrain[ "enableDiffuse2" ].value = true;
-			uniformsTerrain[ "enableSpecular" ].value = true;
+			uniformsTerrain.get( "enableDiffuse1" ).setValue( 1 );
+			uniformsTerrain.get( "enableDiffuse2" ).setValue( 1 );
+			uniformsTerrain.get( "enableSpecular" ).setValue( 1 );
 
-			uniformsTerrain[ "uDiffuseColor" ].value.setHex( 0xffffff );
-			uniformsTerrain[ "uSpecularColor" ].value.setHex( 0xffffff );
-			uniformsTerrain[ "uAmbientColor" ].value.setHex( 0x111111 );
+			((Color)uniformsTerrain.get( "uDiffuseColor" ).getValue()).setHex( 0xffffff );
+			((Color)uniformsTerrain.get( "uSpecularColor").getValue()).setHex( 0xffffff );
+			((Color)uniformsTerrain.get( "uAmbientColor" ).getValue()).setHex( 0x111111 );
 
-			uniformsTerrain[ "uShininess" ].value = 30;
+			uniformsTerrain.get( "uShininess" ).setValue( 30.0 );
 
-			uniformsTerrain[ "uDisplacementScale" ].value = 375;
+			uniformsTerrain.get( "uDisplacementScale" ).setValue( 375 );
 
-			uniformsTerrain[ "uRepeatOverlay" ].value.set( 6, 6 );
+			((Vector2)uniformsTerrain.get( "uRepeatOverlay" ).getValue()).set( 6, 6 );
 
-			var params = [
-							[ 'heightmap', 	document.getElementById( 'fragmentShaderNoise' ).textContent, 	vertexShader, uniformsNoise, false ],
-							[ 'normal', 	normalShader.fragmentShader,  normalShader.vertexShader, uniformsNormal, false ],
-							[ 'terrain', 	terrainShader.fragmentShader, terrainShader.vertexShader, uniformsTerrain, true ]
-						 ];
+//			uniformsNoise = {
+//
+//				time:   { type: "f", value: 1.0 },
+//				scale:  { type: "v2", value: new Vector2( 1.5, 1.5 ) },
+//				offset: { type: "v2", value: new Vector2( 0, 0 ) }
+//
+//			};
+			
+			mlib = new HashMap<String, ShaderMaterial>();
+			
+			ShaderMaterial material1 = new ShaderMaterial(Resources.INSTANCE);
+			material1.getShader().setUniforms(uniformsNoise);
+			material1.setLights(false);
+			material1.setFog(true);
+			mlib.put("heightmap", material1);
+			
+			ShaderMaterial material2 = new ShaderMaterial(normalShader);
+			material2.getShader().setUniforms(uniformsNormal);
+			material2.setLights(false);
+			material2.setFog(true);
+			mlib.put("normal", material2);
+			
+			ShaderMaterial material3 = new ShaderMaterial(terrainShader);
+			material3.getShader().setUniforms(uniformsTerrain);
+			material3.setLights(true);
+			material3.setFog(true);
+			mlib.put("terrain", material3);
 
-			for( int i = 0; i < params.length; i ++ ) 
-			{
-				material = new ShaderMaterial( {
+			PlaneGeometry plane = new PlaneGeometry( SCREEN_WIDTH, SCREEN_HEIGHT );
 
-					uniforms: 		params[ i ][ 3 ],
-					vertexShader: 	params[ i ][ 2 ],
-					fragmentShader: params[ i ][ 1 ],
-					lights: 		params[ i ][ 4 ],
-					fog: 			true
-					} );
-
-				mlib[ params[ i ][ 0 ] ] = material;
-			}
-
-
-			var plane = new THREE.PlaneGeometry( SCREEN_WIDTH, SCREEN_HEIGHT );
-
-			quadTarget = new THREE.Mesh( plane, new THREE.MeshBasicMaterial( { color: 0x000000 } ) );
+			quadTarget = new Mesh( plane, new MeshBasicMaterial( { color: 0x000000 } ) );
 			quadTarget.position.z = -500;
 			sceneRenderTarget.add( quadTarget );
 
@@ -253,7 +298,7 @@ public final class TerrainDynamic extends ContentWidget
 			geometryTerrain.computeVertexNormals();
 			geometryTerrain.computeTangents();
 
-			Mesh terrain = new Mesh( geometryTerrain, mlib[ "terrain" ] );
+			terrain = new Mesh( geometryTerrain, mlib[ "terrain" ] );
 			terrain.getPosition().set( 0, -125, 0 );
 			terrain.getRotation().setX( -Math.PI / 2 );
 			terrain.setVisible(false);
@@ -400,15 +445,16 @@ public final class TerrainDynamic extends ContentWidget
 			getRenderer().render( sceneTmp, cameraOrtho, target, true );
 		}
 		
-		private void loadTextures() 
+		@Override
+		public void onImageLoad(Texture texture)
 		{
 			textureCounter += 1;
 
 			if ( textureCounter == 3 )	
 			{
-				terrain.visible = true;
+				terrain.setVisible(true);
 
-				document.getElementById( "loading" ).style.display = "none";
+//				document.getElementById( "loading" ).style.display = "none";
 			}
 		}
 		
