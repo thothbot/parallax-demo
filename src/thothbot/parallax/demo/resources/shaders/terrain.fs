@@ -42,7 +42,7 @@ uniform vec3 ambientLightColor;
 
 varying vec3 vViewPosition;
 
-			THREE.ShaderChunk[ "fog_pars_fragment" ],
+[*]
 
 void main() {
 
@@ -171,7 +171,6 @@ void main() {
 	// gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor) + totalSpecular;
 	gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor + totalSpecular );
 
-				THREE.ShaderChunk[ "linear_to_gamma_fragment" ],
-				THREE.ShaderChunk[ "fog_fragment" ],
+[*]
 
 }
