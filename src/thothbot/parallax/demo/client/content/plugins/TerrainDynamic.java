@@ -19,17 +19,25 @@
 
 package thothbot.parallax.demo.client.content.plugins;
 
+import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.controls.TrackballControls;
+import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
+import thothbot.parallax.core.shared.lights.AmbientLight;
+import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -51,79 +59,82 @@ public final class TerrainDynamic extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		OrthographicCamera cameraOrtho;
+		Scene sceneRenderTarget;
+		
+		TrackballControls controls;
+		
 		@Override
 		protected void loadCamera()
 		{
 			setCamera(
 					new PerspectiveCamera(
-							70, // fov
+							40, // fov
 							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							1000 // far 
+							2, // near
+							4000 // far 
 					)); 
+			
+			Canvas3d canvas = getRenderer().getCanvas();
+			
+			cameraOrtho = new OrthographicCamera( 
+					canvas.getWidth() / - 2.0, 
+					canvas.getWidth() / 2.0, 
+					canvas.getHeight() / 2.0, 
+					canvas.getHeight() / - 2.0, 
+					-10000, 10000);
 		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(400);
-			getScene().add(getCamera());
+			getCamera().getPosition().set( -1200, 800, 1200 );
+			cameraOrtho.getPosition().setZ( 100 );
+//			getScene().add(getCamera());
 
-			container = document.getElementById( 'container' );
-
-			soundtrack = document.getElementById( "soundtrack" );
+//			container = document.getElementById( 'container' );
+//			soundtrack = document.getElementById( "soundtrack" );
 
 			// SCENE (RENDER TARGET)
 
-			sceneRenderTarget = new THREE.Scene();
-
-			cameraOrtho = new THREE.OrthographicCamera( SCREEN_WIDTH / - 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_HEIGHT / - 2, -10000, 10000 );
-			cameraOrtho.position.z = 100;
-
+			sceneRenderTarget = new Scene();
 			sceneRenderTarget.add( cameraOrtho );
 
 			// CAMERA
 
-			camera = new THREE.PerspectiveCamera( 40, SCREEN_WIDTH / SCREEN_HEIGHT, 2, 4000 );
-			camera.position.set( -1200, 800, 1200 );
+			controls = new TrackballControls( getCamera(), getRenderer().getCanvas() );
+			controls.getTarget().set( 0 );
 
-			controls = new THREE.TrackballControls( camera );
-			controls.target.set( 0, 0, 0 );
+			controls.setRotateSpeed(1.0);
+			controls.setZoomSpeed(1.2);
+			controls.setPanSpeed(0.8);
 
-			controls.rotateSpeed = 1.0;
-			controls.zoomSpeed = 1.2;
-			controls.panSpeed = 0.8;
+			controls.setZoom(true);
+			controls.setPan(true);
 
-			controls.noZoom = false;
-			controls.noPan = false;
-
-			controls.staticMoving = false;
-			controls.dynamicDampingFactor = 0.15;
-
-			controls.keys = [ 65, 83, 68 ];
+			controls.setStaticMoving(true);
+			controls.setDynamicDampingFactor(0.15);
 
 			// SCENE (FINAL)
 
-			scene = new THREE.Scene();
-			scene.fog = new THREE.Fog( 0x050505, 2000, 4000 );
-			scene.fog.color.setHSV( 0.102, 0.9, 0.825 );
+			getScene().setFog( new FogSimple( 0x050505, 2000, 4000 ) );
+			getScene().getFog().getColor().setHSV( 0.102, 0.9, 0.825 );
 
 			// LIGHTS
 
-			scene.add( new THREE.AmbientLight( 0x111111 ) );
+			getScene().add( new AmbientLight( 0x111111 ) );
 
-			directionalLight = new THREE.DirectionalLight( 0xffffff, 1.15 );
-			directionalLight.position.set( 500, 2000, 0 );
-			scene.add( directionalLight );
+			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 1.15 );
+			directionalLight.getPosition().set( 500, 2000, 0 );
+			getScene().add( directionalLight );
 
-			pointLight = new THREE.PointLight( 0xff4400, 1.5 );
-			pointLight.position.set( 0, 0, 0 );
-			scene.add( pointLight );
-
+			PointLight pointLight = new PointLight( 0xff4400, 1.5, 0 );
+			pointLight.getPosition().set( 0 );
+			getScene().add( pointLight );
 
 			// HEIGHT + NORMAL MAPS
 
-			var normalShader = THREE.ShaderExtras[ 'normalmap' ];
+			NormalMapShader normalShader = new NormalMapShader();
 
 			var rx = 256, ry = 256;
 			var pars = { minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat };
@@ -149,9 +160,9 @@ public final class TerrainDynamic extends ContentWidget
 
 			// TEXTURES
 
-			var specularMap = new THREE.WebGLRenderTarget( 2048, 2048, pars );
+			RenderTargetTexture specularMap = new RenderTargetTexture( 2048, 2048, pars );
 
-			var diffuseTexture1 = THREE.ImageUtils.loadTexture( "textures/terrain/grasslight-big.jpg", null, function () {
+			Texture diffuseTexture1 = ImageUtils.loadTexture( "textures/terrain/grasslight-big.jpg", null, function () {
 
 				loadTextures();
 				applyShader( THREE.ShaderExtras[ 'luminosity' ], diffuseTexture1, specularMap );
@@ -202,9 +213,9 @@ public final class TerrainDynamic extends ContentWidget
 							[ 'terrain', 	terrainShader.fragmentShader, terrainShader.vertexShader, uniformsTerrain, true ]
 						 ];
 
-			for( var i = 0; i < params.length; i ++ ) {
-
-				material = new THREE.ShaderMaterial( {
+			for( int i = 0; i < params.length; i ++ ) 
+			{
+				material = new ShaderMaterial( {
 
 					uniforms: 		params[ i ][ 3 ],
 					vertexShader: 	params[ i ][ 2 ],
@@ -214,7 +225,6 @@ public final class TerrainDynamic extends ContentWidget
 					} );
 
 				mlib[ params[ i ][ 0 ] ] = material;
-
 			}
 
 
@@ -240,32 +250,9 @@ public final class TerrainDynamic extends ContentWidget
 
 			// RENDERER
 
-			renderer = new THREE.WebGLRenderer();
-			renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-			renderer.setClearColor( scene.fog.color, 1 );
-
-			renderer.domElement.style.position = "absolute";
-			renderer.domElement.style.top = MARGIN + "px";
-			renderer.domElement.style.left = "0px";
-
-			container.appendChild( renderer.domElement );
-
-			//
-
-			renderer.gammaInput = true;
-			renderer.gammaOutput = true;
-
-
-			// STATS
-
-			stats = new Stats();
-			stats.domElement.style.position = 'absolute';
-			stats.domElement.style.top = '0px';
-			container.appendChild( stats.domElement );
-
-			stats.domElement.children[ 0 ].children[ 0 ].style.color = "#aaa";
-			stats.domElement.children[ 0 ].style.background = "transparent";
-			stats.domElement.children[ 0 ].children[ 1 ].style.display = "none";
+			getRenderer().setClearColor(getScene().getFog().getColor());
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
 
 			// EVENTS
 

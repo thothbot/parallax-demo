@@ -41,7 +41,7 @@ import thothbot.parallax.plugin.postprocessing.client.BloomPass;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.postprocessing.client.shaders.ShaderScreen;
+import thothbot.parallax.plugin.postprocessing.client.shaders.ScreenShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -145,7 +145,7 @@ public final class GeometryLinesColors extends ContentWidget
 			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
 			BloomPass effectBloom = new BloomPass( 1.3 );
 
-			ShaderPass effectScreen = new ShaderPass( new ShaderScreen() );
+			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
 			effectScreen.setRenderToScreen(true);
 
 			composer = new Postprocessing( getRenderer(), getScene() );

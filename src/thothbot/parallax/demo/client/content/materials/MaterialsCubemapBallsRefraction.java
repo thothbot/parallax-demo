@@ -27,7 +27,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
-import thothbot.parallax.core.client.shaders.ShaderCubeMap;
+import thothbot.parallax.core.client.shaders.CubeMapShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
@@ -133,7 +133,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			}
 
 			// Skybox
-			ShaderMaterial sMaterial = new ShaderMaterial(new ShaderCubeMap());
+			ShaderMaterial sMaterial = new ShaderMaterial(new CubeMapShader());
 			sMaterial.getShader().getUniforms().get("tCube").setTexture( textureCube ); 
 			sMaterial.setDepthWrite( false );
 			sMaterial.setSide( Material.SIDE.BACK );

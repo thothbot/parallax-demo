@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import thothbot.parallax.core.client.controls.TrackballControls;
-import thothbot.parallax.core.client.shaders.ShaderNormalMap;
+import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -112,7 +112,7 @@ public final class TrackballEarth extends ContentWidget
 			Texture specularTexture = ImageUtils.loadTexture( earthSpecular );
 			Texture moonTexture     = ImageUtils.loadTexture( moon );
 
-			ShaderMaterial materialNormalMap = new ShaderMaterial(new ShaderNormalMap()); 
+			ShaderMaterial materialNormalMap = new ShaderMaterial(new NormalMapShader()); 
 			materialNormalMap.setLights(true);
 			
 			Map<String, Uniform> uniforms = materialNormalMap.getShader().getUniforms();
