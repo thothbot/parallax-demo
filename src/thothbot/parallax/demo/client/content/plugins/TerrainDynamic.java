@@ -180,8 +180,8 @@ public final class TerrainDynamic extends ContentWidget
 
 			} );
 
-			var diffuseTexture2 = THREE.ImageUtils.loadTexture( "textures/terrain/backgrounddetailed6.jpg", null, loadTextures );
-			var detailTexture = THREE.ImageUtils.loadTexture( "textures/terrain/grasslight-big-nm.jpg", null, loadTextures );
+			Texture diffuseTexture2 = ImageUtils.loadTexture( "textures/terrain/backgrounddetailed6.jpg", null, loadTextures );
+			Texture detailTexture = ImageUtils.loadTexture( "textures/terrain/grasslight-big-nm.jpg", null, loadTextures );
 
 			diffuseTexture1.wrapS = diffuseTexture1.wrapT = THREE.RepeatWrapping;
 			diffuseTexture2.wrapS = diffuseTexture2.wrapT = THREE.RepeatWrapping;
@@ -247,17 +247,17 @@ public final class TerrainDynamic extends ContentWidget
 
 			// TERRAIN MESH
 
-			var geometryTerrain = new THREE.PlaneGeometry( 6000, 6000, 256, 256 );
+			PlaneGeometry geometryTerrain = new PlaneGeometry( 6000, 6000, 256, 256 );
 
 			geometryTerrain.computeFaceNormals();
 			geometryTerrain.computeVertexNormals();
 			geometryTerrain.computeTangents();
 
-			terrain = new THREE.Mesh( geometryTerrain, mlib[ "terrain" ] );
-			terrain.position.set( 0, -125, 0 );
-			terrain.rotation.x = -Math.PI / 2;
-			terrain.visible = false;
-			scene.add( terrain );
+			Mesh terrain = new Mesh( geometryTerrain, mlib[ "terrain" ] );
+			terrain.getPosition().set( 0, -125, 0 );
+			terrain.getRotation().setX( -Math.PI / 2 );
+			terrain.setVisible(false);
+			getScene().add( terrain );
 
 			// RENDERER
 
