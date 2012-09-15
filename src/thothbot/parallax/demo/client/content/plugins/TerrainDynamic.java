@@ -20,6 +20,7 @@
 package thothbot.parallax.demo.client.content.plugins;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import thothbot.parallax.core.client.context.Canvas3d;
@@ -104,10 +105,23 @@ public final class TerrainDynamic extends ContentWidget
 		private static final String flamingoModel = "./static/models/animated/flamingo.js";
 		private static final String storkModel = "./static/models/animated/stork.js";
 		
+		private static final boolean updateNoise = true;
+		private static final boolean animateTerrain = false;
+		
 		OrthographicCamera cameraOrtho;
 		Scene sceneRenderTarget;
 		
 		Map<String, ShaderMaterial> mlib;
+		List<Mesh> morphs;
+		
+		Map<String, Uniform> uniformsTerrain;
+		Map<String, Uniform> uniformsNoise;
+		
+		RenderTargetTexture heightMap;
+		RenderTargetTexture normalMap;
+		
+		DirectionalLight directionalLight;
+		PointLight pointLight;
 		
 		TrackballControls controls;
 		Postprocessing composer;
@@ -116,6 +130,11 @@ public final class TerrainDynamic extends ContentWidget
 		Mesh quadTarget;
 		
 		int textureCounter;
+		
+		double animDelta = 0;
+		int animDeltaDir = -1;
+		double lightVal = 0;
+		int lightDir = 1;
 		
 		@Override
 		protected void loadCamera()
@@ -176,11 +195,11 @@ public final class TerrainDynamic extends ContentWidget
 
 			getScene().add( new AmbientLight( 0x111111 ) );
 
-			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 1.15 );
+			directionalLight = new DirectionalLight( 0xffffff, 1.15 );
 			directionalLight.getPosition().set( 500, 2000, 0 );
 			getScene().add( directionalLight );
 
-			PointLight pointLight = new PointLight( 0xff4400, 1.5, 0 );
+			pointLight = new PointLight( 0xff4400, 1.5, 0 );
 			pointLight.getPosition().set( 0 );
 			getScene().add( pointLight );
 
@@ -188,12 +207,12 @@ public final class TerrainDynamic extends ContentWidget
 
 			int rx = 256, ry = 256;
 
-			RenderTargetTexture heightMap  = new RenderTargetTexture( rx, ry );
+			heightMap  = new RenderTargetTexture( rx, ry );
 			heightMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			heightMap.setMagFilter(TextureMagFilter.LINEAR);
 			heightMap.setFormat(PixelFormat.RGB);
 			
-			RenderTargetTexture normalMap = new RenderTargetTexture( rx, ry );
+			normalMap = new RenderTargetTexture( rx, ry );
 			normalMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			normalMap.setMagFilter(TextureMagFilter.LINEAR);
 			normalMap.setFormat(PixelFormat.RGB);
@@ -240,7 +259,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			TerrainShader terrainShader = new TerrainShader();
 
-			Map<String, Uniform> uniformsTerrain = UniformsUtils.clone( terrainShader.getUniforms() );
+			uniformsTerrain = UniformsUtils.clone( terrainShader.getUniforms() );
 
 			uniformsTerrain.get( "tNormal" ).setTexture( normalMap );
 			uniformsTerrain.get( "uNormalScale" ).setValue( 3.5 );
@@ -261,18 +280,14 @@ public final class TerrainDynamic extends ContentWidget
 			((Color)uniformsTerrain.get( "uAmbientColor" ).getValue()).setHex( 0x111111 );
 
 			uniformsTerrain.get( "uShininess" ).setValue( 30.0 );
-
 			uniformsTerrain.get( "uDisplacementScale" ).setValue( 375 );
 
 			((Vector2)uniformsTerrain.get( "uRepeatOverlay" ).getValue()).set( 6, 6 );
 
-//			uniformsNoise = {
-//
-//				time:   { type: "f", value: 1.0 },
-//				scale:  { type: "v2", value: new Vector2( 1.5, 1.5 ) },
-//				offset: { type: "v2", value: new Vector2( 0, 0 ) }
-//
-//			};
+			uniformsNoise = new HashMap<String, Uniform>();
+			uniformsNoise.put("time", new Uniform(Uniform.TYPE.F, 1.0));
+			uniformsNoise.put("scale", new Uniform(Uniform.TYPE.V2, new Vector2( 1.5, 1.5 )));
+			uniformsNoise.put("offset", new Uniform(Uniform.TYPE.V2, new Vector2( 0, 0 )));
 			
 			mlib = new HashMap<String, ShaderMaterial>();
 			
@@ -516,48 +531,46 @@ public final class TerrainDynamic extends ContentWidget
 				double fLow = 0.4, fHigh = 0.825;
 
 				lightVal = Mathematics.clamp( lightVal + 0.5 * delta * lightDir, fLow, fHigh );
+				double valNorm = ( lightVal - fLow ) / ( fHigh - fLow );
 
-				var valNorm = ( lightVal - fLow ) / ( fHigh - fLow );
-
-				var sat = Mathematics.mapLinear( valNorm, 0, 1, 0.95, 0.25 );
-				scene.fog.color.setHSV( 0.1, sat, lightVal );
+				double sat = Mathematics.mapLinear( valNorm, 0, 1, 0.95, 0.25 );
+				getScene().getFog().getColor().setHSV( 0.1, sat, lightVal );
 
 				getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
 
-				directionalLight.intensity = Mathematics.mapLinear( valNorm, 0, 1, 0.1, 1.15 );
-				pointLight.intensity = Mathematics.mapLinear( valNorm, 0, 1, 0.9, 1.5 );
+				directionalLight.setIntensity( Mathematics.mapLinear( valNorm, 0, 1, 0.1, 1.15 ) );
+				pointLight.setIntensity( Mathematics.mapLinear( valNorm, 0, 1, 0.9, 1.5 ) );
 
-				uniformsTerrain[ "uNormalScale" ].value = Mathematics.mapLinear( valNorm, 0, 1, 0.6, 3.5 );
+				uniformsTerrain.get( "uNormalScale" ).setValue( Mathematics.mapLinear( valNorm, 0, 1, 0.6, 3.5 ) );
 
 				if ( updateNoise ) 
 				{
-					animDelta = Mathematics.clamp( animDelta + 0.00075 * animDeltaDir, 0, 0.05 );
-					uniformsNoise[ "time" ].value += delta * animDelta;
+					double animDelta = Mathematics.clamp( animDelta + 0.00075 * animDeltaDir, 0, 0.05 );
+					uniformsNoise.get( "time" ).setValue( uniformsNoise.get( "time" ).getValue() + delta * animDelta );
+					((Vector2)uniformsNoise.get( "offset" ).getValue()).addX( delta * 0.05 );
 
-					uniformsNoise[ "offset" ].value.x += delta * 0.05;
+					((Vector2)uniformsTerrain.get( "uOffset" ).getValue()).setX( 4 * ((Vector2)uniformsNoise.get( "offset" ).getValue()).getX() );
 
-					uniformsTerrain[ "uOffset" ].value.x = 4 * uniformsNoise[ "offset" ].value.x;
-
-					quadTarget.material = mlib[ "heightmap" ];
+					quadTarget.setMaterial( mlib.get( "heightmap" ));
 					getRenderer().render( sceneRenderTarget, cameraOrtho, heightMap, true );
 
-					quadTarget.material = mlib[ "normal" ];
+					quadTarget.setMaterial( mlib.get( "normal" ));
 					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
 
 					//updateNoise = false;
 				}
 
-				for ( int i = 0; i < morphs.length; i ++ ) 
+				for ( int i = 0; i < morphs.size(); i ++ ) 
 				{
-					morph = morphs[ i ];
+					Mesh morph = morphs.get( i );
 
 					morph.updateAnimation( 1000 * delta );
 
-					morph.position.x += morph.speed * delta;
+					morph.getPosition().addX( morph.speed * delta );
 
-					if ( morph.position.x  > 2000 )  
+					if ( morph.getPosition().getX()  > 2000 )  
 					{
-						morph.position.x = -1500 - Math.random() * 500;
+						morph.getPosition().setX( -1500 - Math.random() * 500 );
 					}
 				}
 
