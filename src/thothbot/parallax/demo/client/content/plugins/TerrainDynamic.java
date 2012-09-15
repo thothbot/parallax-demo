@@ -43,6 +43,7 @@ import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -57,6 +58,7 @@ import thothbot.parallax.demo.client.content.CustomAttributesParticles2.Resource
 import thothbot.parallax.demo.resources.TerrainShader;
 import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.loader.shared.MorphAnimation;
+import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.shaders.LuminosityShader;
 
 import com.google.gwt.core.client.GWT;
@@ -101,6 +103,7 @@ public final class TerrainDynamic extends ContentWidget
 		Map<String, ShaderMaterial> mlib;
 		
 		TrackballControls controls;
+		Postprocessing composer;
 		
 		Mesh terrain;
 		Mesh quadTarget;
@@ -285,9 +288,10 @@ public final class TerrainDynamic extends ContentWidget
 			mlib.put("terrain", material3);
 
 			PlaneGeometry plane = new PlaneGeometry( SCREEN_WIDTH, SCREEN_HEIGHT );
-
-			quadTarget = new Mesh( plane, new MeshBasicMaterial( { color: 0x000000 } ) );
-			quadTarget.position.z = -500;
+			MeshBasicMaterial planeMaterial = new MeshBasicMaterial();
+			planeMaterial.setColor(new Color(0x000000));
+			quadTarget = new Mesh( plane, planeMaterial );
+			quadTarget.getPosition().setZ( -500 );
 			sceneRenderTarget.add( quadTarget );
 
 			// TERRAIN MESH
@@ -314,35 +318,32 @@ public final class TerrainDynamic extends ContentWidget
 
 			onWindowResize();
 
-			window.addEventListener( 'resize', onWindowResize, false );
-
 			document.addEventListener( 'keydown', onKeyDown, false );
 
 			// COMPOSER
 
-			renderer.autoClear = false;
+			getRenderer().setAutoClear(false);
 
 			renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
 			renderTarget = new THREE.WebGLRenderTarget( SCREEN_WIDTH, SCREEN_HEIGHT, renderTargetParameters );
 
-			effectBloom = new THREE.BloomPass( 0.6 );
-			var effectBleach = new THREE.ShaderPass( THREE.ShaderExtras[ "bleachbypass" ] );
+			effectBloom = new BloomPass( 0.6 );
+			var effectBleach = new ShaderPass( THREE.ShaderExtras[ "bleachbypass" ] );
 
-			hblur = new THREE.ShaderPass( THREE.ShaderExtras[ "horizontalTiltShift" ] );
-			vblur = new THREE.ShaderPass( THREE.ShaderExtras[ "verticalTiltShift" ] );
+			hblur = new ShaderPass( THREE.ShaderExtras[ "horizontalTiltShift" ] );
+			vblur = new ShaderPass( THREE.ShaderExtras[ "verticalTiltShift" ] );
 
-			var bluriness = 6;
+			int bluriness = 6;
 
 			hblur.uniforms[ 'h' ].value = bluriness / SCREEN_WIDTH;
 			vblur.uniforms[ 'v' ].value = bluriness / SCREEN_HEIGHT;
-
 			hblur.uniforms[ 'r' ].value = vblur.uniforms[ 'r' ].value = 0.5;
 
 			effectBleach.uniforms[ 'opacity' ].value = 0.65;
 
-			composer = new THREE.EffectComposer( renderer, renderTarget );
+			composer = new Postprocessing( getRenderer(), renderTarget );
 
-			var renderModel = new THREE.RenderPass( scene, camera );
+			var renderModel = new RenderPass( getScene(), getCamera() );
 
 			vblur.renderToScreen = true;
 
