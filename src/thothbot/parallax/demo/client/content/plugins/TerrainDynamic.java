@@ -608,7 +608,7 @@ public final class TerrainDynamic extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleTerrainDynamic();
 	}
 	
 	@Override

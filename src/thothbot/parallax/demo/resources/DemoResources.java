@@ -155,6 +155,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_performance_double_sided.jpg")
 	ImageResource examplePerformanceDoubleSided();
 	
+	@Source("images/example_terrain_dynamic.jpg")
+	ImageResource exampleTerrainDynamic();
+	
 	@Source("images/example_lensflares.jpg")
 	ImageResource exampleLensflares();
 	
