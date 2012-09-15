@@ -57,20 +57,23 @@ import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.CustomAttributesParticles2.Resources;
 import thothbot.parallax.demo.resources.TerrainShader;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.loader.shared.MorphAnimation;
+import thothbot.parallax.plugin.postprocessing.client.BloomPass;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugin.postprocessing.client.RenderPass;
+import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
+import thothbot.parallax.plugin.postprocessing.client.shaders.BleachbypassShader;
+import thothbot.parallax.plugin.postprocessing.client.shaders.HorizontalTiltShiftShader;
 import thothbot.parallax.plugin.postprocessing.client.shaders.LuminosityShader;
+import thothbot.parallax.plugin.postprocessing.client.shaders.VerticalTiltShiftShader;
 
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.http.client.RequestException;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class TerrainDynamic extends ContentWidget 
@@ -136,6 +139,10 @@ public final class TerrainDynamic extends ContentWidget
 		double lightVal = 0;
 		int lightDir = 1;
 		
+		int SCREEN_WIDTH, SCREEN_HEIGHT;
+		
+		private double oldTime;
+		
 		@Override
 		protected void loadCamera()
 		{
@@ -156,14 +163,25 @@ public final class TerrainDynamic extends ContentWidget
 					canvas.getHeight() / - 2.0, 
 					-10000, 10000);
 		}
+		
+		@Override
+		protected void onResize() 
+		{
+			super.onResize();
+			Canvas3d canvas = getRenderer().getCanvas();
+
+			SCREEN_WIDTH = canvas.getWidth();
+			SCREEN_HEIGHT = canvas.getHeight();
+		}
 
 		@Override
 		protected void onStart()
 		{
 			getCamera().getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
-//			getScene().add(getCamera());
+			getScene().add(getCamera());
 
+			onResize();
 //			soundtrack = document.getElementById( "soundtrack" );
 
 			// SCENE (RENDER TARGET)
@@ -227,7 +245,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// TEXTURES
 
-			RenderTargetTexture specularMap = new RenderTargetTexture( 2048, 2048 );
+			final RenderTargetTexture specularMap = new RenderTargetTexture( 2048, 2048 );
 			specularMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			specularMap.setMagFilter(TextureMagFilter.LINEAR);
 			specularMap.setFormat(PixelFormat.RGB);
@@ -239,7 +257,7 @@ public final class TerrainDynamic extends ContentWidget
 				@Override
 				public void onImageLoad(Texture texture) {
 					DemoScene.this.onImageLoad(texture);
-					DemoScene.this.applyShader( new LuminosityShader(), diffuseTexture1, specularMap );
+					DemoScene.this.applyShader( new LuminosityShader(), texture, specularMap );
 				}
 			});
 
@@ -291,23 +309,23 @@ public final class TerrainDynamic extends ContentWidget
 			
 			mlib = new HashMap<String, ShaderMaterial>();
 			
-			ShaderMaterial material1 = new ShaderMaterial(Resources.INSTANCE);
-			material1.getShader().setUniforms(uniformsNoise);
-			material1.setLights(false);
-			material1.setFog(true);
-			mlib.put("heightmap", material1);
+			ShaderMaterial materialHeightmap = new ShaderMaterial(Resources.INSTANCE);
+			materialHeightmap.getShader().setUniforms(uniformsNoise);
+			materialHeightmap.setLights(false);
+			materialHeightmap.setFog(true);
+			mlib.put("heightmap", materialHeightmap);
 			
-			ShaderMaterial material2 = new ShaderMaterial(normalShader);
-			material2.getShader().setUniforms(uniformsNormal);
-			material2.setLights(false);
-			material2.setFog(true);
-			mlib.put("normal", material2);
+			ShaderMaterial materialNormal = new ShaderMaterial(normalShader);
+			materialNormal.getShader().setUniforms(uniformsNormal);
+			materialNormal.setLights(false);
+			materialNormal.setFog(true);
+			mlib.put("normal", materialNormal);
 			
-			ShaderMaterial material3 = new ShaderMaterial(terrainShader);
-			material3.getShader().setUniforms(uniformsTerrain);
-			material3.setLights(true);
-			material3.setFog(true);
-			mlib.put("terrain", material3);
+			ShaderMaterial materialTerrain = new ShaderMaterial(terrainShader);
+			materialTerrain.getShader().setUniforms(uniformsTerrain);
+			materialTerrain.setLights(true);
+			materialTerrain.setFog(true);
+			mlib.put("terrain", materialTerrain);
 
 			PlaneGeometry plane = new PlaneGeometry( SCREEN_WIDTH, SCREEN_HEIGHT );
 			MeshBasicMaterial planeMaterial = new MeshBasicMaterial();
@@ -324,7 +342,7 @@ public final class TerrainDynamic extends ContentWidget
 			geometryTerrain.computeVertexNormals();
 			geometryTerrain.computeTangents();
 
-			terrain = new Mesh( geometryTerrain, mlib[ "terrain" ] );
+			terrain = new Mesh( geometryTerrain, materialTerrain );
 			terrain.getPosition().set( 0, -125, 0 );
 			terrain.getRotation().setX( -Math.PI / 2 );
 			terrain.setVisible(false);
@@ -332,53 +350,50 @@ public final class TerrainDynamic extends ContentWidget
 
 			// RENDERER
 
-			getRenderer().setClearColor(getScene().getFog().getColor());
+			getRenderer().setClearColor(getScene().getFog().getColor(), 1.0);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 
 			// EVENTS
 
-			onWindowResize();
-
-			document.addEventListener( 'keydown', onKeyDown, false );
+//			document.addEventListener( 'keydown', onKeyDown, false );
 
 			// COMPOSER
 
 			getRenderer().setAutoClear(false);
+			
+			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
+			
+			BloomPass effectBloom = new BloomPass( 0.6 );
+			ShaderPass effectBleach = new ShaderPass( new BleachbypassShader() );
+			effectBleach.getUniforms().get( "opacity" ).setValue( 0.65 );
 
-			renderTargetParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false };
-			renderTarget = new THREE.WebGLRenderTarget( SCREEN_WIDTH, SCREEN_HEIGHT, renderTargetParameters );
-
-			effectBloom = new BloomPass( 0.6 );
-			var effectBleach = new ShaderPass( THREE.ShaderExtras[ "bleachbypass" ] );
-
-			hblur = new ShaderPass( THREE.ShaderExtras[ "horizontalTiltShift" ] );
-			vblur = new ShaderPass( THREE.ShaderExtras[ "verticalTiltShift" ] );
+			ShaderPass hblur = new ShaderPass( new HorizontalTiltShiftShader() );
+			ShaderPass vblur = new ShaderPass( new VerticalTiltShiftShader() );
 
 			int bluriness = 6;
 
-			hblur.uniforms[ 'h' ].value = bluriness / SCREEN_WIDTH;
-			vblur.uniforms[ 'v' ].value = bluriness / SCREEN_HEIGHT;
-			hblur.uniforms[ 'r' ].value = vblur.uniforms[ 'r' ].value = 0.5;
+			hblur.getUniforms().get( "h" ).setValue( bluriness / SCREEN_WIDTH );
+			vblur.getUniforms().get( "v" ).setValue( bluriness / SCREEN_HEIGHT );
+			hblur.getUniforms().get( "r" ).setValue( 0.5 ); 
+			vblur.getUniforms().get( "r" ).setValue( 0.5 );
+			vblur.setRenderToScreen(true);
 
-			effectBleach.uniforms[ 'opacity' ].value = 0.65;
-
-			composer = new Postprocessing( getRenderer(), renderTarget );
-
-			var renderModel = new RenderPass( getScene(), getCamera() );
-
-			vblur.renderToScreen = true;
-
-			composer = new THREE.EffectComposer( renderer, renderTarget );
-
+			RenderTargetTexture renderTarget = new RenderTargetTexture( SCREEN_WIDTH, SCREEN_HEIGHT );
+			specularMap.setMinFilter(TextureMinFilter.LINEAR);
+			specularMap.setMagFilter(TextureMagFilter.LINEAR);
+			specularMap.setFormat(PixelFormat.RGB);
+			specularMap.setStencilBuffer(false);
+			
+			composer = new Postprocessing( getRenderer(), getScene(), renderTarget );
 			composer.addPass( renderModel );
-
 			composer.addPass( effectBloom );
 			//composer.addPass( effectBleach );
 
 			composer.addPass( hblur );
 			composer.addPass( vblur );
-
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		private void addMorph( Geometry geometry, double speed, double duration, double x, double y, double z ) 
@@ -388,21 +403,21 @@ public final class TerrainDynamic extends ContentWidget
 			material.setMorphTargets(true);
 			material.setVertexColors(Material.COLORS.FACE);
 
-			MorphAnimation meshAnim = new MorphAnimation( geometry, material );
-
-			meshAnim.speed = speed;
-			meshAnim.setDuration(duration);
-			meshAnim.time = 600 * Math.random();
-
-			meshAnim.position.set( x, y, z );
-			meshAnim.rotation.y = Math.PI/2;
-
-			meshAnim.castShadow = true;
-			meshAnim.receiveShadow = false;
-
-			getScene().add( meshAnim );
-
-			morphs.add( meshAnim );
+//			MorphAnimation meshAnim = new MorphAnimation( geometry, material );
+//
+//			meshAnim.speed = speed;
+//			meshAnim.setDuration(duration);
+//			meshAnim.time = 600 * Math.random();
+//
+//			meshAnim.position.set( x, y, z );
+//			meshAnim.rotation.y = Math.PI/2;
+//
+//			meshAnim.castShadow = true;
+//			meshAnim.receiveShadow = false;
+//
+//			getScene().add( meshAnim );
+//
+//			morphs.add( meshAnim );
 
 			getRenderer().initWebGLObjects( getScene() );
 
@@ -509,7 +524,7 @@ public final class TerrainDynamic extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			var delta = clock.getDelta();
+			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
 
 			//			soundVal = Mathematics.clamp( soundVal + delta * soundDir, 0, 1 );
 			//
@@ -545,8 +560,8 @@ public final class TerrainDynamic extends ContentWidget
 
 				if ( updateNoise ) 
 				{
-					double animDelta = Mathematics.clamp( animDelta + 0.00075 * animDeltaDir, 0, 0.05 );
-					uniformsNoise.get( "time" ).setValue( uniformsNoise.get( "time" ).getValue() + delta * animDelta );
+					animDelta = Mathematics.clamp( animDelta + 0.00075 * animDeltaDir, 0, 0.05 );
+					uniformsNoise.get( "time" ).setValue( (Double)uniformsNoise.get( "time" ).getValue() + delta * animDelta );
 					((Vector2)uniformsNoise.get( "offset" ).getValue()).addX( delta * 0.05 );
 
 					((Vector2)uniformsTerrain.get( "uOffset" ).getValue()).setX( 4 * ((Vector2)uniformsNoise.get( "offset" ).getValue()).getX() );
@@ -560,29 +575,28 @@ public final class TerrainDynamic extends ContentWidget
 					//updateNoise = false;
 				}
 
-				for ( int i = 0; i < morphs.size(); i ++ ) 
-				{
-					Mesh morph = morphs.get( i );
-
-					morph.updateAnimation( 1000 * delta );
-
-					morph.getPosition().addX( morph.speed * delta );
-
-					if ( morph.getPosition().getX()  > 2000 )  
-					{
-						morph.getPosition().setX( -1500 - Math.random() * 500 );
-					}
-				}
-
-				//renderer.render( scene, camera );
-				composer.render( 0.1 );
+//				for ( int i = 0; i < morphs.size(); i ++ ) 
+//				{
+//					Mesh morph = morphs.get( i );
+//
+//					morph.updateAnimation( 1000 * delta );
+//
+//					morph.getPosition().addX( morph.speed * delta );
+//
+//					if ( morph.getPosition().getX()  > 2000 )  
+//					{
+//						morph.getPosition().setX( -1500 - Math.random() * 500 );
+//					}
+//				}
 			}
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 	}
 		
 	public TerrainDynamic() 
 	{
-		super("Dynamic procedural terrain", "Used 3d simplex noise. Options - day / night: [n]; animate terrain: [m]; toggle soundtrack: [b]. This example based on the three.js example.");
+		super("Dynamic procedural terrain", "Used 3d simplex noise. Options - day / night: [n]; animate terrain: [m]. This example based on the three.js example.");
 	}
 	
 	@Override
