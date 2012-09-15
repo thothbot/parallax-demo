@@ -21,6 +21,9 @@ package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
+import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
+import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
@@ -134,23 +137,28 @@ public final class TerrainDynamic extends ContentWidget
 
 			// HEIGHT + NORMAL MAPS
 
+			int rx = 256, ry = 256;
+
+			RenderTargetTexture heightMap  = new RenderTargetTexture( rx, ry );
+			heightMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
+			heightMap.setMagFilter(TextureMagFilter.LINEAR);
+			heightMap.setFormat(PixelFormat.RGB);
+			
+			RenderTargetTexture normalMap = new RenderTargetTexture( rx, ry );
+			normalMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
+			normalMap.setMagFilter(TextureMagFilter.LINEAR);
+			normalMap.setFormat(PixelFormat.RGB);
+
 			NormalMapShader normalShader = new NormalMapShader();
+//			uniformsNoise = {
+//
+//				time:   { type: "f", value: 1.0 },
+//				scale:  { type: "v2", value: new Vector2( 1.5, 1.5 ) },
+//				offset: { type: "v2", value: new Vector2( 0, 0 ) }
+//
+//			};
 
-			var rx = 256, ry = 256;
-			var pars = { minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat };
-
-			heightMap  = new THREE.WebGLRenderTarget( rx, ry, pars );
-			normalMap = new THREE.WebGLRenderTarget( rx, ry, pars );
-
-			uniformsNoise = {
-
-				time:   { type: "f", value: 1.0 },
-				scale:  { type: "v2", value: new THREE.Vector2( 1.5, 1.5 ) },
-				offset: { type: "v2", value: new THREE.Vector2( 0, 0 ) }
-
-			};
-
-			uniformsNormal = THREE.UniformsUtils.clone( normalShader.uniforms );
+			Map<String, Uniform> uniformsNormal = UniformsUtils.clone( normalShader.getUniforms() );
 
 			uniformsNormal.height.value = 0.05;
 			uniformsNormal.resolution.value.set( rx, ry );
@@ -160,7 +168,10 @@ public final class TerrainDynamic extends ContentWidget
 
 			// TEXTURES
 
-			RenderTargetTexture specularMap = new RenderTargetTexture( 2048, 2048, pars );
+			RenderTargetTexture specularMap = new RenderTargetTexture( 2048, 2048 );
+			specularMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
+			specularMap.setMagFilter(TextureMagFilter.LINEAR);
+			specularMap.setFormat(PixelFormat.RGB);
 
 			Texture diffuseTexture1 = ImageUtils.loadTexture( "textures/terrain/grasslight-big.jpg", null, function () {
 
