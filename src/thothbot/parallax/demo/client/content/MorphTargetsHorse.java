@@ -28,7 +28,7 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.Json;
+import thothbot.parallax.loader.shared.JsonLoader;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -85,16 +85,16 @@ public final class MorphTargetsHorse extends ContentWidget
 			light1.getPosition().set( -1, -1, -1 ).normalize();
 			getScene().add( light1 );
 
-			final Json json = new Json();
+			final JsonLoader jsonLoader = new JsonLoader();
 			try
 			{
-				json.load(model, new Json.Callback() {
+				jsonLoader.load(model, new JsonLoader.Callback() {
 
 					@Override
 					public void onLoaded() {																					
-						json.getAnimation().setDuration(3000);
+						jsonLoader.getAnimation().setDuration(3000);
 
-						mesh = json.getMesh();
+						mesh = jsonLoader.getMesh();
 						mesh.getScale().set(1.5);
 
 						getScene().add(mesh);

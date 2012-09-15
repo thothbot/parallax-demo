@@ -35,7 +35,7 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.Collada;
+import thothbot.parallax.loader.shared.ColladaLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -73,10 +73,10 @@ public final class LoaderCollada extends ContentWidget
 			getCamera().getPosition().set(2, 2, 3);
 			getScene().add(getCamera());
 
-			Collada collada = new Collada();
+			ColladaLoader colladaLoader = new ColladaLoader();
 			try
 			{
-				collada.load(model, new Collada.Callback() {
+				colladaLoader.load(model, new ColladaLoader.Callback() {
 
 					@Override
 					public void onLoaded() {
@@ -164,7 +164,7 @@ public final class LoaderCollada extends ContentWidget
 		
 	public LoaderCollada() 
 	{
-		super("Collada", "This example based on the three.js example.");
+		super("ColladaLoader", "This example based on the three.js example.");
 	}
 	
 	@Override

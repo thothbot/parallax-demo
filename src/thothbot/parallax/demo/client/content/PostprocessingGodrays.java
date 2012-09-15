@@ -33,11 +33,8 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.Json;
+import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
-import thothbot.parallax.plugin.postprocessing.client.RenderPass;
-import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.postprocessing.client.shaders.ShaderScreen;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -95,12 +92,12 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			// tree
 
-			final Json loader = new Json();
+			final JsonLoader loader = new JsonLoader();
 			loader.setMaterial(materialScene);
 
 			try
 			{
-				loader.load(model, new Json.Callback() {
+				loader.load(model, new JsonLoader.Callback() {
 
 					@Override
 					public void onLoaded() {																					

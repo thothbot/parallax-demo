@@ -27,7 +27,7 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.Json;
+import thothbot.parallax.loader.shared.JsonLoader;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -48,7 +48,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		
 		static final int radius = 600;
 		
-		Json json;
+		JsonLoader jsonLoader;
 		
 		private double oldTime;
 
@@ -74,16 +74,16 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			light.getPosition().set( 1, 1, 1 );
 			getScene().add( light );
 
-			this.json = new Json();
+			this.jsonLoader = new JsonLoader();
 			try
 			{
-				this.json.load(model, new Json.Callback() {
+				this.jsonLoader.load(model, new JsonLoader.Callback() {
 
 					@Override
 					public void onLoaded() {																					
-						json.getAnimation().setDuration(3000);
+						jsonLoader.getAnimation().setDuration(3000);
 
-						Mesh mesh = json.getMesh();
+						Mesh mesh = jsonLoader.getMesh();
 						mesh.getScale().set(2);
 						mesh.getPosition().set(0);
 
@@ -118,7 +118,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 
 			getCamera().lookAt( getScene().getPosition() );
 
-			this.json.getAnimation().updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime)  );
+			this.jsonLoader.getAnimation().updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime)  );
 			getRenderer().clear(false, false, false);
 		}
 	}
