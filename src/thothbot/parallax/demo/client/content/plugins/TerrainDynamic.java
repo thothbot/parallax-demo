@@ -38,6 +38,7 @@ import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Mathematics;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
@@ -375,7 +376,7 @@ public final class TerrainDynamic extends ContentWidget
 			MorphAnimation meshAnim = new MorphAnimation( geometry, material );
 
 			meshAnim.speed = speed;
-			meshAnim.duration = duration;
+			meshAnim.setDuration(duration);
 			meshAnim.time = 600 * Math.random();
 
 			meshAnim.position.set( x, y, z );
@@ -386,62 +387,61 @@ public final class TerrainDynamic extends ContentWidget
 
 			getScene().add( meshAnim );
 
-			morphs.push( meshAnim );
+			morphs.add( meshAnim );
 
-			renderer.initWebGLObjects( scene );
+			getRenderer().initWebGLObjects( getScene() );
 
-			JsonLoader jsonLoader = new JsonLoader();
+			final JsonLoader jsonLoader = new JsonLoader();
 
-			var startX = -3000;
-
+			final double startX = -3000;
 			try
 			{
-				jsonLoader.load(parrotModel, new JsonLoader.Callback() {
-
+				jsonLoader.load(parrotModel, new JsonLoader.ModelLoadHandler() {
+					
 					@Override
-					public void onModeLoad() {																					
-						jsonLoader.getAnimation().setDuration(3000);
+					public void onModeLoad() {
+						Geometry geometry = jsonLoader.getGeometry();
 
-						Mesh mesh = jsonLoader.getMesh();
-						mesh.getScale().set(2);
-						mesh.getPosition().set(0);
-
-						getScene().add(mesh);
+						morphColorsToFaceColors( geometry );
+						addMorph( geometry, 250, 500, startX -500, 500, 700 );
+						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, -200 );
+						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 200 );
+						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 1000 );
+						
 					}
 				});
+				
+				jsonLoader.load(flamingoModel, new JsonLoader.ModelLoadHandler() {
+					
+					@Override
+					public void onModeLoad() {
+						Geometry geometry = jsonLoader.getGeometry();
+
+						morphColorsToFaceColors( geometry );
+						addMorph( geometry, 500, 1000, startX - Math.random() * 500, 350, 40 );
+					}
+				});
+				
+				jsonLoader.load(storkModel, new JsonLoader.ModelLoadHandler() {
+
+					@Override
+					public void onModeLoad() {
+						Geometry geometry = jsonLoader.getGeometry();
+
+						morphColorsToFaceColors( geometry );
+						addMorph( geometry, 350, 1000, startX - Math.random() * 500, 350, 340 );
+					}
+				});
+
 			}
 			catch (RequestException exception) 
 			{
 				Log.error("Error while loading JSON file.");
 			}
 			
-			loader.load( "models/animated/parrot.js", function( geometry ) {
-
-				morphColorsToFaceColors( geometry );
-				addMorph( geometry, 250, 500, startX -500, 500, 700 );
-				addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, -200 );
-				addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 200 );
-				addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 1000 );
-
-			} );
-
-			loader.load( "models/animated/flamingo.js", function( geometry ) {
-
-				morphColorsToFaceColors( geometry );
-				addMorph( geometry, 500, 1000, startX - Math.random() * 500, 350, 40 );
-
-			} );
-
-			loader.load( "models/animated/stork.js", function( geometry ) {
-
-				morphColorsToFaceColors( geometry );
-				addMorph( geometry, 350, 1000, startX - Math.random() * 500, 350, 340 );
-
-			} );
-
 			// PRE-INIT
 
-			renderer.initWebGLObjects( scene );
+			getRenderer().initWebGLObjects( getScene() );
 		}
 
 		private void morphColorsToFaceColors( Geometry geometry ) 
@@ -496,42 +496,42 @@ public final class TerrainDynamic extends ContentWidget
 		{
 			var delta = clock.getDelta();
 
-			soundVal = THREE.Math.clamp( soundVal + delta * soundDir, 0, 1 );
+			//			soundVal = Mathematics.clamp( soundVal + delta * soundDir, 0, 1 );
+			//
+			//			if ( soundVal !== oldSoundVal ) 
+			//			{
+			//				if ( soundtrack ) 
+			//				{
+			//					soundtrack.volume = soundVal;
+			//					oldSoundVal = soundVal;
+			//				}
+			//			}
 
-			if ( soundVal !== oldSoundVal ) 
-			{
-				if ( soundtrack ) 
-				{
-					soundtrack.volume = soundVal;
-					oldSoundVal = soundVal;
-				}
-			}
-
-			if ( terrain.visible ) 
+			if ( terrain.isVisible() ) 
 			{
 				controls.update();
 
-				var time = Date.now() * 0.001;
+				double time = duration * 0.001;
 
-				var fLow = 0.4, fHigh = 0.825;
+				double fLow = 0.4, fHigh = 0.825;
 
-				lightVal = THREE.Math.clamp( lightVal + 0.5 * delta * lightDir, fLow, fHigh );
+				lightVal = Mathematics.clamp( lightVal + 0.5 * delta * lightDir, fLow, fHigh );
 
 				var valNorm = ( lightVal - fLow ) / ( fHigh - fLow );
 
-				var sat = THREE.Math.mapLinear( valNorm, 0, 1, 0.95, 0.25 );
+				var sat = Mathematics.mapLinear( valNorm, 0, 1, 0.95, 0.25 );
 				scene.fog.color.setHSV( 0.1, sat, lightVal );
 
-				renderer.setClearColor( scene.fog.color, 1 );
+				getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
 
-				directionalLight.intensity = THREE.Math.mapLinear( valNorm, 0, 1, 0.1, 1.15 );
-				pointLight.intensity = THREE.Math.mapLinear( valNorm, 0, 1, 0.9, 1.5 );
+				directionalLight.intensity = Mathematics.mapLinear( valNorm, 0, 1, 0.1, 1.15 );
+				pointLight.intensity = Mathematics.mapLinear( valNorm, 0, 1, 0.9, 1.5 );
 
-				uniformsTerrain[ "uNormalScale" ].value = THREE.Math.mapLinear( valNorm, 0, 1, 0.6, 3.5 );
+				uniformsTerrain[ "uNormalScale" ].value = Mathematics.mapLinear( valNorm, 0, 1, 0.6, 3.5 );
 
 				if ( updateNoise ) 
 				{
-					animDelta = THREE.Math.clamp( animDelta + 0.00075 * animDeltaDir, 0, 0.05 );
+					animDelta = Mathematics.clamp( animDelta + 0.00075 * animDeltaDir, 0, 0.05 );
 					uniformsNoise[ "time" ].value += delta * animDelta;
 
 					uniformsNoise[ "offset" ].value.x += delta * 0.05;
@@ -539,15 +539,15 @@ public final class TerrainDynamic extends ContentWidget
 					uniformsTerrain[ "uOffset" ].value.x = 4 * uniformsNoise[ "offset" ].value.x;
 
 					quadTarget.material = mlib[ "heightmap" ];
-					renderer.render( sceneRenderTarget, cameraOrtho, heightMap, true );
+					getRenderer().render( sceneRenderTarget, cameraOrtho, heightMap, true );
 
 					quadTarget.material = mlib[ "normal" ];
-					renderer.render( sceneRenderTarget, cameraOrtho, normalMap, true );
+					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
 
 					//updateNoise = false;
 				}
 
-				for ( var i = 0; i < morphs.length; i ++ ) 
+				for ( int i = 0; i < morphs.length; i ++ ) 
 				{
 					morph = morphs[ i ];
 
@@ -563,6 +563,7 @@ public final class TerrainDynamic extends ContentWidget
 
 				//renderer.render( scene, camera );
 				composer.render( 0.1 );
+			}
 		}
 	}
 		
