@@ -66,7 +66,7 @@ public interface DemoResources extends ClientBundle
 	ImageResource exampleCube();
 	
 	@Source("images/example_hilbert_curves.jpg")
-	ImageResource exampleGeometryLinesColors();
+	ImageResource exampleHilbertCurves();
 	
 	@Source("images/example_postprocessing_godrays.jpg")
 	ImageResource examplePostprocessingGodrays();

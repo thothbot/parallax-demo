@@ -50,7 +50,7 @@ import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public final class GeometryLinesColors extends ContentWidget 
+public final class HilbertCurves extends ContentWidget 
 {
 	/*
 	 * Prepare Rendering Scene
@@ -224,7 +224,7 @@ public final class GeometryLinesColors extends ContentWidget
 		}
 	}
 		
-	public GeometryLinesColors() 
+	public HilbertCurves() 
 	{
 		super("Hilbert curves", "Drag mouse to move. This example based on the three.js example.");
 	}
@@ -262,13 +262,13 @@ public final class GeometryLinesColors extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleGeometryLinesColors();
+		return Demo.resources.exampleHilbertCurves();
 	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
-		GWT.runAsync(GeometryLinesColors.class, new RunAsyncCallback() 
+		GWT.runAsync(HilbertCurves.class, new RunAsyncCallback() 
 		{
 			public void onFailure(Throwable caught)
 			{

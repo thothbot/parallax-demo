@@ -61,7 +61,7 @@ import thothbot.parallax.demo.client.content.misc.MiscMemoryTestShaders;
 import thothbot.parallax.demo.client.content.misc.PerformanceDoubleSided;
 import thothbot.parallax.demo.client.content.plugins.EffectsLensFlares;
 import thothbot.parallax.demo.client.content.plugins.EffectsSprites;
-import thothbot.parallax.demo.client.content.plugins.GeometryLinesColors;
+import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
 import thothbot.parallax.demo.client.content.plugins.TerrainDynamic;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -382,8 +382,8 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 			category.addExample(new TerrainDynamic(),
 					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
-			category.addExample(new GeometryLinesColors(),
-					RunAsyncCode.runAsyncCode(GeometryLinesColors.class));
+			category.addExample(new HilbertCurves(),
+					RunAsyncCode.runAsyncCode(HilbertCurves.class));
 			category.addExample(new EffectsLensFlares(),
 					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
 			category.addExample(new EffectsSprites(),
