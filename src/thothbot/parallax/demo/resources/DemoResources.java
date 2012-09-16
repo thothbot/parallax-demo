@@ -149,6 +149,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_morph_targets_horse.jpg")
 	ImageResource exampleMorphTargetsHorse();
 	
+	@Source("images/example_cloth_simulation.jpg")
+	ImageResource exampleClothSimulation();
+	
 	@Source("images/example_loader_collada.jpg")
 	ImageResource exampleLoaderCollada();
 	
