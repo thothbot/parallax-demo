@@ -29,7 +29,6 @@ import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
@@ -66,6 +65,7 @@ import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
 import thothbot.parallax.plugin.postprocessing.client.shaders.BleachbypassShader;
 import thothbot.parallax.plugin.postprocessing.client.shaders.HorizontalTiltShiftShader;
 import thothbot.parallax.plugin.postprocessing.client.shaders.LuminosityShader;
+import thothbot.parallax.plugin.postprocessing.client.shaders.NormalMapShader;
 import thothbot.parallax.plugin.postprocessing.client.shaders.VerticalTiltShiftShader;
 
 import com.google.gwt.core.client.Duration;

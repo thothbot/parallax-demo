@@ -175,7 +175,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 		
 	public MaterialsCubemapFresnel() 
 	{
-		super("CubeGeometry Fresnel shader", "This example based on the three.js example.");
+		super("Cube Fresnel shader", "This example based on the three.js example.");
 	}
 	
 	@Override

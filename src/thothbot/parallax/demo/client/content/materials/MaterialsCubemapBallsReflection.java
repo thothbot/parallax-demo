@@ -172,7 +172,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		
 	public MaterialsCubemapBallsReflection() 
 	{
-		super("CubeGeometry reflection", "Drag mouse to move. This example based on the three.js example.");
+		super("Cube reflection", "Drag mouse to move. This example based on the three.js example.");
 	}
 	
 	@Override

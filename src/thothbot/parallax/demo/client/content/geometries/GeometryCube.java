@@ -89,7 +89,7 @@ public class GeometryCube extends ContentWidget
 		
 	public GeometryCube() 
 	{
-		super("CubeGeometry and texture", "Here are used cube geometry and mesh basic material with simple texture. This example based on the three.js example.");
+		super("Cube and texture", "Here are used cube geometry and mesh basic material with simple texture. This example based on the three.js example.");
 	}
 	
 	@Override

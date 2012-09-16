@@ -186,7 +186,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 
 	public CustomAttributesParticles2() 
 	{
-		super("SphereGeometry and cube", "Here are used custom shaders and sprites. This example based on the three.js example.");
+		super("Sphere and cube", "Here are used custom shaders and sprites. This example based on the three.js example.");
 	}
 
 	@Override
