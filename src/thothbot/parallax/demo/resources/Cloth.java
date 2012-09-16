@@ -184,7 +184,7 @@ public class Cloth
 	public void simulate() 
 	{
 		// Aerodynamics forces
-		if (wind) 
+		if (wind)
 		{
 			faces = clothGeometry.faces;
 
@@ -216,7 +216,6 @@ public class Cloth
 		}
 
 		// Ball Constrains
-
 
 		ballPosition.z = -Math.sin(Date.now()/300) * 90 ; //+ 40;
 		ballPosition.x = Math.cos(Date.now()/200) * 70;

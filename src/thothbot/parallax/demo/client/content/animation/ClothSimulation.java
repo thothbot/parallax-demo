@@ -34,6 +34,7 @@ import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.resources.Cloth;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -55,6 +56,7 @@ public final class ClothSimulation extends ContentWidget
 		
 		PlaneParametricGeometry clothGeometry;
 		
+		Cloth cloth;
 		Mesh object;
 		Mesh sphere;
 
@@ -253,7 +255,7 @@ public final class ClothSimulation extends ContentWidget
 			arrow.setLength( windStrength );
 			arrow.setDirection( windForce );
 
-			simulate();
+			cloth.simulate();
 
 			double timer = duration * 0.0002;
 
@@ -267,8 +269,8 @@ public final class ClothSimulation extends ContentWidget
 			clothGeometry.computeFaceNormals();
 			clothGeometry.computeVertexNormals();
 
-			clothGeometry.normalsNeedUpdate = true;
-			clothGeometry.verticesNeedUpdate = true;
+			clothGeometry.setNormalsNeedUpdate(true);
+			clothGeometry.setVerticesNeedUpdate(true);
 
 			sphere.getPosition().copy( ballPosition );
 
