@@ -38,6 +38,7 @@ import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ImageUtils;
+import thothbot.parallax.core.shared.utils.ImageUtils.ImageLoadHandler;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -168,12 +169,13 @@ public final class ClothSimulation extends ContentWidget
 
 			Mesh object = new Mesh( cloth.getGeometry(), material );
 			object.getPosition().set( 0 );
-			object.castShadow = true;
-			object.receiveShadow = true;
+			object.setCastShadow(true);
+			object.setReceiveShadow(true);
 			getScene().add( object );
 
-			object.customDepthMaterial = new ShaderMaterial(Resources.INSTANCE);
-			object.customDepthMaterial.getShader().addUniform("texture", new Uniform(Uniform.TYPE.T, 0));
+			// TODO: fix
+//			object.customDepthMaterial = new ShaderMaterial(Resources.INSTANCE);
+//			object.customDepthMaterial.getShader().addUniform("texture", new Uniform(Uniform.TYPE.T, 0));
 
 			// sphere
 
@@ -183,8 +185,8 @@ public final class ClothSimulation extends ContentWidget
 
 			Mesh sphere = new Mesh( ballGeo, ballMaterial );
 			cloth.setBall(sphere);
-			sphere.castShadow = true;
-			sphere.receiveShadow = true;
+			sphere.setCastShadow(true);
+			sphere.setReceiveShadow(true);
 			getScene().add( sphere );
 
 			// arrow
@@ -200,23 +202,30 @@ public final class ClothSimulation extends ContentWidget
 			initColor.setHSV( 0.25, 0.85, 0.5 );
 			Texture initTexture = ImageUtils.generateDataTexture( 1, 1, initColor );
 
-			MeshPhongMaterial groundMaterial = new MeshPhongMaterial();
+			final MeshPhongMaterial groundMaterial = new MeshPhongMaterial();
 			groundMaterial.setColor(new Color(0xffffff));
 			groundMaterial.setSpecular(new Color(0x111111));
 			groundMaterial.setMap(initTexture);
 			groundMaterial.setPerPixel(true);
 
-			Texture groundTexture = ImageUtils.loadTexture( grasslight, undefined, function() { groundMaterial.map = groundTexture } );
+			Texture groundTexture = ImageUtils.loadTexture( grasslight, Texture.MAPPING_MODE.UV, new ImageLoadHandler() {
+				
+				@Override
+				public void onImageLoad(Texture texture) {
+					groundMaterial.setMap(texture);
+				}
+			});
+
 			groundTexture.setWrapS(TextureWrapMode.REPEAT);
 			groundTexture.setWrapT(TextureWrapMode.REPEAT);
 			groundTexture.getRepeat().set( 25, 25 );
 			groundTexture.setAnisotropy( 16 );
 
-			Mesh mesh = new Mesh( new PlaneGeometry( 20000, 20000 ), groundMaterial );
-			mesh.getPosition().setY( -250 );
-			mesh.getRotation().setX( - Math.PI / 2 );
-			mesh.receiveShadow = true;
-			getScene().add( mesh );
+			Mesh mesh1 = new Mesh( new PlaneGeometry( 20000, 20000 ), groundMaterial );
+			mesh1.getPosition().setY( -250 );
+			mesh1.getRotation().setX( - Math.PI / 2 );
+			mesh1.setReceiveShadow(true);
+			getScene().add( mesh1 );
 
 			// poles
 
@@ -227,41 +236,41 @@ public final class ClothSimulation extends ContentWidget
 			poleMat.setShininess(100);
 			poleMat.setPerPixel(true);
 
-			Mesh mesh = new Mesh( poleGeo, poleMat );
-			mesh.getPosition().setY( -250 );
-			mesh.getPosition().setX( -125 );
-			mesh.receiveShadow = true;
-			mesh.castShadow = true;
-			getScene().add( mesh );
+			Mesh mesh2 = new Mesh( poleGeo, poleMat );
+			mesh2.getPosition().setY( -250 );
+			mesh2.getPosition().setX( -125 );
+			mesh2.setReceiveShadow(true);
+			mesh2.setCastShadow(true);
+			getScene().add( mesh2 );
 
-			Mesh mesh = new Mesh( poleGeo, poleMat );
-			mesh.getPosition().setY( -250 );
-			mesh.getPosition().setX( 125 );
-			mesh.receiveShadow = true;
-			mesh.castShadow = true;
-			getScene().add( mesh );
+			Mesh mesh3 = new Mesh( poleGeo, poleMat );
+			mesh3.getPosition().setY( -250 );
+			mesh3.getPosition().setX( 125 );
+			mesh3.setReceiveShadow(true);
+			mesh3.setCastShadow(true);
+			getScene().add( mesh3 );
 
-			Mesh mesh = new Mesh( new CubeGeometry( 255, 5, 5 ), poleMat );
-			mesh.getPosition().setY( -250 + 750/2 );
-			mesh.getPosition().setX( 0 );
-			mesh.receiveShadow = true;
-			mesh.castShadow = true;
-			getScene().add( mesh );
+			Mesh mesh4 = new Mesh( new CubeGeometry( 255, 5, 5 ), poleMat );
+			mesh4.getPosition().setY( -250 + 750/2 );
+			mesh4.getPosition().setX( 0 );
+			mesh4.setReceiveShadow(true);
+			mesh4.setCastShadow(true);
+			getScene().add( mesh4 );
 
 			CubeGeometry gg = new CubeGeometry( 10, 10, 10 );
-			Mesh mesh = new Mesh( gg, poleMat );
-			mesh.getPosition().setY( -250 );
-			mesh.getPosition().setX( 125 );
-			mesh.receiveShadow = true;
-			mesh.castShadow = true;
-			getScene().add( mesh );
+			Mesh mesh5 = new Mesh( gg, poleMat );
+			mesh5.getPosition().setY( -250 );
+			mesh5.getPosition().setX( 125 );
+			mesh5.setReceiveShadow(true);
+			mesh5.setCastShadow(true);
+			getScene().add( mesh5 );
 
-			Mesh mesh = new Mesh( gg, poleMat );
-			mesh.getPosition().setY( -250 );
-			mesh.getPosition().setX( -125 );
-			mesh.receiveShadow = true;
-			mesh.castShadow = true;
-			getScene().add( mesh );
+			Mesh mesh6 = new Mesh( gg, poleMat );
+			mesh6.getPosition().setY( -250 );
+			mesh6.getPosition().setX( -125 );
+			mesh6.setReceiveShadow(true);
+			mesh6.setCastShadow(true);
+			getScene().add( mesh6 );
 
 			//
 

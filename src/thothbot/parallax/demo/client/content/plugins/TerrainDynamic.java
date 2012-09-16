@@ -388,7 +388,7 @@ public final class TerrainDynamic extends ContentWidget
 			composer = new Postprocessing( getRenderer(), getScene(), renderTarget );
 			composer.addPass( renderModel );
 			composer.addPass( effectBloom );
-			//composer.addPass( effectBleach );
+			composer.addPass( effectBleach );
 
 			composer.addPass( hblur );
 			composer.addPass( vblur );
