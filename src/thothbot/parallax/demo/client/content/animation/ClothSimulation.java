@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
+import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
 import thothbot.parallax.core.shared.helpers.AxisHelper;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -49,6 +50,11 @@ public final class ClothSimulation extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 	
+		private static final String circuitPattern = "./static/textures/patterns/circuit_pattern.png";
+		private static final String grasslight = "./static/textures/terrain/grasslight-big.jpg";
+		
+		PlaneParametricGeometry clothGeometry;
+		
 		Mesh object;
 		Mesh sphere;
 
@@ -107,20 +113,20 @@ public final class ClothSimulation extends ContentWidget
 			getScene().add( directionalLight );
 
 			// cloth material
-
-			Texture clothTexture = ImageUtils.loadTexture( "textures/patterns/circuit_pattern.png" );
+			
+			Texture clothTexture = ImageUtils.loadTexture( circuitPattern );
 			clothTexture.setWrapS(TextureWrapMode.REPEAT);
 			clothTexture.setWrapT(TextureWrapMode.REPEAT);
 			clothTexture.setAnisotropy( 16 );
 
 			materials = [
-				new THREE.MeshPhongMaterial( { alphaTest: 0.5, ambient: 0xffffff, color: 0xffffff, specular: 0x030303, emissive: 0x111111, shiness: 10, perPixel: true, metal: false, map: clothTexture, side: THREE.DoubleSide } ),
-				new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true, transparent: true, opacity: 0.9 } )
+				new MeshPhongMaterial( { alphaTest: 0.5, ambient: 0xffffff, color: 0xffffff, specular: 0x030303, emissive: 0x111111, shiness: 10, perPixel: true, metal: false, map: clothTexture, side: THREE.DoubleSide } ),
+				new MeshBasicMaterial( { color: 0xff0000, wireframe: true, transparent: true, opacity: 0.9 } )
 			];
 
 			// cloth geometry
 
-			clothGeometry = new ParametricGeometry( ParametricGeometries.plane( 200, 200 ), cloth.w, cloth.h, true );
+			clothGeometry = new PlaneParametricGeometry( 200, 200, cloth.w, cloth.h );
 			clothGeometry.dynamic = true;
 			clothGeometry.computeFaceNormals();
 
@@ -166,7 +172,7 @@ public final class ClothSimulation extends ContentWidget
 			groundMaterial.setMap(initTexture);
 			groundMaterial.setPerPixel(true);
 
-			Texture groundTexture = ImageUtils.loadTexture( "textures/terrain/grasslight-big.jpg", undefined, function() { groundMaterial.map = groundTexture } );
+			Texture groundTexture = ImageUtils.loadTexture( grasslight, undefined, function() { groundMaterial.map = groundTexture } );
 			groundTexture.setWrapS(TextureWrapMode.REPEAT);
 			groundTexture.setWrapT(TextureWrapMode.REPEAT);
 			groundTexture.getRepeat().set( 25, 25 );
