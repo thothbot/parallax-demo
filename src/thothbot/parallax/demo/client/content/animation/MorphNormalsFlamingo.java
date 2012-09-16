@@ -17,7 +17,7 @@
  * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.parallax.demo.client.content;
+package thothbot.parallax.demo.client.content.animation;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.Log;

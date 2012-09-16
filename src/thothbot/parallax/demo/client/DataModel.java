@@ -28,8 +28,8 @@ import java.util.Set;
 
 import thothbot.parallax.demo.client.content.CustomAttributesParticles;
 import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
-import thothbot.parallax.demo.client.content.MorphNormalsFlamingo;
-import thothbot.parallax.demo.client.content.MorphTargetsHorse;
+import thothbot.parallax.demo.client.content.animation.MorphNormalsFlamingo;
+import thothbot.parallax.demo.client.content.animation.MorphTargetsHorse;
 import thothbot.parallax.demo.client.content.geometries.CamerasExample;
 import thothbot.parallax.demo.client.content.geometries.Geometries;
 import thothbot.parallax.demo.client.content.geometries.GeometriesParametric;
@@ -358,9 +358,9 @@ public class DataModel implements TreeViewModel
 //					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
 //		}
 		
-		// Morphing
+		// Animation
 		{
-			Category category = new Category("Morphing");
+			Category category = new Category("Animation");
 			categoriesList.add(category);
 			category.addExample(new MorphNormalsFlamingo(),
 					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
