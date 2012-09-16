@@ -23,8 +23,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gwt.core.client.Duration;
+
 import thothbot.parallax.core.shared.core.Face3;
+import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
+import thothbot.parallax.core.shared.objects.Mesh;
 
 /**
  * Suggested Readings
@@ -46,6 +51,7 @@ public class Cloth
 	static final double damping = 0.01;
 	static final double drag = 1 - damping;
 	static final double mass = 0.1;
+	static final double restDistance = 25;
 
 	class Particle
 	{
@@ -94,33 +100,30 @@ public class Cloth
 		}
 	}
 
-	private static final double restDistance = 25;
-	
-	int GRAVITY = 981; // 
-	Vector3 gravity = new Vector3( 0, -GRAVITY, 0 ).multiply(Cloth.Particle.mass);
+	Geometry clothGeometry;
 
+	private int width;
+	private int height;
+
+	private boolean isWindEnabled = true;
+	private double windStrength = 2;
+	private Vector3 windForce = new Vector3(0,0,0);
+
+	private Mesh ball;
+	private Vector3 ballPosition = new Vector3(0, -45, 0);
+	private double ballSize = 60;
+
+	int GRAVITY = 981; // 
+	Vector3 gravity = new Vector3( 0, -GRAVITY, 0 ).multiply(Cloth.mass);
 
 	double TIMESTEP = 14 / 1000;
 	double TIMESTEP_SQ = TIMESTEP * TIMESTEP;
 
-	var pins = [true];
-	pins[cloth.w] = true;
-
-
-	boolean wind = true;
-	int windStrength = 2;
-	Vector3 windForce = new Vector3(0,0,0);
-
-	Vector3 ballPosition = new Vector3(0, -45, 0);
-	int ballSize = 60; //40
-
-	Vector3 tmpForce = new Vector3();
-	
-	private int width;
-	private int height;
 	List<Cloth.Particle> particles;
 	List<List<Cloth.Particle>> constrains;
-	
+
+	Vector3 tmpForce = new Vector3();
+
 	public Cloth()
 	{
 		this(10, 10);
@@ -134,7 +137,155 @@ public class Cloth
 		particles = new ArrayList<Cloth.Particle>();
 		constrains = new ArrayList<List<Particle>>();
 
-		// Create particles
+		createParticles();
+		createStructure();
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public boolean isWindEnabled() {
+		return isWindEnabled;
+	}
+
+	public void setWindEnabled(boolean isWindEnabled) {
+		this.isWindEnabled = isWindEnabled;
+	}
+
+	public double getWindStrength() {
+		return windStrength;
+	}
+
+	public void setWindStrength(double windStrength) {
+		this.windStrength = windStrength;
+	}
+
+	public Vector3 getWindForce() {
+		return windForce;
+	}
+
+	public void setWindForce(Vector3 windForce) {
+		this.windForce = windForce;
+	}
+	
+	public Mesh getBall() {
+		return ball;
+	}
+
+	public void setBall(Mesh ball) {
+		this.ball = ball;
+	}
+
+	public double getBallSize() {
+		return ballSize;
+	}
+
+	public void setBallSize(double ballSize) {
+		this.ballSize = ballSize;
+	}
+	
+	public Geometry getGeometry() {
+		return clothGeometry;
+	}
+
+	public void setGeometry(Geometry clothGeometry) {
+		this.clothGeometry = clothGeometry;
+	}
+
+	public void simulate() 
+	{
+		// Aerodynamics forces
+		if (isWindEnabled)
+		{
+			List<Face3> faces = clothGeometry.getFaces();
+
+			for (int i = 0, il = faces.size(); i < il; i++)
+			{
+				Face3 face = faces.get(i);
+				Vector3 normal = face.getNormal();
+
+				tmpForce.copy(normal).normalize().multiply(normal.dot(windForce));
+				particles.get(face.getA()).addForce(tmpForce);
+				particles.get(face.getB()).addForce(tmpForce);
+				particles.get(face.getC()).addForce(tmpForce);
+			}
+		}
+		
+		for (int i = 0, il = particles.size(); i < il; i++) 
+		{
+			Cloth.Particle particle = particles.get(i);
+			particle.addForce(gravity);
+			// particle.addForce(windForce);
+			particle.integrate(TIMESTEP_SQ);
+		}
+
+		// Start Constrains
+		for (int i = 0, il = constrains.size(); i < il; i++) 
+		{
+			List<Cloth.Particle> constrain = constrains.get(i);
+			satisifyConstrains(constrain.get(0), constrain.get(1));
+		}
+
+		// Ball Constrains
+
+		double time = Duration.currentTimeMillis();
+		ballPosition.setZ( -Math.sin(time / 300) * 90 ) ; //+ 40;
+		ballPosition.setX( Math.cos(time / 200) * 70 );
+
+		if (ball != null && ball.isVisible())
+		{
+			for (int i = 0, il = particles.size(); i < il; i++) 
+			{
+				Cloth.Particle particle = particles.get(i);
+				Vector3 pos = particle.position;
+				Vector3 diff = new Vector3();
+				diff.sub(pos, ballPosition);
+				if (diff.length() < ballSize) 
+				{
+					// collided
+					diff.normalize().multiply(ballSize);
+					pos.copy(ballPosition).add(diff);
+				}
+			}
+		}
+
+		// Pin Constrains: first and last
+		for (int i = 0; i <= width; i = width) 
+		{
+			Cloth.Particle particle = particles.get(i);
+			particle.previous.set((i - width / 2.0) * restDistance,  - height / 2.0 * -restDistance, 0);
+			particle.position.copy(particle.previous);
+		}
+		
+		for ( int i = 0, il = particles.size(); i < il; i ++ ) 
+		{
+			clothGeometry.getVertices().get( i ).copy( particles.get( i ).position );
+		}
+
+		clothGeometry.computeFaceNormals();
+		clothGeometry.computeVertexNormals();
+
+		clothGeometry.setNormalsNeedUpdate(true);
+		clothGeometry.setVerticesNeedUpdate(true);
+
+		ball.getPosition().copy( ballPosition );
+	}
+
+	private void createParticles()
+	{
 		for (int v = 0; v <= height; v++) 
 		{
 			for (int u = 0; u <= width; u++) 
@@ -144,9 +295,10 @@ public class Cloth
 				);
 			}
 		}
-
-		// Structural
-
+	}
+	
+	private void createStructure()
+	{
 		for (int v = 0; v < height; v++) 
 		{
 			for (int u = 0; u < width; u++) 
@@ -178,74 +330,6 @@ public class Cloth
 				particles.get( index(u, v, width) ),
 				particles.get( index(u + 1, v, width) )
 			));
-		}
-	}
-	
-	public void simulate() 
-	{
-		// Aerodynamics forces
-		if (wind)
-		{
-			faces = clothGeometry.faces;
-
-			for (int i = 0, il = faces.size(); i < il; i++)
-			{
-				Face3 face = faces.get(i);
-				Vector3 normal = face.getNormal();
-
-				tmpForce.copy(normal).normalize().multiply(normal.dot(windForce));
-				particles.get(face.getA()).addForce(tmpForce);
-				particles.get(face.getB()).addForce(tmpForce);
-				particles.get(face.getC()).addForce(tmpForce);
-			}
-		}
-		
-		for (int i = 0, il = particles.size(); i < il; i++) 
-		{
-			Cloth.Particle particle = particles.get(i);
-			particle.addForce(gravity);
-			// particle.addForce(windForce);
-			particle.integrate(TIMESTEP_SQ);
-		}
-
-		// Start Constrains
-		for (int i = 0, il = constrains.size(); i < il; i++) 
-		{
-			List<Cloth.Particle> constrain = constrains.get(i);
-			satisifyConstrains(constrain.get(0), constrain.get(1));
-		}
-
-		// Ball Constrains
-
-		ballPosition.z = -Math.sin(Date.now()/300) * 90 ; //+ 40;
-		ballPosition.x = Math.cos(Date.now()/200) * 70;
-
-		if (sphere.isVisible())
-		{
-			for (int i = 0, il = particles.size(); i < il; i++) 
-			{
-				Cloth.Particle particle = particles.get(i);
-				Vector3 pos = particle.position;
-				Vector3 diff = new Vector3();
-				diff.sub(pos, ballPosition);
-				if (diff.length() < ballSize) 
-				{
-					// collided
-					diff.normalize().multiply(ballSize);
-					pos.copy(ballPosition).add(diff);
-				}
-			}
-		}
-
-		// Pin Constrains
-		for (int i = 0, il = cloth.w; i <= il; i++) 
-		{
-			if (pins[i])
-			{
-				particle = particles[i];
-				particle.previous.set((i - cloth.w/2) * restDistance,  -cloth.h/2 * -restDistance, 0);
-				particle.position.copy(particle.previous);
-			}
 		}
 	}
 	

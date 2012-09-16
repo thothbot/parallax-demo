@@ -20,29 +20,54 @@
 package thothbot.parallax.demo.client.content.animation;
 
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.shaders.Shader;
+import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
+import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
 import thothbot.parallax.core.shared.helpers.AxisHelper;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
+import thothbot.parallax.core.shared.materials.Material.SIDE;
+import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.client.content.materials.MaterialsWireframe.Resources;
 import thothbot.parallax.demo.resources.Cloth;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.TextResource;
+import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class ClothSimulation extends ContentWidget 
 {
+
+	/*
+	 * Load shaders
+	 */
+	@DemoSource
+	public interface Resources extends Shader.DefaultResources
+	{
+		Resources INSTANCE = GWT.create(Resources.class);
+
+		@Source("../../../resources/shaders/cloth_depth.fs")
+		TextResource fragmetShader();
+		
+		@Source("../../../resources/shaders/cloth_depth.vs")
+		TextResource vertexShader();
+	}
 
 	/*
 	 * Prepare Rendering Scene
@@ -53,12 +78,10 @@ public final class ClothSimulation extends ContentWidget
 	
 		private static final String circuitPattern = "./static/textures/patterns/circuit_pattern.png";
 		private static final String grasslight = "./static/textures/terrain/grasslight-big.jpg";
-		
-		PlaneParametricGeometry clothGeometry;
-		
+				
 		Cloth cloth;
-		Mesh object;
-		Mesh sphere;
+		
+		boolean isRotate;
 
 		@Override
 		protected void loadCamera()
@@ -114,6 +137,14 @@ public final class ClothSimulation extends ContentWidget
 			directionalLight.getPosition().set( 0, -1, 0 );
 			getScene().add( directionalLight );
 
+			// cloth geometry
+
+			cloth = new Cloth();
+			PlaneParametricGeometry clothGeometry = new PlaneParametricGeometry( 200, 200, cloth.getWidth(), cloth.getHeight() );
+			clothGeometry.setDynamic(true);
+			clothGeometry.computeFaceNormals();
+			cloth.setGeometry(clothGeometry);
+
 			// cloth material
 			
 			Texture clothTexture = ImageUtils.loadTexture( circuitPattern );
@@ -121,36 +152,37 @@ public final class ClothSimulation extends ContentWidget
 			clothTexture.setWrapT(TextureWrapMode.REPEAT);
 			clothTexture.setAnisotropy( 16 );
 
-			materials = [
-				new MeshPhongMaterial( { alphaTest: 0.5, ambient: 0xffffff, color: 0xffffff, specular: 0x030303, emissive: 0x111111, shiness: 10, perPixel: true, metal: false, map: clothTexture, side: THREE.DoubleSide } ),
-				new MeshBasicMaterial( { color: 0xff0000, wireframe: true, transparent: true, opacity: 0.9 } )
-			];
-
-			// cloth geometry
-
-			clothGeometry = new PlaneParametricGeometry( 200, 200, cloth.w, cloth.h );
-			clothGeometry.dynamic = true;
-			clothGeometry.computeFaceNormals();
-
-			var uniforms = { texture:  { type: "t", value: 0, texture: clothTexture } };
+			MeshPhongMaterial material = new MeshPhongMaterial();
+			material.setAlphaTest(0.5);
+			material.setAmbient(new Color(0xffffff));
+			material.setColor(new Color(0xffffff));
+			material.setSpecular(new Color(0x030303));
+			material.setEmissive(new Color(0x111111));
+			material.setShininess(10);
+			material.setPerPixel(true);
+			material.setMetal(false);
+			material.setMap(clothTexture);
+			material.setSide(SIDE.DOUBLE);
 
 			// cloth mesh
 
-			object = new Mesh( clothGeometry, materials[ 0 ] );
+			Mesh object = new Mesh( cloth.getGeometry(), material );
 			object.getPosition().set( 0 );
 			object.castShadow = true;
 			object.receiveShadow = true;
 			getScene().add( object );
 
-			object.customDepthMaterial = new ShaderMaterial( { uniforms: uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader } );
+			object.customDepthMaterial = new ShaderMaterial(Resources.INSTANCE);
+			object.customDepthMaterial.getShader().addUniform("texture", new Uniform(Uniform.TYPE.T, 0));
 
 			// sphere
 
-			SphereGeometry ballGeo = new SphereGeometry( ballSize, 20, 20 );
+			SphereGeometry ballGeo = new SphereGeometry( cloth.getBallSize(), 20, 20 );
 			MeshPhongMaterial ballMaterial = new MeshPhongMaterial();
 			ballMaterial.setColor(new Color(0xffffff));
 
-			sphere = new Mesh( ballGeo, ballMaterial );
+			Mesh sphere = new Mesh( ballGeo, ballMaterial );
+			cloth.setBall(sphere);
 			sphere.castShadow = true;
 			sphere.receiveShadow = true;
 			getScene().add( sphere );
@@ -160,7 +192,7 @@ public final class ClothSimulation extends ContentWidget
 			AxisHelper axis = new AxisHelper();
 			axis.getPosition().set( 200, 0, -200 );
 			axis.getScale().set( 0.5 );
-			scene.add( axis );
+			getScene().add( axis );
 
 			// ground
 
@@ -218,22 +250,22 @@ public final class ClothSimulation extends ContentWidget
 
 			CubeGeometry gg = new CubeGeometry( 10, 10, 10 );
 			Mesh mesh = new Mesh( gg, poleMat );
-			mesh.position.setY( -250 );
-			mesh.position.setX( 125 );
+			mesh.getPosition().setY( -250 );
+			mesh.getPosition().setX( 125 );
 			mesh.receiveShadow = true;
 			mesh.castShadow = true;
 			getScene().add( mesh );
 
-			var mesh = new THREE.Mesh( gg, poleMat );
-			mesh.position.y = -250;
-			mesh.position.x = -125;
+			Mesh mesh = new Mesh( gg, poleMat );
+			mesh.getPosition().setY( -250 );
+			mesh.getPosition().setX( -125 );
 			mesh.receiveShadow = true;
 			mesh.castShadow = true;
 			getScene().add( mesh );
 
 			//
 
-			getRenderer().setClearColor( getScene().getFog().getColor() );
+			getRenderer().setClearColor( getScene().getFog().getColor(), 1.0 );
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 			getRenderer().setPhysicallyBasedShading(true);
@@ -250,31 +282,17 @@ public final class ClothSimulation extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			windStrength = Math.cos( duration / 7000 ) * 20 + 40;
-			windForce.set( Math.sin( duration / 2000 ), Math.cos( duration / 3000 ), Math.sin( duration / 1000 ) ).normalize().multiplyScalar( windStrength );
-			arrow.setLength( windStrength );
-			arrow.setDirection( windForce );
+			cloth.setWindStrength( Math.cos( duration / 7000 ) * 20 + 40 );
+			cloth.getWindForce().set( 
+					Math.sin( duration / 2000 ), 
+					Math.cos( duration / 3000 ), 
+					Math.sin( duration / 1000 ) ).normalize().multiply( cloth.getWindStrength() );
 
 			cloth.simulate();
 
 			double timer = duration * 0.0002;
-
-			var p = cloth.particles;
-
-			for ( int i = 0, il = p.length; i < il; i ++ ) 
-			{
-				clothGeometry.vertices[ i ].copy( p[ i ].position );
-			}
-
-			clothGeometry.computeFaceNormals();
-			clothGeometry.computeVertexNormals();
-
-			clothGeometry.setNormalsNeedUpdate(true);
-			clothGeometry.setVerticesNeedUpdate(true);
-
-			sphere.getPosition().copy( ballPosition );
-
-			if ( rotate ) 
+			
+			if ( isRotate ) 
 			{
 				getCamera().getPosition().setX( Math.cos( timer ) * 1500 );
 				getCamera().getPosition().setZ( Math.sin( timer ) * 1500 );
