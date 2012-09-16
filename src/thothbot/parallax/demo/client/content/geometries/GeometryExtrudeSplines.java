@@ -365,8 +365,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 				lookAt.copy( pos ).add( dir );
 
 			this.splineCamera.getMatrix().lookAt( this.splineCamera.getPosition(), lookAt, this.normal );
-			this.splineCamera.getRotation().getRotationFromMatrix( this.splineCamera.getMatrix() );
-
+			this.splineCamera.getRotation().setEulerFromRotationMatrix(splineCamera.getMatrix(), splineCamera.getEulerOrder());
+			
 			this.cameraHelper.update();
 
 			this.parent.getRotation().addY( ( this.targetRotation - this.parent.getRotation().getY() ) * 0.05 );
