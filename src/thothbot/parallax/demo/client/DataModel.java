@@ -28,6 +28,7 @@ import java.util.Set;
 
 import thothbot.parallax.demo.client.content.CustomAttributesParticles;
 import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
+import thothbot.parallax.demo.client.content.animation.ClothSimulation;
 import thothbot.parallax.demo.client.content.animation.MorphNormalsFlamingo;
 import thothbot.parallax.demo.client.content.animation.MorphTargetsHorse;
 import thothbot.parallax.demo.client.content.geometries.CamerasExample;
@@ -362,6 +363,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Animation");
 			categoriesList.add(category);
+			category.addExample(new ClothSimulation(),
+					RunAsyncCode.runAsyncCode(ClothSimulation.class));
 			category.addExample(new MorphNormalsFlamingo(),
 					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
 			category.addExample(new MorphTargetsHorse(),
