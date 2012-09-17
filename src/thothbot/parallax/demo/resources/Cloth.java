@@ -25,6 +25,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.Duration;
 
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
@@ -263,7 +264,7 @@ public class Cloth
 		}
 
 		// Pin Constrains: first and last
-		for (int i = 0; i <= width; i = width) 
+		for (int i = 0; i <= width; i += width) 
 		{
 			Cloth.Particle particle = particles.get(i);
 			particle.previous.set((i - width / 2.0) * restDistance,  - height / 2.0 * -restDistance, 0);

@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
@@ -82,7 +83,7 @@ public final class ClothSimulation extends ContentWidget
 				
 		Cloth cloth;
 		
-		boolean isRotate;
+		boolean isRotate = true;
 
 		@Override
 		protected void loadCamera()
@@ -213,6 +214,7 @@ public final class ClothSimulation extends ContentWidget
 				@Override
 				public void onImageLoad(Texture texture) {
 					groundMaterial.setMap(texture);
+					Log.error(5);
 				}
 			});
 
