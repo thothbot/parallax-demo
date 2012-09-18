@@ -48,10 +48,10 @@ public final class MiscMemoryTestShaders extends ContentWidget
 		Resources INSTANCE = GWT.create(Resources.class);
 
 		@Source("../../../resources/shaders/misc_memory_test.fs")
-		TextResource fragmetShader();
+		TextResource getFragmentShader();
 		
 		@Source("../../../resources/shaders/misc_memory_test.vs")
-		TextResource vertexShader();
+		TextResource getVertexShader();
 	}
 
 	/*

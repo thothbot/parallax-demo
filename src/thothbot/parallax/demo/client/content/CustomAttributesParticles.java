@@ -29,6 +29,7 @@ import java.util.Map;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.shaders.Attribute;
+import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
@@ -44,7 +45,6 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -55,15 +55,15 @@ public class CustomAttributesParticles extends ContentWidget
 	 * Load shaders
 	 */
 	@DemoSource
-	public interface Resources extends ClientBundle
+	public interface Resources extends Shader.DefaultResources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 
 		@Source("../../resources/shaders/custom_attributes_particles.fs")
-		TextResource fragmetShader();
+		TextResource getFragmentShader();
 		
 		@Source("../../resources/shaders/custom_attributes_particles.vs")
-		TextResource vertexShader();
+		TextResource getVertexShader();
 	}
 
 	/*
@@ -104,9 +104,7 @@ public class CustomAttributesParticles extends ContentWidget
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
 			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture( texture )));
 
-			ShaderMaterial shaderMaterial = new ShaderMaterial(
-					Resources.INSTANCE.vertexShader().getText(), 
-					Resources.INSTANCE.fragmetShader().getText());
+			ShaderMaterial shaderMaterial = new ShaderMaterial( Resources.INSTANCE );
 			shaderMaterial.getShader().setAttributes(attributes);
 			shaderMaterial.getShader().setUniforms(uniforms);
 

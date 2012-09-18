@@ -21,9 +21,7 @@ package thothbot.parallax.demo.client.content.animation;
 
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Shader;
-import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
@@ -33,9 +31,8 @@ import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeomet
 import thothbot.parallax.core.shared.helpers.AxisHelper;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.materials.Material.SIDE;
-import thothbot.parallax.core.shared.materials.ShaderMaterial;
+import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ImageUtils;
@@ -43,14 +40,12 @@ import thothbot.parallax.core.shared.utils.ImageUtils.ImageLoadHandler;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.materials.MaterialsWireframe.Resources;
 import thothbot.parallax.demo.resources.Cloth;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
-import com.google.gwt.resources.client.ClientBundle.Source;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class ClothSimulation extends ContentWidget 
@@ -65,10 +60,10 @@ public final class ClothSimulation extends ContentWidget
 		Resources INSTANCE = GWT.create(Resources.class);
 
 		@Source("../../../resources/shaders/cloth_depth.fs")
-		TextResource fragmetShader();
+		TextResource getFragmentShader();
 		
 		@Source("../../../resources/shaders/cloth_depth.vs")
-		TextResource vertexShader();
+		TextResource getVertexShader();
 	}
 
 	/*

@@ -88,10 +88,10 @@ public final class TerrainDynamic extends ContentWidget
 		Resources INSTANCE = GWT.create(Resources.class);
 
 		@Source("../../../resources/shaders/terrain_dynamic_noise.fs")
-		TextResource fragmetShader();
+		TextResource getFragmentShader();
 		
 		@Source("../../../resources/shaders/terrain_dynamic_noise.vs")
-		TextResource vertexShader();
+		TextResource getVertexShader();
 	}
 
 	/*

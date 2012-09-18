@@ -25,6 +25,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.shaders.Attribute;
 import thothbot.parallax.core.client.shaders.Shader;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -57,10 +58,10 @@ public final class MaterialsWireframe extends ContentWidget
 		Resources INSTANCE = GWT.create(Resources.class);
 
 		@Source("../../../resources/shaders/materials_wireframe.fs")
-		TextResource fragmetShader();
+		TextResource getFragmentShader();
 		
 		@Source("../../../resources/shaders/materials_wireframe.vs")
-		TextResource vertexShader();
+		TextResource getVertexShader();
 	}
 
 	/*
@@ -114,7 +115,7 @@ public final class MaterialsWireframe extends ContentWidget
 			Attribute attributesQuads = new Attribute(Attribute.TYPE.V4, setupAttributes( geometryQuads ));
 			attributesQuads.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 
-			ShaderMaterial materialQuads = new ShaderMaterial(Resources.INSTANCE);
+			ShaderMaterial materialQuads = new ShaderMaterial( Resources.INSTANCE );
 			materialQuads.getShader().addAttributes("center", attributesQuads);
 
 			meshQuads = new Mesh( geometryQuads, materialQuads );
@@ -126,7 +127,7 @@ public final class MaterialsWireframe extends ContentWidget
 			Attribute attributesTris = new Attribute(Attribute.TYPE.V4, setupAttributes( geometryTris ));
 			attributesTris.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 			
-			ShaderMaterial materialTris = new ShaderMaterial(Resources.INSTANCE);
+			ShaderMaterial materialTris = new ShaderMaterial( Resources.INSTANCE );
 			materialTris.getShader().addAttributes("center", attributesTris);
 
 			meshTris = new Mesh( geometryTris, materialTris );
@@ -140,7 +141,7 @@ public final class MaterialsWireframe extends ContentWidget
 			Attribute attributesMixed = new Attribute(Attribute.TYPE.V4, setupAttributes( mixedGeometry ));
 			attributesMixed.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 
-			ShaderMaterial materialMixed = new ShaderMaterial(Resources.INSTANCE);
+			ShaderMaterial materialMixed = new ShaderMaterial( Resources.INSTANCE );
 			materialMixed.getShader().addAttributes("center", attributesMixed);
 
 			meshMixed = new Mesh( mixedGeometry, materialMixed );

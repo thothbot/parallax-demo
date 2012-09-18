@@ -104,7 +104,7 @@ public final class EffectsLensFlares extends ContentWidget
 			material.setShininess(50);
 			material.setPerPixel(true);
 			
-			for ( int i = 0; i < 3000; i ++ ) 
+			for ( int i = 0; i < 30; i ++ ) 
 			{
 				Mesh mesh = new Mesh( cubeGeometry, material );
 
