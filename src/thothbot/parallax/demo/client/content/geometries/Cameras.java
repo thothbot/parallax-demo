@@ -51,7 +51,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class CamerasExample extends ContentWidget implements RequiresResize
+public class Cameras extends ContentWidget implements RequiresResize
 {
 	 
 	/*
@@ -172,7 +172,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			
 			Geometry geometry = new Geometry();
 	
-			for ( int i = 0; i < 100; i ++ ) 
+			for ( int i = 0; i < 10000; i ++ ) 
 			{
 				Vector3 vertex = new Vector3();
 				vertex.setX(Mathematics.randFloatSpread( 2000.0 ));
@@ -248,7 +248,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		}
 	}
 	
-	public CamerasExample() 
+	public Cameras() 
 	{
 		super("Cameras", "Here is show how to split viewport to two and use different cameras for each. Use: [O] - orthographic camera,  [P] - perspective camera. This example based on the three.js example.");
 	}
@@ -295,7 +295,7 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
-		GWT.runAsync(CamerasExample.class, new RunAsyncCallback() 
+		GWT.runAsync(Cameras.class, new RunAsyncCallback() 
 		{
 			public void onFailure(Throwable caught)
 			{

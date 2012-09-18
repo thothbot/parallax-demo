@@ -31,7 +31,7 @@ import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
 import thothbot.parallax.demo.client.content.animation.ClothSimulation;
 import thothbot.parallax.demo.client.content.animation.MorphNormalsFlamingo;
 import thothbot.parallax.demo.client.content.animation.MorphTargetsHorse;
-import thothbot.parallax.demo.client.content.geometries.CamerasExample;
+import thothbot.parallax.demo.client.content.geometries.Cameras;
 import thothbot.parallax.demo.client.content.geometries.Geometries;
 import thothbot.parallax.demo.client.content.geometries.GeometriesParametric;
 import thothbot.parallax.demo.client.content.geometries.GeometryColors;
@@ -289,8 +289,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(GeometryDynamic.class));
 			category.addExample(new GeometryHierarchy(),
 					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
-			category.addExample(new CamerasExample(),
-					RunAsyncCode.runAsyncCode(CamerasExample.class));
+			category.addExample(new Cameras(),
+					RunAsyncCode.runAsyncCode(Cameras.class));
 			category.addExample(new LinesSphere(),
 					RunAsyncCode.runAsyncCode(LinesSphere.class));
 			category.addExample(new GeometryShapes(),
