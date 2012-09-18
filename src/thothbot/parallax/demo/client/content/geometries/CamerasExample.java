@@ -60,20 +60,19 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{	
-		public Camera activeCamera;
+		Camera activeCamera;
+		CameraHelper activeHelper;
 
-		public PerspectiveCamera cameraPerspective;
-		private CameraHelper cameraPerspectiveHelper;
+		PerspectiveCamera cameraPerspective;
+		CameraHelper cameraPerspectiveHelper;
 		
-		public OrthographicCamera cameraOrtho;
-		private CameraHelper cameraOrthoHelper;
+		OrthographicCamera cameraOrtho;
+		CameraHelper cameraOrthoHelper;
 		
-		private Object3D cameraRig;
+		Object3D cameraRig;
 		
-		private Mesh mesh;
+		Mesh mesh;
 		
-		private double r = 0.0;
-
 		@Override
 		protected void loadCamera()
 		{
@@ -102,10 +101,14 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		@Override
 		protected void onResize() 
 		{
-			super.onResize();
 			Canvas3d canvas = getRenderer().getCanvas();
 
+			((PerspectiveCamera)getCamera()).setAspectRatio(
+					0.5 * getRenderer().getCanvas().getAspectRation());
+			((PerspectiveCamera)getCamera()).updateProjectionMatrix();
+			
 			cameraPerspective.setAspectRatio(0.5 * canvas.getAspectRation());
+			cameraPerspective.updateProjectionMatrix();
 
 			cameraOrtho.setLeft(- 0.5 * canvas.getWidth() / 2.0 );
 			cameraOrtho.setRight( 0.5 * canvas.getWidth() / 2.0 );
@@ -121,26 +124,27 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			getScene().add( getCamera() );
 					
 			this.cameraPerspectiveHelper = new CameraHelper( this.cameraPerspective );
-			this.cameraPerspective.add( this.cameraPerspectiveHelper );
+			getScene().add( this.cameraPerspectiveHelper );
 
 			this.cameraOrthoHelper = new CameraHelper( this.cameraOrtho );
-			this.cameraOrtho.add( this.cameraOrthoHelper );
-	
+			getScene().add( this.cameraOrthoHelper );
+
 			//
 			
 			this.activeCamera = this.cameraPerspective;
+			this.activeHelper = this.cameraPerspectiveHelper;
 			
 			// counteract different front orientation of cameras vs rig
 	
-			cameraOrtho.getRotation().setY(Math.PI);
-			cameraPerspective.getRotation().setY(Math.PI);
+			this.cameraOrtho.getRotation().setY(Math.PI);
+			this.cameraPerspective.getRotation().setY(Math.PI);
 	
 			this.cameraRig = new Object3D();
 	
-			cameraRig.add( cameraPerspective );
-			cameraRig.add( cameraOrtho );
+			this.cameraRig.add( this.cameraPerspective );
+			this.cameraRig.add( this.cameraOrtho );
 	
-			getScene().add( cameraRig );
+			getScene().add( this.cameraRig );
 			
 			//
 	
@@ -168,18 +172,18 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 			
 			Geometry geometry = new Geometry();
 	
-			for ( int i = 0; i < 10000; i ++ ) 
+			for ( int i = 0; i < 100; i ++ ) 
 			{
 				Vector3 vertex = new Vector3();
-				vertex.setX(Mathematics.randFloatSpread( 3000.0 ));
-				vertex.setY(Mathematics.randFloatSpread( 3000.0 ));
-				vertex.setZ(Mathematics.randFloatSpread( 3000.0 ));
+				vertex.setX(Mathematics.randFloatSpread( 2000.0 ));
+				vertex.setY(Mathematics.randFloatSpread( 2000.0 ));
+				vertex.setZ(Mathematics.randFloatSpread( 2000.0 ));
 	
 				geometry.getVertices().add( vertex );
 			}
 			
 			ParticleBasicMaterial popt = new ParticleBasicMaterial();
-			popt.setColor( new Color(0xDDDDDD) );
+			popt.setColor( new Color(0x888888) );
 	
 			ParticleSystem particles = new ParticleSystem( geometry, popt );
 			getScene().add( particles );
@@ -197,9 +201,11 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 		@Override
 		protected void onUpdate(double duration)
 		{
-			mesh.getPosition().setX(700.0 * Math.cos( r ));
-			mesh.getPosition().setZ(700.0 * Math.sin( r ));
-			mesh.getPosition().setY(700.0 * Math.sin( r ));
+			double r = duration * 0.0005;
+			
+			mesh.getPosition().setX(700 * Math.cos( r ));
+			mesh.getPosition().setZ(700 * Math.sin( r ));
+			mesh.getPosition().setY(700 * Math.sin( r ));
 
 			mesh.getChildren().get( 0 ).getPosition().setX(70.0 * Math.cos( 2.0 * r ));
 			mesh.getChildren().get( 0 ).getPosition().setZ(70.0 * Math.sin( r ));
@@ -211,9 +217,9 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				cameraPerspective.updateProjectionMatrix();
 
 				cameraPerspectiveHelper.update();
-				cameraPerspectiveHelper.getLine().setVisible(true);
+				cameraPerspectiveHelper.setVisible(true);
 
-				cameraOrthoHelper.getLine().setVisible(false);
+				cameraOrthoHelper.setVisible(false);
 			} 
 			else 
 			{
@@ -221,22 +227,24 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				cameraOrtho.updateProjectionMatrix();
 
 				cameraOrthoHelper.update();
-				cameraOrthoHelper.getLine().setVisible(true);
+				cameraOrthoHelper.setVisible(true);
 
-				cameraPerspectiveHelper.getLine().setVisible(false);
+				cameraPerspectiveHelper.setVisible(false);
 			}
 
 			cameraRig.lookAt( mesh.getPosition() );
 
 			getRenderer().clear(false, false, false);
 
-			getRenderer().setViewport( 0, 0, getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getHeight() );
+			activeHelper.setVisible(false);
+			
+			Canvas3d canvas = getRenderer().getCanvas();
+			getRenderer().setViewport( 0, 0, canvas.getWidth() / 2, canvas.getHeight() );
 			getRenderer().render( getScene(), activeCamera );
 
-			getRenderer().setViewport( getRenderer().getCanvas().getWidth()/2, 0, 
-					getRenderer().getCanvas().getWidth()/2, getRenderer().getCanvas().getWidth() );
-
-			r += 0.01;
+			activeHelper.setVisible(true);
+			
+			getRenderer().setViewport( canvas.getWidth() / 2, 0, canvas.getWidth() / 2, canvas.getHeight() );
 		}
 	}
 	
@@ -258,8 +266,14 @@ public class CamerasExample extends ContentWidget implements RequiresResize
 				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				switch(event.getNativeEvent().getKeyCode())
 				{
-				case 79: case 111:/*O*/	rs.activeCamera = rs.cameraOrtho; break;
-				case 80: case 112:/*P*/ rs.activeCamera = rs.cameraPerspective; break;
+				case 79: case 111:/*O*/	
+					rs.activeCamera = rs.cameraOrtho;
+					rs.activeHelper = rs.cameraOrthoHelper;
+					break;
+				case 80: case 112:/*P*/ 
+					rs.activeCamera = rs.cameraPerspective;
+					rs.activeHelper = rs.cameraPerspectiveHelper;
+					break;
 				}		
 				
 			}

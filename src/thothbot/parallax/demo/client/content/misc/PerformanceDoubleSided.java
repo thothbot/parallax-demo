@@ -74,9 +74,9 @@ public final class PerformanceDoubleSided extends ContentWidget
 			getCamera().getPosition().setZ(3200);
 			getScene().add(getCamera());
 			
-			PointLight light = new PointLight( 0x0011ff, 1, 5500 );
-			light.getPosition().set( 4000, 0, 0 );
-			getScene().add( light );
+			PointLight light1 = new PointLight( 0x0011ff, 1, 5500 );
+			light1.getPosition().set( 4000, 0, 0 );
+			getScene().add( light1 );
 
 			PointLight light2 = new PointLight( 0xff1100, 1, 5500 );
 			light2.getPosition().set( -4000, 0, 0 );
