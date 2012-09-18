@@ -172,14 +172,11 @@ public final class GeometryExtrudeSplines extends ContentWidget
 					0.01, // near
 					1000 // far 
 			);
-			
-			cameraHelper = new CameraHelper(splineCamera);
 		}
 		
 		@Override
 		protected void onResize() 
 		{
-			super.onResize();
 			Canvas3d canvas = getRenderer().getCanvas();
 
 			mainCamera.setAspectRatio(canvas.getAspectRation());
@@ -198,76 +195,23 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 			parent = new Object3D();
 			parent.getPosition().setY(100);
+			
 			getScene().add(parent);
-
+			
+			cameraHelper = new CameraHelper(splineCamera);
+			cameraHelper.getScale().multiply(0.1);
+			splineCamera.add(cameraHelper);
+			parent.add(splineCamera);
+						
 			addTube();
 
 			// Debug point
 			MeshBasicMaterial pMaterial = new MeshBasicMaterial();
 			pMaterial.setColor(new Color(0xdddddd));
-			this.cameraEye = new Mesh(new SphereGeometry(5), pMaterial);
-
-			this.cameraHelper.getChildren().get(0).setVisible(isShowCameraHelper);
-			this.cameraEye.setVisible(isShowCameraHelper);
-
+			cameraEye = new Mesh(new SphereGeometry(5), pMaterial);
 			parent.add(cameraEye);
 
-			cameraHelper.getScale().multiply(0.1);
-			splineCamera.add(cameraHelper);
-			parent.add(splineCamera);
-		}
-		
-		public void setScale(double scale)
-		{
-			this.scale = scale;
-			setScale();
-		}
-		
-		public void setSpline(String spline)
-		{
-			this.extrudePath = splines().get(spline);
-			addTube();
-		}
-		
-		public void setExtrusionSegments(int extrusionSegments)
-		{
-			this.extrusionSegments = extrusionSegments;
-			addTube();
-		}
-		
-		public void setRadiusSegments(int radiusSegments)
-		{
-			this.radiusSegments = radiusSegments;
-			addTube();
-		}
-		
-		public void setDebug(boolean isDebug)
-		{
-			this.isDebug = isDebug; 
-			addTube();
-		}
-		
-		public void setClosed(boolean isClosed)
-		{
-			this.isClosed = isClosed;
-			addTube();
-		}
-		
-		public void setLookAhead(boolean isLookAhead)
-		{
-			this.isLookAhead = isLookAhead;
-		}
-		
-		public void setShowCameraHelper(boolean isShowCameraHelper)
-		{
-			this.isShowCameraHelper = isShowCameraHelper;
-			
 			animateCamera();
-		}
-		
-		public boolean isCameraAnimation()
-		{
-			return getCamera().equals(splineCamera);
 		}
 		
 		public void setCameraAnimation()
@@ -280,7 +224,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		private void animateCamera() 
 	    {
-	        cameraHelper.getChildren().get(0).setVisible( this.isShowCameraHelper );
+	        cameraHelper.setVisible( this.isShowCameraHelper );
 	        cameraEye.setVisible( this.isShowCameraHelper );
 	    }
 		
@@ -358,7 +302,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 			// Using arclength for stabilization in look ahead.
 			Vector3 lookAt = (Vector3) this.tubeGeometry.getPath().getPointAt(
-					( t + 30 / (double)this.tubeGeometry.getPath().getLength()) % 1 ).multiply(this.scale);
+					( t + 30 / this.tubeGeometry.getPath().getLength()) % 1 ).multiply(this.scale);
 
 			// Camera Orientation 2 - up orientation via normal
 			if ( !this.isLookAhead )
@@ -428,7 +372,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.setSpline(splines.getValue(splines.getSelectedIndex()));
+				rs.extrudePath = rs.splines().get(splines.getValue(splines.getSelectedIndex()));
+				rs.addTube();
 			}
 		});
 
@@ -445,7 +390,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.setScale( Integer.parseInt( scale.getValue(scale.getSelectedIndex())) );
+				rs.scale = Integer.parseInt( scale.getValue(scale.getSelectedIndex()));
+				rs.setScale();
 			}
 		});
 
@@ -465,7 +411,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.setExtrusionSegments(Integer.parseInt( extrusionSegments.getValue(extrusionSegments.getSelectedIndex()) ));
+				rs.extrusionSegments = Integer.parseInt( extrusionSegments.getValue(extrusionSegments.getSelectedIndex()) );
+				rs.addTube();
 			}
 		});
 
@@ -485,7 +432,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onChange(ChangeEvent event) {
-				rs.setRadiusSegments(Integer.parseInt( radiusSegments.getValue(radiusSegments.getSelectedIndex()) ));	
+				rs.radiusSegments = Integer.parseInt( radiusSegments.getValue(radiusSegments.getSelectedIndex()) );
+				rs.addTube();
 			}
 		});
 
@@ -504,7 +452,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.setDebug(isDebugNormals.getValue());
+				rs.isDebug = isDebugNormals.getValue(); 
+				rs.addTube();
 			}
 		});
 
@@ -518,7 +467,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.setClosed(isClosed.getValue());
+				rs.isClosed = isClosed.getValue();
+				rs.addTube();
 			}
 		});
 
@@ -532,7 +482,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			@Override
 			public void onClick(ClickEvent event) {
 				rs.setCameraAnimation();
-				animation.setText("Camera Spline Animation View: " + (rs.isCameraAnimation() ? "ON" : "OFF"));
+				animation.setText("Camera Spline Animation View: " + (rs.getCamera().equals(rs.splineCamera) ? "ON" : "OFF"));
 			}
 		});
 
@@ -548,7 +498,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.setLookAhead(isLookAhead.getValue());				
+				rs.isLookAhead = isLookAhead.getValue();
 			}
 		});
 		
@@ -561,7 +511,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.setShowCameraHelper(isCameraHelper.getValue());				
+				rs.isShowCameraHelper = isCameraHelper.getValue();
+				rs.animateCamera();
 			}
 		});
 		panel.add(isCameraHelper);
