@@ -122,9 +122,9 @@ public final class PerformanceDoubleSided extends ContentWidget
 				getScene().add( mesh );
 			}
 
-//			renderer.gammaInput = true;
-//			renderer.gammaOutput = true;
-//			renderer.physicallyBasedShading = true;
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
+			getRenderer().setPhysicallyBasedShading(true);
 		}
 		
 		@Override
