@@ -103,14 +103,14 @@ public final class TerrainShader extends Shader
 	protected void updateFragmentSource(String src)
 	{
 		List<String> vars = Arrays.asList(
-			ChunksFragmentShader.FOG_PARS
+				ChunksFragmentShader.FOG_PARS
 		);
-		
+			
 		List<String> main = Arrays.asList(
-			ChunksFragmentShader.LENEAR_TO_GAMMA,
-			ChunksFragmentShader.FOG
+				ChunksFragmentShader.LINEAR_TO_GAMMA,
+				ChunksFragmentShader.FOG
 		);
-		
+					
 		super.updateFragmentSource(Shader.updateShaderSource(src, vars, main));		
 	}
 }
