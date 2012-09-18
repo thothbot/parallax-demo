@@ -19,7 +19,6 @@
 
 package thothbot.parallax.demo.client.content.interactivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
@@ -34,7 +33,6 @@ import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -95,7 +93,7 @@ public final class InteractiveCubes extends ContentWidget
 
 			CubeGeometry geometry = new CubeGeometry( 20, 20, 20 );
 
-			for ( int i = 0; i < 500; i ++ ) 
+			for ( int i = 0; i < 2000; i ++ ) 
 			{
 				MeshLambertMaterial material = new MeshLambertMaterial();
 				material.setColor(new Color( (int)(Math.random() * 0xffffff) ));
@@ -109,9 +107,9 @@ public final class InteractiveCubes extends ContentWidget
 				object.getRotation().setY( ( Math.random() * 360 ) * Math.PI / 180 );
 				object.getRotation().setZ( ( Math.random() * 360 ) * Math.PI / 180 );
 
-				object.getScale().setX( Math.random() * 2 + 1 );
-				object.getScale().setY( Math.random() * 2 + 1 );
-				object.getScale().setZ( Math.random() * 2 + 1 );
+				object.getScale().setX( Math.random() + 0.5 );
+				object.getScale().setY( Math.random() + 0.5 );
+				object.getScale().setZ( Math.random() + 0.5 );
 
 				getScene().add( object );
 
@@ -150,18 +148,18 @@ public final class InteractiveCubes extends ContentWidget
 				if ( Intersected != intersects.get( 0 ).object ) 
 				{
 					if ( Intersected != null ) 
-						((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( Intersected.currentHex );
+						((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().setHex( Intersected.currentHex );
 
 					Intersected = new Intersect();
 					Intersected.object = (GeometryObject) intersects.get( 0 ).object;
-					Intersected.currentHex = ((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().getHex();
-					((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( 0xff0000 );
+					Intersected.currentHex = ((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().getHex();
+					((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().setHex( 0xff0000 );
 				}
 			}
 			else 
 			{
 				if ( Intersected != null ) 
-					((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( Intersected.currentHex );
+					((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().setHex( Intersected.currentHex );
 
 				Intersected = null;
 			}
@@ -185,7 +183,7 @@ public final class InteractiveCubes extends ContentWidget
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() / canvas.getWidth() ) * 2 - 1; 
-		    	  	rs.mouseY = (event.getY() / canvas.getHeight() ) * 2 + 1;
+		    	  	rs.mouseY = - (event.getY() / canvas.getHeight() ) * 2 + 1;
 		      }
 		});
 	}

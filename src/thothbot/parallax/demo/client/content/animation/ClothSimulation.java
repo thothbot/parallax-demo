@@ -214,7 +214,6 @@ public final class ClothSimulation extends ContentWidget
 				@Override
 				public void onImageLoad(Texture texture) {
 					groundMaterial.setMap(texture);
-					Log.error(5);
 				}
 			});
 
