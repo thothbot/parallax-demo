@@ -110,6 +110,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_lines_sphere.jpg")
 	ImageResource exampleLinesSphere();
 	
+	@Source("images/example_materials_bumpmap.jpg")
+	ImageResource exampleMaterialsBumpmap();
+	
 	@Source("images/example_materials_wireframe.jpg")
 	ImageResource exampleMaterialsWireframe();
 	
