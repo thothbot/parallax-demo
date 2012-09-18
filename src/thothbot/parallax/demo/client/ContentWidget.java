@@ -240,6 +240,15 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 		super.onLoad();
 	}
 	
+	@Override
+	protected void onUnload() 
+	{
+		view = null;
+		renderingPanel = null;
+		widgetInitializing = widgetInitialized = false;
+		super.onUnload();
+	}
+	
 	/**
 	 * Ensure that an example has been initialized. Note that
 	 * initialization can fail if there is a network failure.
