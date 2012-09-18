@@ -19,13 +19,33 @@
 
 package thothbot.parallax.demo.client.content.materials;
 
+import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Color;
+import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.lights.AmbientLight;
+import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.lights.PointLight;
+import thothbot.parallax.core.shared.lights.SpotLight;
+import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
+import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.loader.shared.JsonLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -38,24 +58,157 @@ public final class MaterialsBumpmap extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		private static final String texture = "./static/models/obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg";
+		private static final String model = "./static/models/obj/leeperrysmith/LeePerrySmith.js";
+		
+		Mesh mesh;
+		
+		int mouseX = 0, mouseY = 0;
+		
 		@Override
 		protected void loadCamera()
 		{
 			setCamera(
 					new PerspectiveCamera(
-							70, // fov
+							27, // fov
 							getRenderer().getCanvas().getAspectRation(), // aspect 
 							1, // near
-							1000 // far 
+							10000 // far 
 					)); 
 		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(400);
+			getCamera().getPosition().setZ(1200);
 			getScene().add(getCamera());
 
+			// LIGHTS
+
+			getScene().add( new AmbientLight( 0x444444 ) );
+
+			//
+
+			PointLight pointLight = new PointLight( 0xffffff, 1.5, 1000 );
+			pointLight.getColor().setHSV( 0.05, 0.05, 1 );
+			pointLight.getPosition().set( 0, 0, 600 );
+
+			getScene().add( pointLight );
+
+			// shadow for PointLight
+
+			SpotLight spotLight = new SpotLight( 0xffffff, 1.5 );
+			spotLight.getPosition().set( 0.05, 0.05, 1 );
+			spotLight.getColor().setHSV( 0.6, 0.05, 1 );
+			getScene().add( spotLight );
+
+			spotLight.getPosition().multiply( 700 );
+
+//			spotLight.castShadow = true;
+//			spotLight.onlyShadow = true;
+//			//spotLight.shadowCameraVisible = true;
+//
+//			spotLight.shadowMapWidth = 2048;
+//			spotLight.shadowMapHeight = 2048;
+//
+//			spotLight.shadowCameraNear = 200;
+//			spotLight.shadowCameraFar = 1500;
+//
+//			spotLight.shadowCameraFov = 40;
+//
+//			spotLight.shadowBias = -0.005;
+//			spotLight.shadowDarkness = 0.35;
+
+			//
+
+			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 1.5 );
+			directionalLight.getPosition().set( 1, -0.5, 1 );
+			directionalLight.getColor().setHSV( 0.6, 0.05, 1 );
+			getScene().add( directionalLight );
+
+			directionalLight.getPosition().multiply( 500 );
+
+//			directionalLight.castShadow = true;
+//			//directionalLight.shadowCameraVisible = true;
+//
+//			directionalLight.shadowMapWidth = 2048;
+//			directionalLight.shadowMapHeight = 2048;
+//
+//			directionalLight.shadowCameraNear = 200;
+//			directionalLight.shadowCameraFar = 1500;
+//
+//			directionalLight.shadowCameraLeft = -500;
+//			directionalLight.shadowCameraRight = 500;
+//			directionalLight.shadowCameraTop = 500;
+//			directionalLight.shadowCameraBottom = -500;
+//
+//			directionalLight.shadowBias = -0.005;
+//			directionalLight.shadowDarkness = 0.35;
+
+			//
+
+			DirectionalLight directionalLight2 = new DirectionalLight( 0xffffff, 1.2 );
+			directionalLight2.getPosition().set( 1, -0.5, -1 );
+			directionalLight2.getColor().setHSV( 0.08, 0.35, 1 );
+			getScene().add( directionalLight2 );
+
+			Texture mapHeight = ImageUtils.loadTexture( texture );
+
+			mapHeight.setAnisotropy(4);
+			mapHeight.getRepeat().set( 0.998, 0.998 );
+			mapHeight.getOffset().set( 0.001, 0.001 );
+			mapHeight.setWrapS(TextureWrapMode.REPEAT);
+			mapHeight.setWrapT(TextureWrapMode.REPEAT);
+			mapHeight.setFormat(PixelFormat.RGB);
+
+			final MeshPhongMaterial material = new MeshPhongMaterial();
+			material.setAmbient(new Color(0x552811));
+			material.setColor(new Color(0x552811));
+			material.setSpecular(new Color(0x333333));
+			material.setShininess(25);
+			material.setPerPixel(true);
+			material.setBumpMap(mapHeight);
+			material.setBumpScale(19);
+			material.setMetal(false);
+			
+			final JsonLoader jsonLoader = new JsonLoader();
+			try
+			{
+				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+
+					@Override
+					public void onModeLoad() {		
+						createScene( jsonLoader.getGeometry(), 100, material );
+					}
+				});
+			}
+			catch (RequestException exception) 
+			{
+				Log.error("Error while loading JSON file.");
+			}
+
+//			renderer.shadowMapEnabled = true;
+//			renderer.shadowMapCullFrontFaces = false;
+
+			//
+
+			getRenderer().setClearColorHex(0x060708);
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
+			getRenderer().setPhysicallyBasedShading(true);
+		}
+		
+		private void createScene( Geometry geometry, double scale, Material material ) 
+		{
+			mesh = new Mesh( geometry, material );
+
+			mesh.getPosition().setY( - 50 );
+			mesh.getScale().set( scale );
+
+//			mesh.castShadow = true;
+//			mesh.receiveShadow = true;
+
+			getScene().add( mesh );
 		}
 		
 		@Override
@@ -66,13 +219,37 @@ public final class MaterialsBumpmap extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			double targetX = mouseX * .001;
+			double targetY = mouseY * .001;
 
+			if ( mesh != null ) 
+			{
+				mesh.getRotation().addY( 0.05 * ( targetX - mesh.getRotation().getY() ) );
+				mesh.getRotation().addX( 0.05 * ( targetY - mesh.getRotation().getX() ) );
+			}
 		}
 	}
 		
 	public MaterialsBumpmap() 
 	{
 		super("Bump mapping without tangents", "This example based on the three.js example.");
+	}
+	
+	@Override
+	public void onAnimationReady(AnimationReadyEvent event)
+	{
+		super.onAnimationReady(event);
+
+		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		      @Override
+		      public void onMouseMove(MouseMoveEvent event)
+		      {
+		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
+		    	  	rs.mouseX = event.getX() - canvas.getWidth() / 2 ; 
+		    	  	rs.mouseY = event.getY() - canvas.getHeight() / 2;
+		      }
+		});
 	}
 	
 	@Override
