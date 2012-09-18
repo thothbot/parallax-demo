@@ -232,7 +232,7 @@ public final class MaterialsBumpmap extends ContentWidget
 		
 	public MaterialsBumpmap() 
 	{
-		super("Bump mapping without tangents", "This example based on the three.js example.");
+		super("Bump mapping", "This example based on the three.js example.");
 	}
 	
 	@Override

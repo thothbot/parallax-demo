@@ -171,6 +171,22 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			directionalLight2.getPosition().set( 1, -0.5, -1 );
 			getScene().add( directionalLight2 );
 			
+			// COMPOSER BECKMANN
+
+			ShaderPass effectBeckmann = new ShaderPass( new BeckmannShader() );
+			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
+
+			effectScreen.setRenderToScreen(true);
+
+			RenderTargetTexture target = new RenderTargetTexture( 512, 512 );
+			target.setMinFilter(TextureMinFilter.LINEAR);
+			target.setMagFilter(TextureMagFilter.LINEAR);
+			target.setFormat(PixelFormat.RGB);
+			target.setStencilBuffer(false);
+			composerBeckmann = new Postprocessing( getRenderer(), getScene(), target );
+			composerBeckmann.addPass( effectBeckmann );
+			composerBeckmann.addPass( effectScreen );
+
 			//
 			
 			final JsonLoader jsonLoader = new JsonLoader();
@@ -188,40 +204,18 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			{
 				Log.error("Error while loading JSON file.");
 			}
-
+//			createScene( new CubeGeometry(), 100 );
 			//
 
-			Color color = new Color();
-			color.setHSV( 0.6, 0.15, 0.35 );
-			getRenderer().setClearColor( color, 1 );
+			getRenderer().setClearColorHex(0x4c5159);
 
 //			renderer.shadowMapEnabled = true;
 //			renderer.shadowMapCullFrontFaces = false;
-
-			//
 
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 			getRenderer().setPhysicallyBasedShading(true);
-			
-			// COMPOSER
-
-			// BECKMANN
-
-			ShaderPass effectBeckmann = new ShaderPass( new BeckmannShader() );
-			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
-
-			effectScreen.setRenderToScreen(true);
-
-			RenderTargetTexture target = new RenderTargetTexture( 512, 512 );
-			target.setMinFilter(TextureMinFilter.LINEAR);
-			target.setMagFilter(TextureMagFilter.LINEAR);
-			target.setFormat(PixelFormat.RGB);
-			target.setStencilBuffer(false);
-			composerBeckmann = new Postprocessing( getRenderer(), getScene(), target );
-			composerBeckmann.addPass( effectBeckmann );
-			composerBeckmann.addPass( effectScreen );
 		}
 		
 		private void createScene( Geometry geometry, double scale ) 
@@ -256,11 +250,11 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			uniforms.get( "enableBump" ).setValue( true );
 			uniforms.get( "enableSpecular" ).setValue( true );
 
-			uniforms.get( "tBeckmann" ).setValue( composerBeckmann.getRenderTarget1() );
-			uniforms.get( "tDiffuse" ).setValue( mapColor );
+			uniforms.get( "tBeckmann" ).setTexture( composerBeckmann.getRenderTarget1() );
+			uniforms.get( "tDiffuse" ).setTexture( mapColor );
 
-			uniforms.get( "bumpMap" ).setValue( mapHeight );
-			uniforms.get( "specularMap" ).setValue( mapSpecular );
+			uniforms.get( "bumpMap" ).setTexture( mapHeight );
+			uniforms.get( "specularMap" ).setTexture( mapSpecular );
 
 			((Color)uniforms.get( "uAmbientColor" ).getValue()).setHex( 0xa0a0a0 );
 			((Color)uniforms.get( "uDiffuseColor" ).getValue()).setHex( 0xa0a0a0 );
@@ -269,7 +263,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			uniforms.get( "uRoughness" ).setValue( 0.145 );
 			uniforms.get( "uSpecularBrightness" ).setValue( 0.75 );
 
-			uniforms.get( "bumpScale" ).setValue( 16 );
+			uniforms.get( "bumpScale" ).setValue( 16.0 );
 
 			((Vector4)uniforms.get( "offsetRepeat" ).getValue()).set( 0.001, 0.001, 0.998, 0.998 );
 
