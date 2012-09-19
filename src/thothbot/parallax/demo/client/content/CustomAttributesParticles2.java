@@ -32,6 +32,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Attribute;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector3;
@@ -75,7 +76,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{	
-		private static final String texture = "./static/textures/sprites/disc.png";
+		private static final String image = "./static/textures/sprites/disc.png";
 		
 		Map<String, Attribute> attributes;
 		ParticleSystem sphere;
@@ -105,11 +106,13 @@ public class CustomAttributesParticles2 extends ContentWidget
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
-			uniforms.put("texture", new Uniform(Uniform.TYPE.T, 0, ImageUtils.loadTexture(texture)));
-	
-			uniforms.get("texture").getTexture().setWrapS(TextureWrapMode.REPEAT);
-			uniforms.get("texture").getTexture().setWrapT(TextureWrapMode.REPEAT);
-	
+			
+			Texture texture = ImageUtils.loadTexture(image);
+			texture.setWrapS(TextureWrapMode.REPEAT);
+			texture.setWrapT(TextureWrapMode.REPEAT);
+
+			uniforms.put("texture", new Uniform(Uniform.TYPE.T, texture));
+		
 			ShaderMaterial shaderMaterial = new ShaderMaterial(	Resources.INSTANCE );
 			shaderMaterial.getShader().setAttributes(attributes);
 			shaderMaterial.getShader().setUniforms(uniforms);

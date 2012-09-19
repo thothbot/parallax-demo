@@ -184,8 +184,8 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			target.setFormat(PixelFormat.RGB);
 			target.setStencilBuffer(false);
 			composerBeckmann = new Postprocessing( getRenderer(), getScene(), target );
-			composerBeckmann.addPass( effectBeckmann );
-			composerBeckmann.addPass( effectScreen );
+//			composerBeckmann.addPass( effectBeckmann );
+//			composerBeckmann.addPass( effectScreen );
 
 			//
 			
@@ -250,11 +250,11 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			uniforms.get( "enableBump" ).setValue( true );
 			uniforms.get( "enableSpecular" ).setValue( true );
 
-			uniforms.get( "tBeckmann" ).setTexture( composerBeckmann.getRenderTarget1() );
-			uniforms.get( "tDiffuse" ).setTexture( mapColor );
+			uniforms.get( "tBeckmann" ).setValue( composerBeckmann.getRenderTarget1() );
+			uniforms.get( "tDiffuse" ).setValue( mapColor );
 
-			uniforms.get( "bumpMap" ).setTexture( mapHeight );
-			uniforms.get( "specularMap" ).setTexture( mapSpecular );
+			uniforms.get( "bumpMap" ).setValue( mapHeight );
+			uniforms.get( "specularMap" ).setValue( mapSpecular );
 
 			((Color)uniforms.get( "uAmbientColor" ).getValue()).setHex( 0xa0a0a0 );
 			((Color)uniforms.get( "uDiffuseColor" ).getValue()).setHex( 0xa0a0a0 );

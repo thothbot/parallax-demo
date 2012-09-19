@@ -241,7 +241,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			uniformsNormal.get("height").setValue( 0.05 );
 			((Vector2)uniformsNormal.get("resolution").getValue()).set( rx, ry );
-			uniformsNormal.get("heightMap").setTexture( heightMap );
+			uniformsNormal.get("heightMap").setValue( heightMap );
 
 			// TEXTURES
 
@@ -279,15 +279,15 @@ public final class TerrainDynamic extends ContentWidget
 
 			uniformsTerrain = UniformsUtils.clone( terrainShader.getUniforms() );
 
-			uniformsTerrain.get( "tNormal" ).setTexture( normalMap );
+			uniformsTerrain.get( "tNormal" ).setValue( normalMap );
 			uniformsTerrain.get( "uNormalScale" ).setValue( 3.5 );
 
-			uniformsTerrain.get( "tDisplacement" ).setTexture( heightMap );
+			uniformsTerrain.get( "tDisplacement" ).setValue( heightMap );
 
-			uniformsTerrain.get( "tDiffuse1" ).setTexture( diffuseTexture1 );
-			uniformsTerrain.get( "tDiffuse2" ).setTexture( diffuseTexture2 );
-			uniformsTerrain.get( "tSpecular" ).setTexture( specularMap );
-			uniformsTerrain.get( "tDetail" ).setTexture( detailTexture );
+			uniformsTerrain.get( "tDiffuse1" ).setValue( diffuseTexture1 );
+			uniformsTerrain.get( "tDiffuse2" ).setValue( diffuseTexture2 );
+			uniformsTerrain.get( "tSpecular" ).setValue( specularMap );
+			uniformsTerrain.get( "tDetail" ).setValue( detailTexture );
 
 			uniformsTerrain.get( "enableDiffuse1" ).setValue( 1 );
 			uniformsTerrain.get( "enableDiffuse2" ).setValue( 1 );
@@ -491,7 +491,7 @@ public final class TerrainDynamic extends ContentWidget
 		{
 			ShaderMaterial shaderMaterial = new ShaderMaterial(shader);
 
-			shaderMaterial.getShader().getUniforms().get("tDiffuse").setTexture(texture);
+			shaderMaterial.getShader().getUniforms().get("tDiffuse").setValue(texture);
 
 			Scene sceneTmp = new Scene();
 

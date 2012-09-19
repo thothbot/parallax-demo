@@ -134,7 +134,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 
 			// Skybox
 			ShaderMaterial sMaterial = new ShaderMaterial(new CubeMapShader());
-			sMaterial.getShader().getUniforms().get("tCube").setTexture( textureCube ); 
+			sMaterial.getShader().getUniforms().get("tCube").setValue( textureCube ); 
 			sMaterial.setDepthWrite( false );
 			sMaterial.setSide( Material.SIDE.BACK );
 			

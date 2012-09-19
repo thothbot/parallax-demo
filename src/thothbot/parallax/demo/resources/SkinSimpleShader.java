@@ -79,8 +79,8 @@ public final class SkinSimpleShader extends Shader
 		this.addUniform("enableBump", new Uniform(Uniform.TYPE.I, 0 ));
 		this.addUniform("enableSpecular", new Uniform(Uniform.TYPE.I, 0 ));
 		
-		this.addUniform("tDiffuse", new Uniform(Uniform.TYPE.T, 0 ));
-		this.addUniform("tBeckmann", new Uniform(Uniform.TYPE.T, 1 ));
+		this.addUniform("tDiffuse", new Uniform(Uniform.TYPE.T ));
+		this.addUniform("tBeckmann", new Uniform(Uniform.TYPE.T ));
 
 		this.addUniform("uDiffuseColor", new Uniform(Uniform.TYPE.C, new Color( 0xeeeeee ) ));
 		this.addUniform("uSpecularColor", new Uniform(Uniform.TYPE.C, new Color( 0x111111 ) ));
@@ -91,10 +91,10 @@ public final class SkinSimpleShader extends Shader
 		this.addUniform("uRoughness", new Uniform(Uniform.TYPE.F, 0.15 ));
 		this.addUniform("uSpecularBrightness", new Uniform(Uniform.TYPE.F, 0.75 ));
 
-		this.addUniform("bumpMap", new Uniform(Uniform.TYPE.T, 2 ));
+		this.addUniform("bumpMap", new Uniform(Uniform.TYPE.T ));
 		this.addUniform("bumpScale", new Uniform(Uniform.TYPE.F, 1.0 ));
 		
-		this.addUniform("specularMap", new Uniform(Uniform.TYPE.T, 3 ));
+		this.addUniform("specularMap", new Uniform(Uniform.TYPE.T ));
 		
 		this.addUniform("offsetRepeat", new Uniform(Uniform.TYPE.V4, new Vector4( 0, 0, 1, 1 ) ));
 		this.addUniform("uWrapRGB", new Uniform(Uniform.TYPE.V3, new Vector3( 0.75, 0.375, 0.1875 ) ));		

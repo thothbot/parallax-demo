@@ -38,7 +38,8 @@ import com.google.gwt.resources.client.TextResource;
  * Dynamic terrain shader<br>
  * - Blinn-Phong<br>
  * - height + normal + diffuse1 + diffuse2 + specular + detail maps<br>
- * - point and directional lights (use with "lights: true" material option)
+ * - point, directional and hemisphere lights (use with "lights: true" material option)<br>
+ * - shadow maps receiving
  * <p>
  * Based on three.js code
  * 
@@ -69,17 +70,18 @@ public final class TerrainShader extends Shader
 	{
 		this.setUniforms(UniformsLib.getFog());
 		this.setUniforms(UniformsLib.getLights());
+		this.setUniforms(UniformsLib.getShadowmap());
 		this.addUniform("enableDiffuse1", new Uniform(Uniform.TYPE.I, 0 ));
 		this.addUniform("enableDiffuse2", new Uniform(Uniform.TYPE.I, 0 ));
 		this.addUniform("enableSpecular", new Uniform(Uniform.TYPE.I, 0 ));
 		this.addUniform("enableReflection", new Uniform(Uniform.TYPE.I, 0 ));
 
-		this.addUniform("tDiffuse1", new Uniform(Uniform.TYPE.T, 0 ));
-		this.addUniform("tDiffuse2", new Uniform(Uniform.TYPE.T, 1 ));
-		this.addUniform("tDetail", new Uniform(Uniform.TYPE.T, 2 ));
-		this.addUniform("tNormal", new Uniform(Uniform.TYPE.T, 3 ));
-		this.addUniform("tSpecular", new Uniform(Uniform.TYPE.T, 4 ));
-		this.addUniform("tDisplacement", new Uniform(Uniform.TYPE.T, 5 ));
+		this.addUniform("tDiffuse1", new Uniform(Uniform.TYPE.T ));
+		this.addUniform("tDiffuse2", new Uniform(Uniform.TYPE.T ));
+		this.addUniform("tDetail", new Uniform(Uniform.TYPE.T ));
+		this.addUniform("tNormal", new Uniform(Uniform.TYPE.T ));
+		this.addUniform("tSpecular", new Uniform(Uniform.TYPE.T ));
+		this.addUniform("tDisplacement", new Uniform(Uniform.TYPE.T ));
 		
 		this.addUniform("uNormalScale", new Uniform(Uniform.TYPE.F, 1.0 ));
 		
@@ -103,14 +105,30 @@ public final class TerrainShader extends Shader
 	protected void updateFragmentSource(String src)
 	{
 		List<String> vars = Arrays.asList(
+				ChunksFragmentShader.SHADOWMAP_PARS,
 				ChunksFragmentShader.FOG_PARS
 		);
 			
 		List<String> main = Arrays.asList(
+				ChunksFragmentShader.SHADOWMAP,
 				ChunksFragmentShader.LINEAR_TO_GAMMA,
 				ChunksFragmentShader.FOG
 		);
 					
 		super.updateFragmentSource(Shader.updateShaderSource(src, vars, main));		
+	}
+	
+	@Override
+	protected void updateVertexSource(String src) 
+	{
+		List<String> vars = Arrays.asList(
+				ChunksVertexShader.SHADOWMAP_PARS
+		);
+			
+		List<String> main = Arrays.asList(
+				ChunksVertexShader.SHADOWMAP
+		);
+
+		super.updateVertexSource(Shader.updateShaderSource(src, vars, main));
 	}
 }

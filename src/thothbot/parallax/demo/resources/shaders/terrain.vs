@@ -19,14 +19,12 @@ varying vec2 vUv;
 
 varying vec3 vViewPosition;
 
+[*]
+
 void main() {
 
-	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-
-	vViewPosition = -mvPosition.xyz;
-
 	vNormal = normalize( normalMatrix * normal );
-	
+
 	// tangent and binormal vectors
 
 	vTangent = normalize( normalMatrix * tangent.xyz );
@@ -46,16 +44,25 @@ void main() {
 
 		vec3 dv = texture2D( tDisplacement, uvBase ).xyz;
 		float df = uDisplacementScale * dv.x + uDisplacementBias;
-		vec4 displacedPosition = vec4( vNormal.xyz * df, 0.0 ) + mvPosition;
-		gl_Position = projectionMatrix * displacedPosition;
+		vec3 displacedPosition = normal * df + position;
+
+		vec4 mPosition = modelMatrix * vec4( displacedPosition, 1.0 );
+		vec4 mvPosition = modelViewMatrix * vec4( displacedPosition, 1.0 );
 
 	#else
 
-		gl_Position = projectionMatrix * mvPosition;
+		vec4 mPosition = modelMatrix * vec4( position, 1.0 );
+		vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 
 	#endif
 
+	gl_Position = projectionMatrix * mvPosition;
+
+	vViewPosition = -mvPosition.xyz;
+
 	vec3 normalTex = texture2D( tNormal, uvBase ).xyz * 2.0 - 1.0;
 	vNormal = normalMatrix * normalTex;
+
+	[*]
 
 }

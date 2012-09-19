@@ -106,7 +106,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 			textureCube.setFormat(PixelFormat.RGB);
 
 			FresnelShader shader = new FresnelShader();
-			shader.getUniforms().get("tCube").setTexture(textureCube);
+			shader.getUniforms().get("tCube").setValue(textureCube);
 
 			ShaderMaterial material = new ShaderMaterial( shader );
 
@@ -130,7 +130,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 
 			// Skybox
 			CubeMapShader shaderCube = new CubeMapShader();
-			shaderCube.getUniforms().get("tCube").setTexture(textureCube);
+			shaderCube.getUniforms().get("tCube").setValue(textureCube);
 
 			ShaderMaterial sMaterial = new ShaderMaterial(shaderCube);
 			sMaterial.setSide(Material.SIDE.BACK);

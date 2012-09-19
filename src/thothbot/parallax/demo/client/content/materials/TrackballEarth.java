@@ -112,20 +112,20 @@ public final class TrackballEarth extends ContentWidget
 			Texture specularTexture = ImageUtils.loadTexture( earthSpecular );
 			Texture moonTexture     = ImageUtils.loadTexture( moon );
 
-			ShaderMaterial materialNormalMap = new ShaderMaterial(new NormalMapShader()); 
-			materialNormalMap.setLights(true);
+			ShaderMaterial materialNormalMap = new ShaderMaterial( new NormalMapShader() ); 
+			materialNormalMap.setLights( true );
 			
 			Map<String, Uniform> uniforms = materialNormalMap.getShader().getUniforms();
 
-			uniforms.get("tNormal").setTexture( normalTexture );
+			uniforms.get("tNormal").setValue( normalTexture );
 			uniforms.get("uNormalScale").setValue( 0.85 );
 
-			uniforms.get("tDiffuse").setTexture( planetTexture );
-			uniforms.get("tSpecular").setTexture( specularTexture );
+			uniforms.get("tDiffuse").setValue( planetTexture );
+			uniforms.get("tSpecular").setValue( specularTexture );
 
-			uniforms.get("enableAO").setValue( 0 );
-			uniforms.get("enableDiffuse").setValue( 1 );
-			uniforms.get("enableSpecular").setValue( 1 );
+			uniforms.get("enableAO").setValue( false );
+			uniforms.get("enableDiffuse").setValue( true );
+			uniforms.get("enableSpecular").setValue( true );
 
 			((Color)uniforms.get("uDiffuseColor").getValue()).setHex( 0xffffff );
 			((Color)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
@@ -147,8 +147,8 @@ public final class TrackballEarth extends ContentWidget
 			meshPlanet.getRotation().setZ( tilt );
 			getScene().add( meshPlanet );
 
-
 			// clouds
+
 			MeshLambertMaterial materialClouds = new MeshLambertMaterial();
 			materialClouds.setColor( new Color(0xffffff) );
 			materialClouds.setMap( cloudsTexture );

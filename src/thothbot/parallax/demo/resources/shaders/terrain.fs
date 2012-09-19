@@ -30,14 +30,26 @@ varying vec2 vUv;
 uniform vec3 ambientLightColor;
 
 #if MAX_DIR_LIGHTS > 0
+
 	uniform vec3 directionalLightColor[ MAX_DIR_LIGHTS ];
 	uniform vec3 directionalLightDirection[ MAX_DIR_LIGHTS ];
+
+#endif
+
+#if MAX_HEMI_LIGHTS > 0
+
+	uniform vec3 hemisphereLightSkyColor[ MAX_HEMI_LIGHTS ];
+	uniform vec3 hemisphereLightGroundColor[ MAX_HEMI_LIGHTS ];
+	uniform vec3 hemisphereLightPosition[ MAX_HEMI_LIGHTS ];
+
 #endif
 
 #if MAX_POINT_LIGHTS > 0
+
 	uniform vec3 pointLightColor[ MAX_POINT_LIGHTS ];
 	uniform vec3 pointLightPosition[ MAX_POINT_LIGHTS ];
 	uniform float pointLightDistance[ MAX_POINT_LIGHTS ];
+
 #endif
 
 varying vec3 vViewPosition;
@@ -149,6 +161,47 @@ void main() {
 
 	#endif
 
+	// hemisphere lights
+
+	#if MAX_HEMI_LIGHTS > 0
+
+		vec3 hemiDiffuse  = vec3( 0.0 );
+		vec3 hemiSpecular = vec3( 0.0 );
+
+		for( int i = 0; i < MAX_HEMI_LIGHTS; i ++ ) {
+
+			vec4 lPosition = viewMatrix * vec4( hemisphereLightPosition[ i ], 1.0 );
+			vec3 lVector = normalize( lPosition.xyz + vViewPosition.xyz );
+
+			// diffuse
+
+			float dotProduct = dot( normal, lVector );
+			float hemiDiffuseWeight = 0.5 * dotProduct + 0.5;
+
+			hemiDiffuse += uDiffuseColor * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight );
+
+			// specular (sky light)
+
+			float hemiSpecularWeight = 0.0;
+
+			vec3 hemiHalfVectorSky = normalize( lVector + viewPosition );
+			float hemiDotNormalHalfSky = 0.5 * dot( normal, hemiHalfVectorSky ) + 0.5;
+			hemiSpecularWeight += specularTex.r * max( pow( hemiDotNormalHalfSky, uShininess ), 0.0 );
+
+			// specular (ground light)
+
+			vec3 lVectorGround = normalize( -lPosition.xyz + vViewPosition.xyz );
+
+			vec3 hemiHalfVectorGround = normalize( lVectorGround + viewPosition );
+			float hemiDotNormalHalfGround = 0.5 * dot( normal, hemiHalfVectorGround ) + 0.5;
+			hemiSpecularWeight += specularTex.r * max( pow( hemiDotNormalHalfGround, uShininess ), 0.0 );
+
+			hemiSpecular += uSpecularColor * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight ) * hemiSpecularWeight * hemiDiffuseWeight;
+
+		}
+
+	#endif
+
 	// all lights contribution summation
 
 	vec3 totalDiffuse = vec3( 0.0 );
@@ -161,6 +214,13 @@ void main() {
 
 	#endif
 
+	#if MAX_HEMI_LIGHTS > 0
+
+		totalDiffuse += hemiDiffuse;
+		totalSpecular += hemiSpecular;
+
+	#endif
+
 	#if MAX_POINT_LIGHTS > 0
 
 		totalDiffuse += pointDiffuse;
@@ -168,9 +228,8 @@ void main() {
 
 	#endif
 
-	// gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor) + totalSpecular;
+	//"gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor) + totalSpecular;
 	gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor + totalSpecular );
 
 [*]
-
 }
