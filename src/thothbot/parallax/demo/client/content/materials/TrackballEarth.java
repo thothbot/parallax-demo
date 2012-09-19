@@ -30,6 +30,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -118,7 +119,7 @@ public final class TrackballEarth extends ContentWidget
 			Map<String, Uniform> uniforms = materialNormalMap.getShader().getUniforms();
 
 			uniforms.get("tNormal").setValue( normalTexture );
-			uniforms.get("uNormalScale").setValue( 0.85 );
+			((Vector2)uniforms.get("uNormalScale").getValue()).set( 0.85, 0.85 );
 
 			uniforms.get("tDiffuse").setValue( planetTexture );
 			uniforms.get("tSpecular").setValue( specularTexture );

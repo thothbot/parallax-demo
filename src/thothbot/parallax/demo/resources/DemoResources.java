@@ -116,6 +116,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_materials_bumpmap_skin.jpg")
 	ImageResource exampleMaterialsBumpmapSkin();
 	
+	@Source("images/example_materials_lightmap.jpg")
+	ImageResource exampleMaterialsLightmap();
+	
 	@Source("images/example_materials_wireframe.jpg")
 	ImageResource exampleMaterialsWireframe();
 	
