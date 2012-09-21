@@ -9,7 +9,6 @@
   <inherits name="thothbot.parallax.plugin.postprocessing.Postprocessing"/>
   <inherits name="thothbot.parallax.plugin.lensflare.LensFlare"/>
   <inherits name="thothbot.parallax.plugin.sprite.Sprite"/>
-  <inherits name="thothbot.parallax.plugin.shadowmap.Shadowmap"/>
   
   <inherits name="com.google.gwt.user.theme.standard.Standard"/>
 

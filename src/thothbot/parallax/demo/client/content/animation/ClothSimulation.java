@@ -21,6 +21,7 @@ package thothbot.parallax.demo.client.content.animation;
 
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Shader;
+import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
@@ -33,6 +34,7 @@ import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material.SIDE;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
+import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ImageUtils;
@@ -114,18 +116,18 @@ public final class ClothSimulation extends ContentWidget
 			light.setCastShadow(true);
 			//light.shadowCameraVisible = true;
 
-			light.shadowMapWidth = 2048;
-			light.shadowMapHeight = 2048;
+			light.setShadowMapWidth( 2048 );
+			light.setShadowMapHeight( 2048 );
 
 			int d = 300;
 
-			light.shadowCameraLeft = -d;
-			light.shadowCameraRight = d;
-			light.shadowCameraTop = d;
-			light.shadowCameraBottom = -d;
+			light.setShadowCameraLeft( -d );
+			light.setShadowCameraRight( d );
+			light.setShadowCameraTop( d );
+			light.setShadowCameraBottom( -d );
 
-			light.shadowCameraFar = 1000;
-			light.shadowDarkness = 0.5;
+			light.setShadowCameraFar( 1000 );
+			light.setShadowDarkness( 0.5 );
 
 			getScene().add( light );
 
@@ -169,9 +171,8 @@ public final class ClothSimulation extends ContentWidget
 			object.setReceiveShadow(true);
 			getScene().add( object );
 
-			// TODO: fix
-//			object.customDepthMaterial = new ShaderMaterial(Resources.INSTANCE);
-//			object.customDepthMaterial.getShader().addUniform("texture", new Uniform(Uniform.TYPE.T, 0));
+			object.setCustomDepthMaterial( new ShaderMaterial(Resources.INSTANCE) );
+			object.getCustomDepthMaterial().getShader().addUniform("texture", new Uniform( Uniform.TYPE.T ));
 
 			// sphere
 
