@@ -29,6 +29,8 @@ import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.geometries.ParametricGeometry;
+import thothbot.parallax.core.shared.geometries.ParametricGeometry.ParametricFunction;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
 import thothbot.parallax.core.shared.objects.Mesh;
 
@@ -48,6 +50,26 @@ import thothbot.parallax.core.shared.objects.Mesh;
  */
 public class Cloth 
 {
+	public class ClothPlane extends ParametricGeometry
+	{
+
+		public ClothPlane(final double width, final double height, int slices, int stacks)
+		{
+			super(new ParametricFunction() {
+				
+				@Override
+				public Vector3 run(double u, double v)
+				{
+					double x = (u-0.5) * width;
+					double y = (v+0.5) * height;
+
+					return new Vector3(x, y, 0);
+				}
+			}, slices, stacks, true);
+		}
+
+	}
+	
 	class Particle
 	{
 		private Vector3 position;
@@ -97,12 +119,20 @@ public class Cloth
 
 			this.a.set(0, 0, 0);
 		}
+		
+		public String toString()
+		{
+			return this.position.toString();
+		}
 	}
 
-	private static final double damping = 0.03;
-	private static final double drag = 1 - damping;
-	private static final double mass = 0.1;
-	private static final double restDistance = 25;
+	public static final double damping = 0.03;
+	public static final double drag = 1 - damping;
+	public static final double mass = 0.1;
+	public static final double restDistance = 25;
+	
+	public static final int xSegs = 10; //
+	public static final int ySegs = 10; //
 
 	private static final double GRAVITY = 981 * 1.4; // 
 	private static final Vector3 gravity = new Vector3( 0, -GRAVITY, 0 ).multiply(Cloth.mass);
@@ -133,7 +163,7 @@ public class Cloth
 	public List<Integer> pins = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 	public Cloth()
 	{
-		this(10, 10);
+		this(xSegs, ySegs);
 	}
 
 	public Cloth(int width, int height)
@@ -214,6 +244,9 @@ public class Cloth
 
 	public void simulate() 
 	{
+		clothGeometry.computeFaceNormals();
+		clothGeometry.computeVertexNormals();
+		
 		// Aerodynamics forces
 		if (isWindEnabled)
 		{
@@ -235,7 +268,6 @@ public class Cloth
 		{
 			Cloth.Particle particle = particles.get(i);
 			particle.addForce(gravity);
-			// particle.addForce(windForce);
 			particle.integrate(TIMESTEP_SQ);
 		}
 
@@ -293,10 +325,7 @@ public class Cloth
 		{
 			clothGeometry.getVertices().get( i ).copy( particles.get( i ).position );
 		}
-
-		clothGeometry.computeFaceNormals();
-		clothGeometry.computeVertexNormals();
-
+		
 		clothGeometry.setNormalsNeedUpdate(true);
 		clothGeometry.setVerticesNeedUpdate(true);
 
@@ -310,7 +339,7 @@ public class Cloth
 			for (int u = 0; u <= width; u++) 
 			{
 				particles.add(
-					new Particle(clothFunction(u/width, v/height), Cloth.mass)
+					new Particle(clothFunction( u, v ), Cloth.mass)
 				);
 			}
 		}
@@ -318,8 +347,8 @@ public class Cloth
 	
 	private Vector3 clothFunction(double u, double v)
 	{
-		double x = (u-0.5) * restDistance * this.width;
-		double y = (v+0.5) * restDistance * this.height;
+		double x = (u / this.width - 0.5) * restDistance * this.width;
+		double y = (v / this.height + 0.5) * restDistance * this.height;
 
 		return new Vector3(x, y, 0);
 	}
@@ -366,12 +395,13 @@ public class Cloth
 		
 		diff.sub(p2.position, p1.position);
 		double currentDist = diff.length();
-		
+	
 		if (currentDist == 0) 
 			return; // prevents division by 0
 		
 		Vector3 correction = diff.multiply(1 - restDistance/currentDist);
 		Vector3 correctionHalf = correction.multiply(0.5);
+
 		p1.position.add(correctionHalf);
 		p2.position.sub(correctionHalf);
 	}

@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Vector3;
@@ -116,21 +117,21 @@ public final class ClothSimulation extends ContentWidget
 			light.getPosition().set( 50, 200, 100 );
 			light.getPosition().multiply( 1.3 );
 
-			light.setCastShadow(true);
-			//light.shadowCameraVisible = true;
-
-			light.setShadowMapWidth( 2048 );
-			light.setShadowMapHeight( 2048 );
-
-			int d = 300;
-
-			light.setShadowCameraLeft( -d );
-			light.setShadowCameraRight( d );
-			light.setShadowCameraTop( d );
-			light.setShadowCameraBottom( -d );
-
-			light.setShadowCameraFar( 1000 );
-			light.setShadowDarkness( 0.5 );
+//			light.setCastShadow(true);
+//			//light.shadowCameraVisible = true;
+//
+//			light.setShadowMapWidth( 2048 );
+//			light.setShadowMapHeight( 2048 );
+//
+//			int d = 300;
+//
+//			light.setShadowCameraLeft( -d );
+//			light.setShadowCameraRight( d );
+//			light.setShadowCameraTop( d );
+//			light.setShadowCameraBottom( -d );
+//
+//			light.setShadowCameraFar( 1000 );
+//			light.setShadowDarkness( 0.5 );
 
 			getScene().add( light );
 
@@ -142,7 +143,9 @@ public final class ClothSimulation extends ContentWidget
 			// cloth geometry
 
 			cloth = new Cloth();
-			PlaneParametricGeometry clothGeometry = new PlaneParametricGeometry( 200, 200, cloth.getWidth(), cloth.getHeight() );
+			Cloth.ClothPlane clothGeometry = cloth.new ClothPlane(Cloth.restDistance * Cloth.xSegs, 
+					Cloth.restDistance * Cloth.ySegs, cloth.getWidth(), cloth.getHeight());
+
 			clothGeometry.setDynamic(true);
 			clothGeometry.computeFaceNormals();
 			cloth.setGeometry(clothGeometry);
@@ -193,6 +196,7 @@ public final class ClothSimulation extends ContentWidget
 
 			arrow = new ArrowHelper( new Vector3( 0, 1, 0 ), new Vector3( 0, 0, 0 ), 50, 0xff0000 );
 			arrow.getPosition().set( -200, 0, -200 );
+			getScene().add( arrow );
 
 			AxisHelper axis = new AxisHelper();
 			axis.getPosition().set( 200, 0, -200 );
@@ -281,7 +285,7 @@ public final class ClothSimulation extends ContentWidget
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 			getRenderer().setPhysicallyBasedShading(true);
-			getRenderer().setShadowMapEnabled(true);
+//			getRenderer().setShadowMapEnabled(true);
 
 			sphere.setVisible(false);
 		}
