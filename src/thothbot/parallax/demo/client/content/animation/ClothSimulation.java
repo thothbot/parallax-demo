@@ -25,10 +25,12 @@ import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
+import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
+import thothbot.parallax.core.shared.helpers.ArrowHelper;
 import thothbot.parallax.core.shared.helpers.AxisHelper;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -79,6 +81,7 @@ public final class ClothSimulation extends ContentWidget
 		private static final String grasslight = "./static/textures/terrain/grasslight-big.jpg";
 				
 		Cloth cloth;
+		ArrowHelper arrow;
 		
 		boolean isRotate = true;
 
@@ -188,6 +191,9 @@ public final class ClothSimulation extends ContentWidget
 
 			// arrow
 
+			arrow = new ArrowHelper( new Vector3( 0, 1, 0 ), new Vector3( 0, 0, 0 ), 50, 0xff0000 );
+			arrow.getPosition().set( -200, 0, -200 );
+
 			AxisHelper axis = new AxisHelper();
 			axis.getPosition().set( 200, 0, -200 );
 			axis.getScale().set( 0.5 );
@@ -296,6 +302,9 @@ public final class ClothSimulation extends ContentWidget
 
 			cloth.simulate();
 
+			arrow.setLength( cloth.getWindStrength() );
+			arrow.setDirection( cloth.getWindForce() );
+			
 			double timer = duration * 0.0002;
 			
 			if ( isRotate ) 

@@ -48,27 +48,25 @@ import thothbot.parallax.core.shared.objects.Mesh;
  */
 public class Cloth 
 {
-
-	static final double damping = 0.01;
-	static final double drag = 1 - damping;
-	static final double mass = 0.1;
-	static final double restDistance = 25;
-
 	class Particle
 	{
 		private Vector3 position;
 		private Vector3 previous;
+		private Vector3 original;
 		private Vector3 a;
+		private double mass;
 		private double invMass;
 		
 		private Vector3 tmp;
 		private Vector3 tmp2;
 		
-		public Particle(double x, double y, double z)
+		public Particle(Vector3 position, double mass)
 		{
-			this.position = new Vector3(x, y, z); // position
-			this.previous = new Vector3(x, y, z); // previous
+			this.position = position; // position
+			this.previous = position; // previous
+			this.original = position; 
 			this.a = new Vector3(0, 0, 0); // acceleration
+			this.mass = mass;
 			this.invMass = 1 / mass;
 			this.tmp = new Vector3();
 			this.tmp2 = new Vector3();
@@ -101,6 +99,17 @@ public class Cloth
 		}
 	}
 
+	private static final double damping = 0.03;
+	private static final double drag = 1 - damping;
+	private static final double mass = 0.1;
+	private static final double restDistance = 25;
+
+	private static final double GRAVITY = 981 * 1.4; // 
+	private static final Vector3 gravity = new Vector3( 0, -GRAVITY, 0 ).multiply(Cloth.mass);
+
+	private static final double TIMESTEP = 18 / 1000;
+	private static final double TIMESTEP_SQ = TIMESTEP * TIMESTEP;
+	
 	Geometry clothGeometry;
 
 	private int width;
@@ -114,17 +123,14 @@ public class Cloth
 	private Vector3 ballPosition = new Vector3(0, -45, 0);
 	private double ballSize = 60;
 
-	int GRAVITY = 981; // 
-	Vector3 gravity = new Vector3( 0, -GRAVITY, 0 ).multiply(Cloth.mass);
+	private List<Cloth.Particle> particles;
+	private List<List<Cloth.Particle>> constrains;
 
-	double TIMESTEP = 14 / 1000;
-	double TIMESTEP_SQ = TIMESTEP * TIMESTEP;
-
-	List<Cloth.Particle> particles;
-	List<List<Cloth.Particle>> constrains;
-
-	Vector3 tmpForce = new Vector3();
-
+	private Vector3 tmpForce = new Vector3();
+	
+	private double lastTime;
+	
+	public List<Integer> pins = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 	public Cloth()
 	{
 		this(10, 10);
@@ -243,8 +249,8 @@ public class Cloth
 		// Ball Constrains
 
 		double time = Duration.currentTimeMillis();
-		ballPosition.setZ( -Math.sin(time / 300) * 90 ) ; //+ 40;
-		ballPosition.setX( Math.cos(time / 200) * 70 );
+		ballPosition.setZ( -Math.sin(time / 600) * 90 ) ; //+ 40;
+		ballPosition.setX( Math.cos(time / 400) * 70 );
 
 		if (ball != null && ball.isVisible())
 		{
@@ -263,14 +269,26 @@ public class Cloth
 			}
 		}
 
-		// Pin Constrains: first and last
-		for (int i = 0; i <= width; i += width) 
+		// Floor Constains
+		for (int i = 0, il = particles.size(); i<il; i++) 
 		{
 			Cloth.Particle particle = particles.get(i);
-			particle.previous.set((i - width / 2.0) * restDistance,  - height / 2.0 * -restDistance, 0);
-			particle.position.copy(particle.previous);
+			Vector3 pos = particle.position;
+			if (pos.getY() < -250) 
+			{
+				pos.setY( -250 );
+			}
 		}
-		
+
+		// Pin Constrains
+		for (int i = 0, il = pins.size(); i<il; i++) 
+		{
+			int xy = pins.get(i);
+			Cloth.Particle p = particles.get(xy);
+			p.position.copy(p.original);
+			p.previous.copy(p.original);
+		}
+				
 		for ( int i = 0, il = particles.size(); i < il; i ++ ) 
 		{
 			clothGeometry.getVertices().get( i ).copy( particles.get( i ).position );
@@ -292,10 +310,18 @@ public class Cloth
 			for (int u = 0; u <= width; u++) 
 			{
 				particles.add(
-					new Particle((u - width/2) * restDistance, (v - height/2) * -restDistance, 0)
+					new Particle(clothFunction(u/width, v/height), Cloth.mass)
 				);
 			}
 		}
+	}
+	
+	private Vector3 clothFunction(double u, double v)
+	{
+		double x = (u-0.5) * restDistance * this.width;
+		double y = (v+0.5) * restDistance * this.height;
+
+		return new Vector3(x, y, 0);
 	}
 	
 	private void createStructure()
@@ -305,13 +331,13 @@ public class Cloth
 			for (int u = 0; u < width; u++) 
 			{
 				constrains.add(Arrays.asList(
-					particles.get( index(u, v, width) ),
-					particles.get( index(u, v + 1, width) )
+					particles.get( index(u, v) ),
+					particles.get( index(u, v + 1) )
 				));
 
 				constrains.add(Arrays.asList(
-					particles.get( index(u, v, width) ),
-					particles.get( index(u + 1, v, width) )
+					particles.get( index(u, v) ),
+					particles.get( index(u + 1, v) )
 				));
 
 			}
@@ -320,16 +346,16 @@ public class Cloth
 		for (int u = width, v=0; v < height; v++) 
 		{
 			constrains.add(Arrays.asList(
-				particles.get( index(u, v, width) ),
-				particles.get( index(u, v + 1, width) )
+				particles.get( index(u, v) ),
+				particles.get( index(u, v + 1) )
 			));
 		}
 
 		for (int v = height, u = 0; u < width; u++) 
 		{
 			constrains.add(Arrays.asList(
-				particles.get( index(u, v, width) ),
-				particles.get( index(u + 1, v, width) )
+				particles.get( index(u, v) ),
+				particles.get( index(u + 1, v) )
 			));
 		}
 	}
@@ -350,8 +376,8 @@ public class Cloth
 		p2.position.sub(correctionHalf);
 	}
 	
-	private int index(int u, int v, int w) 
+	private int index(int u, int v) 
 	{
-		return u + v * (w + 1);
+		return u + v * (width + 1);
 	}
 }
