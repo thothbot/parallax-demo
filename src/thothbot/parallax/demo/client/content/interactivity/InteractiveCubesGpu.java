@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.gl2.WebGLRenderingContext;
@@ -31,6 +32,7 @@ import thothbot.parallax.core.client.gl2.enums.DataType;
 import thothbot.parallax.core.client.gl2.enums.GLenum;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
@@ -118,7 +120,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 			controls.setZoomSpeed(1.2);
 			controls.setPanSpeed(0.8);
 			controls.setZoom(true);
-//			controls.noPan = false;
+			controls.setPan(true);
 			controls.setStaticMoving(true);
 			controls.setDynamicDampingFactor(0.3);
 
@@ -204,8 +206,8 @@ public final class InteractiveCubesGpu extends ContentWidget
 			}
 			
 			Mesh drawnObject = new Mesh(geometry, defaultMaterial);
-			//drawnObject.castShadow = true;
-			//drawnObject.receiveShadow = true;
+			drawnObject.setCastShadow(true);
+			drawnObject.setReceiveShadow(true);
 			getScene().add(drawnObject);
 
 			pickingScene.add(new Mesh(pickingGeometry, pickingMaterial));
@@ -216,10 +218,9 @@ public final class InteractiveCubesGpu extends ContentWidget
 			getScene().add( highlightBox );
 
 			projector = new Projector();
-			getRenderer().setClearColorHex(0xeeeeee);
 			getRenderer().setSortObjects(false);
-			getRenderer().setShadowMapEnabled(true);
-			getRenderer().setShadowMapSoft(true);
+//			getRenderer().setShadowMapEnabled(true);
+//			getRenderer().setShadowMapSoft(true);
 		}
 		
 		private void applyVertexColors(Geometry g, Color c) 
@@ -253,15 +254,16 @@ public final class InteractiveCubesGpu extends ContentWidget
 			WebGLRenderingContext gl = getRenderer().getGL();
 			getRenderer().render(pickingScene, getCamera(), pickingTexture);
 			Uint8Array pixelBuffer = Uint8Array.create(4);
-			
+
 			//read the pixel under the mouse from the texture
 			gl.readPixels(mouseX, pickingTexture.getHeight() - mouseY, 1, 1, PixelFormat.RGBA.getValue(), DataType.UNSIGNED_BYTE.getValue(), pixelBuffer);
-			
+
 			//interpret the pixel as an ID
-			int id = (pixelBuffer.get(0) << 16) | (pixelBuffer.get(1) << 8) | (pixelBuffer.get(2));
-			Picking data = pickingData.get(id);
-			if(data != null)
+
+			int id = ( pixelBuffer.get(0) << 16 ) | (  pixelBuffer.get(1) << 8 ) | pixelBuffer.get(2);
+			if( pickingData.size() > id )
 			{
+				Picking data = pickingData.get(id);
 				//move our highlightBox so that it surrounds the picked object
 				if(data.position != null && data.rotation != null && data.scale != null)
 				{
@@ -282,6 +284,13 @@ public final class InteractiveCubesGpu extends ContentWidget
 	{
 		super("GPU picking", "This example based on the three.js example.");
 	}
+
+	@Override
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
+	{
+		super.loadRenderingPanelAttributes(renderingPanel);
+		renderingPanel.setBackground(0xffffff);
+	}
 	
 	@Override
 	public void onAnimationReady(AnimationReadyEvent event)
@@ -293,7 +302,6 @@ public final class InteractiveCubesGpu extends ContentWidget
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = event.getX(); 
 		    	  	rs.mouseY = event.getY();
 		      }

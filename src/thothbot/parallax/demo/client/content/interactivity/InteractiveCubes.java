@@ -23,6 +23,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
@@ -62,7 +63,7 @@ public final class InteractiveCubes extends ContentWidget
 		
 		Projector projector;
 		
-		int mouseX = 0, mouseY = 0;
+		double mouseDeltaX = 0, mouseDeltaY = 0;
 		Intersect Intersected;
 		
 		@Override
@@ -128,6 +129,7 @@ public final class InteractiveCubes extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			Log.error(mouseDeltaX, mouseDeltaY);
 			getCamera().getPosition().setX( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
 			getCamera().getPosition().setY( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
 			getCamera().getPosition().setZ( radius * Math.cos( duration / 100 * Math.PI / 360 ) );
@@ -136,7 +138,7 @@ public final class InteractiveCubes extends ContentWidget
 
 			// find intersections
 
-			Vector3 vector = new Vector3( mouseX, mouseY, 1 );
+			Vector3 vector = new Vector3( mouseDeltaX, mouseDeltaY, 1 );
 			projector.unprojectVector( vector, getCamera() );
 
 			Ray ray = new Ray( getCamera().getPosition(), vector.sub( getCamera().getPosition() ).normalize() );
@@ -148,18 +150,18 @@ public final class InteractiveCubes extends ContentWidget
 				if ( Intersected != intersects.get( 0 ).object ) 
 				{
 					if ( Intersected != null ) 
-						((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().setHex( Intersected.currentHex );
+						((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( Intersected.currentHex );
 
 					Intersected = new Intersect();
 					Intersected.object = (GeometryObject) intersects.get( 0 ).object;
-					Intersected.currentHex = ((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().getHex();
-					((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().setHex( 0xff0000 );
+					Intersected.currentHex = ((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().getHex();
+					((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( 0xff0000 );
 				}
 			}
 			else 
 			{
 				if ( Intersected != null ) 
-					((MeshLambertMaterial)Intersected.object.getMaterial()).getEmissive().setHex( Intersected.currentHex );
+					((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( Intersected.currentHex );
 
 				Intersected = null;
 			}
@@ -182,8 +184,8 @@ public final class InteractiveCubes extends ContentWidget
 		      {
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseX = (event.getX() / canvas.getWidth() ) * 2 - 1; 
-		    	  	rs.mouseY = - (event.getY() / canvas.getHeight() ) * 2 + 1;
+		    	  	rs.mouseDeltaX = (event.getX() / (double)canvas.getWidth() ) * 2.0 - 1.0; 
+		    	  	rs.mouseDeltaY = - (event.getY() / (double)canvas.getHeight() ) * 2.0 + 1.0;
 		      }
 		});
 	}
