@@ -64,7 +64,7 @@ public final class InteractiveCubes extends ContentWidget
 		Projector projector;
 		
 		double mouseDeltaX = 0, mouseDeltaY = 0;
-		Intersect Intersected;
+		Intersect intersected;
 		
 		@Override
 		protected void loadCamera()
@@ -147,23 +147,26 @@ public final class InteractiveCubes extends ContentWidget
 
 			if ( intersects.size() > 0 ) 
 			{
-				if ( Intersected != intersects.get( 0 ).object ) 
+				
+				if ( intersected == null || intersected.object != intersects.get( 0 ).object ) 
 				{
-					if ( Intersected != null ) 
-						((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( Intersected.currentHex );
-
-					Intersected = new Intersect();
-					Intersected.object = (GeometryObject) intersects.get( 0 ).object;
-					Intersected.currentHex = ((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().getHex();
-					((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( 0xff0000 );
+					if(intersected != null)
+					{
+						((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( intersected.currentHex );
+					}
+					
+					intersected = new Intersect();
+					intersected.object = (GeometryObject) intersects.get( 0 ).object;
+					intersected.currentHex = ((MeshLambertMaterial)intersected.object.getMaterial()).getColor().getHex();
+					((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( 0xff0000 );
 				}
 			}
 			else 
 			{
-				if ( Intersected != null ) 
-					((MeshLambertMaterial)Intersected.object.getMaterial()).getColor().setHex( Intersected.currentHex );
+				if ( intersected != null ) 
+					((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( intersected.currentHex );
 
-				Intersected = null;
+				intersected = null;
 			}
 		}
 	}

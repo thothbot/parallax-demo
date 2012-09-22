@@ -36,24 +36,29 @@ import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.interactivity.InteractiveCubes.Intersect;
-import thothbot.parallax.demo.client.content.interactivity.InteractiveCubesGpu.DemoScene;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Style.Cursor;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
 
-public final class InteractiveDraggableCubes extends ContentWidget 
+public final class InteractiveDraggableCubes extends ContentWidget implements  MouseMoveHandler, MouseDownHandler, MouseUpHandler
 {
 	class Intersect
 	{
@@ -69,7 +74,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 	{
 
 		Vector3 offset = new Vector3(10, 10, 10);
-		int mouseX = 0, mouseY = 0;
+		double mouseDeltaX = 0, mouseDeltaY = 0;
 		
 		List<Mesh> objects;
 		Mesh plane;
@@ -78,7 +83,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 		Projector projector;
 		
 		Intersect intersected;
-		Mesh selected;
+		DimensionalObject selected;
 		
 		@Override
 		protected void loadCamera()
@@ -106,6 +111,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 			controls.setPan(true);
 			controls.setStaticMoving(true);
 			controls.setDynamicDampingFactor(0.3);
+			controls.setEnabled(false);
 
 			getScene().add( new AmbientLight( 0x505050 ) );
 
@@ -131,7 +137,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 			for ( int i = 0; i < 200; i ++ ) 
 			{
 				MeshLambertMaterial material1 = new MeshLambertMaterial();
-				material1.setColor(new Color((int)(Math.random() * 0xfffff)));
+				material1.setColor(new Color( (int)(Math.random() * 0xffffff) ));
 				material1.setAmbient(material1.getColor());
 				Mesh object = new Mesh( geometry, material1 );
 
@@ -147,8 +153,8 @@ public final class InteractiveDraggableCubes extends ContentWidget
 				object.getScale().setY( Math.random() * 2 + 1 );
 				object.getScale().setZ( Math.random() * 2 + 1 );
 
-//				object.castShadow = true;
-//				object.receiveShadow = true;
+				object.setCastShadow(true);
+				object.setReceiveShadow(true);
 
 				getScene().add( object );
 
@@ -168,8 +174,8 @@ public final class InteractiveDraggableCubes extends ContentWidget
 
 			getRenderer().setClearColorHex(0xeeeeee);
 			getRenderer().setSortObjects(false);
-			getRenderer().setShadowMapEnabled(true);
-			getRenderer().setShadowMapSoft(true);
+//			getRenderer().setShadowMapEnabled(true);
+//			getRenderer().setShadowMapSoft(true);
 		}
 		
 		@Override
@@ -180,46 +186,7 @@ public final class InteractiveDraggableCubes extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			Vector3 vector = new Vector3( mouseX, mouseY, 0.5 );
-			projector.unprojectVector( vector, getCamera() );
-
-			Ray ray = new Ray( getCamera().getPosition(), vector.sub( getCamera().getPosition() ).normalize() );
-
-
-			if ( selected != null ) 
-			{
-				List<Ray.Intersect> intersects = ray.intersectObject( plane );
-				selected.getPosition().copy( intersects.get( 0 ).point.sub( offset ) );
-				return;
-			}
-
-			List<Ray.Intersect> intersects = ray.intersectObjects( objects );
-
-			if ( intersects.size() > 0 ) 
-			{
-				if ( intersected.object != intersects.get(0).object ) 
-				{
-					if ( intersected != null ) 
-						((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( intersected.currentHex );
-
-					intersected = new Intersect();
-					intersected.object = (GeometryObject) intersects.get(0).object;
-					intersected.currentHex = ((MeshLambertMaterial)intersected.object.getMaterial()).getColor().getHex();
-
-					plane.getPosition().copy( intersected.object.getPosition() );
-					plane.lookAt( getCamera().getPosition() );
-				}
-				getWidget().getElement().getStyle().setCursor(Cursor.POINTER);
-			} 
-			else 
-			{
-				if ( intersected != null) 
-					((MeshLambertMaterial)intersected.object.getMaterial()).getColor().setHex( intersected.currentHex );
-
-				intersected = null;
-
-				getWidget().getElement().getStyle().setCursor(Cursor.AUTO);
-			}
+			controls.update();
 		}
 	}
 		
@@ -233,16 +200,113 @@ public final class InteractiveDraggableCubes extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
-		      @Override
-		      public void onMouseMove(MouseMoveEvent event)
-		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseX = (event.getX() / canvas.getWidth() ) * 2 - 1; 
-		    	  	rs.mouseY = - (event.getY() / canvas.getHeight() ) * 2 + 1;
-		      }
-		});
+		getWidget().addDomHandler(this, MouseMoveEvent.getType());
+		getWidget().addDomHandler(this, MouseDownEvent.getType());
+		getWidget().addDomHandler(this, MouseUpEvent.getType());
+	}
+	
+	@Override
+	public void onMouseUp(MouseUpEvent event) 
+	{
+		event.preventDefault();
+
+		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		
+		rs.controls.setEnabled(true);
+
+		if ( rs.intersected != null ) 
+		{
+			rs.plane.getPosition().copy( rs.intersected.object.getPosition() );
+
+			rs.selected = null;
+		}
+
+		getWidget().getElement().getStyle().setCursor(Cursor.AUTO);	
+	}
+
+	@Override
+	public void onMouseDown(MouseDownEvent event) 
+	{
+		event.preventDefault();
+
+		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		
+		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaY, 0.5 );
+		rs.projector.unprojectVector( vector, rs.getCamera() );
+
+		Ray ray = new Ray( rs.getCamera().getPosition(), vector.sub( rs.getCamera().getPosition() ).normalize() );
+		List<Ray.Intersect> intersects = ray.intersectObjects( rs.objects );
+
+		if ( intersects.size() > 0 ) 
+		{
+			rs.controls.setEnabled(false);
+
+			rs.selected = intersects.get( 0 ).object; 
+
+			List<Ray.Intersect> intersects2 = ray.intersectObject( rs.plane );
+			rs.offset.copy( intersects2.get( 0 ).point ).sub( rs.plane.getPosition() );
+
+			getWidget().getElement().getStyle().setCursor(Cursor.MOVE);	
+		}
+	}
+
+	@Override
+	public void onMouseMove(MouseMoveEvent event) 
+	{
+		event.preventDefault();
+
+		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+		Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
+		
+		rs.mouseDeltaX = (event.getX() / (double)canvas.getWidth() ) * 2.0 - 1.0; 
+		rs.mouseDeltaX = - (event.getY() / (double)canvas.getHeight() ) * 2.0 + 1.0;
+
+		//
+
+		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaX, 0.5 );
+		rs.projector.unprojectVector( vector, rs.getCamera() );
+
+		Ray ray = new Ray( rs.getCamera().getPosition(), vector.sub( rs.getCamera().getPosition() ).normalize() );
+
+		if ( rs.selected != null ) 
+		{
+			List<Ray.Intersect> intersects = ray.intersectObject( rs.plane );
+			rs.selected.getPosition().copy( intersects.get( 0 ).point.sub( rs.offset ) );
+			return;
+		}
+
+		List<Ray.Intersect> intersects = ray.intersectObjects( rs.objects );
+
+		if ( intersects.size() > 0 ) 
+		{
+//			if ( rs.intersected == null || rs.intersected.object != intersects.get(0).object ) 
+			if ( rs.intersected != intersects.get(0).object )
+			{
+				if ( rs.intersected != null )
+				{
+					((MeshLambertMaterial)rs.intersected.object.getMaterial()).getColor().setHex( rs.intersected.currentHex );
+				}
+
+				rs.intersected = new Intersect();
+				rs.intersected.object = (GeometryObject) intersects.get(0).object;
+				rs.intersected.currentHex = ((MeshLambertMaterial)rs.intersected.object.getMaterial()).getColor().getHex();
+
+				rs.plane.getPosition().copy( rs.intersected.object.getPosition() );
+				rs.plane.lookAt( rs.getCamera().getPosition() );
+			}
+
+			getWidget().getElement().getStyle().setCursor(Cursor.POINTER);
+
+		} else {
+
+			if ( rs.intersected != null ) 
+				((MeshLambertMaterial)rs.intersected.object.getMaterial()).getColor().setHex( rs.intersected.currentHex );
+
+			rs.intersected = null;
+
+			getWidget().getElement().getStyle().setCursor(Cursor.AUTO);
+
+		}
 	}
 	
 	@Override
@@ -273,5 +337,4 @@ public final class InteractiveDraggableCubes extends ContentWidget
 			}
 		});
 	}
-
 }
