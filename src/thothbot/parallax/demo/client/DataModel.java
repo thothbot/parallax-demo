@@ -324,8 +324,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsBumpmap.class));
 			category.addExample(new MaterialsBumpmapSkin(),
 					RunAsyncCode.runAsyncCode(MaterialsBumpmapSkin.class));
-			category.addExample(new MaterialsLightmap(),
-					RunAsyncCode.runAsyncCode(MaterialsLightmap.class));
+//			category.addExample(new MaterialsLightmap(),
+//					RunAsyncCode.runAsyncCode(MaterialsLightmap.class));
 			category.addExample(new MaterialsWireframe(),
 					RunAsyncCode.runAsyncCode(MaterialsWireframe.class));
 			category.addExample(new MaterialsCanvas2D(),
@@ -392,8 +392,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Plugins");
 			categoriesList.add(category);
-			category.addExample(new TerrainDynamic(),
-					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
+//			category.addExample(new TerrainDynamic(),
+//					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
 			category.addExample(new HilbertCurves(),
 					RunAsyncCode.runAsyncCode(HilbertCurves.class));
 			category.addExample(new EffectsLensFlares(),
