@@ -43,6 +43,7 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -208,7 +209,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		
 	public InteractiveVoxelPainter() 
 	{
-		super("Voxel painter", "Add voxel: [click]; Remove voxel: [control + click]; Rotate: [shift + click]. This example based on the three.js example.");
+		super("Voxel painter", "Add voxel: [click]; Remove voxel: [control + click]; Rotate: [shift + mouse]. This example based on the three.js example.");
 	}
 	
 	@Override
@@ -265,8 +266,8 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 
-	  	rs.mouse2D.setX( (event.getX() / canvas.getWidth() ) * 2 - 1 ); 
-	  	rs.mouse2D.setY( - (event.getY() / canvas.getHeight() ) * 2 + 1 );	
+	  	rs.mouse2D.setX( (event.getX() /(double) canvas.getWidth() ) * 2.0 - 1.0 ); 
+	  	rs.mouse2D.setY( - (event.getY() /(double) canvas.getHeight() ) * 2.0 + 1.0 );	
 	}
 
 	@Override
@@ -274,11 +275,11 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 	{
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		
-		if ( event.getNativeEvent().getKeyCode() == 16 ) 
+		if ( event.getNativeKeyCode() == KeyCodes.KEY_SHIFT ) 
 		{
 			rs.isShiftDown = false;
 		} 
-		else if ( event.getNativeEvent().getKeyCode() == 17 ) 
+		else if ( event.getNativeKeyCode() == KeyCodes.KEY_CTRL ) 
 		{
 			rs.isCtrlDown = false;
 		} 
@@ -289,11 +290,11 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 	{
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		
-		if ( event.getNativeEvent().getKeyCode() == 16 ) 
+		if ( event.getNativeKeyCode() == KeyCodes.KEY_SHIFT ) 
 		{
 			rs.isShiftDown = true;
 		} 
-		else if ( event.getNativeEvent().getKeyCode() == 17 ) 
+		else if ( event.getNativeKeyCode() == KeyCodes.KEY_CTRL ) 
 		{
 			rs.isCtrlDown = true;
 		} 
