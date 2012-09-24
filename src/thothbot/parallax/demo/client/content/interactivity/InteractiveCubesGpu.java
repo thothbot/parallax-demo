@@ -157,7 +157,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 
 			pickingData = new ArrayList<Picking>();
 			
-			for ( int i = 0; i < 5000; i ++ ) 
+			for ( int i = 0; i < 500; i ++ ) 
 			{
 				Vector3 position = new Vector3();
 				position.setX( Math.random() * 10000 - 5000 );

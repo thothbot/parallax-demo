@@ -234,7 +234,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 
 			cameraRig.lookAt( mesh.getPosition() );
 
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 
 			activeHelper.setVisible(false);
 			

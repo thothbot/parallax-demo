@@ -232,7 +232,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			getCamera().lookAt( getScene().getPosition() );
 
 			getRenderer().enableScissorTest( false );
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 			getRenderer().enableScissorTest( true );
 
 			Canvas3d canvas = getRenderer().getCanvas();

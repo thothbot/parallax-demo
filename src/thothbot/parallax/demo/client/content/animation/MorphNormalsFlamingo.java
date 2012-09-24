@@ -119,7 +119,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			getCamera().lookAt( getScene().getPosition() );
 
 			this.jsonLoader.getAnimation().updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime)  );
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 		}
 	}
 		

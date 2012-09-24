@@ -372,8 +372,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Animation");
 			categoriesList.add(category);
-			category.addExample(new ClothSimulation(),
-					RunAsyncCode.runAsyncCode(ClothSimulation.class));
+//			category.addExample(new ClothSimulation(),
+//					RunAsyncCode.runAsyncCode(ClothSimulation.class));
 			category.addExample(new MorphNormalsFlamingo(),
 					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
 			category.addExample(new MorphTargetsHorse(),

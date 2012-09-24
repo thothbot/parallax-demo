@@ -107,9 +107,6 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			// LIGHTS
 
 			getScene().add( new AmbientLight( 0x555555 ) );
-			
-
-			//
 
 			PointLight pointLight = new PointLight( 0xffffff, 1.5, 1000 );
 			pointLight.getPosition().set( 0, 0, 600 );
@@ -124,20 +121,20 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			
 			spotLight.getPosition().multiply( 700 );
 
-//			spotLight.castShadow = true;
-//			spotLight.onlyShadow = true;
-//			//spotLight.shadowCameraVisible = true;
-//
-//			spotLight.shadowMapWidth = 2048;
-//			spotLight.shadowMapHeight = 2048;
-//
-//			spotLight.shadowCameraNear = 200;
-//			spotLight.shadowCameraFar = 1500;
-//
-//			spotLight.shadowCameraFov = 40;
-//
-//			spotLight.shadowBias = -0.005;
-//			spotLight.shadowDarkness = 0.15;
+			spotLight.setCastShadow(true);
+			spotLight.setOnlyShadow(true);
+			//spotLight.shadowCameraVisible = true;
+
+			spotLight.setShadowMapWidth( 2048 );
+			spotLight.setShadowMapHeight( 2048 );
+
+			spotLight.setShadowCameraNear( 200 );
+			spotLight.setShadowCameraFar( 1500 );
+
+			spotLight.setShadowCameraFov( 40 );
+
+			spotLight.setShadowBias( -0.005 );
+			spotLight.setShadowDarkness( 0.15 );
 
 			//
 
@@ -148,22 +145,22 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			directionalLight.getPosition().multiply( 500 );
 			
-//			directionalLight.castShadow = true;
-//			//directionalLight.shadowCameraVisible = true;
-//
-//			directionalLight.shadowMapWidth = 2048;
-//			directionalLight.shadowMapHeight = 2048;
-//
-//			directionalLight.shadowCameraNear = 200;
-//			directionalLight.shadowCameraFar = 1500;
-//
-//			directionalLight.shadowCameraLeft = -500;
-//			directionalLight.shadowCameraRight = 500;
-//			directionalLight.shadowCameraTop = 500;
-//			directionalLight.shadowCameraBottom = -500;
-//
-//			directionalLight.shadowBias = -0.005;
-//			directionalLight.shadowDarkness = 0.15;
+			directionalLight.setCastShadow(true);
+			//directionalLight.shadowCameraVisible = true;
+
+			directionalLight.setShadowMapWidth( 2048 );
+			directionalLight.setShadowMapHeight( 2048 );
+
+			directionalLight.setShadowCameraNear( 200 );
+			directionalLight.setShadowCameraFar( 1500 );
+
+			directionalLight.setShadowCameraLeft( -500 );
+			directionalLight.setShadowCameraRight( 500 );
+			directionalLight.setShadowCameraTop( 500 );
+			directionalLight.setShadowCameraBottom( -500 );
+
+			directionalLight.setShadowBias( -0.005 );
+			directionalLight.setShadowDarkness( 0.15 );
 
 			//
 
@@ -204,14 +201,13 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			{
 				Log.error("Error while loading JSON file.");
 			}
-//			createScene( new CubeGeometry(), 100 );
+
 			//
 
 			getRenderer().setClearColorHex(0x4c5159);
 
-//			renderer.shadowMapEnabled = true;
-//			renderer.shadowMapCullFrontFaces = false;
-
+			getRenderer().setShadowMapEnabled(true);
+			getRenderer().setShadowMapCullFrontFaces(false);
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
@@ -275,8 +271,8 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			mesh.getPosition().setY(- 50 );
 			mesh.getScale().set( scale );
 
-//			mesh.castShadow = true;
-//			mesh.receiveShadow = true;
+			mesh.setCastShadow(true);
+			mesh.setReceiveShadow(true);
 
 			getScene().add( mesh );
 		}
@@ -305,7 +301,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 //				firstPass = false;
 //			}
 
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 		}
 	}
 		

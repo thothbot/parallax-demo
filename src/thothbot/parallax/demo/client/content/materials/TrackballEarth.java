@@ -247,9 +247,8 @@ public final class TrackballEarth extends ContentWidget
 			
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
-
-//			renderer.gammaInput = true;
-//			renderer.gammaOutput = true;
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
 			
 			this.oldTime = Duration.currentTimeMillis();
 		}
@@ -278,7 +277,7 @@ public final class TrackballEarth extends ContentWidget
 
 			this.control.update();
 
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 			
 			this.oldTime = Duration.currentTimeMillis();
 		}

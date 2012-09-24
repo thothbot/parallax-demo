@@ -168,7 +168,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 				sphere.getPosition().setY( 5000 * Math.sin( timer + i * 1.1 ) );
 			}
 
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 			getRenderer().render( sceneCube, cameraCube );
 		}
 	}

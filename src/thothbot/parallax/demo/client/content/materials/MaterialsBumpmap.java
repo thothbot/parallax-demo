@@ -29,6 +29,7 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
@@ -107,7 +108,7 @@ public final class MaterialsBumpmap extends ContentWidget
 
 			spotLight.setCastShadow(true);
 			spotLight.setOnlyShadow(true);
-			//spotLight.shadowCameraVisible = true;
+//			spotLight.setShadowCameraVisible(true);
 
 			spotLight.setShadowMapWidth( 2048 );
 			spotLight.setShadowMapHeight( 2048 );
@@ -130,7 +131,7 @@ public final class MaterialsBumpmap extends ContentWidget
 			directionalLight.getPosition().multiply( 500 );
 
 			directionalLight.setCastShadow( true );
-			//directionalLight.shadowCameraVisible = true;
+//			directionalLight.setShadowCameraVisible(true);
 
 			directionalLight.setShadowMapWidth( 2048 );
 			directionalLight.setShadowMapHeight( 2048 );
@@ -187,9 +188,9 @@ public final class MaterialsBumpmap extends ContentWidget
 			{
 				Log.error("Error while loading JSON file.");
 			}
-
+			
 			getRenderer().setShadowMapEnabled(true);
-			getRenderer().setShadowMapCullFrontFaces(true);
+			getRenderer().setShadowMapCullFrontFaces(false);
 
 			//
 

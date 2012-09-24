@@ -149,7 +149,7 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			getCamera().lookAt( getScene().getPosition() );
 			
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 		}
 	}
 		

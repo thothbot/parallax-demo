@@ -220,7 +220,7 @@ public final class HilbertCurves extends ContentWidget
 					object.getRotation().setY( duration * 0.0005 * ( (i % 2 > 0) ? 1.0 : -1.0 ) );
 			}
 
-			getRenderer().clear(false, false, false);
+			getRenderer().clear();
 		}
 	}
 		
