@@ -32,7 +32,6 @@ import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.utils.ColorUtils;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -55,9 +54,9 @@ public final class EffectsLensFlares extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		
-		private Texture textureFlare0 = ImageUtils.loadTexture( "./static/textures/lensflare/lensflare0.png" );
-		private Texture textureFlare2 = ImageUtils.loadTexture( "./static/textures/lensflare/lensflare2.png" );
-		private Texture textureFlare3 = ImageUtils.loadTexture( "./static/textures/lensflare/lensflare3.png" );
+		private Texture textureFlare0 = new Texture( "./static/textures/lensflare/lensflare0.png" );
+		private Texture textureFlare2 = new Texture( "./static/textures/lensflare/lensflare2.png" );
+		private Texture textureFlare3 = new Texture( "./static/textures/lensflare/lensflare3.png" );
 		
 		private FlyControls controls;
 		

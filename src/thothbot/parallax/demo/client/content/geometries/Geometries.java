@@ -51,7 +51,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -95,7 +94,7 @@ public class Geometries extends ContentWidget
 			light.getPosition().set( 0, 1, 0 );
 			getScene().add( light );
 			
-			Texture texture = ImageUtils.loadTexture(image);
+			Texture texture = new Texture(image);
 			texture.setWrapS(TextureWrapMode.REPEAT);
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.setAnisotropy(16);

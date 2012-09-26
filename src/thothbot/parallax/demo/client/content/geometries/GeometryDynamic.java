@@ -33,7 +33,6 @@ import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogExp2;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -99,7 +98,7 @@ public class GeometryDynamic extends ContentWidget
 			this.geometry.computeFaceNormals();
 			this.geometry.computeVertexNormals();
 
-			Texture texture = ImageUtils.loadTexture(DemoScene.texture);
+			Texture texture = new Texture(DemoScene.texture);
 			texture.setWrapS(TextureWrapMode.REPEAT); 
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.getRepeat().set( 5.0, 5.0 );

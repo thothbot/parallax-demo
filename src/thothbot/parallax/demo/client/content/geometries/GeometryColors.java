@@ -27,6 +27,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
@@ -41,7 +42,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -89,7 +89,7 @@ public class GeometryColors extends ContentWidget
 			getScene().add( light );
 			
 			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
-			shadowMaterial.setMap( ImageUtils.loadTexture(texture) );
+			shadowMaterial.setMap( new Texture(texture) );
 			Geometry shadowGeo = new PlaneGeometry( 300, 300, 1, 1 );
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );

@@ -35,7 +35,6 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -102,7 +101,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 
 			SphereGeometry geometry = new SphereGeometry( 100, 32, 16 );
 
-			CubeTexture textureCube = ImageUtils.loadTextureCube( textures );
+			CubeTexture textureCube = new CubeTexture( textures );
 			textureCube.setFormat(PixelFormat.RGB);
 
 			FresnelShader shader = new FresnelShader();

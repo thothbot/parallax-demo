@@ -37,7 +37,6 @@ import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -154,7 +153,7 @@ public final class MaterialsBumpmap extends ContentWidget
 			directionalLight2.getColor().setHSV( 0.08, 0.35, 1 );
 			getScene().add( directionalLight2 );
 
-			Texture mapHeight = ImageUtils.loadTexture( texture );
+			Texture mapHeight = new Texture( texture );
 
 			mapHeight.setAnisotropy(4);
 			mapHeight.getRepeat().set( 0.998, 0.998 );

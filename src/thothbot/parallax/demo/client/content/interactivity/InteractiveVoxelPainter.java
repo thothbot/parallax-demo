@@ -23,6 +23,7 @@ import java.util.List;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
@@ -36,7 +37,6 @@ import thothbot.parallax.core.shared.materials.Material.SHADING;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -122,7 +122,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			cubeGeo = new CubeGeometry( 50, 50, 50 );
 			cubeMaterial = new MeshLambertMaterial();
 			cubeMaterial.setShading(SHADING.FLAT);
-			cubeMaterial.setMap(ImageUtils.loadTexture( texture ));
+			cubeMaterial.setMap(new Texture( texture ));
 			cubeMaterial.getColor().setHSV( 0.1, 0.7, 1.0 );
 			cubeMaterial.setAmbient(cubeMaterial.getColor());			
 

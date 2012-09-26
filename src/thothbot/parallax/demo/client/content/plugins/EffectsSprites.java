@@ -23,7 +23,6 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.objects.Object3D;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -47,9 +46,9 @@ public final class EffectsSprites extends ContentWidget
 	{
 		Object3D group;
 		
-		Texture mapA = ImageUtils.loadTexture( "./static/textures/sprite0.png" );
-		Texture mapB = ImageUtils.loadTexture( "./static/textures/sprite1.png" );
-		Texture mapC = ImageUtils.loadTexture( "./static/textures/sprite2.png" );
+		Texture mapA = new Texture( "./static/textures/sprite0.png" );
+		Texture mapB = new Texture( "./static/textures/sprite1.png" );
+		Texture mapC = new Texture( "./static/textures/sprite2.png" );
 		
 		@Override
 		protected void loadCamera()

@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
@@ -31,7 +32,6 @@ import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -86,7 +86,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 			light3.getPosition().set( 0, 0, 0 );
 			getScene().add( light3 );
 
-			Texture reflectionCube = ImageUtils.loadTextureCube( textures );
+			CubeTexture reflectionCube = new CubeTexture( textures );
 			reflectionCube.setFormat(PixelFormat.RGB);
 
 			MeshPhongMaterial material = new MeshPhongMaterial();

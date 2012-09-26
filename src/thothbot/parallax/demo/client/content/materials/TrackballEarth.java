@@ -40,7 +40,6 @@ import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -107,11 +106,11 @@ public final class TrackballEarth extends ContentWidget
 			dirLight.getPosition().set( -1, 0, 1 ).normalize();
 			getScene().add( dirLight );
 
-			Texture planetTexture   = ImageUtils.loadTexture( earthAtmos );
-			Texture cloudsTexture   = ImageUtils.loadTexture( earthClouds );
-			Texture normalTexture   = ImageUtils.loadTexture( earthNormal );
-			Texture specularTexture = ImageUtils.loadTexture( earthSpecular );
-			Texture moonTexture     = ImageUtils.loadTexture( moon );
+			Texture planetTexture   = new Texture( earthAtmos );
+			Texture cloudsTexture   = new Texture( earthClouds );
+			Texture normalTexture   = new Texture( earthNormal );
+			Texture specularTexture = new Texture( earthSpecular );
+			Texture moonTexture     = new Texture( moon );
 
 			ShaderMaterial materialNormalMap = new ShaderMaterial( new NormalMapShader() ); 
 			materialNormalMap.setLights( true );

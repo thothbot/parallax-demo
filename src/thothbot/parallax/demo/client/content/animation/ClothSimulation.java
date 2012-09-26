@@ -22,6 +22,7 @@ package thothbot.parallax.demo.client.content.animation;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
+import thothbot.parallax.core.client.textures.DataTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -40,8 +41,6 @@ import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
-import thothbot.parallax.core.shared.utils.ImageUtils;
-import thothbot.parallax.core.shared.utils.ImageUtils.ImageLoadHandler;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -152,7 +151,7 @@ public final class ClothSimulation extends ContentWidget
 
 			// cloth material
 			
-			Texture clothTexture = ImageUtils.loadTexture( circuitPattern );
+			Texture clothTexture = new Texture( circuitPattern );
 			clothTexture.setWrapS(TextureWrapMode.REPEAT);
 			clothTexture.setWrapT(TextureWrapMode.REPEAT);
 			clothTexture.setAnisotropy( 16 );
@@ -207,15 +206,14 @@ public final class ClothSimulation extends ContentWidget
 
 			Color initColor = new Color( 0x00ff00 );
 			initColor.setHSV( 0.25, 0.85, 0.5 );
-			Texture initTexture = ImageUtils.generateDataTexture( 1, 1, initColor );
 
 			final MeshPhongMaterial groundMaterial = new MeshPhongMaterial();
 			groundMaterial.setColor(new Color(0xffffff));
 			groundMaterial.setSpecular(new Color(0x111111));
-			groundMaterial.setMap(initTexture);
+			groundMaterial.setMap(new DataTexture(1, 1, initColor));
 			groundMaterial.setPerPixel(true);
 
-			Texture groundTexture = ImageUtils.loadTexture( grasslight, Texture.MAPPING_MODE.UV, new ImageLoadHandler() {
+			Texture groundTexture = new Texture( grasslight, new Texture.ImageLoadHandler() {
 				
 				@Override
 				public void onImageLoad(Texture texture) {

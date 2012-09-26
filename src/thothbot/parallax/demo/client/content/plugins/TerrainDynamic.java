@@ -51,7 +51,6 @@ import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -98,7 +97,7 @@ public final class TerrainDynamic extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene implements ImageUtils.ImageLoadHandler
+	class DemoScene extends DemoAnimatedScene implements Texture.ImageLoadHandler
 	{
 		private static final String diffuseImage1 = "./static/textures/terrain/grasslight-big.jpg";
 		private static final String diffuseImage2 = "./static/textures/terrain/backgrounddetailed6.jpg";
@@ -252,7 +251,7 @@ public final class TerrainDynamic extends ContentWidget
 			specularMap.setWrapS(TextureWrapMode.REPEAT);
 			specularMap.setWrapT(TextureWrapMode.REPEAT);
 
-			Texture diffuseTexture1 = ImageUtils.loadTexture( diffuseImage1, null, new ImageUtils.ImageLoadHandler() {
+			Texture diffuseTexture1 = new Texture( diffuseImage1, new Texture.ImageLoadHandler() {
 				
 				@Override
 				public void onImageLoad(Texture texture) {
@@ -264,12 +263,12 @@ public final class TerrainDynamic extends ContentWidget
 			diffuseTexture1.setWrapS(TextureWrapMode.REPEAT);
 			diffuseTexture1.setWrapT(TextureWrapMode.REPEAT);
 
-			Texture diffuseTexture2 = ImageUtils.loadTexture( diffuseImage2, null, this);
+			Texture diffuseTexture2 = new Texture( diffuseImage2, this);
 
 			diffuseTexture2.setWrapS(TextureWrapMode.REPEAT);
 			diffuseTexture2.setWrapT(TextureWrapMode.REPEAT);
 
-			Texture detailTexture = ImageUtils.loadTexture( detailImage, null, this );
+			Texture detailTexture = new Texture( detailImage, this );
 			detailTexture.setWrapS(TextureWrapMode.REPEAT);
 			detailTexture.setWrapT(TextureWrapMode.REPEAT);
 

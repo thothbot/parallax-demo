@@ -41,7 +41,6 @@ import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.utils.GeometryUtils;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -107,7 +106,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
 			
-			Texture texture = ImageUtils.loadTexture(image);
+			Texture texture = new Texture(image);
 			texture.setWrapS(TextureWrapMode.REPEAT);
 			texture.setWrapT(TextureWrapMode.REPEAT);
 

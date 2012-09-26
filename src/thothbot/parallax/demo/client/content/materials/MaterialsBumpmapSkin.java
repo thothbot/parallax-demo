@@ -51,7 +51,6 @@ import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -216,7 +215,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 		
 		private void createScene( Geometry geometry, double scale ) 
 		{
-			Texture mapHeight = ImageUtils.loadTexture( texture );
+			Texture mapHeight = new Texture( texture );
 
 			mapHeight.setAnisotropy(4);
 			mapHeight.getRepeat().set( 0.998, 0.998 );
@@ -225,14 +224,14 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			mapHeight.setWrapT(TextureWrapMode.REPEAT);
 			mapHeight.setFormat(PixelFormat.RGB);
 
-			Texture mapSpecular = ImageUtils.loadTexture( textureSpec );
+			Texture mapSpecular = new Texture( textureSpec );
 			mapSpecular.getRepeat().set( 0.998, 0.998 );
 			mapSpecular.getOffset().set( 0.001, 0.001 );
 			mapSpecular.setWrapS(TextureWrapMode.REPEAT);
 			mapSpecular.setWrapT(TextureWrapMode.REPEAT);
 			mapSpecular.setFormat(PixelFormat.RGB);
 
-			Texture mapColor = ImageUtils.loadTexture( textureCol );
+			Texture mapColor = new Texture( textureCol );
 			mapColor.getRepeat().set( 0.998, 0.998 );
 			mapColor.getOffset().set( 0.001, 0.001 );
 			mapColor.setWrapS(TextureWrapMode.REPEAT);

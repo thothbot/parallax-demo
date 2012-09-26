@@ -32,7 +32,6 @@ import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.geometries.TorusKnotGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -96,7 +95,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			getCamera().getPosition().setZ(400);
 			getScene().add(getCamera());
 
-			Texture texture = ImageUtils.loadTexture(DemoScene.texture);
+			Texture texture = new Texture(DemoScene.texture);
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
 			mbOpt.setMap( texture );
 			

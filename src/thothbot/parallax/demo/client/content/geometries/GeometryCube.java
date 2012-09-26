@@ -22,11 +22,11 @@
 
 package thothbot.parallax.demo.client.content.geometries;
 
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -68,7 +68,7 @@ public class GeometryCube extends ContentWidget
 			CubeGeometry geometry = new CubeGeometry( 200, 200, 200 );
 
 			MeshBasicMaterial material = new MeshBasicMaterial();
-			material.setMap( ImageUtils.loadTexture(texture) );
+			material.setMap( new Texture(texture) );
 
 			this.mesh = new Mesh(geometry, material);
 			getScene().add(mesh);

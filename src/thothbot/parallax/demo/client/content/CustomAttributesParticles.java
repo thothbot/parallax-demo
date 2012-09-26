@@ -31,6 +31,7 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.shaders.Attribute;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
+import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -38,7 +39,6 @@ import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -102,7 +102,7 @@ public class CustomAttributesParticles extends ContentWidget
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
 			uniforms.put("color", new Uniform(Uniform.TYPE.C, new Color( 0xffffff )));
-			uniforms.put("texture", new Uniform(Uniform.TYPE.T, ImageUtils.loadTexture( texture )));
+			uniforms.put("texture", new Uniform(Uniform.TYPE.T, new Texture(texture)));
 
 			ShaderMaterial shaderMaterial = new ShaderMaterial( Resources.INSTANCE );
 			shaderMaterial.getShader().setAttributes(attributes);

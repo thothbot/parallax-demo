@@ -36,7 +36,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -81,12 +80,12 @@ public final class MaterialsTextures extends ContentWidget
 
 			objects = new ArrayList<Mesh>();
 
-			Texture imgTexture2 = ImageUtils.loadTexture( img2 );
+			Texture imgTexture2 = new Texture( img2 );
 			imgTexture2.setWrapS(TextureWrapMode.REPEAT);
 			imgTexture2.setWrapT(TextureWrapMode.REPEAT);
 			imgTexture2.setAnisotropy(16);
 
-			Texture imgTexture = ImageUtils.loadTexture( img );
+			Texture imgTexture = new Texture( img );
 			imgTexture.setRepeat(new Vector2(4, 2));
 			imgTexture.setWrapS(TextureWrapMode.REPEAT);
 			imgTexture.setWrapT(TextureWrapMode.REPEAT);

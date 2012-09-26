@@ -33,7 +33,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.FogSimple;
 import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.ImageUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -109,14 +108,20 @@ public final class MaterialsTextureFilter extends ContentWidget
 			context.fillRect( 0, 0, 64, 64);
 			context.fillRect( 64, 64, 64, 64 );
 
-			Texture textureCanvas = new Texture( canvas, Texture.MAPPING_MODE.UV, TextureWrapMode.REPEAT, TextureWrapMode.REPEAT );
+			Texture textureCanvas = new Texture( canvas );
+			textureCanvas.setWrapS(TextureWrapMode.REPEAT);
+			textureCanvas.setWrapT(TextureWrapMode.REPEAT);
 			MeshBasicMaterial materialCanvas = new MeshBasicMaterial();
 			materialCanvas.setMap(textureCanvas);
 
 			textureCanvas.setNeedsUpdate(true);
 			textureCanvas.setRepeat(new Vector2(1000, 1000));
 
-			Texture textureCanvas2 = new Texture( canvas, Texture.MAPPING_MODE.UV, TextureWrapMode.REPEAT, TextureWrapMode.REPEAT, TextureMagFilter.NEAREST, TextureMinFilter.NEAREST);
+			Texture textureCanvas2 = new Texture( canvas );
+			textureCanvas2.setWrapS(TextureWrapMode.REPEAT);
+			textureCanvas2.setWrapT(TextureWrapMode.REPEAT);
+			textureCanvas2.setMagFilter(TextureMagFilter.NEAREST);
+			textureCanvas2.setMinFilter(TextureMinFilter.NEAREST);
 			MeshBasicMaterial materialCanvas2 = new MeshBasicMaterial();
 			materialCanvas2.setColor(new Color(0xffccaa));
 			materialCanvas2.setMap(textureCanvas2);
@@ -135,7 +140,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 			meshCanvas2.getScale().set( 1000 );
 
 			// PAINTING
-			Texture texturePainting = ImageUtils.loadTexture(texture, Texture.MAPPING_MODE.UV, new ImageUtils.ImageLoadHandler() {
+			Texture texturePainting = new Texture(texture, new Texture.ImageLoadHandler() {
 				
 				@Override
 				public void onImageLoad(Texture texture) {
