@@ -28,8 +28,8 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.gl2.WebGLRenderingContext;
 import thothbot.parallax.core.client.gl2.arrays.Uint8Array;
-import thothbot.parallax.core.client.gl2.enums.DataType;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.gl2.enums.PixelType;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
@@ -253,7 +253,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 			Uint8Array pixelBuffer = Uint8Array.create(4);
 
 			//read the pixel under the mouse from the texture
-			gl.readPixels(mouseX, pickingTexture.getHeight() - mouseY, 1, 1, PixelFormat.RGBA.getValue(), DataType.UNSIGNED_BYTE.getValue(), pixelBuffer);
+			gl.readPixels(mouseX, pickingTexture.getHeight() - mouseY, 1, 1, PixelFormat.RGBA, PixelType.UNSIGNED_BYTE, pixelBuffer);
 
 			//interpret the pixel as an ID
 
