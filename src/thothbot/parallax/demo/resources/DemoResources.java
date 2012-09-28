@@ -143,6 +143,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_materials_cubemap_fresnel.jpg")
 	ImageResource exampleMaterialsCubemapFresnel();
 	
+	@Source("images/example_materials_texture_compressed.jpg")
+	ImageResource exampleMaterialsTextureCompressed();
+	
 	@Source("images/example_particle_trails.jpg")
 	ImageResource exampleParticleTrails();
 	

@@ -173,7 +173,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 		
 	public MaterialsCubemapBallsRefraction() 
 	{
-		super("Cube refraction", "Drag mouse to move. This example based on the three.js example.");
+		super("Cube map refraction", "Drag mouse to move. This example based on the three.js example.");
 	}
 	
 	@Override

@@ -171,7 +171,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		
 	public MaterialsCubemapDynamicReflection() 
 	{
-		super("Dynamic cube reflection", "Use mouse to move and zoom. This example based on the three.js example.");
+		super("Dynamic map cube reflection", "Use mouse to move and zoom. This example based on the three.js example.");
 	}
 	
 	@Override
