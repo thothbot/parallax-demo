@@ -114,11 +114,6 @@ public class GeometryDynamic extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{			
 			for ( int i = 0, l = this.geometry.getVertices().size(); i < l; i ++ )

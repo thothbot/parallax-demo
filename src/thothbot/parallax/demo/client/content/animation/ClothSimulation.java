@@ -289,11 +289,6 @@ public final class ClothSimulation extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			cloth.setWindStrength( Math.cos( duration / 7000 ) * 20 + 40 );

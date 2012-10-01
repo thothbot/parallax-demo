@@ -173,12 +173,7 @@ public class Geometries extends ContentWidget
 			object12.getPosition().set( 300, 0, 300 );
 			getScene().add( object12 );
 		}
-		
-		@Override
-		protected void onStop()
-		{			
-		}
-		
+				
 		@Override
 		protected void onUpdate(double duration)
 		{

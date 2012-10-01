@@ -70,11 +70,6 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			if(mesh != null)

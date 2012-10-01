@@ -145,11 +145,6 @@ public final class LinesSphere extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			getCamera().getPosition().addY( ( - mouseY + 200.0 - getCamera().getPosition().getY() ) * .05 );

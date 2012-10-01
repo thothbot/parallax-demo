@@ -108,11 +108,6 @@ public final class MiscMemoryTestShaders extends ContentWidget
 			String vector = Math.random() + "," + Math.random() + "," + Math.random();
 			shader.setFragmentSource(Shader.updateShaderSource(shader.getFragmentSource(), vector));
 		}
-
-		@Override
-		protected void onStop()
-		{			
-		}
 		
 		@Override
 		protected void onUpdate(double duration)

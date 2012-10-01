@@ -103,11 +103,6 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			this.oldTime = Duration.currentTimeMillis();

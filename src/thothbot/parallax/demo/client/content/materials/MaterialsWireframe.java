@@ -177,12 +177,6 @@ public final class MaterialsWireframe extends ContentWidget
 
 			return values;
 		}
-
-		
-		@Override
-		protected void onStop()
-		{			
-		}
 		
 		@Override
 		protected void onUpdate(double duration)

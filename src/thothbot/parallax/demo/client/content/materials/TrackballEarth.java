@@ -253,11 +253,6 @@ public final class TrackballEarth extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;

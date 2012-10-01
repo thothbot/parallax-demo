@@ -130,12 +130,7 @@ public final class PostprocessingGodrays extends ContentWidget
 			getRenderer().setAutoClear(false);
 			getRenderer().setClearColorHex( bgColor, 1 );
 		}
-		
-		@Override
-		protected void onStop()
-		{			
-		}
-		
+				
 		@Override
 		protected void onUpdate(double duration)
 		{

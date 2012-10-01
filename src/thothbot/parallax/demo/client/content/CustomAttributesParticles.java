@@ -148,11 +148,6 @@ public class CustomAttributesParticles extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double time = duration * 0.005;

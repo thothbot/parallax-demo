@@ -122,11 +122,6 @@ public final class InteractiveCubes extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			Log.error(mouseDeltaX, mouseDeltaY);

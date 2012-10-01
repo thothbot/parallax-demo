@@ -128,11 +128,6 @@ public final class EffectsSprites extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double time = duration * .001;

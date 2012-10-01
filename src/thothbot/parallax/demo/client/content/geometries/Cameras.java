@@ -194,11 +194,6 @@ public class Cameras extends ContentWidget implements RequiresResize
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double r = duration * 0.0005;

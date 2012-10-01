@@ -179,11 +179,6 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			controls.update();

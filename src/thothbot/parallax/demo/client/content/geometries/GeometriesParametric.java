@@ -125,12 +125,7 @@ public class GeometriesParametric extends ContentWidget
 //			object4.getScale().multiply(100);
 //			getScene().addChild( object4 );
 		}
-		
-		@Override
-		protected void onStop()
-		{			
-		}
-		
+				
 		@Override
 		protected void onUpdate(double duration)
 		{

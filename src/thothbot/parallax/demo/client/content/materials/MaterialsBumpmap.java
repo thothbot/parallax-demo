@@ -213,11 +213,6 @@ public final class MaterialsBumpmap extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double targetX = mouseX * .001;

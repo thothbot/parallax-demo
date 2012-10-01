@@ -142,11 +142,6 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );

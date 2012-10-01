@@ -121,11 +121,6 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			this.lon += .15;

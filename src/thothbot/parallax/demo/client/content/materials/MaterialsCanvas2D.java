@@ -291,11 +291,6 @@ public final class MaterialsCanvas2D extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double timer = 0.0001 * duration;

@@ -75,11 +75,6 @@ public class GeometryCube extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			this.mesh.getRotation().setX(this.mesh.getRotation().getX() + 0.005);

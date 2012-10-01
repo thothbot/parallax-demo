@@ -161,11 +161,6 @@ public final class MaterialsLightmap extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			controls.update();

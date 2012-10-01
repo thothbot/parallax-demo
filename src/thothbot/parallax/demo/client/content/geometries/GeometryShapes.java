@@ -437,11 +437,6 @@ public final class GeometryShapes extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			this.parent.getRotation().addY( ( this.mouseX - parent.getRotation().getY() ) * 0.00001 );

@@ -141,11 +141,6 @@ public final class LoaderCollada extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double timer = duration * 0.0005;

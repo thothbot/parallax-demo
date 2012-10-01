@@ -275,11 +275,6 @@ public final class MaterialsTextures extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double timer = duration * 0.00025;

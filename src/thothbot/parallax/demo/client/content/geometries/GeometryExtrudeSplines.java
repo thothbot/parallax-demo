@@ -263,11 +263,6 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 	    	this.parent.add(this.tubeMesh);
 	    }
-				
-		@Override
-		protected void onStop()
-		{			
-		}
 		
 		@Override
 		protected void onUpdate(double duration)

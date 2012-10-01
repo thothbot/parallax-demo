@@ -156,12 +156,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 			getScene().add( sphere );
 
 		}
-		
-		@Override
-		protected void onStop()
-		{			
-		}
-		
+				
 		@Override
 		protected void onUpdate(double duration)
 		{

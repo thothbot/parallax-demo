@@ -233,11 +233,6 @@ public final class InteractiveCubesGpu extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			controls.update();

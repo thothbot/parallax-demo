@@ -108,11 +108,6 @@ public final class MorphTargetsHorse extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			double theta = duration * 0.02;

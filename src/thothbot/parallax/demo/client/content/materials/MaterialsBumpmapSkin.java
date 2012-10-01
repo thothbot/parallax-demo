@@ -275,12 +275,6 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			getScene().add( mesh );
 		}
-
-		
-		@Override
-		protected void onStop()
-		{			
-		}
 		
 		@Override
 		protected void onUpdate(double duration)

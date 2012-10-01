@@ -202,11 +202,6 @@ public final class EffectsLensFlares extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001 );

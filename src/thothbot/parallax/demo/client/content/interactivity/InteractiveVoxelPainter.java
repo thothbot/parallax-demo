@@ -147,11 +147,6 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			if ( isShiftDown ) 

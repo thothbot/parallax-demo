@@ -183,11 +183,6 @@ public class GeometryColors extends ContentWidget
 		}
 		
 		@Override
-		protected void onStop()
-		{			
-		}
-		
-		@Override
 		protected void onUpdate(double duration)
 		{
 			getCamera().getPosition().addX(( - mouseX - getRenderer().getCanvas().getWidth()/2.5 - getCamera().getPosition().getX()) );
