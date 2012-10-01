@@ -276,12 +276,12 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 		        if (demoAnimatedScene != null)
 		        {
 		        	RenderingPanel renderingPanel = new RenderingPanel();
+		    		ContentWidget.this.renderingPanel = renderingPanel;
+
 		    		loadRenderingPanelAttributes(renderingPanel);
 		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
 		    		renderingPanel.addAnimationReadyEventHandler(ContentWidget.this);
 		    		
-		    		ContentWidget.this.renderingPanel = renderingPanel;
-
 		        	view.setRenderingPanel(renderingPanel);
 		        }
 			}

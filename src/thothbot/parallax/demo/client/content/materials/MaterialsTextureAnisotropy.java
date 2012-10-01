@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Mathematics;
@@ -39,10 +40,13 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 
 public final class MaterialsTextureAnisotropy extends ContentWidget 
 {
@@ -56,7 +60,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 		
 		int mouseX = 0, mouseY = 0;
 		
-		Scene scene1;
+		Scene sceneMaxAnisotropy;
 		
 
 		@Override
@@ -77,18 +81,18 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			getCamera().getPosition().setZ(1500);
 			getScene().add(getCamera());
 
-			scene1 = new Scene();
+			sceneMaxAnisotropy = new Scene();
 
-			scene1.setFog( new FogSimple( 0xffffff, 1, 25000 ) );
-			scene1.getFog().getColor().setHSV( 0.6, 0.05, 1 );
-			getScene().setFog(scene1.getFog());
+			sceneMaxAnisotropy.setFog( new FogSimple( 0xffffff, 1, 25000 ) );
+			sceneMaxAnisotropy.getFog().getColor().setHSV( 0.6, 0.05, 1 );
+			getScene().setFog(sceneMaxAnisotropy.getFog());
 
-			scene1.add( new AmbientLight( 0xeef0ff ) );
+			sceneMaxAnisotropy.add( new AmbientLight( 0xeef0ff ) );
 			getScene().add( new AmbientLight( 0xeef0ff ) );
 
 			DirectionalLight light1 = new DirectionalLight( 0xffffff, 2 );
 			light1.getPosition().set( 1 );
-			scene1.add( light1 );
+			sceneMaxAnisotropy.add( light1 );
 
 			DirectionalLight light2 = new DirectionalLight( 0xffffff, 2 );
 			light2.setPosition( light1.getPosition() );
@@ -96,14 +100,12 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 
 			// GROUND
 
-			int maxAnisotropy = getRenderer().getGPUmaxAnisotropy();
-
 			Texture texture1 = new Texture(texture);
 			MeshPhongMaterial material1 = new MeshPhongMaterial();
 			material1.setColor(new Color(0xffffff));
 			material1.setMap(texture1);
 
-			texture1.setAnisotropy( maxAnisotropy );
+			texture1.setAnisotropy( getRenderer().getGPUmaxAnisotropy() );
 			texture1.setWrapS(TextureWrapMode.REPEAT);
 			texture1.setWrapT(TextureWrapMode.REPEAT);
 			texture1.getRepeat().set( 512, 512 );
@@ -118,17 +120,6 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			texture2.setWrapT(TextureWrapMode.REPEAT);
 			texture2.getRepeat().set( 512, 512 );
 
-//			if ( maxAnisotropy > 0 ) 
-//			{
-//				document.getElementById( "val_left" ).innerHTML = texture1.anisotropy;
-//				document.getElementById( "val_right" ).innerHTML = texture2.anisotropy;
-//			} 
-//			else 
-//			{
-//				document.getElementById( "val_left" ).innerHTML = "not supported";
-//				document.getElementById( "val_right" ).innerHTML =  "not supported";
-//			}
-
 			//
 
 			PlaneGeometry geometry = new PlaneGeometry( 100, 100 );
@@ -141,12 +132,12 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			mesh2.getRotation().setX( - Math.PI / 2 );
 			mesh2.getScale().set( 1000 );
 
-			scene1.add( mesh1 );
+			sceneMaxAnisotropy.add( mesh1 );
 			getScene().add( mesh2 );
 
 			// RENDERER
 
-			getRenderer().setClearColor( scene1.getFog().getColor(), 1 );
+			getRenderer().setClearColor( sceneMaxAnisotropy.getFog().getColor(), 1 );
 			getRenderer().setAutoClear(false);
 		}
 		
@@ -162,7 +153,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			getCamera().getPosition().setY( Mathematics.clamp( 
 					getCamera().getPosition().getY() + ( - ( mouseY - 200 ) - getCamera().getPosition().getY() ) * .05, 50, 1000 ));
 
-			getCamera().lookAt( scene1.getPosition() );
+			getCamera().lookAt( sceneMaxAnisotropy.getPosition() );
 
 			getRenderer().enableScissorTest( false );
 			getRenderer().clear();
@@ -170,7 +161,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 
 			Canvas3d canvas = getRenderer().getCanvas();
 			getRenderer().setScissor( 0, 0, canvas.getWidth()/2 - 2, canvas.getHeight() );
-			getRenderer().render( scene1, getCamera() );
+			getRenderer().render( sceneMaxAnisotropy, getCamera() );
 
 			getRenderer().setScissor( canvas.getWidth()/2, 0, canvas.getWidth()/2 - 2, canvas.getHeight()  );
 		}
@@ -185,12 +176,38 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 	public void onAnimationReady(AnimationReadyEvent event)
 	{
 		super.onAnimationReady(event);
+				
+		FlowPanel panelLeft = new FlowPanel();
+		panelLeft.setStyleName("common-panel", true);
+		panelLeft.setStyleName("corner-panel", true);
+		this.renderingPanel.add(panelLeft);
+		this.renderingPanel.setWidgetLeftWidth(panelLeft, 1, Unit.PX, 80, Unit.PX);
+		this.renderingPanel.setWidgetBottomHeight(panelLeft, 1, Unit.PX, 20, Unit.PX);
+		
+		FlowPanel panelRight = new FlowPanel();
+		panelRight.setStyleName("common-panel", true);
+		panelRight.setStyleName("corner-panel", true);
+		this.renderingPanel.add(panelRight);
+		this.renderingPanel.setWidgetRightWidth(panelRight, 1, Unit.PX, 80, Unit.PX);
+		this.renderingPanel.setWidgetBottomHeight(panelRight, 1, Unit.PX, 20, Unit.PX);
 
+		final DemoScene rs = (DemoScene) this.renderingPanel.getAnimatedScene();
+
+		if ( this.renderingPanel.getRenderer().getGPUmaxAnisotropy() > 0 ) 
+		{
+			panelLeft.add(new Label("Anisotropy: " + this.renderingPanel.getRenderer().getGPUmaxAnisotropy()));
+			panelRight.add(new Label("Anisotropy: " + 1));
+		} 
+		else
+		{
+			panelLeft.add(new Label("not supported"));
+			panelRight.add(new Label("not supported"));
+		}
+		
 		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
 		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
 		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);
