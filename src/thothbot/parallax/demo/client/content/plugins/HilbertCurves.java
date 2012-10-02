@@ -60,11 +60,7 @@ public final class HilbertCurves extends ContentWidget
 	{
 		public int mouseX;
 		public int mouseY;
-		
-		private Postprocessing composer;
-		
-		ShaderPass effectFXAA;
-		
+						
 		@Override
 		protected void loadCamera()
 		{
@@ -148,7 +144,7 @@ public final class HilbertCurves extends ContentWidget
 			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
 			effectScreen.setRenderToScreen(true);
 
-			composer = new Postprocessing( getRenderer(), getScene() );
+			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
 
 			composer.addPass( renderModel );
 			composer.addPass( effectBloom );
