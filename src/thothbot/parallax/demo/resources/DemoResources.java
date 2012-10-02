@@ -182,6 +182,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_terrain_dynamic.jpg")
 	ImageResource exampleTerrainDynamic();
 	
+	@Source("images/example_postprocessing_multi.jpg")
+	ImageResource examplePostprocessingMulti();
+	
 	@Source("images/example_lensflares.jpg")
 	ImageResource exampleLensflares();
 	

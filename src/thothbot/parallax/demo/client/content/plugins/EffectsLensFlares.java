@@ -30,7 +30,7 @@ import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.FogSimple;
+import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.utils.ColorUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -88,7 +88,7 @@ public final class EffectsLensFlares extends ContentWidget
 			controls.setAutoForward( false );
 			controls.setDragToLook( false );
 			
-			FogSimple fog = new FogSimple( 0x000000, 3500, 15000 );
+			Fog fog = new Fog( 0x000000, 3500, 15000 );
 			fog.getColor().setHSV( 0.51, 0.6, 0.025 );
 			getScene().setFog(fog);
 

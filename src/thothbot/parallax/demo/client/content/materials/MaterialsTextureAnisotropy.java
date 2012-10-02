@@ -32,7 +32,7 @@ import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.FogSimple;
+import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -83,7 +83,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 
 			sceneMaxAnisotropy = new Scene();
 
-			sceneMaxAnisotropy.setFog( new FogSimple( 0xffffff, 1, 25000 ) );
+			sceneMaxAnisotropy.setFog( new Fog( 0xffffff, 1, 25000 ) );
 			sceneMaxAnisotropy.getFog().getColor().setHSV( 0.6, 0.05, 1 );
 			getScene().setFog(sceneMaxAnisotropy.getFog());
 

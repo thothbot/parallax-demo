@@ -32,7 +32,7 @@ import thothbot.parallax.core.shared.materials.Material.SIDE;
 import thothbot.parallax.core.shared.materials.MeshFaceMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.FogSimple;
+import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -92,7 +92,7 @@ public final class MaterialsLightmap extends ContentWidget
 			getCamera().getPosition().set(700, -500, 1800);
 			getScene().add(getCamera());
 
-			getScene().setFog( new FogSimple( 0xfafafa, 1000, 10000 ) );
+			getScene().setFog( new Fog( 0xfafafa, 1000, 10000 ) );
 			getScene().getFog().getColor().setHSV( 0.6, 0.125, 1 );
 
 			// CONTROLS

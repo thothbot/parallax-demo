@@ -31,7 +31,7 @@ import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.FogSimple;
+import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -91,7 +91,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 
 			this.scene2 = new Scene();
 
-			getScene().setFog( new FogSimple( 0x000000, 1500, 4000 ));
+			getScene().setFog( new Fog( 0x000000, 1500, 4000 ));
 			scene2.setFog( getScene().getFog() );
 
 			// GROUND

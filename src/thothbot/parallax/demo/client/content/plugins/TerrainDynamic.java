@@ -49,7 +49,7 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.FogSimple;
+import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -205,7 +205,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// SCENE (FINAL)
 
-			getScene().setFog( new FogSimple( 0x050505, 2000, 4000 ) );
+			getScene().setFog( new Fog( 0x050505, 2000, 4000 ) );
 			getScene().getFog().getColor().setHSV( 0.102, 0.9, 0.825 );
 
 			// LIGHTS
