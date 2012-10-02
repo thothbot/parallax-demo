@@ -26,9 +26,9 @@ import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.plugin.sprite.Sprite;
-import thothbot.parallax.plugin.sprite.Sprite.ALIGNMENT;
-import thothbot.parallax.plugin.sprite.SpritePlugin;
+import thothbot.parallax.plugin.scene.sprite.Sprite;
+import thothbot.parallax.plugin.scene.sprite.SpritePlugin;
+import thothbot.parallax.plugin.scene.sprite.Sprite.ALIGNMENT;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;

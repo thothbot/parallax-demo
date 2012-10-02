@@ -30,14 +30,14 @@ import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.Fog;
+import thothbot.parallax.core.shared.scene.Fog;
 import thothbot.parallax.core.shared.utils.ColorUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.plugin.lensflare.LensFlare;
-import thothbot.parallax.plugin.lensflare.LensFlare.LensSprite;
-import thothbot.parallax.plugin.lensflare.LensFlarePlugin;
+import thothbot.parallax.plugin.scene.lensflare.LensFlare;
+import thothbot.parallax.plugin.scene.lensflare.LensFlarePlugin;
+import thothbot.parallax.plugin.scene.lensflare.LensFlare.LensSprite;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;

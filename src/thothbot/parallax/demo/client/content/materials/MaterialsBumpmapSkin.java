@@ -58,9 +58,9 @@ import thothbot.parallax.demo.client.content.geometries.GeometryCube;
 import thothbot.parallax.demo.resources.BeckmannShader;
 import thothbot.parallax.demo.resources.SkinSimpleShader;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
-import thothbot.parallax.plugin.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugin.scene.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugin.scene.postprocessing.client.ShaderPass;
+import thothbot.parallax.plugin.scene.postprocessing.client.shaders.ScreenShader;
 
 public final class MaterialsBumpmapSkin extends ContentWidget 
 {
