@@ -37,6 +37,7 @@ import thothbot.parallax.plugin.postprocessing.client.FilmPass;
 import thothbot.parallax.plugin.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugin.postprocessing.client.RenderPass;
 
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.resources.client.ImageResource;
@@ -56,6 +57,8 @@ public final class MaterialsShaderLava extends ContentWidget
 		
 		Map<String, Uniform> uniforms;
 		Mesh mesh;
+		
+		private double oldTime;
 		
 		@Override
 		protected void loadCamera()
@@ -110,12 +113,14 @@ public final class MaterialsShaderLava extends ContentWidget
 			composer.addPass( effectFilm );
 			
 			getRenderer().setAutoClear(false);
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		@Override
 		protected void onUpdate(double duration)
 		{
-			double delta = 5 * duration * 0.001;
+			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001 * 5;
 
 			uniforms.get("time").setValue((Double)uniforms.get("time").getValue() + 0.2 * delta );
 
@@ -123,6 +128,8 @@ public final class MaterialsShaderLava extends ContentWidget
 			mesh.getRotation().addY( 0.0125 * delta );
 
 			getRenderer().clear();
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 	}
 		
