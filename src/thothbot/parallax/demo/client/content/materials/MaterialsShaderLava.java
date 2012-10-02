@@ -21,10 +21,12 @@ package thothbot.parallax.demo.client.content.materials;
 
 import java.util.Map;
 
+import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.TorusGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -72,6 +74,17 @@ public final class MaterialsShaderLava extends ContentWidget
 					)); 
 		}
 
+		@Override
+		protected void onResize() 
+		{
+			super.onResize();
+			
+			Canvas3d canvas = getRenderer().getCanvas();
+			
+			((Vector2)uniforms.get("resolution").getValue()).setX( canvas.getWidth() );
+			((Vector2)uniforms.get("resolution").getValue()).setY( canvas.getHeight() );
+		}
+		
 		@Override
 		protected void onStart()
 		{
