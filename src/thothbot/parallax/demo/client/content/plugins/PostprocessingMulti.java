@@ -42,21 +42,8 @@ public final class PostprocessingMulti extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		PerspectiveCamera camera;
 		OrthographicCamera cameraOrtho;
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-						
-//			cameraOrtho = new OrthographicCamera( -halfWidth, halfWidth, halfHeight, -halfHeight, -10000, 10000 );
-		}
 
 		@Override
 		protected void onResize() 
@@ -86,8 +73,17 @@ public final class PostprocessingMulti extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(900);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().setZ(900);
+			
+//			cameraOrtho = new OrthographicCamera( -halfWidth, halfWidth, halfHeight, -halfHeight, -10000, 10000 );
+			
 			
 			cameraOrtho.getPosition().setZ( 100 );
 

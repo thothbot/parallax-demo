@@ -49,27 +49,22 @@ public final class MiscLookAt extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		PerspectiveCamera camera;
 		Mesh sphere;
 		
 		int mouseX = 0, mouseY = 0;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							15000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(3200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					15000 // far 
+			); 
+			
+			camera.getPosition().setZ(3200);
 			
 			MeshNormalMaterial material = new MeshNormalMaterial();
 			material.setShading(Material.SHADING.SMOOTH);
@@ -109,9 +104,11 @@ public final class MiscLookAt extends ContentWidget
 				getScene().getChildren().get(i).lookAt( sphere.getPosition() );
 			}
 
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05 );
-			getCamera().lookAt( getScene().getPosition() );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().addY( ( - mouseY - camera.getPosition().getY() ) * .05 );
+			camera.lookAt( getScene().getPosition() );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

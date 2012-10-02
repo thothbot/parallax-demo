@@ -110,6 +110,8 @@ public final class TerrainDynamic extends ContentWidget
 		private static final boolean updateNoise = true;
 		private static final boolean animateTerrain = false;
 		
+		PerspectiveCamera camera;
+		
 		OrthographicCamera cameraOrtho;
 		Scene sceneRenderTarget;
 		
@@ -143,27 +145,6 @@ public final class TerrainDynamic extends ContentWidget
 		private double oldTime;
 		
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							2, // near
-							4000 // far 
-					)); 
-			
-			Canvas3d canvas = getRenderer().getCanvas();
-			
-			cameraOrtho = new OrthographicCamera( 
-					canvas.getWidth() / - 2.0, 
-					canvas.getWidth() / 2.0, 
-					canvas.getHeight() / 2.0, 
-					canvas.getHeight() / - 2.0, 
-					-10000, 10000);
-		}
-		
-		@Override
 		protected void onResize() 
 		{
 			super.onResize();
@@ -176,9 +157,26 @@ public final class TerrainDynamic extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set( -1200, 800, 1200 );
+			
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					2, // near
+					4000 // far 
+			); 
+			
+			Canvas3d canvas = getRenderer().getCanvas();
+			
+			cameraOrtho = new OrthographicCamera( 
+					canvas.getWidth() / - 2.0, 
+					canvas.getWidth() / 2.0, 
+					canvas.getHeight() / 2.0, 
+					canvas.getHeight() / - 2.0, 
+					-10000, 10000);
+			
+			camera.getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
-			getScene().add(getCamera());
+			
 
 			onResize();
 //			soundtrack = document.getElementById( "soundtrack" );
@@ -190,7 +188,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// CAMERA
 
-			controls = new TrackballControls( getCamera(), getRenderer().getCanvas() );
+			controls = new TrackballControls( camera, getRenderer().getCanvas() );
 			controls.getTarget().set( 0 );
 
 			controls.setRotateSpeed(1.0);
@@ -361,7 +359,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			getRenderer().setAutoClear(false);
 			
-			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
+			RenderPass renderModel = new RenderPass( getScene(), camera );
 			
 			BloomPass effectBloom = new BloomPass( 0.6 );
 			ShaderPass effectBleach = new ShaderPass( new BleachbypassShader() );
@@ -418,7 +416,7 @@ public final class TerrainDynamic extends ContentWidget
 //
 //			morphs.add( meshAnim );
 
-			getRenderer().initWebGLObjects( getScene() );
+			getScene().initWebGLObjects();
 
 			final JsonLoader jsonLoader = new JsonLoader();
 
@@ -470,7 +468,7 @@ public final class TerrainDynamic extends ContentWidget
 			
 			// PRE-INIT
 
-			getRenderer().initWebGLObjects( getScene() );
+			getScene().initWebGLObjects();
 		}
 
 		private void morphColorsToFaceColors( Geometry geometry ) 
@@ -499,7 +497,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			sceneTmp.add( meshTmp );
 
-			getRenderer().render( sceneTmp, cameraOrtho, target, true );
+//			getRenderer().render( sceneTmp, cameraOrtho, target, true );
 		}
 		
 		@Override
@@ -560,11 +558,11 @@ public final class TerrainDynamic extends ContentWidget
 
 					((Vector2)uniformsTerrain.get( "uOffset" ).getValue()).setX( 4 * ((Vector2)uniformsNoise.get( "offset" ).getValue()).getX() );
 
-					quadTarget.setMaterial( mlib.get( "heightmap" ));
-					getRenderer().render( sceneRenderTarget, cameraOrtho, heightMap, true );
-
-					quadTarget.setMaterial( mlib.get( "normal" ));
-					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
+//					quadTarget.setMaterial( mlib.get( "heightmap" ));
+//					getRenderer().render( sceneRenderTarget, cameraOrtho, heightMap, true );
+//
+//					quadTarget.setMaterial( mlib.get( "normal" ));
+//					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
 
 					//updateNoise = false;
 				}

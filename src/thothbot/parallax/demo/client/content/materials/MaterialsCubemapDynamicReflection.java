@@ -59,6 +59,8 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	{
 		private static final String texture = "./static/textures/ruins.jpg";
 		
+		PerspectiveCamera camera; 
+		
 		public int onMouseDownMouseX = 0;
 		public int onMouseDownMouseY = 0;
 		
@@ -78,22 +80,16 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		private CubeCamera cubeCamera;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							this.fov, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							1000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(400);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					this.fov, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					1000 // far 
+			); 
+			
+			camera.getPosition().setZ(400);
 
 			Texture texture = new Texture(DemoScene.texture);
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
@@ -118,6 +114,8 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 
 			torus = new Mesh( new TorusKnotGeometry( 20, 5, 100, 100 ), material );
 			getScene().add( torus );
+			
+			getRenderer().render( getScene(), camera );
 		}
 		
 		@Override
@@ -150,11 +148,11 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			this.torus.getRotation().addX( 0.02 );
 			this.torus.getRotation().addY( 0.03 );
 
-			getCamera().getPosition().setX(100.0 * Math.sin( phi ) * Math.cos( theta ) );
-			getCamera().getPosition().setY(100.0 * Math.cos( phi ) );
-			getCamera().getPosition().setZ(100.0 * Math.sin( phi ) * Math.sin( theta ) );
+			camera.getPosition().setX(100.0 * Math.sin( phi ) * Math.cos( theta ) );
+			camera.getPosition().setY(100.0 * Math.cos( phi ) );
+			camera.getPosition().setZ(100.0 * Math.sin( phi ) * Math.sin( theta ) );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			this.sphere.setVisible(false); // *cough*
 
@@ -180,7 +178,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			public void onMouseWheel(MouseWheelEvent event) {
 				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				rs.fov -= event.getDeltaY() * 1.0;
-				rs.getCamera().getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getCanvas().getAspectRation(), 1, 1100);
+				rs.camera.getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getCanvas().getAspectRation(), 1, 1100);
 			}
 		});
 		

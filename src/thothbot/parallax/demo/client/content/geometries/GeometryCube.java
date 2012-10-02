@@ -45,25 +45,20 @@ public class GeometryCube extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		private static final String texture = "./static/textures/crate.gif";
+		PerspectiveCamera camera;
+		
 		private Mesh mesh;
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							70, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							1000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(400);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					70, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					1000 // far 
+			);
+			camera.getPosition().setZ(400);
 
 			CubeGeometry geometry = new CubeGeometry( 200, 200, 200 );
 
@@ -79,6 +74,8 @@ public class GeometryCube extends ContentWidget
 		{
 			this.mesh.getRotation().setX(this.mesh.getRotation().getX() + 0.005);
 			this.mesh.getRotation().setY(this.mesh.getRotation().getY() + 0.01);
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

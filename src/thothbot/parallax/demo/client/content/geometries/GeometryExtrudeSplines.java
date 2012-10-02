@@ -105,6 +105,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		int extrusionSegments = 100;
 		int radiusSegments = 3;
 		double scale = 4;
+		boolean isAnimation = false;
 		boolean isClosed = true;
 		boolean isDebug = false;
 		boolean isLookAhead = false;
@@ -153,27 +154,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			      
 		    return retval;
 		}
-		
-		@Override
-		protected void loadCamera()
-		{		
-			mainCamera = new PerspectiveCamera(
-					50, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
-					0.01, // near
-					1000 // far 
-			);
-			
-			setCamera(mainCamera); 
-
-			splineCamera = new PerspectiveCamera(
-					84, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
-					0.01, // near
-					1000 // far 
-			);
-		}
-		
+				
 		@Override
 		protected void onResize() 
 		{
@@ -186,9 +167,22 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(0, 50, 500);
-			getScene().add(getCamera());
+			mainCamera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					0.01, // near
+					1000 // far 
+			);
+			
+			mainCamera.getPosition().set(0, 50, 500);
 
+			splineCamera = new PerspectiveCamera(
+					84, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					0.01, // near
+					1000 // far 
+			);
+			
 			DirectionalLight light = new DirectionalLight(0xffffff);
 			light.getPosition().set(0, 0, 1);
 			getScene().add(light);
@@ -212,14 +206,6 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			parent.add(cameraEye);
 
 			animateCamera();
-		}
-		
-		public void setCameraAnimation()
-		{
-			if(getCamera().equals(splineCamera))
-				setCamera(mainCamera);
-			else
-				setCamera(splineCamera);
 		}
 
 		private void animateCamera() 
@@ -309,6 +295,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			this.cameraHelper.update();
 
 			this.parent.getRotation().addY( ( this.targetRotation - this.parent.getRotation().getY() ) * 0.05 );
+			
+			getRenderer().render( getScene(), isAnimation ? splineCamera : mainCamera );
 		}
 	}
 		
@@ -476,8 +464,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				rs.setCameraAnimation();
-				animation.setText("Camera Spline Animation View: " + (rs.getCamera().equals(rs.splineCamera) ? "ON" : "OFF"));
+				rs.isAnimation = !rs.isAnimation;
+				animation.setText("Camera Spline Animation View: " + ((rs.isAnimation) ? "ON" : "OFF"));
 			}
 		});
 

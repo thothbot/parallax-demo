@@ -48,27 +48,23 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		
 		static final int radius = 600;
 		
+		PerspectiveCamera camera;
+		
 		JsonLoader jsonLoader;
 		
 		private double oldTime;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setY(200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().setY(200);
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff, 1.3 );
 			light.getPosition().set( 1, 1, 1 );
@@ -108,13 +104,14 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			this.oldTime = Duration.currentTimeMillis();
 			double theta = duration * 0.01;
 
-			getCamera().getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
-			getCamera().getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
+			camera.getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
+			camera.getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			this.jsonLoader.getAnimation().updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime)  );
 			getRenderer().clear();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

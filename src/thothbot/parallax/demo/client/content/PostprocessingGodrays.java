@@ -59,30 +59,24 @@ public final class PostprocessingGodrays extends ContentWidget
 		private static final int bgColor = 0x000511;
 		private static final int sunColor = 0xffee00;
 		
+		PerspectiveCamera camera;
+		
 		public int mouseX;
 		public int mouseY;
 		
 		Mesh sphereMesh;
 		
 		private Postprocessing composer;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							70, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							3000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera( 70,
+					getRenderer().getCanvas().getAspectRation(), 
+					1, 
+					3000 
+				);
+			camera.getPosition().setZ(200);
 			
 			MeshDepthMaterial materialDepth = new MeshDepthMaterial();
 
@@ -139,12 +133,13 @@ public final class PostprocessingGodrays extends ContentWidget
 			this.sphereMesh.getPosition().setX( orbitRadius * Math.cos( time ) );
 			this.sphereMesh.getPosition().setZ( orbitRadius * Math.sin( time ) - 100.0 );
 
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * 0.036 );
-			getCamera().getPosition().addY( ( - ( mouseY ) - getCamera().getPosition().getY() ) * 0.036 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * 0.036 );
+			camera.getPosition().addY( ( - ( mouseY ) - camera.getPosition().getY() ) * 0.036 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 			
 			getRenderer().clear();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

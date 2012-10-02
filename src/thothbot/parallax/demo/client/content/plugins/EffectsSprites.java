@@ -44,29 +44,24 @@ public final class EffectsSprites extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera;
 		Object3D group;
 		
 		Texture mapA = new Texture( "./static/textures/sprite0.png" );
 		Texture mapB = new Texture( "./static/textures/sprite1.png" );
 		Texture mapC = new Texture( "./static/textures/sprite2.png" );
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							5000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1500);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					5000 // far 
+			);
+			
+			camera.getPosition().setZ(1500);
 			
 			int amount = 200;
 			int radius = 500;
@@ -147,6 +142,8 @@ public final class EffectsSprites extends ContentWidget
 			group.getRotation().setX( time * 0.5 );
 			group.getRotation().setY( time * 0.75);
 			group.getRotation().setZ( time * 1.0 );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

@@ -79,30 +79,25 @@ public final class ClothSimulation extends ContentWidget
 	
 		private static final String circuitPattern = "./static/textures/patterns/circuit_pattern.png";
 		private static final String grasslight = "./static/textures/terrain/grasslight-big.jpg";
-				
+			
+		PerspectiveCamera camera;
 		Cloth cloth;
 		ArrowHelper arrow;
 		
 		boolean isRotate = true;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							30, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1500);
-			getCamera().getPosition().setY(50);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					30, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().setZ(1500);
+			camera.getPosition().setY(50);
 
 			getScene().setFog( new Fog( 0x000000, 500, 10000 ) );
 			getScene().getFog().getColor().setHSV( 0.6, 0.2, 1 );
@@ -306,11 +301,12 @@ public final class ClothSimulation extends ContentWidget
 			
 			if ( isRotate ) 
 			{
-				getCamera().getPosition().setX( Math.cos( timer ) * 1500 );
-				getCamera().getPosition().setZ( Math.sin( timer ) * 1500 );
+				camera.getPosition().setX( Math.cos( timer ) * 1500 );
+				camera.getPosition().setZ( Math.sin( timer ) * 1500 );
 			}
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

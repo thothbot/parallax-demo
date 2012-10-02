@@ -53,25 +53,18 @@ public final class LoaderCollada extends ContentWidget
 	{
 		static final String model = "./models/collada/monster/monster.dae";
 		
+		PerspectiveCamera camera;
 		Mesh particleLight;
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							45, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							2000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(2, 2, 3);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera( 45,
+					getRenderer().getCanvas().getAspectRation(), 
+					1, 
+					2000 
+			);
+			camera.getPosition().set(2, 2, 3);
 
 			ColladaLoader colladaLoader = new ColladaLoader();
 			try
@@ -145,15 +138,17 @@ public final class LoaderCollada extends ContentWidget
 		{
 			double timer = duration * 0.0005;
 
-			getCamera().getPosition().setX( Math.cos( timer ) * 10.0 );
-			getCamera().getPosition().setY( 2.0 );
-			getCamera().getPosition().setZ( Math.sin( timer ) * 10.0 );
+			camera.getPosition().setX( Math.cos( timer ) * 10.0 );
+			camera.getPosition().setY( 2.0 );
+			camera.getPosition().setZ( Math.sin( timer ) * 10.0 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			this.particleLight.getPosition().setX( Math.sin( timer * 4 ) * 3009.0 );
 			this.particleLight.getPosition().setY( Math.cos( timer * 5 ) * 4000.0 );
 			this.particleLight.getPosition().setZ( Math.cos( timer * 4 ) * 3009.0 );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

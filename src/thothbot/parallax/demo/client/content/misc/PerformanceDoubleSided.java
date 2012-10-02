@@ -53,26 +53,22 @@ public final class PerformanceDoubleSided extends ContentWidget
 	{
 		private static final String textures = "./static/textures/cube/swedishRoyalCastle/*.jpg";
 		
+		PerspectiveCamera camera;
+		
 		public int mouseX;
 		public int mouseY;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							20000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(3200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					20000 // far 
+			); 
+			
+			camera.getPosition().setZ(3200);
 			
 			PointLight light1 = new PointLight( 0x0011ff, 1, 5500 );
 			light1.getPosition().set( 4000, 0, 0 );
@@ -130,10 +126,12 @@ public final class PerformanceDoubleSided extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().addY( ( - mouseY - camera.getPosition().getY() ) * .05 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

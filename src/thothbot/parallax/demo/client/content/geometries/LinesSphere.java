@@ -70,28 +70,24 @@ public final class LinesSphere extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		PerspectiveCamera camera;
+		
 		public int mouseX;
 		public int mouseY;
 		
 		Map<Line, Double> originalScale;
 		
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							80, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							3000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					80, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					3000 // far 
+			);
+			
+			camera.getPosition().setZ(1000);
 
 			List<ExampleData> parameters = new ArrayList<ExampleData>();
 			parameters.add(new ExampleData( 0.25, 0xff7700, 1.00, 2));
@@ -147,8 +143,8 @@ public final class LinesSphere extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addY( ( - mouseY + 200.0 - getCamera().getPosition().getY() ) * .05 );
-			getCamera().lookAt( getScene().getPosition() );
+			camera.getPosition().addY( ( - mouseY + 200.0 - camera.getPosition().getY() ) * .05 );
+			camera.lookAt( getScene().getPosition() );
 
 			double time = duration * 0.0001;
 
@@ -164,6 +160,8 @@ public final class LinesSphere extends ContentWidget
 						object.getScale().set(originalScale.get(object) * (i / 5.0 + 1.0) * (1.0 + 0.5 * Math.sin( 7.0 * time ) ));
 				}
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

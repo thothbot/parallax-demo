@@ -49,6 +49,7 @@ public final class MorphTargetsHorse extends ContentWidget
 		
 		static final int radius = 600;
 		
+		PerspectiveCamera camera;
 		Mesh mesh;
 		Vector3 target = new Vector3(0, 150, 0);
 		
@@ -60,22 +61,16 @@ public final class MorphTargetsHorse extends ContentWidget
 		int currentKeyframe = 0;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setY(300);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().setY(300);
 			
 			DirectionalLight light = new DirectionalLight( 0xefefff, 2 );
 			light.getPosition().set( 1, 1, 1 ).normalize();
@@ -112,10 +107,10 @@ public final class MorphTargetsHorse extends ContentWidget
 		{
 			double theta = duration * 0.02;
 
-			getCamera().getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
-			getCamera().getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
+			camera.getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
+			camera.getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
 
-			getCamera().lookAt( target );
+			camera.lookAt( target );
 
 			if ( mesh != null ) 
 			{
@@ -139,6 +134,8 @@ public final class MorphTargetsHorse extends ContentWidget
 				mesh.getMorphTargetInfluences().set( lastKeyframe,
 						1.0 - mesh.getMorphTargetInfluences().get( keyframe ));
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

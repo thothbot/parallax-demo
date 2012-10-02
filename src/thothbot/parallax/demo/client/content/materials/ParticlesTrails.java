@@ -49,26 +49,22 @@ public final class ParticlesTrails extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera;
+		
 		public int mouseX;
 		public int mouseY;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(100000, 0, 3200 );
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().set(100000, 0, 3200 );
 
 			int[] colors = {0x000000, 0xff0080, 0x8000ff, 0xffffff};
 			Geometry geometry = new Geometry();
@@ -102,10 +98,11 @@ public final class ParticlesTrails extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().addY( ( - mouseY - camera.getPosition().getY() ) * .05 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
+			getRenderer().render(getScene(), camera);
 		}
 	}
 

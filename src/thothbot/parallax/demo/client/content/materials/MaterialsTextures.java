@@ -57,27 +57,22 @@ public final class MaterialsTextures extends ContentWidget
 		private static final String img = "./static/textures/lava/lavatile.jpg";
 		private static final String img2 = "./static/textures/planets/moon_1024.jpg";
 
+		PerspectiveCamera camera;
 		List<Mesh> objects;
 		Mesh particleLight;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							2000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setY(200);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					2000 // far 
+			); 
+			
+			camera.getPosition().setY(200);
+			
 			objects = new ArrayList<Mesh>();
 
 			Texture imgTexture2 = new Texture( img2 );
@@ -279,10 +274,10 @@ public final class MaterialsTextures extends ContentWidget
 		{
 			double timer = duration * 0.00025;
 
-			getCamera().getPosition().setX( Math.cos( timer ) * 800 );
-			getCamera().getPosition().setZ( Math.sin( timer ) * 800 );
+			camera.getPosition().setX( Math.cos( timer ) * 800 );
+			camera.getPosition().setZ( Math.sin( timer ) * 800 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			for ( int i = 0, l = objects.size(); i < l; i ++ ) 
 			{
@@ -294,6 +289,8 @@ public final class MaterialsTextures extends ContentWidget
 			particleLight.getPosition().setX( Math.sin( timer * 7 ) * 300 );
 			particleLight.getPosition().setY( Math.cos( timer * 5 ) * 400 );
 			particleLight.getPosition().setZ( Math.cos( timer * 3 ) * 300 );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

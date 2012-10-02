@@ -67,6 +67,8 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 	
 		private static final String texture = "./static/textures/square-outline-textured.png";
 		
+		PerspectiveCamera camera;
+		
 		Projector projector;
 		Ray ray;
 		
@@ -83,24 +85,18 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		boolean isShiftDown, isCtrlDown;
 		
 		double theta = 45;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							45, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(1000, 800, 1000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					45, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().set(1000, 800, 1000);
 
 			projector = new Projector();
 			mouse2D = new Vector3( 0, 10000, 0.5 );
@@ -154,7 +150,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 				theta += mouse2D.getX() * 3;
 			}
 
-			ray = projector.pickingRay( mouse2D.clone(), getCamera() );
+			ray = projector.pickingRay( mouse2D.clone(), camera );
 
 			List<Ray.Intersect> intersects = ray.intersectObjects( getScene().getChildren() );
 
@@ -169,10 +165,12 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 				}
 			}
 
-			getCamera().getPosition().setX( 1400 * Math.sin( theta * Math.PI / 360 ) );
-			getCamera().getPosition().setZ( 1400 * Math.cos( theta * Math.PI / 360 ) );
+			camera.getPosition().setX( 1400 * Math.sin( theta * Math.PI / 360 ) );
+			camera.getPosition().setZ( 1400 * Math.cos( theta * Math.PI / 360 ) );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
+			
+			getRenderer().render(getScene(), camera);
 		}
 		
 		public Ray.Intersect getRealIntersector( List<Ray.Intersect> intersects ) 

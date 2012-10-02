@@ -73,6 +73,8 @@ public final class InteractiveCubesGpu extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera;
+		
 		Vector3 offset = new Vector3(10, 10, 10);
 		int mouseX = 0, mouseY = 0;
 
@@ -86,18 +88,6 @@ public final class InteractiveCubesGpu extends ContentWidget
 		Projector projector;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							70, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onResize() 
 		{
 			super.onResize();
@@ -109,10 +99,15 @@ public final class InteractiveCubesGpu extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					70, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			camera.getPosition().setZ(1000);
 			
-			controls = new TrackballControls( getCamera(), getRenderer().getCanvas()  );
+			controls = new TrackballControls( camera, getRenderer().getCanvas()  );
 			controls.setRotateSpeed(1.0);
 			controls.setZoomSpeed(1.2);
 			controls.setPanSpeed(0.8);
@@ -134,7 +129,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 			light.setCastShadow(true);
 
 			light.setShadowCameraNear(200);
-			light.setShadowCameraFar(((PerspectiveCamera)getCamera()).getFar());
+			light.setShadowCameraFar(((PerspectiveCamera)camera).getFar());
 			light.setShadowCameraFov(50);
 
 			light.setShadowBias(-0.00022);
@@ -238,13 +233,15 @@ public final class InteractiveCubesGpu extends ContentWidget
 			controls.update();
 
 			pick();
+			
+			getRenderer().render(getScene(), camera);
 		}
 		
 		private void pick() 
 		{
 			//render the picking scene off-screen
 			WebGLRenderingContext gl = getRenderer().getGL();
-			getRenderer().render(pickingScene, getCamera(), pickingTexture);
+			getRenderer().render(pickingScene, camera, pickingTexture);
 			Uint8Array pixelBuffer = Uint8Array.create(4);
 
 			//read the pixel under the mouse from the texture

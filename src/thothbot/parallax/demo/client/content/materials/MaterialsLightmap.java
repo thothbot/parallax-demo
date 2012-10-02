@@ -72,32 +72,28 @@ public final class MaterialsLightmap extends ContentWidget
 	{
 		private static final String model = "./static/models/obj/lightmap/lightmap.js";
 		
-		TrackballControls controls;
+		PerspectiveCamera camera;
 		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
+		TrackballControls controls;
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(700, -500, 1800);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().set(700, -500, 1800);
 
 			getScene().setFog( new Fog( 0xfafafa, 1000, 10000 ) );
 			getScene().getFog().getColor().setHSV( 0.6, 0.125, 1 );
 
 			// CONTROLS
 
-			controls = new TrackballControls( getCamera(), getRenderer().getCanvas() );
+			controls = new TrackballControls( camera, getRenderer().getCanvas() );
 			controls.getTarget().setZ( 150 );
 
 			// LIGHTS
@@ -164,6 +160,7 @@ public final class MaterialsLightmap extends ContentWidget
 		protected void onUpdate(double duration)
 		{
 			controls.update();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

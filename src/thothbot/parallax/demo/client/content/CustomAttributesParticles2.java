@@ -77,26 +77,20 @@ public class CustomAttributesParticles2 extends ContentWidget
 	{	
 		private static final String image = "./static/textures/sprites/disc.png";
 		
+		PerspectiveCamera camera;
 		Map<String, Attribute> attributes;
 		ParticleSystem sphere;
 		int vc1;
 
 		@Override
-		protected void loadCamera()
+		protected void onStart()
 		{
-			setCamera(
-				new PerspectiveCamera( 45,
+			camera = new PerspectiveCamera( 45,
 					getRenderer().getCanvas().getAspectRation(), 
 					1, 
 					10000 
-				)); 
-		}
-
-		@Override
-		protected void onStart()
-		{
-			getCamera().getPosition().setZ(300);
-			getScene().add(getCamera());
+				);
+			camera.getPosition().setZ(300);
 
 			this.attributes = new HashMap<String, Attribute>();
 			attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
@@ -173,6 +167,8 @@ public class CustomAttributesParticles2 extends ContentWidget
 			}
 			
 			attributes.get("size").needsUpdate = true;
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 

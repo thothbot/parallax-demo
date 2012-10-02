@@ -69,28 +69,23 @@ public final class MaterialsCanvas2D extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		
+		PerspectiveCamera camera;
 		private List<Material> materials;
 		private PointLight pointLight;
 		private Mesh particleLight;
 		private List<Mesh> objects;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							45, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							2000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(0, 200, 800);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					45, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					2000 // far 
+			); 
+
+			camera.getPosition().set(0, 200, 800);
 			
 			// Grid
 
@@ -295,10 +290,10 @@ public final class MaterialsCanvas2D extends ContentWidget
 		{
 			double timer = 0.0001 * duration;
 
-			getCamera().getPosition().setX( Math.cos( timer ) * 1000.0 );
-			getCamera().getPosition().setZ( Math.sin( timer ) * 1000.0 );
+			camera.getPosition().setX( Math.cos( timer ) * 1000.0 );
+			camera.getPosition().setZ( Math.sin( timer ) * 1000.0 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			for ( int i = 0, l = this.objects.size(); i < l; i ++ ) 
 			{
@@ -327,6 +322,8 @@ public final class MaterialsCanvas2D extends ContentWidget
 			this.pointLight.getPosition().setX( particleLight.getPosition().getX() );
 			this.pointLight.getPosition().setY( particleLight.getPosition().getY() );
 			this.pointLight.getPosition().setZ( particleLight.getPosition().getZ() );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

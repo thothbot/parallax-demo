@@ -71,32 +71,28 @@ public final class TrackballEarth extends ContentWidget
 		static final double cloudsScale = 1.005;
 		static final double moonScale = 0.23;
 		
+		PerspectiveCamera camera;
+		
 		Mesh meshPlanet;
 		Mesh meshClouds;
 		Mesh meshMoon;
 		
 		private TrackballControls control;
 		private double oldTime;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							25, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							50, // near
-							1e7f // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(radius * 7);
-			getScene().add(getCamera());
-
-			this.control = new TrackballControls( getCamera(), getRenderer().getCanvas() );
+			camera = new PerspectiveCamera(
+					25, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					50, // near
+					1e7f // far 
+			); 
+			
+			camera.getPosition().setZ(radius * 7);
+			
+			this.control = new TrackballControls( camera, getRenderer().getCanvas() );
 			this.control.setPanSpeed(0.2);
 			this.control.setDynamicDampingFactor(0.3);
 			this.control.setMinDistance(radius * 1.1);
@@ -274,6 +270,8 @@ public final class TrackballEarth extends ContentWidget
 			getRenderer().clear();
 			
 			this.oldTime = Duration.currentTimeMillis();
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 

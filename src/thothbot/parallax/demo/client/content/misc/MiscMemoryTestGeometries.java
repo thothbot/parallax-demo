@@ -39,8 +39,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MiscMemoryTestGeometries extends ContentWidget 
 {
-	Mesh mesh;
-	Texture texture;
+
 	
 	/*
 	 * Prepare Rendering Scene
@@ -49,24 +48,21 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
+		PerspectiveCamera camera;
+		Mesh mesh;
+		Texture texture;
+		
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(200);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().setZ(200);
 		}
 		
 		@Override
@@ -93,6 +89,8 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 			mesh = new Mesh( geometry, material );
 
 			getScene().add( mesh );
+			
+			getRenderer().render(getScene(), camera);
 		}
 		
 		private CanvasElement generateTexture() 

@@ -55,25 +55,20 @@ public final class MaterialsTextureCompressed extends ContentWidget
 		private static final String dxt3_mip = "./static/textures/compressed/hepatica_dxt3_mip.dds";
 		private static final String dxt5_mip = "./static/textures/compressed/explosion_dxt5_mip.dds";
 
+		PerspectiveCamera camera;
 		List<Mesh> meshes;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							2000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					2000 // far 
+			); 
+			
+			camera.getPosition().setZ(1000);
 			
 			Geometry geometry = new CubeGeometry( 200, 200, 200 );
 

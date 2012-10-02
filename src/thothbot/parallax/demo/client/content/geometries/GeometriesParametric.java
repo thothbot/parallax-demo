@@ -60,23 +60,19 @@ public class GeometriesParametric extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		private static final String image = "./static/textures/ash_uvgrid01.jpg";
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera( 45,
-							getRenderer().getCanvas().getAspectRation(), 
-							1, 
-							2000 
-					)); 
-		}
 
+		PerspectiveCamera camera;
+		
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setY(400);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera( 45,
+					getRenderer().getCanvas().getAspectRation(), 
+					1, 
+					2000 
+			);
+			
+			camera.getPosition().setY(400);
 			
 			getScene().add( new AmbientLight( 0x404040 ) );
 	
@@ -129,10 +125,10 @@ public class GeometriesParametric extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().setX(Math.cos( duration * 0.0001 ) * 800.0);
-			getCamera().getPosition().setZ(Math.sin( duration * 0.0001 ) * 800.0);
+			camera.getPosition().setX(Math.cos( duration * 0.0001 ) * 800.0);
+			camera.getPosition().setZ(Math.sin( duration * 0.0001 ) * 800.0);
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			for ( int i = 0, l = getScene().getChildren().size(); i < l; i ++ ) 
 			{
@@ -141,6 +137,8 @@ public class GeometriesParametric extends ContentWidget
 				object.getRotation().addX(0.01);
 				object.getRotation().addY(0.005);
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 	

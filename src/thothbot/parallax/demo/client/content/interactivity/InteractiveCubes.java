@@ -61,28 +61,24 @@ public final class InteractiveCubes extends ContentWidget
 	{
 		static final int radius = 100;
 		
+		PerspectiveCamera camera;
+		
 		Projector projector;
 		
 		double mouseDeltaX = 0, mouseDeltaY = 0;
 		Intersect intersected;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							70, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set( 0, 300, 500 );
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					70, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().set( 0, 300, 500 );
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff, 2 );
 			light.getPosition().set( 1 ).normalize();
@@ -125,18 +121,18 @@ public final class InteractiveCubes extends ContentWidget
 		protected void onUpdate(double duration)
 		{
 			Log.error(mouseDeltaX, mouseDeltaY);
-			getCamera().getPosition().setX( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
-			getCamera().getPosition().setY( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
-			getCamera().getPosition().setZ( radius * Math.cos( duration / 100 * Math.PI / 360 ) );
+			camera.getPosition().setX( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
+			camera.getPosition().setY( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
+			camera.getPosition().setZ( radius * Math.cos( duration / 100 * Math.PI / 360 ) );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			// find intersections
 
 			Vector3 vector = new Vector3( mouseDeltaX, mouseDeltaY, 1 );
-			projector.unprojectVector( vector, getCamera() );
+			projector.unprojectVector( vector, camera );
 
-			Ray ray = new Ray( getCamera().getPosition(), vector.sub( getCamera().getPosition() ).normalize() );
+			Ray ray = new Ray( camera.getPosition(), vector.sub( camera.getPosition() ).normalize() );
 
 			List<Ray.Intersect> intersects = ray.intersectObjects( getScene().getChildren() );
 
@@ -163,6 +159,8 @@ public final class InteractiveCubes extends ContentWidget
 
 				intersected = null;
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

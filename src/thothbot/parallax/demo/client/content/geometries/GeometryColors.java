@@ -64,25 +64,21 @@ public class GeometryColors extends ContentWidget
 	{	
 		private static final String texture = "./static/textures/shadow.png";
 		
+		PerspectiveCamera camera;
+		
 		public int mouseX;
 		public int mouseY;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera( 20,
-							getRenderer().getCanvas().getAspectRation(), 
-							1, 
-							10000 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(2000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera( 20,
+					getRenderer().getCanvas().getAspectRation(), 
+					1, 
+					10000 
+			);
+			
+			camera.getPosition().setZ(2000);
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
@@ -185,10 +181,12 @@ public class GeometryColors extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX(( - mouseX - getRenderer().getCanvas().getWidth()/2.5 - getCamera().getPosition().getX()) );
-			getCamera().getPosition().addY(( mouseY - getRenderer().getCanvas().getHeight()/2.5- getCamera().getPosition().getY()) );
+			camera.getPosition().addX(( - mouseX - getRenderer().getCanvas().getWidth()/2.5 - camera.getPosition().getX()) );
+			camera.getPosition().addY(( mouseY - getRenderer().getCanvas().getHeight()/2.5- camera.getPosition().getY()) );
 
-			getCamera().lookAt( getScene().getPosition());
+			camera.lookAt( getScene().getPosition());
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

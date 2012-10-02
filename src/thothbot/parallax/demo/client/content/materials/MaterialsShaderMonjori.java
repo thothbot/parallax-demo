@@ -48,13 +48,9 @@ public final class MaterialsShaderMonjori extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		Camera camera;
+		
 		Map<String, Uniform> uniforms;
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(new Camera()); 
-		}
 		
 		@Override
 		protected void onResize() 
@@ -70,8 +66,9 @@ public final class MaterialsShaderMonjori extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1);
-			getScene().add(getCamera());
+			camera = new Camera(); 
+			
+			camera.getPosition().setZ(1);
 
 			ShaderMaterial material = new ShaderMaterial(new MonjoriShader());
 			uniforms = material.getShader().getUniforms();
@@ -83,7 +80,8 @@ public final class MaterialsShaderMonjori extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			uniforms.get("time").setValue((Double)uniforms.get("time").getValue() + 0.05) ;
+			uniforms.get("time").setValue((Double)uniforms.get("time").getValue() + 0.05);
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

@@ -64,26 +64,19 @@ public class GeometryExtrudeShapes extends ContentWidget
 	{
 		private static final String texture = "./static/textures/crate.gif";
 		
+		PerspectiveCamera camera;
 		Object3D parentObject;
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							1000 // far 
-					)); 
-		}
         
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set(0, 150, 500);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera( 50,
+					getRenderer().getCanvas().getAspectRation(), 
+					1, 
+					1000 
+				);
+			camera.getPosition().set(0, 150, 150);
+			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
 			getScene().add( light );
@@ -258,6 +251,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 //				mesh.add(geometry.debug);
 
 			this.parentObject.add( mesh );
+			getRenderer().render(getScene(), camera);
 		}
 		
 		@Override

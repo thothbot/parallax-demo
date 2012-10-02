@@ -53,28 +53,24 @@ public final class ParticlesRandom extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 
+		PerspectiveCamera camera;
+		
 		List<ParticleBasicMaterial> materials;
 		
 		int mouseX = 0, mouseY = 0;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							75, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							3000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1000);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera(
+					75, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					3000 // far 
+			); 
+			
+			camera.getPosition().setZ(1000);
+			
 			getScene().setFog( new FogExp2( 0x000000, 0.0007 ));
 			
 			Geometry geometry = new Geometry();
@@ -115,10 +111,10 @@ public final class ParticlesRandom extends ContentWidget
 		{
 			double time = duration * 0.00005;
 
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * 0.05 );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * 0.05 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * 0.05 );
+			camera.getPosition().addY( ( - mouseY - camera.getPosition().getY() ) * 0.05 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			for ( int i = 0; i < getScene().getChildren().size(); i ++ ) 
 			{
@@ -136,6 +132,8 @@ public final class ParticlesRandom extends ContentWidget
 				ColorUtils.HSV hsv = ColorUtils.rgbToHsv( material.getColor() );
 				material.getColor().setHSV( Math.abs(Math.sin( hsv.hue + time )), hsv.saturation, hsv.value );
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

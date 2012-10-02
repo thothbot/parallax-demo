@@ -58,30 +58,26 @@ public final class EffectsLensFlares extends ContentWidget
 		private Texture textureFlare2 = new Texture( "./static/textures/lensflare/lensflare2.png" );
 		private Texture textureFlare3 = new Texture( "./static/textures/lensflare/lensflare3.png" );
 		
+		PerspectiveCamera camera;
+		
 		private FlyControls controls;
 		
 		private double oldTime;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							15000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(250);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					15000 // far 
+			);
+			
+			camera.getPosition().setZ(250);
 			
 			new LensFlarePlugin(getRenderer(), getScene());
-			controls = new FlyControls( getCamera(), getRenderer().getCanvas() );
+			controls = new FlyControls( camera, getRenderer().getCanvas() );
 
 			controls.setMovementSpeed( 2500 );
 			controls.setRollSpeed( Math.PI / 6.0 );
@@ -206,6 +202,7 @@ public final class EffectsLensFlares extends ContentWidget
 		{
 			controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001 );
 			this.oldTime = Duration.currentTimeMillis();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

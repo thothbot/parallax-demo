@@ -58,6 +58,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 	{
 		private static final String texture = "./static/textures/caravaggio.jpg";
 		
+		PerspectiveCamera camera;
 		int mouseX = 0, mouseY = 0;
 		
 		Scene scene2;
@@ -72,25 +73,19 @@ public final class MaterialsTextureFilter extends ContentWidget
 		MeshBasicMaterial materialPainting2;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							35, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							5000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1500);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera(
+					35, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					5000 // far 
+			); 
+			
+			camera.getPosition().setZ(1500);
+			
 			this.scene2 = new Scene();
-
+			
 			getScene().setFog( new Fog( 0x000000, 1500, 4000 ));
 			scene2.setFog( getScene().getFog() );
 
@@ -226,10 +221,10 @@ public final class MaterialsTextureFilter extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().addY( ( - ( mouseY - 200) - getCamera().getPosition().getY() ) * .05 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().addY( ( - ( mouseY - 200) - camera.getPosition().getY() ) * .05 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			getRenderer().enableScissorTest( false );
 			getRenderer().clear();
@@ -237,9 +232,10 @@ public final class MaterialsTextureFilter extends ContentWidget
 
 			Canvas3d canvas = getRenderer().getCanvas();
 			getRenderer().setScissor( canvas.getOffsetWidth()/2, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight()  );
-			getRenderer().render( this.scene2, getCamera() );
+			getRenderer().render( this.scene2, camera );
 
 			getRenderer().setScissor( 0, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight() );
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

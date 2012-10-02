@@ -50,27 +50,24 @@ public final class GeometryHierarchy extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera;
+		
 		Object3D group;
 
 		int mouseX = 0, mouseY = 0;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(500);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().setZ(500);
+
 			getScene().setFog(new Fog( 0xffffff, 1, 10000));
 
 			CubeGeometry geometry = new CubeGeometry( 100, 100, 100 );
@@ -109,14 +106,16 @@ public final class GeometryHierarchy extends ContentWidget
 			double ry = Math.sin( time * 0.3 ) * 0.5;
 			double rz = Math.sin( time * 0.2 ) * 0.5;
 
-			getCamera().getPosition().addX(( mouseX - getCamera().getPosition().getX() ) * .05);
-			getCamera().getPosition().addY(( - mouseY - getCamera().getPosition().getY() ) * .05);
+			camera.getPosition().addX(( mouseX - camera.getPosition().getX() ) * .05);
+			camera.getPosition().addY(( - mouseY - camera.getPosition().getY() ) * .05);
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			this.group.getRotation().setX( rx );
 			this.group.getRotation().setY( ry );
 			this.group.getRotation().setZ( rz );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

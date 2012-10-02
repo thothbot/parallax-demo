@@ -57,31 +57,13 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 	{
 		private static final String textures = "./static/textures/cube/park2/*.jpg";
 		
+		PerspectiveCamera camera;
 		private Scene sceneCube;
 		private PerspectiveCamera cameraCube;
 		
 		List<Mesh> spheres;
 		
 		int mouseX = 0, mouseY = 0;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							100000 // far 
-					)); 
-			
-			this.cameraCube = new PerspectiveCamera(
-					60, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
-					1, // near
-					100000 // far
-				);
-		}
 		
 		@Override
 		protected void onResize()
@@ -93,11 +75,23 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(3200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					100000 // far 
+			); 
+			
+			camera.getPosition().setZ(3200);
+			
+			this.cameraCube = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					100000 // far
+				);
 
 			this.sceneCube = new Scene();
-			sceneCube.add( cameraCube );
 
 			SphereGeometry geometry = new SphereGeometry( 100, 32, 16 );
 
@@ -147,12 +141,12 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 		{
 			double timer = 0.0001 * duration;
 
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().addY( ( - mouseY - getCamera().getPosition().getY() ) * .05 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().addY( ( - mouseY - camera.getPosition().getY() ) * .05 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
-			cameraCube.getRotation().copy( getCamera().getRotation() );
+			cameraCube.getRotation().copy( camera.getRotation() );
 
 			for ( int i = 0, il = spheres.size(); i < il; i ++ ) 
 			{
@@ -164,6 +158,7 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 
 			getRenderer().clear();
 			getRenderer().render( sceneCube, cameraCube );
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

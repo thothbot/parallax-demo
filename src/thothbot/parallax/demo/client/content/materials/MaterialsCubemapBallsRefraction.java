@@ -62,6 +62,8 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 	{
 		private static final String textures = "./static/textures/cube/skybox/*.jpg";
 		
+		PerspectiveCamera camera;
+		
 		public int mouseX = 0;
 		public int mouseY = 0;
 		
@@ -69,26 +71,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 		
 		private Scene sceneCube;
 		private PerspectiveCamera cameraCube;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							100000 // far 
-					)); 
-			
-			this.cameraCube = new PerspectiveCamera(
-					60, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
-					1, // near
-					100000 // far 
-			);
-		}
-		
+				
 		@Override
 		protected void onResize()
 		{
@@ -99,11 +82,23 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(3200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					100000 // far 
+			); 
+			
+			camera.getPosition().setZ(3200);
+			
+			this.cameraCube = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					100000 // far 
+			);
 			
 			this.sceneCube = new Scene();
-			sceneCube.add( cameraCube );
 
 			SphereGeometry geometry = new SphereGeometry( 100, 32, 16 );
 
@@ -156,13 +151,14 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 				this.speres.get(i).getPosition().setY(5000.0 * Math.sin( timer + i * 1.1 ) );
 			}
 
-			getCamera().getPosition().addX(( mouseX - getCamera().getPosition().getX() ) * 0.05 );
-			getCamera().getPosition().addY(( - mouseY - getCamera().getPosition().getY() ) * 0.05 );
+			camera.getPosition().addX(( mouseX - camera.getPosition().getX() ) * 0.05 );
+			camera.getPosition().addY(( - mouseY - camera.getPosition().getY() ) * 0.05 );
 
-			getCamera().lookAt( getScene().getPosition() );
-			this.cameraCube.getRotation().copy( getCamera().getRotation() );
+			camera.lookAt( getScene().getPosition() );
+			this.cameraCube.getRotation().copy( camera.getRotation() );
 
 			getRenderer().render( sceneCube, cameraCube );
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

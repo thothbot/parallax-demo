@@ -58,31 +58,25 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 	{
 		private static final String texture = "./static/textures/crate.gif";
 		
+		PerspectiveCamera camera;
 		int mouseX = 0, mouseY = 0;
 		
 		Scene sceneMaxAnisotropy;
-		
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							35, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							25000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1500);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera(
+					35, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					25000 // far 
+			);
+				
+			camera.getPosition().setZ(1500);
+			
 			sceneMaxAnisotropy = new Scene();
-
+			
 			sceneMaxAnisotropy.setFog( new Fog( 0xffffff, 1, 25000 ) );
 			sceneMaxAnisotropy.getFog().getColor().setHSV( 0.6, 0.05, 1 );
 			getScene().setFog(sceneMaxAnisotropy.getFog());
@@ -144,11 +138,11 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().setY( Mathematics.clamp( 
-					getCamera().getPosition().getY() + ( - ( mouseY - 200 ) - getCamera().getPosition().getY() ) * .05, 50, 1000 ));
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().setY( Mathematics.clamp( 
+					camera.getPosition().getY() + ( - ( mouseY - 200 ) - camera.getPosition().getY() ) * .05, 50, 1000 ));
 
-			getCamera().lookAt( sceneMaxAnisotropy.getPosition() );
+			camera.lookAt( sceneMaxAnisotropy.getPosition() );
 
 			getRenderer().enableScissorTest( false );
 			getRenderer().clear();
@@ -156,9 +150,10 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 
 			Canvas3d canvas = getRenderer().getCanvas();
 			getRenderer().setScissor( 0, 0, canvas.getWidth()/2 - 2, canvas.getHeight() );
-			getRenderer().render( sceneMaxAnisotropy, getCamera() );
+			getRenderer().render( sceneMaxAnisotropy, camera );
 
 			getRenderer().setScissor( canvas.getWidth()/2, 0, canvas.getWidth()/2 - 2, canvas.getHeight()  );
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

@@ -61,25 +61,21 @@ public final class MiscMemoryTestShaders extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		private static final int N = 100;
+		
+		PerspectiveCamera camera;
 		List<Mesh> meshes;
-
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(2000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().setZ(2000);
 
 			SphereGeometry geometry = new SphereGeometry( 15, 64, 32 );
 			meshes = new ArrayList<Mesh>();
@@ -125,6 +121,8 @@ public final class MiscMemoryTestShaders extends ContentWidget
 				generateFragmentShader(material.getShader());
 				mesh.setMaterial(material);
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

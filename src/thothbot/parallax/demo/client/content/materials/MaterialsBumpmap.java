@@ -62,27 +62,23 @@ public final class MaterialsBumpmap extends ContentWidget
 		private static final String texture = "./static/models/obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg";
 		private static final String model = "./static/models/obj/leeperrysmith/LeePerrySmith.js";
 		
+		PerspectiveCamera camera;
+		
 		Mesh mesh;
 		
 		int mouseX = 0, mouseY = 0;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							27, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					27, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().setZ(1200);
 
 			// LIGHTS
 
@@ -223,6 +219,8 @@ public final class MaterialsBumpmap extends ContentWidget
 				mesh.getRotation().addY( 0.05 * ( targetX - mesh.getRotation().getY() ) );
 				mesh.getRotation().addX( 0.05 * ( targetY - mesh.getRotation().getX() ) );
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

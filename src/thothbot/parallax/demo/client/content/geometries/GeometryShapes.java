@@ -65,27 +65,23 @@ public final class GeometryShapes extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera ;
+		
 		Object3D parent;
 		
 		int mouseX = 0;
 		
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							50, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							1000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().set( 0, 180, 500 );
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					50, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					1000 // far 
+			);
+			
+			camera.getPosition().set( 0, 180, 500 );
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
@@ -440,6 +436,8 @@ public final class GeometryShapes extends ContentWidget
 		protected void onUpdate(double duration)
 		{
 			this.parent.getRotation().addY( ( this.mouseX - parent.getRotation().getY() ) * 0.00001 );
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

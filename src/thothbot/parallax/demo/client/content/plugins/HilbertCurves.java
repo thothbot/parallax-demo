@@ -58,26 +58,21 @@ public final class HilbertCurves extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera;
 		public int mouseX;
 		public int mouseY;
-						
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							33, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(700);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					33, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			); 
+			
+			camera.getPosition().setZ(700);
 
 			Geometry geometry = new Geometry();
 			Geometry geometry2 = new Geometry();
@@ -138,7 +133,7 @@ public final class HilbertCurves extends ContentWidget
 			
 			//
 
-			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
+			RenderPass renderModel = new RenderPass( getScene(), camera );
 			BloomPass effectBloom = new BloomPass( 1.3 );
 
 			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
@@ -199,10 +194,10 @@ public final class HilbertCurves extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			getCamera().getPosition().addX( ( mouseX - getCamera().getPosition().getX() ) * .05 );
-			getCamera().getPosition().addY( ( - mouseY + 200.0 - getCamera().getPosition().getY() ) * .05 );
+			camera.getPosition().addX( ( mouseX - camera.getPosition().getX() ) * .05 );
+			camera.getPosition().addY( ( - mouseY + 200.0 - camera.getPosition().getY() ) * .05 );
 
-			getCamera().lookAt( getScene().getPosition() );
+			camera.lookAt( getScene().getPosition() );
 
 			for ( int i = 0; i < getScene().getChildren().size(); i ++ ) 
 			{
@@ -212,6 +207,7 @@ public final class HilbertCurves extends ContentWidget
 			}
 
 			getRenderer().clear();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

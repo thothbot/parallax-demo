@@ -57,22 +57,11 @@ public final class MaterialsShaderLava extends ContentWidget
 		private static final String img1 = "./static/textures/lava/cloud.png";
 		private static final String img2 = "./static/textures/lava/lavatile.jpg";
 		
+		PerspectiveCamera camera;
 		Map<String, Uniform> uniforms;
 		Mesh mesh;
 		
 		private double oldTime;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							35, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							3000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onResize() 
@@ -88,8 +77,14 @@ public final class MaterialsShaderLava extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(4);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					35, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					3000 // far 
+			); 
+			
+			camera.getPosition().setZ(4);
 			
 			ShaderMaterial material = new ShaderMaterial(new LavaShader());
 			uniforms = material.getShader().getUniforms();
@@ -115,7 +110,7 @@ public final class MaterialsShaderLava extends ContentWidget
 
 			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
 
-			RenderPass renderModel = new RenderPass( getScene(), getCamera() );
+			RenderPass renderModel = new RenderPass( getScene(), camera );
 			BloomPass effectBloom = new BloomPass( 1.25 );
 
 			FilmPass effectFilm = new FilmPass( 0.35, 0.95, 2048, false );
@@ -143,6 +138,7 @@ public final class MaterialsShaderLava extends ContentWidget
 			getRenderer().clear();
 			
 			this.oldTime = Duration.currentTimeMillis();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

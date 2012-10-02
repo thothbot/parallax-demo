@@ -72,7 +72,8 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-
+		PerspectiveCamera camera;
+		
 		Vector3 offset = new Vector3(10, 10, 10);
 		double mouseDeltaX = 0, mouseDeltaY = 0;
 		
@@ -84,26 +85,19 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		
 		Intersect intersected;
 		DimensionalObject selected;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							70, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1000);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					70, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			camera.getPosition().setZ(1000);
 			
-			controls = new TrackballControls( getCamera(), getRenderer().getCanvas() );
+			controls = new TrackballControls( camera, getRenderer().getCanvas() );
 			controls.setRotateSpeed(1.0);
 			controls.setZoomSpeed(1.2);
 			controls.setPanSpeed(0.8);
@@ -120,7 +114,7 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 			light.setCastShadow(true);
 
 			light.setShadowCameraNear(200);
-			light.setShadowCameraFar(((PerspectiveCamera)getCamera()).getFar());
+			light.setShadowCameraFar(((PerspectiveCamera)camera).getFar());
 			light.setShadowCameraFar(50);
 
 			light.setShadowBias(-0.00022);
@@ -182,6 +176,7 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		protected void onUpdate(double duration)
 		{
 			controls.update();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		
@@ -227,9 +222,9 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		
 		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaY, 0.5 );
-		rs.projector.unprojectVector( vector, rs.getCamera() );
+		rs.projector.unprojectVector( vector, rs.camera );
 
-		Ray ray = new Ray( rs.getCamera().getPosition(), vector.sub( rs.getCamera().getPosition() ).normalize() );
+		Ray ray = new Ray( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
 		List<Ray.Intersect> intersects = ray.intersectObjects( rs.objects );
 
 		if ( intersects.size() > 0 ) 
@@ -259,9 +254,9 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		//
 
 		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaX, 0.5 );
-		rs.projector.unprojectVector( vector, rs.getCamera() );
+		rs.projector.unprojectVector( vector, rs.camera );
 
-		Ray ray = new Ray( rs.getCamera().getPosition(), vector.sub( rs.getCamera().getPosition() ).normalize() );
+		Ray ray = new Ray( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
 
 		if ( rs.selected != null ) 
 		{
@@ -287,7 +282,7 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 				rs.intersected.currentHex = ((MeshLambertMaterial)rs.intersected.object.getMaterial()).getColor().getHex();
 
 				rs.plane.getPosition().copy( rs.intersected.object.getPosition() );
-				rs.plane.lookAt( rs.getCamera().getPosition() );
+				rs.plane.lookAt( rs.camera.getPosition() );
 			}
 
 			getWidget().getElement().getStyle().setCursor(Cursor.POINTER);

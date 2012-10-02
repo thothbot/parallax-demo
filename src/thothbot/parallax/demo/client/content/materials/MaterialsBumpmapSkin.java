@@ -77,6 +77,8 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 		private static final String textureCol = "./static/models/obj/leeperrysmith/Map-COL.jpg";
 		private static final String model = "./static/models/obj/leeperrysmith/LeePerrySmith.js";
 		
+		PerspectiveCamera camera;
+		
 		Mesh mesh;
 		
 		Postprocessing composerBeckmann;
@@ -84,24 +86,18 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 		int mouseX = 0, mouseY = 0;
 		
 		boolean firstPass = true;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							27, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							10000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(1200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					27, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					10000 // far 
+			);
+			
+			camera.getPosition().setZ(1200);
 
 			// LIGHTS
 
@@ -295,6 +291,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 //			}
 
 			getRenderer().clear();
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

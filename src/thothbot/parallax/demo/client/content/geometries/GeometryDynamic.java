@@ -53,6 +53,8 @@ public class GeometryDynamic extends ContentWidget
 	{
 		private static final String texture = "./static/textures/water.jpg";
 		
+		PerspectiveCamera camera;
+		
 		FirstPersonControls controls;
 		PlaneGeometry geometry;
 		Mesh mesh;
@@ -65,26 +67,20 @@ public class GeometryDynamic extends ContentWidget
 		private double oldTime;
 		
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							60, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							20000 // far 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setY(200);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera(
+					60, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					20000 // far 
+			);
+			
+			camera.getPosition().setY(200);
 
 			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007 ));
 
-			this.controls = new FirstPersonControls( getCamera(), getRenderer().getCanvas() );
+			this.controls = new FirstPersonControls( camera, getRenderer().getCanvas() );
 			controls.setMovementSpeed(500);
 			controls.setLookSpeed(0.1);
 
@@ -124,6 +120,8 @@ public class GeometryDynamic extends ContentWidget
 			this.controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001);
 
 			this.oldTime = Duration.currentTimeMillis();
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

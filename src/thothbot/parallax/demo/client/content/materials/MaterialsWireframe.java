@@ -70,29 +70,25 @@ public final class MaterialsWireframe extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
+		PerspectiveCamera camera;
+		
 		Mesh meshLines;
 		Mesh meshQuads;
 		Mesh meshTris;
 		Mesh meshMixed;
-		
-		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera(
-							40, // fov
-							getRenderer().getCanvas().getAspectRation(), // aspect 
-							1, // near
-							2000 // far 
-					)); 
-		}
 
 		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(800);
-			getScene().add(getCamera());
-
+			camera = new PerspectiveCamera(
+					40, // fov
+					getRenderer().getCanvas().getAspectRation(), // aspect 
+					1, // near
+					2000 // far 
+			);
+			
+			camera.getPosition().setZ(800);
+			
 			double size = 150;
 
 			CubeGeometry geometryLines = new CubeGeometry( size, size, size );
@@ -195,6 +191,8 @@ public final class MaterialsWireframe extends ContentWidget
 				meshMixed.getRotation().addX(0.005);
 				meshMixed.getRotation().addY(0.01);
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

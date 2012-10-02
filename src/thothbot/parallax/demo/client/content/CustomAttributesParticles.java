@@ -75,25 +75,20 @@ public class CustomAttributesParticles extends ContentWidget
 	{	
 		private static final String texture = "./static/textures/sprites/spark1.png";
 		
+		PerspectiveCamera camera;
 		Map<String, Attribute> attributes;
 		ParticleSystem sphere;
 
 		@Override
-		protected void loadCamera()
-		{
-			setCamera(
-					new PerspectiveCamera( 40,
-							getRenderer().getCanvas().getAspectRation(), 
-							1, 
-							10000 
-					)); 
-		}
-
-		@Override
 		protected void onStart()
 		{
-			getCamera().getPosition().setZ(300);
-			getScene().add(getCamera());
+			camera = new PerspectiveCamera( 40,
+					getRenderer().getCanvas().getAspectRation(), 
+					1, 
+					10000 
+			);
+
+			camera.getPosition().setZ(300);
 
 			this.attributes = new HashMap<String, Attribute>();
 			this.attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
@@ -161,6 +156,7 @@ public class CustomAttributesParticles extends ContentWidget
 			}
 
 			this.attributes.get("size").needsUpdate = true;
+			getRenderer().render(getScene(), camera);
 		}
 	}
 	
