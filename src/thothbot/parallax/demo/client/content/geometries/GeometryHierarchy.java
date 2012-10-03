@@ -29,7 +29,7 @@ import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.materials.MeshNormalMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.objects.Object3D;
-import thothbot.parallax.core.shared.scene.Fog;
+import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;

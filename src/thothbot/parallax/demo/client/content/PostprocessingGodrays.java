@@ -34,7 +34,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.plugin.scene.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;

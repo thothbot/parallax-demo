@@ -32,7 +32,7 @@ import thothbot.parallax.core.shared.core.Matrix4;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scene.FogExp2;
+import thothbot.parallax.core.shared.scenes.FogExp2;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;

@@ -35,6 +35,7 @@ import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.renderers.ShadowMap;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
@@ -51,7 +52,6 @@ import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scene.ShadowMap;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -59,9 +59,9 @@ import thothbot.parallax.demo.client.content.geometries.GeometryCube;
 import thothbot.parallax.demo.resources.BeckmannShader;
 import thothbot.parallax.demo.resources.SkinSimpleShader;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.plugin.scene.postprocessing.client.Postprocessing;
-import thothbot.parallax.plugin.scene.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugin.scene.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
+import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
 
 public final class MaterialsBumpmapSkin extends ContentWidget 
 {

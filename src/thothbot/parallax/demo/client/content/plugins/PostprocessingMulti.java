@@ -22,7 +22,7 @@ package thothbot.parallax.demo.client.content.plugins;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.scene.Scene;
+import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;

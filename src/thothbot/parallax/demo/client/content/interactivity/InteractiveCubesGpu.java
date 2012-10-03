@@ -45,7 +45,7 @@ import thothbot.parallax.core.shared.materials.Material.SHADING;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scene.Scene;
+import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.core.shared.utils.GeometryUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;

@@ -6,9 +6,9 @@
   <inherits name="com.google.gwt.i18n.I18N"/>
   <inherits name="thothbot.parallax.core.Core"/>
   <inherits name="thothbot.parallax.loader.Loader"/>
-  <inherits name="thothbot.parallax.plugin.scene.postprocessing.Postprocessing"/>
-  <inherits name="thothbot.parallax.plugin.scene.lensflare.LensFlare"/>
-  <inherits name="thothbot.parallax.plugin.scene.sprite.Sprite"/>
+  <inherits name="thothbot.parallax.plugins.postprocessing.Postprocessing"/>
+  <inherits name="thothbot.parallax.plugins.lensflare.LensFlare"/>
+  <inherits name="thothbot.parallax.plugins.sprite.Sprite"/>
   
   <inherits name="com.google.gwt.user.theme.standard.Standard"/>
 

@@ -34,10 +34,10 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.LavaShader;
-import thothbot.parallax.plugin.scene.postprocessing.client.BloomPass;
-import thothbot.parallax.plugin.scene.postprocessing.client.FilmPass;
-import thothbot.parallax.plugin.scene.postprocessing.client.Postprocessing;
-import thothbot.parallax.plugin.scene.postprocessing.client.RenderPass;
+import thothbot.parallax.plugins.postprocessing.client.BloomPass;
+import thothbot.parallax.plugins.postprocessing.client.FilmPass;
+import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.client.RenderPass;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;

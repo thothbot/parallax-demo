@@ -30,7 +30,7 @@ import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
-import thothbot.parallax.core.shared.scene.FogExp2;
+import thothbot.parallax.core.shared.scenes.FogExp2;
 import thothbot.parallax.core.shared.utils.ColorUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
