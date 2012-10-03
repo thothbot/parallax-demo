@@ -32,7 +32,7 @@ import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.curves.CurveSpline3D;
+import thothbot.parallax.core.shared.curves.SplineCurve3;
 import thothbot.parallax.core.shared.curves.Path;
 import thothbot.parallax.core.shared.curves.Shape;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -121,7 +121,7 @@ public final class GeometryShapes extends ContentWidget
 			splineShape.moveTo( 0, 0 );
 			splineShape.splineThru( splinepts );
 		
-			CurveSpline3D apath = new CurveSpline3D();
+			SplineCurve3 apath = new SplineCurve3();
 			apath.points.add(new Vector3(-50, 150, 10));
 			apath.points.add(new Vector3(-20, 180, 20));
 			apath.points.add(new Vector3(40, 220, 50));
@@ -231,11 +231,11 @@ public final class GeometryShapes extends ContentWidget
 		{
 			Shape arcShape = new Shape();
 			arcShape.moveTo( 50, 10 );
-			arcShape.arc( 10, 10, 40, 0, Math.PI*2, false );
+			arcShape.absarc( 10, 10, 40, 0, Math.PI*2, false );
 
 			Path holePath = new Path();
 			holePath.moveTo( 20, 10 );
-			holePath.arc( 10, 10, 10, 0, Math.PI*2, true );
+			holePath.absarc( 10, 10, 10, 0, Math.PI*2, true );
 			arcShape.getHoles().add( holePath );
 			
 			addGeometry( 
@@ -292,16 +292,16 @@ public final class GeometryShapes extends ContentWidget
 		{
 			Shape smileyShape = new Shape();
 			smileyShape.moveTo( 80, 40 );
-			smileyShape.arc( 40, 40, 40, 0, Math.PI*2, false );
+			smileyShape.absarc( 40, 40, 40, 0, Math.PI*2, false );
 
 			Path smileyEye1Path = new Path();
 			smileyEye1Path.moveTo( 35, 20 );
-			smileyEye1Path.arc( 25, 20, 10, 0, Math.PI*2, true );
+			smileyEye1Path.absellipse( 25, 20, 10, 10, 0, Math.PI*2, true );
 			smileyShape.getHoles().add( smileyEye1Path );
 
 			Path smileyEye2Path = new Path();
 			smileyEye2Path.moveTo( 65, 20 );
-			smileyEye2Path.arc( 55, 20, 10, 0, Math.PI*2, true );
+			smileyEye2Path.absarc( 55, 20, 10, 0, Math.PI*2, true );
 			smileyShape.getHoles().add( smileyEye2Path );
 
 			Path smileyMouthPath = new Path();

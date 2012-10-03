@@ -34,8 +34,8 @@ import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Mathematics;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.core.Vector3;
-import thothbot.parallax.core.shared.curves.CurveSpline3D;
-import thothbot.parallax.core.shared.curves.CurveSplineClosed3D;
+import thothbot.parallax.core.shared.curves.SplineCurve3;
+import thothbot.parallax.core.shared.curves.SplineCurve3Closed;
 import thothbot.parallax.core.shared.curves.Path;
 import thothbot.parallax.core.shared.curves.Shape;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -86,14 +86,14 @@ public class GeometryExtrudeShapes extends ContentWidget
 			getScene().add( this.parentObject );
 			
 			//Closed
-			CurveSpline3D extrudeBend = new CurveSpline3D(Arrays.asList( 
+			SplineCurve3 extrudeBend = new SplineCurve3(Arrays.asList( 
 					new Vector3( 30, 12, 83),
 					new Vector3( 40, 20, 67),
 					new Vector3( 60, 40, 99),
 					new Vector3( 10, 60, 49),
 					new Vector3( 25, 80, 40)));
 
-			CurveSpline3D pipeSpline = new CurveSpline3D(Arrays.asList( 
+			SplineCurve3 pipeSpline = new SplineCurve3(Arrays.asList( 
 					new Vector3(0, 10, -10), 
 					new Vector3(10, 0, -10), 
 					new Vector3(20, 0, 0), 
@@ -123,7 +123,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 					new Vector3(90, 0, 0),
 					new Vector3(100, 0, 0)));
 
-			CurveSplineClosed3D sampleClosedSpline = new CurveSplineClosed3D(Arrays.asList( 
+			SplineCurve3Closed sampleClosedSpline = new SplineCurve3Closed(Arrays.asList( 
 					new Vector3(0, -40, -40),
 					new Vector3(0, 40, -40),
 					new Vector3(0, 140, -40),
@@ -135,9 +135,9 @@ public class GeometryExtrudeShapes extends ContentWidget
 //			for (int i=0; i<10; i++)
 //				randomPoints.add(new Vector3((double)Math.random() * 200.0f, (double)Math.random() * 200.0f, (double)Math.random() * 200.0f ));
 //
-//			CurveSpline3D randomSpline =  new CurveSpline3D(randomPoints);
+//			SplineCurve3 randomSpline =  new SplineCurve3(randomPoints);
 			
-			CurveSpline3D randomSpline = new CurveSpline3D(Arrays.asList( 
+			SplineCurve3 randomSpline = new SplineCurve3(Arrays.asList( 
 					new Vector3(-40, -40, 0),
 					new Vector3(40, -40, 0),
 					new Vector3( 140, -40, 0),

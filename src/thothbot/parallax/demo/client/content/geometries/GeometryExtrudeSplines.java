@@ -31,8 +31,8 @@ import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.curves.Curve;
-import thothbot.parallax.core.shared.curves.CurveSpline3D;
-import thothbot.parallax.core.shared.curves.CurveSplineClosed3D;
+import thothbot.parallax.core.shared.curves.SplineCurve3;
+import thothbot.parallax.core.shared.curves.SplineCurve3Closed;
 import thothbot.parallax.core.shared.curves.parametric.CurveCinquefoilKnot;
 import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot4a;
 import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot4b;
@@ -137,7 +137,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			retval.put("DecoratedTorusKnot4b", new CurveDecoratedTorusKnot4b());
 		    retval.put("DecoratedTorusKnot5a", new CurveDecoratedTorusKnot5a());
 		    retval.put("DecoratedTorusKnot5c", new CurveDecoratedTorusKnot5c());
-		    retval.put("PipeSpline", new CurveSpline3D(Arrays.asList(
+		    retval.put("PipeSpline", new SplineCurve3(Arrays.asList(
 		             new Vector3(0, 10, -10),  new Vector3(10, 0, -10),  new Vector3(20, 0, 0), 
 		             new Vector3(30, 0, 10),   new Vector3(30, 0, 20),   new Vector3(20, 0, 30), 
 		             new Vector3(10, 0, 30),   new Vector3(0, 0, 30),    new Vector3(-10, 10, 30), 
@@ -148,7 +148,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		             new Vector3(40, -15, 10), new Vector3(50, -15, 10), new Vector3(60, 0, 10), 
 		             new Vector3(70, 0, 0),    new Vector3(80, 0, 0),    new Vector3(90, 0, 0), 
 		             new Vector3(100, 0, 0))));
-		    retval.put("SampleClosedSpline",  new CurveSplineClosed3D(Arrays.asList( //?
+		    retval.put("SampleClosedSpline",  new SplineCurve3Closed(Arrays.asList( //?
 		             new Vector3(0, -40, -40), new Vector3(0, 40, -40), new Vector3(0, 140, -40),
 		             new Vector3(0, 40, 40),   new Vector3(0, -40, 40) )));
 			      
