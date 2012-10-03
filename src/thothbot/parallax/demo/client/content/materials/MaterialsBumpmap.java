@@ -37,6 +37,7 @@ import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.scene.ShadowMap;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -184,8 +185,8 @@ public final class MaterialsBumpmap extends ContentWidget
 				Log.error("Error while loading JSON file.");
 			}
 			
-			getRenderer().setShadowMapEnabled(true);
-			getRenderer().setShadowMapCullFrontFaces(false);
+			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
+			shadowMap.setCullFrontFaces(false);
 
 			//
 
