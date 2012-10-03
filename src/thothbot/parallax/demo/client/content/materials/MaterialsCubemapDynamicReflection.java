@@ -159,6 +159,8 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			cubeCamera.updateCubeMap( getRenderer(), getScene() );
 
 			this.sphere.setVisible(true); // *cough*
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		

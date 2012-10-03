@@ -147,6 +147,8 @@ public final class MaterialsTextureCompressed extends ContentWidget
 				mesh.getRotation().setX( time );
 				mesh.getRotation().setY( time );
 			}
+			
+			getRenderer().render(getScene(), camera);
 		}
 	}
 		
