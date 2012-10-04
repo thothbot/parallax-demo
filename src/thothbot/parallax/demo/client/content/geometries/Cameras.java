@@ -81,7 +81,6 @@ public class Cameras extends ContentWidget implements RequiresResize
 
 			camera.setAspectRatio(
 					0.5 * getRenderer().getCanvas().getAspectRation());
-			camera.updateProjectionMatrix();
 			
 			cameraPerspective.setAspectRatio(0.5 * canvas.getAspectRation());
 			cameraPerspective.updateProjectionMatrix();

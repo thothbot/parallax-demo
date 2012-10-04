@@ -416,7 +416,7 @@ public final class TerrainDynamic extends ContentWidget
 //
 //			morphs.add( meshAnim );
 
-			getScene().initWebGLObjects();
+			getScene().initWebGLObjects(getRenderer());
 
 			final JsonLoader jsonLoader = new JsonLoader();
 
@@ -468,7 +468,7 @@ public final class TerrainDynamic extends ContentWidget
 			
 			// PRE-INIT
 
-			getScene().initWebGLObjects();
+			getScene().initWebGLObjects(getRenderer());
 		}
 
 		private void morphColorsToFaceColors( Geometry geometry ) 

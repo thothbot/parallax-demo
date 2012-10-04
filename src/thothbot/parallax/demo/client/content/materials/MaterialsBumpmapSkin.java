@@ -21,14 +21,6 @@ package thothbot.parallax.demo.client.content.materials;
 
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
@@ -44,24 +36,29 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector4;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.geometries.GeometryCube;
 import thothbot.parallax.demo.resources.BeckmannShader;
 import thothbot.parallax.demo.resources.SkinSimpleShader;
 import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
 import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.MouseMoveEvent;
+import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MaterialsBumpmapSkin extends ContentWidget 
 {

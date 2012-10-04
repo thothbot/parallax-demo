@@ -19,16 +19,54 @@
 
 package thothbot.parallax.demo.client.content.plugins;
 
+import java.util.Map;
+
+import sun.misc.Perf.GetPerfAction;
+import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
+import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
+import thothbot.parallax.core.client.shaders.NormalMapShader;
+import thothbot.parallax.core.client.shaders.Uniform;
+import thothbot.parallax.core.client.textures.RenderTargetTexture;
+import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Vector2;
+import thothbot.parallax.core.shared.geometries.PlaneGeometry;
+import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.materials.ShaderMaterial;
+import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
+import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.plugins.postprocessing.client.BloomPass;
+import thothbot.parallax.plugins.postprocessing.client.ClearMaskPass;
+import thothbot.parallax.plugins.postprocessing.client.DotScreenPass;
+import thothbot.parallax.plugins.postprocessing.client.FilmPass;
+import thothbot.parallax.plugins.postprocessing.client.MaskPass;
+import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.client.RenderPass;
+import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
+import thothbot.parallax.plugins.postprocessing.client.TexturePass;
+import thothbot.parallax.plugins.postprocessing.client.shaders.BleachbypassShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.ColorifyShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.HorizontalBlurShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.SepiaShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.VerticalBlurShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.VignetteShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -41,302 +79,320 @@ public final class PostprocessingMulti extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-
-		PerspectiveCamera camera;
+		private static final String model = "./static/models/obj/leeperrysmith/LeePerrySmith.js";
+		private static final String texture = "./static/models/obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg";
+		private static final String textureCol = "./static/models/obj/leeperrysmith/Map-COL.jpg";
+		private static final String texturebg = "./static/textures/cube/swedishRoyalCastle/pz.jpg";
+		
+		PerspectiveCamera cameraPerspective;
 		OrthographicCamera cameraOrtho;
+		
+		Scene sceneModel, sceneBG;
+		
+		Mesh mesh, quadBG, quadMask;
+		
+		Postprocessing composerScene, composer1, composer2, composer3, composer4;
+		TexturePass renderScene;
 
 		@Override
 		protected void onResize() 
 		{
 			super.onResize();
+/*
+			Canvas3d canvas = getRenderer().getCanvas();
+			int halfWidth = canvas.getWidth() / 2;
+			int halfHeight = canvas.getHeight() / 2;
+			
+			cameraPerspective.setAspectRatio( getRenderer().getCanvas().getAspectRation() );
 
-//			cameraOrtho.left = -halfWidth;
-//			cameraOrtho.right = halfWidth;
-//			cameraOrtho.top = halfHeight;
-//			cameraOrtho.bottom = -halfHeight;
-//
-//			cameraOrtho.updateProjectionMatrix();
-//
-//			composerScene.reset( new WebGLRenderTarget( halfWidth * 2, halfHeight * 2, rtParameters ) );
-//
-//			composer1.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
-//			composer2.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
-//			composer3.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
-//			composer4.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
-//
-//			renderScene.uniforms[ "tDiffuse" ].value = composerScene.renderTarget2;
-//
-//			quadBG.scale.set( window.innerWidth, 1, window.innerHeight );
-//			quadMask.scale.set( window.innerWidth / 2, 1, window.innerHeight / 2 );
+			cameraOrtho.setLeft( -halfWidth );
+			cameraOrtho.setRight( halfWidth );
+			cameraOrtho.setTop( halfHeight );
+			cameraOrtho.setBottom( -halfHeight );
+
+			cameraOrtho.updateProjectionMatrix();
+
+			composerScene.reset( new WebGLRenderTarget( halfWidth * 2, halfHeight * 2, rtParameters ) );
+
+			composer1.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
+			composer2.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
+			composer3.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
+			composer4.reset( new WebGLRenderTarget( halfWidth, halfHeight, rtParameters ) );
+
+			renderScene.getMaterial().getShader().getUniforms().get("tDiffuse").setValue( composerScene.getRenderTarget2() );
+
+			quadBG.getScale().set( canvas.getWidth(), 1, canvas.getHeight() );
+			quadMask.getScale().set( halfWidth, 1, halfHeight );
+			*/
 		}
 
 		@Override
 		protected void onStart()
 		{
-			camera = new PerspectiveCamera(
-					50, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
-					1, // near
-					10000 // far 
-			); 
+			Canvas3d canvas = getRenderer().getCanvas();
+			int width = canvas.getWidth();
+			int height = canvas.getHeight();
+			int halfWidth = width / 2;
+			int halfHeight = height / 2;
 			
-			camera.getPosition().setZ(900);
-			
-//			cameraOrtho = new OrthographicCamera( -halfWidth, halfWidth, halfHeight, -halfHeight, -10000, 10000 );
-			
-			
+			cameraOrtho = new OrthographicCamera( -halfWidth, halfWidth, halfHeight, -halfHeight, -10000, 10000 );
 			cameraOrtho.getPosition().setZ( 100 );
+
+			cameraPerspective = new PerspectiveCamera( 50, canvas.getAspectRation(), 1, 10000 );
+			cameraPerspective.getPosition().setZ( 900 );
 
 			//
 
-//			sceneModel = new THREE.Scene();
-//			sceneBG = new THREE.Scene();
-//
-//			//
-//
-//			directionalLight = new DirectionalLight( 0xffffff );
-//			directionalLight.position.set( 0, -0.1, 1 ).normalize();
-//			sceneModel.add( directionalLight );
-//
-//			loader = new THREE.JSONLoader( true );
-//			document.body.appendChild( loader.statusDomElement );
-//			loader.load( "obj/leeperrysmith/LeePerrySmith.js", function( geometry ) { createMesh( geometry, sceneModel, 100 ) } );
-//
-//			//
-//
-//			var materialColor = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( "textures/cube/SwedishRoyalCastle/pz.jpg" ), depthTest: false } );
-//
-//			quadBG = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), materialColor );
-//			quadBG.position.z = -500;
-//			quadBG.scale.set( width, height, 1 );
-//			sceneBG.add( quadBG );
-//
-//			//
-//
-//			var sceneMask = new THREE.Scene();
-//
-//			quadMask = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), new THREE.MeshBasicMaterial( { color: 0xffaa00 } )  );
-//			quadMask.position.z = -300;
-//			quadMask.scale.set( width / 2, height / 2, 1 );
-//			sceneMask.add( quadMask );
-//
-//			//
-//
-//			renderer = new THREE.WebGLRenderer( { antialias: false } );
-//			renderer.setSize( width, height );
-//			renderer.setClearColorHex( 0x000000, 1 );
-//			renderer.autoClear = false;
-//
-//			//
-//
-//			renderer.gammaInput = true;
-//			renderer.gammaOutput = true;
-//
-//			//
-//
-//			container.appendChild( renderer.domElement );
-//
-//			//
-//
-//			stats = new Stats();
-//			stats.domElement.style.position = 'absolute';
-//			stats.domElement.style.top = '0px';
-//			//container.appendChild( stats.domElement );
-//
-//			//
-//
-//			var shaderBleach = THREE.ShaderExtras[ "bleachbypass" ];
-//			var shaderSepia = THREE.ShaderExtras[ "sepia" ];
-//			var shaderVignette = THREE.ShaderExtras[ "vignette" ];
-//			var shaderScreen = THREE.ShaderExtras[ "screen" ];
-//
-//			var effectBleach = new THREE.ShaderPass( shaderBleach );
-//			var effectSepia = new THREE.ShaderPass( shaderSepia );
-//			var effectVignette = new THREE.ShaderPass( shaderVignette );
-//			var effectScreen = new THREE.ShaderPass( shaderScreen );
-//
-//			effectBleach.uniforms[ "opacity" ].value = 0.95;
-//
-//			effectSepia.uniforms[ "amount" ].value = 0.9;
-//
-//			effectVignette.uniforms[ "offset" ].value = 0.95;
-//			effectVignette.uniforms[ "darkness" ].value = 1.6;
-//
-//			var effectBloom = new THREE.BloomPass( 0.5 );
-//			var effectFilm = new THREE.FilmPass( 0.35, 0.025, 648, false );
-//			var effectFilmBW = new THREE.FilmPass( 0.35, 0.5, 2048, true );
-//			var effectDotScreen = new THREE.DotScreenPass( new THREE.Vector2( 0, 0 ), 0.5, 0.8 );
-//
-//			var effectHBlur = new THREE.ShaderPass( THREE.ShaderExtras[ "horizontalBlur" ] );
-//			var effectVBlur = new THREE.ShaderPass( THREE.ShaderExtras[ "verticalBlur" ] );
-//			effectHBlur.uniforms[ 'h' ].value = 2 / ( width/2 );
-//			effectVBlur.uniforms[ 'v' ].value = 2 / ( height/2 );
-//
-//			var effectColorify1 = new THREE.ShaderPass( THREE.ShaderExtras[ "colorify" ] );
-//			var effectColorify2 = new THREE.ShaderPass( THREE.ShaderExtras[ "colorify" ] );
-//			effectColorify1.uniforms[ 'color' ].value.setRGB( 1, 0.8, 0.8 );
-//			effectColorify2.uniforms[ 'color' ].value.setRGB( 1, 0.75, 0.5 );
-//
-//			var clearMask = new THREE.ClearMaskPass();
-//			var renderMask = new THREE.MaskPass( sceneModel, cameraPerspective );
-//			var renderMaskInverse = new THREE.MaskPass( sceneModel, cameraPerspective );
-//
-//			renderMaskInverse.inverse = true;
-//
-//			//effectFilm.renderToScreen = true;
-//			//effectFilmBW.renderToScreen = true;
-//			//effectDotScreen.renderToScreen = true;
-//			//effectBleach.renderToScreen = true;
-//			effectVignette.renderToScreen = true;
-//			//effectScreen.renderToScreen = true;
-//
-//			//
-//
-//			rtParameters = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: true };
-//
-//			var rtWidth  = width / 2;
-//			var rtHeight = height / 2;
-//
-//			//
-//
-//			var renderBackground = new THREE.RenderPass( sceneBG, cameraOrtho );
-//			var renderModel = new THREE.RenderPass( sceneModel, cameraPerspective );
-//
-//			renderModel.clear = false;
-//
-//			composerScene = new THREE.EffectComposer( renderer, new THREE.WebGLRenderTarget( rtWidth * 2, rtHeight * 2, rtParameters ) );
-//
-//			composerScene.addPass( renderBackground );
-//			composerScene.addPass( renderModel );
-//			composerScene.addPass( renderMaskInverse );
-//			composerScene.addPass( effectHBlur );
-//			composerScene.addPass( effectVBlur );
-//			composerScene.addPass( clearMask );
-//
-//			//
-//
-//			renderScene = new THREE.TexturePass( composerScene.renderTarget2 );
-//
-//			//
-//
-//			composer1 = new THREE.EffectComposer( renderer, new THREE.WebGLRenderTarget( rtWidth, rtHeight, rtParameters ) );
-//
-//			composer1.addPass( renderScene );
-//			//composer1.addPass( renderMask );
-//			composer1.addPass( effectFilmBW );
-//			//composer1.addPass( clearMask );
-//			composer1.addPass( effectVignette );
-//
-//			//
-//
-//			composer2 = new THREE.EffectComposer( renderer, new THREE.WebGLRenderTarget( rtWidth, rtHeight, rtParameters ) );
-//
-//			composer2.addPass( renderScene );
-//			composer2.addPass( effectDotScreen );
-//			composer2.addPass( renderMask );
-//			composer2.addPass( effectColorify1 );
-//			composer2.addPass( clearMask );
-//			composer2.addPass( renderMaskInverse );
-//			composer2.addPass( effectColorify2 );
-//			composer2.addPass( clearMask );
-//			composer2.addPass( effectVignette );
-//
-//			//
-//
-//			composer3 = new THREE.EffectComposer( renderer, new THREE.WebGLRenderTarget( rtWidth, rtHeight, rtParameters ) );
-//
-//			composer3.addPass( renderScene );
-//			//composer3.addPass( renderMask );
-//			composer3.addPass( effectSepia );
-//			composer3.addPass( effectFilm );
-//			//composer3.addPass( clearMask );
-//			composer3.addPass( effectVignette );
-//
-//			//
-//
-//			composer4 = new THREE.EffectComposer( renderer, new THREE.WebGLRenderTarget( rtWidth, rtHeight, rtParameters ) );
-//
-//			composer4.addPass( renderScene );
-//			//composer4.addPass( renderMask );
-//			composer4.addPass( effectBloom );
-//			composer4.addPass( effectFilm );
-//			composer4.addPass( effectBleach );
-//			//composer4.addPass( clearMask );
-//			composer4.addPass( effectVignette );
-//
-//			//
-//
-//			//onWindowResize();
-//
-//			renderScene.uniforms[ "tDiffuse" ].value = composerScene.renderTarget2;
-//
-//			window.addEventListener( 'resize', onWindowResize, false );
+			sceneModel = new Scene();
+			sceneBG = new Scene();
+
+			//
+
+			DirectionalLight directionalLight = new DirectionalLight( 0xffffff );
+			directionalLight.getPosition().set( 0, -0.1, 1 ).normalize();
+			sceneModel.add( directionalLight );
+
+			final JsonLoader jsonLoader = new JsonLoader();
+			try
+			{
+				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+
+					@Override
+					public void onModeLoad() {		
+						createMesh( jsonLoader.getGeometry(), 100 );
+					}
+				});
+			}
+			catch (RequestException exception) 
+			{
+				Log.error("Error while loading JSON file.");
+			}
+			
+			//
+
+			MeshBasicMaterial materialColor = new MeshBasicMaterial();
+			materialColor.setMap(new Texture(texturebg));
+			materialColor.setDepthTest(false);
+
+			quadBG = new Mesh( new PlaneGeometry( 1, 1 ), materialColor );
+			quadBG.getPosition().setZ( -500 );
+			quadBG.getScale().set( width, height, 1 );
+			sceneBG.add( quadBG );
+
+			//
+
+			Scene sceneMask = new Scene();
+			MeshBasicMaterial maskMaterial = new MeshBasicMaterial();
+			maskMaterial.setColor(new Color(0xffaa00));
+
+			quadMask = new Mesh( new PlaneGeometry( 1, 1 ), maskMaterial );
+			quadMask.getPosition().setZ( -300 );
+			quadMask.getScale().set( width / 2, height / 2, 1 );
+			sceneMask.add( quadMask );
+
+			//
+
+			getRenderer().setClearColorHex( 0x000000, 1 );
+			getRenderer().setAutoClear(false);
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
+
+			BleachbypassShader shaderBleach = new BleachbypassShader();
+			SepiaShader shaderSepia = new SepiaShader();
+			VignetteShader shaderVignette = new VignetteShader();
+			ScreenShader shaderScreen = new ScreenShader();
+
+			ShaderPass effectBleach = new ShaderPass( shaderBleach );
+			ShaderPass effectSepia = new ShaderPass( shaderSepia );
+			ShaderPass effectVignette = new ShaderPass( shaderVignette );
+			ShaderPass effectScreen = new ShaderPass( shaderScreen );
+
+			effectBleach.getUniforms().get("opacity").setValue( 0.95 );
+			effectSepia.getUniforms().get("amount").setValue( 0.9 );
+			effectVignette.getUniforms().get("offset").setValue( 0.95 );
+			effectVignette.getUniforms().get("darkness").setValue( 1.6 );
+
+			BloomPass effectBloom = new BloomPass( 0.5 );
+			FilmPass effectFilm = new FilmPass( 0.35, 0.025, 648, false );
+			FilmPass effectFilmBW = new FilmPass( 0.35, 0.5, 2048, true );
+			DotScreenPass effectDotScreen = new DotScreenPass( new Vector2( 0, 0 ), 0.5, 0.8 );
+
+			ShaderPass effectHBlur = new ShaderPass( new HorizontalBlurShader() );
+			ShaderPass effectVBlur = new ShaderPass( new VerticalBlurShader() );
+			effectHBlur.getUniforms().get("h").setValue( 2.0 / ( width / 2.0 ) );
+			effectVBlur.getUniforms().get("v").setValue( 2.0 / ( height / 2.0 ) );
+
+			ShaderPass effectColorify1 = new ShaderPass( new ColorifyShader() );
+			ShaderPass effectColorify2 = new ShaderPass( new ColorifyShader() );
+			((Color)effectColorify1.getUniforms().get("color").getValue()).setRGB( 1, 0.8, 0.8 );
+			((Color)effectColorify2.getUniforms().get("color").getValue()).setRGB( 1, 0.75, 0.5 );
+
+			ClearMaskPass clearMask = new ClearMaskPass();
+			MaskPass renderMask = new MaskPass( sceneModel, cameraPerspective );
+			MaskPass renderMaskInverse = new MaskPass( sceneModel, cameraPerspective );
+
+			renderMaskInverse.setInverse(true);
+
+			//effectFilm.renderToScreen = true;
+			//effectFilmBW.renderToScreen = true;
+			//effectDotScreen.renderToScreen = true;
+			//effectBleach.renderToScreen = true;
+			effectVignette.setRenderToScreen(true);
+			//effectScreen.renderToScreen = true;
+
+			//
+
+			RenderPass renderBackground = new RenderPass( sceneBG, cameraOrtho );
+			RenderPass renderModel = new RenderPass( sceneModel, cameraPerspective );
+
+			renderModel.setClear(false);
+			
+			RenderTargetTexture rt = new RenderTargetTexture(width, height);
+			rt.setMinFilter(TextureMinFilter.LINEAR);
+			rt.setMagFilter(TextureMagFilter.LINEAR);
+			rt.setFormat(PixelFormat.RGB);
+			rt.setStencilBuffer(true);
+
+			composerScene = new Postprocessing( getRenderer(), getScene(), rt);
+
+			composerScene.addPass( renderBackground );
+			composerScene.addPass( renderModel );
+			composerScene.addPass( renderMaskInverse );
+			composerScene.addPass( effectHBlur );
+			composerScene.addPass( effectVBlur );
+			composerScene.addPass( clearMask );
+
+			//
+
+			renderScene = new TexturePass( composerScene.getRenderTarget2() );
+
+			//
+
+			composer1 = new Postprocessing( getRenderer(), getScene(), rt.clone() );
+			composer1.setEnabled(false);
+
+			composer1.addPass( renderScene );
+			//composer1.addPass( renderMask );
+			composer1.addPass( effectFilmBW );
+			//composer1.addPass( clearMask );
+			composer1.addPass( effectVignette );
+
+			//
+
+			composer2 = new Postprocessing( getRenderer(), getScene(), rt.clone() );
+			composer2.setEnabled(false);
+
+			composer2.addPass( renderScene );
+			composer2.addPass( effectDotScreen );
+			composer2.addPass( renderMask );
+			composer2.addPass( effectColorify1 );
+			composer2.addPass( clearMask );
+			composer2.addPass( renderMaskInverse );
+			composer2.addPass( effectColorify2 );
+			composer2.addPass( clearMask );
+			composer2.addPass( effectVignette );
+
+			//
+
+			composer3 = new Postprocessing( getRenderer(), getScene(), rt.clone() );
+			composer3.setEnabled(false);
+
+			composer3.addPass( renderScene );
+			//composer3.addPass( renderMask );
+			composer3.addPass( effectSepia );
+			composer3.addPass( effectFilm );
+			//composer3.addPass( clearMask );
+			composer3.addPass( effectVignette );
+
+			//
+
+			composer4 = new Postprocessing( getRenderer(), getScene(), rt.clone() );
+			composer4.setEnabled(false);
+
+			composer4.addPass( renderScene );
+			//composer4.addPass( renderMask );
+			composer4.addPass( effectBloom );
+			composer4.addPass( effectFilm );
+			composer4.addPass( effectBleach );
+			//composer4.addPass( clearMask );
+			composer4.addPass( effectVignette );
+
+			renderScene.getMaterial().getShader().getUniforms().get("tDiffuse").setValue( composerScene.getRenderTarget2() );
 		}
 		
-		private void createMesh( Geometry geometry, Scene scene, double scale ) 
+		private void createMesh( Geometry geometry, double scale ) 
 		{
 
-//			geometry.computeTangents();
-//
-//			var ambient = 0x444444, diffuse = 0x999999, specular = 0x080808, shininess = 20;
-//
-//			var shader = THREE.ShaderUtils.lib[ "normal" ];
-//			var uniforms = THREE.UniformsUtils.clone( shader.uniforms );
-//
-//			uniforms[ "tNormal" ].value = THREE.ImageUtils.loadTexture( "obj/leeperrysmith/Infinite-Level_02_Tangent_SmoothUV.jpg" );
-//			uniforms[ "uNormalScale" ].value.set( 0.75, 0.75 );
-//
-//			uniforms[ "tDiffuse" ].value = THREE.ImageUtils.loadTexture( "obj/leeperrysmith/Map-COL.jpg" );
-//
-//			uniforms[ "enableAO" ].value = false;
-//			uniforms[ "enableDiffuse" ].value = true;
-//
-//			uniforms[ "uDiffuseColor" ].value.setHex( diffuse );
-//			uniforms[ "uSpecularColor" ].value.setHex( specular );
-//			uniforms[ "uAmbientColor" ].value.setHex( ambient );
-//
-//			uniforms[ "uShininess" ].value = shininess;
-//
-//			uniforms[ "uDiffuseColor" ].value.convertGammaToLinear();
-//			uniforms[ "uSpecularColor" ].value.convertGammaToLinear();
-//			uniforms[ "uAmbientColor" ].value.convertGammaToLinear();
-//
-//			var parameters = { fragmentShader: shader.fragmentShader, vertexShader: shader.vertexShader, uniforms: uniforms, lights: true };
-//			var mat2 = new THREE.ShaderMaterial( parameters );
-//
-//			mesh = new THREE.Mesh( geometry, mat2 );
-//			mesh.position.set( 0, -50, 0 );
-//			mesh.scale.set( scale, scale, scale );
-//
-//			scene.add( mesh );
-//
-//			loader.statusDomElement.style.display = "none";
+			geometry.computeTangents();
 
+			int ambient = 0x444444, 
+					diffuse = 0x999999, 
+					specular = 0x080808;
+			double shininess = 20;
+
+			ShaderMaterial mat2 = new ShaderMaterial( new NormalMapShader() );
+			mat2.setLights(true);
+			Map<String, Uniform> uniforms = mat2.getShader().getUniforms();
+
+			uniforms.get("tNormal").setValue( new Texture( texture ));
+			((Vector2)uniforms.get("uNormalScale").getValue()).set( 0.75, 0.75 );
+
+			uniforms.get("tDiffuse").setValue( new Texture( textureCol ));
+
+			uniforms.get("enableAO").setValue( false );
+			uniforms.get("enableDiffuse").setValue( true );
+
+			((Color)uniforms.get("uDiffuseColor").getValue()).setHex( diffuse );
+			((Color)uniforms.get("uSpecularColor").getValue()).setHex( specular );
+			((Color)uniforms.get("uAmbientColor").getValue()).setHex( ambient );
+
+			uniforms.get("uShininess").setValue( shininess );
+
+			((Color)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
+			((Color)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
+			((Color)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
+
+			mesh = new Mesh( geometry, mat2 );
+			mesh.getPosition().set( 0, -50, 0 );
+			mesh.getScale().set( scale );
+
+			sceneModel.add( mesh );
 		}
 		
 		@Override
 		protected void onUpdate(double duration)
 		{
-//			var time = Date.now() * 0.0004;
-//
-//			if ( mesh ) mesh.rotation.y = -time;
-//
-//			renderer.setViewport( 0, 0, 2 * halfWidth, 2 * halfHeight );
-//
-//			renderer.clear();
-//			composerScene.render( delta );
-//
-//			renderer.setViewport( 0, 0, halfWidth, halfHeight );
-//			composer1.render( delta );
-//
-//			renderer.setViewport( halfWidth, 0, halfWidth, halfHeight );
-//			composer2.render( delta );
-//
-//			renderer.setViewport( 0, halfHeight, halfWidth, halfHeight );
-//			composer3.render( delta );
-//
-//			renderer.setViewport( halfWidth, halfHeight, halfWidth, halfHeight );
-//			composer4.render( delta );
+			if ( mesh != null )
+				mesh.getRotation().addY( -0.04 );
+
+			Canvas3d canvas = getRenderer().getCanvas();
+			int halfWidth = canvas.getWidth() / 2;
+			int halfHeight = canvas.getHeight() / 2;
+			
+			getRenderer().setViewport( 0, 0, 2 * halfWidth, 2 * halfHeight );
+
+			getRenderer().clear();
+			getRenderer().render(getScene(), this.cameraPerspective);
+
+			getRenderer().setViewport( 0, 0, halfWidth, halfHeight );
+			composer1.setEnabled(true);
+			getRenderer().render(getScene(), this.cameraPerspective);
+			composer1.setEnabled(false);
+
+			getRenderer().setViewport( halfWidth, 0, halfWidth, halfHeight );
+			composer2.setEnabled(true);
+			getRenderer().render(getScene(), this.cameraPerspective);
+			composer2.setEnabled(false);
+
+			getRenderer().setViewport( 0, halfHeight, halfWidth, halfHeight );
+			composer3.setEnabled(true);
+			getRenderer().render(getScene(), this.cameraPerspective);
+			composer3.setEnabled(false);
+
+			getRenderer().setViewport( halfWidth, halfHeight, halfWidth, halfHeight );
+			composer4.setEnabled(true);
+			getRenderer().render(getScene(), this.cameraPerspective);
+			composer4.setEnabled(false);
 		}
 	}
 		
