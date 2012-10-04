@@ -111,7 +111,7 @@ public final class MiscMemoryTestShaders extends ContentWidget
 			for ( int i = 0; i < N; i ++ ) 
 			{
 				Mesh mesh = meshes.get( i );
-				getRenderer().deallocateMaterial( mesh.getMaterial() );
+				 mesh.getMaterial().deallocate( getRenderer() );
 			}
 			
 			for ( int i = 0; i < N; i ++ ) 
