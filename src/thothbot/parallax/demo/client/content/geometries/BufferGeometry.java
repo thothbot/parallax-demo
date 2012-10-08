@@ -86,9 +86,12 @@ public final class BufferGeometry extends ContentWidget
 			int triangles = 160000;
 
 			GeometryBuffer geometry = new GeometryBuffer();
+			geometry.setElementsNeedUpdate(true);
 			geometry.setVerticesNeedUpdate(true);
+			geometry.setNormalsNeedUpdate(true);
+			geometry.setColorsNeedUpdate(true);
 			geometry.setWebGlIndexArray(Int16Array.create(triangles * 3));
-			geometry.setWebGlPositionArray(Float32Array.create(triangles * 3 * 3));
+			geometry.setWebGlVertexArray(Float32Array.create(triangles * 3 * 3));
 			geometry.setWebGlNormalArray(Float32Array.create(triangles * 3 * 3));
 			geometry.setWebGlColorArray(Float32Array.create(triangles * 3 * 3));
 			
@@ -105,7 +108,7 @@ public final class BufferGeometry extends ContentWidget
 				indices.set( i, i % ( 3 * chunkSize ));
 			}
 
-			Float32Array positions = geometry.getWebGlPositionArray();
+			Float32Array positions = geometry.getWebGlVertexArray();
 			Float32Array normals = geometry.getWebGlNormalArray();
 			Float32Array colors = geometry.getWebGlColorArray();
 
