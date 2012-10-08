@@ -20,7 +20,6 @@
 package thothbot.parallax.demo.client.content.geometries;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import thothbot.parallax.core.client.gl2.arrays.Float32Array;
 import thothbot.parallax.core.client.gl2.arrays.Int16Array;
@@ -31,8 +30,8 @@ import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
-import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.materials.Material.SIDE;
+import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -87,6 +86,7 @@ public final class BufferGeometry extends ContentWidget
 			int triangles = 160000;
 
 			GeometryBuffer geometry = new GeometryBuffer();
+			geometry.setVerticesNeedUpdate(true);
 			geometry.setWebGlIndexArray(Int16Array.create(triangles * 3));
 			geometry.setWebGlPositionArray(Float32Array.create(triangles * 3 * 3));
 			geometry.setWebGlNormalArray(Float32Array.create(triangles * 3 * 3));
@@ -204,7 +204,7 @@ public final class BufferGeometry extends ContentWidget
 
 			}
 
-			List<GeometryBuffer.Offset> offsets = new ArrayList<GeometryBuffer.Offset>();
+			geometry.offsets = new ArrayList<GeometryBuffer.Offset>();
 
 			int start = 0;
 			int index = 0;
@@ -240,7 +240,7 @@ public final class BufferGeometry extends ContentWidget
 			material.setPerPixel(true);
 			material.setVertexColors(COLORS.VERTEX);
 
-//			mesh = new Mesh( geometry, material );
+			mesh = new Mesh( geometry, material );
 			getScene().add( mesh );
 
 			//
@@ -277,7 +277,7 @@ public final class BufferGeometry extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleBufferGeometry();
 	}
 	
 	@Override
