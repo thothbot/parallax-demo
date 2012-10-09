@@ -116,7 +116,6 @@ public final class BufferGeometryParticles extends ContentWidget
 			//
 
 			getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
-			getRenderer().setAutoClear(false);
 		}
 		
 		@Override
@@ -144,7 +143,7 @@ public final class BufferGeometryParticles extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleBufferGeometryParticles();
 	}
 	
 	@Override

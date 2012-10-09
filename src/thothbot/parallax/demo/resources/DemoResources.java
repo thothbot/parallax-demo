@@ -68,6 +68,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_buffer_geometry.jpg")
 	ImageResource exampleBufferGeometry();
 	
+	@Source("images/example_buffer_geometry_particles.jpg")
+	ImageResource exampleBufferGeometryParticles();
+	
 	@Source("images/example_hilbert_curves.jpg")
 	ImageResource exampleHilbertCurves();
 	
