@@ -132,10 +132,8 @@ public final class PostprocessingMulti extends ContentWidget
 			Canvas3d canvas = getRenderer().getCanvas();
 			int width = canvas.getWidth();
 			int height = canvas.getHeight();
-			int halfWidth = width / 2;
-			int halfHeight = height / 2;
 			
-			cameraOrtho = new OrthographicCamera( -halfWidth, halfWidth, halfHeight, -halfHeight, -10000, 10000 );
+			cameraOrtho = new OrthographicCamera( width, height, -10000, 10000 );
 			cameraOrtho.getPosition().setZ( 100 );
 
 			cameraPerspective = new PerspectiveCamera( 50, canvas.getAspectRation(), 1, 10000 );

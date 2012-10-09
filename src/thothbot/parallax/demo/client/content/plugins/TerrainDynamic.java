@@ -167,12 +167,7 @@ public final class TerrainDynamic extends ContentWidget
 			
 			Canvas3d canvas = getRenderer().getCanvas();
 			
-			cameraOrtho = new OrthographicCamera( 
-					canvas.getWidth() / - 2.0, 
-					canvas.getWidth() / 2.0, 
-					canvas.getHeight() / 2.0, 
-					canvas.getHeight() / - 2.0, 
-					-10000, 10000);
+			cameraOrtho = new OrthographicCamera( canvas.getWidth(), canvas.getHeight(), -10000, 10000 );
 			
 			camera.getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
