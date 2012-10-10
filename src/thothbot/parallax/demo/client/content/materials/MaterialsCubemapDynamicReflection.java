@@ -84,7 +84,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					this.fov, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					1000 // far 
 			); 
@@ -174,17 +174,17 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseWheelHandler(new MouseWheelHandler() {
+		this.renderingPanel.getCanvas().addMouseWheelHandler(new MouseWheelHandler() {
 			
 			@Override
 			public void onMouseWheel(MouseWheelEvent event) {
 				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 				rs.fov -= event.getDeltaY() * 1.0;
-				rs.camera.getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getCanvas().getAspectRation(), 1, 1100);
+				rs.camera.getProjectionMatrix().makePerspective(rs.fov, rs.getRenderer().getAbsoluteAspectRation(), 1, 1100);
 			}
 		});
 		
-		this.renderingPanel.getRenderer().getCanvas().addMouseDownHandler(new MouseDownHandler() {
+		this.renderingPanel.getCanvas().addMouseDownHandler(new MouseDownHandler() {
 			
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
@@ -198,7 +198,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			}
 		});
 		
-		this.renderingPanel.getRenderer().getCanvas().addMouseUpHandler(new MouseUpHandler() {
+		this.renderingPanel.getCanvas().addMouseUpHandler(new MouseUpHandler() {
 			
 			@Override
 			public void onMouseUp(MouseUpEvent event) {
@@ -207,7 +207,7 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			}
 		});
 				
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 			
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)

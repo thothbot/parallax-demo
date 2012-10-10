@@ -54,7 +54,7 @@ public class GeometryCube extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					70, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					1000 // far 
 			);

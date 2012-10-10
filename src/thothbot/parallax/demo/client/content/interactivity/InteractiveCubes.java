@@ -73,7 +73,7 @@ public final class InteractiveCubes extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					70, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			);
@@ -174,14 +174,13 @@ public final class InteractiveCubes extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseDeltaX = (event.getX() / (double)canvas.getWidth() ) * 2.0 - 1.0; 
-		    	  	rs.mouseDeltaY = - (event.getY() / (double)canvas.getHeight() ) * 2.0 + 1.0;
+		    	  	rs.mouseDeltaX = (event.getX() / (double)renderingPanel.getRenderer().getAbsoluteWidth() ) * 2.0 - 1.0; 
+		    	  	rs.mouseDeltaY = - (event.getY() / (double)renderingPanel.getRenderer().getAbsoluteHeight() ) * 2.0 + 1.0;
 		      }
 		});
 	}

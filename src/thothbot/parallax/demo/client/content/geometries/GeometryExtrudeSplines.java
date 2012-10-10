@@ -158,10 +158,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		@Override
 		protected void onResize() 
 		{
-			Canvas3d canvas = getRenderer().getCanvas();
-
-			mainCamera.setAspectRatio(canvas.getAspectRation());
-			splineCamera.setAspectRatio(canvas.getAspectRation());
+			mainCamera.setAspectRatio(getRenderer().getAbsoluteAspectRation());
+			splineCamera.setAspectRatio(getRenderer().getAbsoluteAspectRation());
 		}
 
 		@Override
@@ -169,7 +167,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		{
 			mainCamera = new PerspectiveCamera(
 					50, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					0.01, // near
 					1000 // far 
 			);
@@ -178,7 +176,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 			splineCamera = new PerspectiveCamera(
 					84, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					0.01, // near
 					1000 // far 
 			);
@@ -319,20 +317,20 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		final DemoScene rs = (DemoScene) this.renderingPanel.getAnimatedScene();
 		
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	rs.mouseX = (event.getX() - renderingPanel.getRenderer().getCanvas().getWidth() / 2 ); 
+		    	  	rs.mouseX = (event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2 ); 
 		    	  	rs.targetRotation = rs.targetRotationOnMouseDown + (rs.mouseX - rs.mouseXOnMouseDown) * 0.02;
 		      }
 		});
 		
-		this.renderingPanel.getRenderer().getCanvas().addMouseDownHandler(new MouseDownHandler() {
+		this.renderingPanel.getCanvas().addMouseDownHandler(new MouseDownHandler() {
 
 			@Override
 			public void onMouseDown(MouseDownEvent event) {
-				rs.mouseXOnMouseDown = event.getX() - renderingPanel.getRenderer().getCanvas().getWidth() / 2;
+				rs.mouseXOnMouseDown = event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2;
 				rs.targetRotationOnMouseDown = rs.targetRotation;
 
 			}

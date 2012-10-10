@@ -60,7 +60,7 @@ public final class BufferGeometry extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					27, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					3500 // far 
 			);

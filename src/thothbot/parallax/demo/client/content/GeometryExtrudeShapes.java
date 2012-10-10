@@ -71,7 +71,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 		protected void onStart()
 		{
 			camera = new PerspectiveCamera( 50,
-					getRenderer().getCanvas().getAspectRation(), 
+					getRenderer().getAbsoluteAspectRation(), 
 					1, 
 					1000 
 				);

@@ -85,14 +85,14 @@ public final class TrackballEarth extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					25, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					50, // near
 					1e7f // far 
 			); 
 			
 			camera.getPosition().setZ(radius * 7);
 			
-			this.control = new TrackballControls( camera, getRenderer().getCanvas() );
+			this.control = new TrackballControls( camera, renderingPanel.getCanvas() );
 			this.control.setPanSpeed(0.2);
 			this.control.setDynamicDampingFactor(0.3);
 			this.control.setMinDistance(radius * 1.1);

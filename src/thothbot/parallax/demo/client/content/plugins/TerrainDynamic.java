@@ -148,10 +148,8 @@ public final class TerrainDynamic extends ContentWidget
 		protected void onResize() 
 		{
 			super.onResize();
-			Canvas3d canvas = getRenderer().getCanvas();
-
-			SCREEN_WIDTH = canvas.getWidth();
-			SCREEN_HEIGHT = canvas.getHeight();
+			SCREEN_WIDTH = renderingPanel.getRenderer().getAbsoluteWidth();
+			SCREEN_HEIGHT = renderingPanel.getRenderer().getAbsoluteHeight();
 		}
 
 		@Override
@@ -160,14 +158,12 @@ public final class TerrainDynamic extends ContentWidget
 			
 			camera = new PerspectiveCamera(
 					40, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					2, // near
 					4000 // far 
 			); 
-			
-			Canvas3d canvas = getRenderer().getCanvas();
-			
-			cameraOrtho = new OrthographicCamera( canvas.getWidth(), canvas.getHeight(), -10000, 10000 );
+						
+			cameraOrtho = new OrthographicCamera( renderingPanel.getRenderer().getAbsoluteWidth(), renderingPanel.getRenderer().getAbsoluteHeight(), -10000, 10000 );
 			
 			camera.getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
@@ -183,7 +179,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// CAMERA
 
-			controls = new TrackballControls( camera, getRenderer().getCanvas() );
+			controls = new TrackballControls( camera, renderingPanel.getCanvas() );
 			controls.getTarget().set( 0 );
 
 			controls.setRotateSpeed(1.0);

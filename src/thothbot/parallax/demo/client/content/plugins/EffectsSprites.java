@@ -56,7 +56,7 @@ public final class EffectsSprites extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					60, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					5000 // far 
 			);

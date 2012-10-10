@@ -68,10 +68,8 @@ public final class MaterialsShaderLava extends ContentWidget
 		{
 			super.onResize();
 			
-			Canvas3d canvas = getRenderer().getCanvas();
-			
-			((Vector2)uniforms.get("resolution").getValue()).setX( canvas.getWidth() );
-			((Vector2)uniforms.get("resolution").getValue()).setY( canvas.getHeight() );
+			((Vector2)uniforms.get("resolution").getValue()).setX( renderingPanel.getRenderer().getAbsoluteWidth() );
+			((Vector2)uniforms.get("resolution").getValue()).setY( renderingPanel.getRenderer().getAbsoluteHeight() );
 		}
 		
 		@Override
@@ -79,7 +77,7 @@ public final class MaterialsShaderLava extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					35, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					3000 // far 
 			); 

@@ -64,7 +64,7 @@ public final class ParticlesRandom extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					75, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					3000 // far 
 			); 
@@ -147,14 +147,14 @@ public final class ParticlesRandom extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseX = event.getX() - canvas.getWidth() / 2; 
-		    	  	rs.mouseY = event.getY() - canvas.getHeight() / 2;
+
+		    	  	rs.mouseX = event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2; 
+		    	  	rs.mouseY = event.getY() - renderingPanel.getRenderer().getAbsoluteHeight() / 2;
 		      }
 		});
 	}

@@ -91,7 +91,7 @@ public final class ClothSimulation extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					30, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			); 

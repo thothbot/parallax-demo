@@ -57,10 +57,8 @@ public final class MaterialsShaderMonjori extends ContentWidget
 		{
 			super.onResize();
 			
-			Canvas3d canvas = getRenderer().getCanvas();
-			
-			((Vector2)uniforms.get("resolution").getValue()).setX( canvas.getWidth() );
-			((Vector2)uniforms.get("resolution").getValue()).setY( canvas.getHeight() );
+			((Vector2)uniforms.get("resolution").getValue()).setX( renderingPanel.getRenderer().getAbsoluteWidth() );
+			((Vector2)uniforms.get("resolution").getValue()).setY( renderingPanel.getRenderer().getAbsoluteHeight() );
 		}
 
 		@Override

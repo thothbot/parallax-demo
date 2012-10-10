@@ -77,21 +77,17 @@ public class Cameras extends ContentWidget implements RequiresResize
 		@Override
 		protected void onResize() 
 		{
-			Canvas3d canvas = getRenderer().getCanvas();
-
-			camera.setAspectRatio(0.5 * getRenderer().getCanvas().getAspectRation());
-			cameraPerspective.setAspectRatio(0.5 * canvas.getAspectRation());
-			cameraOrtho.setSize(0.5 * canvas.getWidth(), canvas.getHeight() );
+			camera.setAspectRatio(0.5 * getRenderer().getAbsoluteAspectRation());
+			cameraPerspective.setAspectRatio(0.5 * getRenderer().getAbsoluteAspectRation());
+			cameraOrtho.setSize(0.5 * renderingPanel.getRenderer().getAbsoluteWidth(), renderingPanel.getRenderer().getAbsoluteHeight() );
 		}
 
 		@Override
 		protected void onStart()
 		{
-			Canvas3d canvas = getRenderer().getCanvas();
-			
 			camera = new PerspectiveCamera( 
 					50, 
-					0.5 * canvas.getAspectRation(), 
+					0.5 * getRenderer().getAbsoluteAspectRation(), 
 					1, 
 					10000 );
 			
@@ -99,11 +95,11 @@ public class Cameras extends ContentWidget implements RequiresResize
 			
 			this.cameraPerspective = new PerspectiveCamera( 
 					50, 
-					canvas.getAspectRation() * 0.5, 
+					getRenderer().getAbsoluteAspectRation() * 0.5, 
 					150, 
 					1000 );
 			
-			this.cameraOrtho = new OrthographicCamera( 0.5 * canvas.getWidth(), canvas.getHeight(),	150, 1000 );
+			this.cameraOrtho = new OrthographicCamera( 0.5 * renderingPanel.getRenderer().getAbsoluteWidth(), renderingPanel.getRenderer().getAbsoluteHeight(),	150, 1000 );
 			
 			this.cameraPerspectiveHelper = new CameraHelper( this.cameraPerspective );
 			getScene().add( this.cameraPerspectiveHelper );
@@ -215,14 +211,13 @@ public class Cameras extends ContentWidget implements RequiresResize
 
 			activeHelper.setVisible(false);
 			
-			Canvas3d canvas = getRenderer().getCanvas();
-			getRenderer().setViewport( 0, 0, canvas.getWidth() / 2, canvas.getHeight() );
+			getRenderer().setViewport( 0, 0, renderingPanel.getRenderer().getAbsoluteWidth() / 2, renderingPanel.getRenderer().getAbsoluteHeight() );
 
 			getRenderer().render( getScene(), activeCamera );
 
 			activeHelper.setVisible(true);
 			
-			getRenderer().setViewport( canvas.getWidth() / 2, 0, canvas.getWidth() / 2, canvas.getHeight() );
+			getRenderer().setViewport( renderingPanel.getRenderer().getAbsoluteWidth() / 2, 0, renderingPanel.getRenderer().getAbsoluteWidth() / 2, renderingPanel.getRenderer().getAbsoluteHeight() );
 			getRenderer().render(getScene(), camera);
 		}
 	}

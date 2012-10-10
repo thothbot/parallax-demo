@@ -81,7 +81,7 @@ public final class MaterialsLightmap extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					40, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			); 
@@ -93,7 +93,7 @@ public final class MaterialsLightmap extends ContentWidget
 
 			// CONTROLS
 
-			controls = new TrackballControls( camera, getRenderer().getCanvas() );
+			controls = new TrackballControls( camera, renderingPanel.getCanvas() );
 			controls.getTarget().setZ( 150 );
 
 			// LIGHTS

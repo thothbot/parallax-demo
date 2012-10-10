@@ -68,7 +68,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					35, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					25000 // far 
 			);
@@ -148,11 +148,10 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			getRenderer().clear();
 			getRenderer().enableScissorTest( true );
 
-			Canvas3d canvas = getRenderer().getCanvas();
-			getRenderer().setScissor( 0, 0, canvas.getWidth()/2 - 2, canvas.getHeight() );
+			getRenderer().setScissor( 0, 0, renderingPanel.getRenderer().getAbsoluteWidth()/2 - 2, renderingPanel.getRenderer().getAbsoluteHeight() );
 			getRenderer().render( sceneMaxAnisotropy, camera );
 
-			getRenderer().setScissor( canvas.getWidth()/2, 0, canvas.getWidth()/2 - 2, canvas.getHeight()  );
+			getRenderer().setScissor( renderingPanel.getRenderer().getAbsoluteWidth()/2, 0, renderingPanel.getRenderer().getAbsoluteWidth()/2 - 2, renderingPanel.getRenderer().getAbsoluteHeight()  );
 			getRenderer().render(getScene(), camera);
 		}
 	}
@@ -194,13 +193,12 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			panelRight.add(new Label("not supported"));
 		}
 		
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
-		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);
+		    	  	rs.mouseX = (event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2 ); 
+		    	  	rs.mouseY = (event.getY() - renderingPanel.getRenderer().getAbsoluteHeight() / 2);
 		      }
 		});
 	}

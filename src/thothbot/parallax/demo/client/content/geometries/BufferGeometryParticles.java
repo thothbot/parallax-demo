@@ -53,7 +53,7 @@ public final class BufferGeometryParticles extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					27, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					5, // near
 					35000 // far 
 			);

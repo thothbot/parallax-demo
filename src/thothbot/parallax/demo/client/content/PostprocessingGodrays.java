@@ -72,7 +72,7 @@ public final class PostprocessingGodrays extends ContentWidget
 		protected void onStart()
 		{
 			camera = new PerspectiveCamera( 70,
-					getRenderer().getCanvas().getAspectRation(), 
+					getRenderer().getAbsoluteAspectRation(), 
 					1, 
 					3000 
 				);
@@ -161,14 +161,13 @@ public final class PostprocessingGodrays extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
-		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);
+		    	  	rs.mouseX = (event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2 ); 
+		    	  	rs.mouseY = (event.getY() - renderingPanel.getRenderer().getAbsoluteHeight() / 2);
 		      }
 		});
 	}

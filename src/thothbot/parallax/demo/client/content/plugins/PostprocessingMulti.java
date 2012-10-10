@@ -100,10 +100,10 @@ public final class PostprocessingMulti extends ContentWidget
 			super.onResize();
 /*
 			Canvas3d canvas = getRenderer().getCanvas();
-			int halfWidth = canvas.getWidth() / 2;
-			int halfHeight = canvas.getHeight() / 2;
+			int halfWidth = renderingPanel.getRenderer().getAbsoluteWidth() / 2;
+			int halfHeight = renderingPanel.getRenderer().getAbsoluteHeight() / 2;
 			
-			cameraPerspective.setAspectRatio( getRenderer().getCanvas().getAspectRation() );
+			cameraPerspective.setAspectRatio( getRenderer().getAbsoluteAspectRation() );
 
 			cameraOrtho.setLeft( -halfWidth );
 			cameraOrtho.setRight( halfWidth );
@@ -121,7 +121,7 @@ public final class PostprocessingMulti extends ContentWidget
 
 			renderScene.getMaterial().getShader().getUniforms().get("tDiffuse").setValue( composerScene.getRenderTarget2() );
 
-			quadBG.getScale().set( canvas.getWidth(), 1, canvas.getHeight() );
+			quadBG.getScale().set( renderingPanel.getRenderer().getAbsoluteWidth(), 1, renderingPanel.getRenderer().getAbsoluteHeight() );
 			quadMask.getScale().set( halfWidth, 1, halfHeight );
 			*/
 		}
@@ -129,14 +129,13 @@ public final class PostprocessingMulti extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			Canvas3d canvas = getRenderer().getCanvas();
-			int width = canvas.getWidth();
-			int height = canvas.getHeight();
+			int width = getRenderer().getAbsoluteWidth();
+			int height = getRenderer().getAbsoluteHeight();
 			
 			cameraOrtho = new OrthographicCamera( width, height, -10000, 10000 );
 			cameraOrtho.getPosition().setZ( 100 );
 
-			cameraPerspective = new PerspectiveCamera( 50, canvas.getAspectRation(), 1, 10000 );
+			cameraPerspective = new PerspectiveCamera( 50, getRenderer().getAbsoluteAspectRation(), 1, 10000 );
 			cameraPerspective.getPosition().setZ( 900 );
 
 			//
@@ -363,9 +362,8 @@ public final class PostprocessingMulti extends ContentWidget
 			if ( mesh != null )
 				mesh.getRotation().addY( -0.04 );
 
-			Canvas3d canvas = getRenderer().getCanvas();
-			int halfWidth = canvas.getWidth() / 2;
-			int halfHeight = canvas.getHeight() / 2;
+			int halfWidth = getRenderer().getAbsoluteWidth() / 2;
+			int halfHeight = getRenderer().getAbsoluteHeight() / 2;
 			
 			getRenderer().setViewport( 0, 0, 2 * halfWidth, 2 * halfHeight );
 

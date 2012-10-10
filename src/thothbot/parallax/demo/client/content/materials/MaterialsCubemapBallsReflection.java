@@ -74,7 +74,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		protected void onResize()
 		{
 			super.onResize();
-			this.cameraCube.setAspectRatio(getRenderer().getCanvas().getAspectRation());
+			this.cameraCube.setAspectRatio(getRenderer().getAbsoluteAspectRation());
 		}
 
 		@Override
@@ -82,7 +82,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					60, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					100000 // far 
 			);
@@ -90,7 +90,7 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 
 			this.cameraCube = new PerspectiveCamera(
 					60, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					100000 // far 
 			);
@@ -169,14 +169,14 @@ public final class MaterialsCubemapBallsReflection extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 			@Override
 			public void onMouseMove(MouseMoveEvent event)
 			{
 				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-				Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-				rs.mouseX = (event.getX() - canvas.getWidth() / 2 ) * 10; 
-				rs.mouseY = (event.getY() - canvas.getHeight() / 2) * 10;
+
+				rs.mouseX = (event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2 ) * 10; 
+				rs.mouseY = (event.getY() - renderingPanel.getRenderer().getAbsoluteHeight() / 2) * 10;
 			}
 		});
 	}

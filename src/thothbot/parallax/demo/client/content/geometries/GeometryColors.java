@@ -73,7 +73,7 @@ public class GeometryColors extends ContentWidget
 		protected void onStart()
 		{
 			camera = new PerspectiveCamera( 20,
-					getRenderer().getCanvas().getAspectRation(), 
+					getRenderer().getAbsoluteAspectRation(), 
 					1, 
 					10000 
 			);
@@ -181,8 +181,8 @@ public class GeometryColors extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			camera.getPosition().addX(( - mouseX - getRenderer().getCanvas().getWidth()/2.5 - camera.getPosition().getX()) );
-			camera.getPosition().addY(( mouseY - getRenderer().getCanvas().getHeight()/2.5- camera.getPosition().getY()) );
+			camera.getPosition().addX(( - mouseX - renderingPanel.getRenderer().getAbsoluteWidth()/2.5 - camera.getPosition().getX()) );
+			camera.getPosition().addY(( mouseY - getRenderer().getAbsoluteHeight()/2.5- camera.getPosition().getY()) );
 
 			camera.lookAt( getScene().getPosition());
 			
@@ -207,7 +207,7 @@ public class GeometryColors extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {

@@ -80,7 +80,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					45, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					2000 // far 
 			); 

@@ -86,7 +86,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 		protected void onStart()
 		{
 			camera = new PerspectiveCamera( 45,
-					getRenderer().getCanvas().getAspectRation(), 
+					getRenderer().getAbsoluteAspectRation(), 
 					1, 
 					10000 
 				);

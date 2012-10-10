@@ -91,7 +91,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		{
 			camera = new PerspectiveCamera(
 					45, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			);
@@ -257,10 +257,9 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		event.preventDefault();
 		
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-
-	  	rs.mouse2D.setX( (event.getX() /(double) canvas.getWidth() ) * 2.0 - 1.0 ); 
-	  	rs.mouse2D.setY( - (event.getY() /(double) canvas.getHeight() ) * 2.0 + 1.0 );	
+	  	
+	  	rs.mouse2D.setX( (event.getX() /(double) renderingPanel.getRenderer().getAbsoluteWidth() ) * 2.0 - 1.0 ); 
+	  	rs.mouse2D.setY( - (event.getY() /(double) renderingPanel.getRenderer().getAbsoluteHeight() ) * 2.0 + 1.0 );	
 	}
 
 	@Override

@@ -91,9 +91,8 @@ public final class InteractiveCubesGpu extends ContentWidget
 		protected void onResize() 
 		{
 			super.onResize();
-			Canvas3d canvas = getRenderer().getCanvas();
-			pickingTexture.setWidth(canvas.getWidth());
-			pickingTexture.setHeight(canvas.getHeight());
+			pickingTexture.setWidth(getRenderer().getAbsoluteWidth());
+			pickingTexture.setHeight(getRenderer().getAbsoluteHeight());
 		}
 
 		@Override
@@ -101,13 +100,13 @@ public final class InteractiveCubesGpu extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					70, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			);
 			camera.getPosition().setZ(1000);
 			
-			controls = new TrackballControls( camera, getRenderer().getCanvas()  );
+			controls = new TrackballControls( camera, renderingPanel.getCanvas()  );
 			controls.setRotateSpeed(1.0);
 			controls.setZoomSpeed(1.2);
 			controls.setPanSpeed(0.8);
@@ -117,8 +116,8 @@ public final class InteractiveCubesGpu extends ContentWidget
 			controls.setDynamicDampingFactor(0.3);
 
 			pickingScene = new Scene();
-			Canvas3d canvas = getRenderer().getCanvas();
-			pickingTexture = new RenderTargetTexture(canvas.getWidth(), canvas.getHeight());
+
+			pickingTexture = new RenderTargetTexture(getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight());
 			pickingTexture.setGenerateMipmaps(false);
 
 			getScene().add( new AmbientLight( 0x555555 ) );
@@ -286,7 +285,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {

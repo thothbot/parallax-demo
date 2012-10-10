@@ -91,13 +91,13 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		{
 			camera = new PerspectiveCamera(
 					70, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			);
 			camera.getPosition().setZ(1000);
 			
-			controls = new TrackballControls( camera, getRenderer().getCanvas() );
+			controls = new TrackballControls( camera, renderingPanel.getCanvas() );
 			controls.setRotateSpeed(1.0);
 			controls.setZoomSpeed(1.2);
 			controls.setPanSpeed(0.8);
@@ -246,10 +246,9 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		event.preventDefault();
 
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		
-		rs.mouseDeltaX = (event.getX() / (double)canvas.getWidth() ) * 2.0 - 1.0; 
-		rs.mouseDeltaX = - (event.getY() / (double)canvas.getHeight() ) * 2.0 + 1.0;
+
+		rs.mouseDeltaX = (event.getX() / (double)renderingPanel.getRenderer().getAbsoluteWidth() ) * 2.0 - 1.0; 
+		rs.mouseDeltaX = - (event.getY() / (double)renderingPanel.getRenderer().getAbsoluteHeight() ) * 2.0 + 1.0;
 
 		//
 

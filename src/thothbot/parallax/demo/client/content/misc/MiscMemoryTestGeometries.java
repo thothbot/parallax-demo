@@ -57,7 +57,7 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					60, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					10000 // far 
 			); 

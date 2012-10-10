@@ -77,7 +77,7 @@ public final class MaterialsTextureFilter extends ContentWidget
 		{
 			camera = new PerspectiveCamera(
 					35, // fov
-					getRenderer().getCanvas().getAspectRation(), // aspect 
+					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
 					5000 // far 
 			); 
@@ -230,11 +230,10 @@ public final class MaterialsTextureFilter extends ContentWidget
 			getRenderer().clear();
 			getRenderer().enableScissorTest( true );
 
-			Canvas3d canvas = getRenderer().getCanvas();
-			getRenderer().setScissor( canvas.getOffsetWidth()/2, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight()  );
+			getRenderer().setScissor( getRenderer().getAbsoluteWidth()/2, 0, getRenderer().getAbsoluteWidth()/2 - 2, getRenderer().getAbsoluteHeight()  );
 			getRenderer().render( this.scene2, camera );
 
-			getRenderer().setScissor( 0, 0, canvas.getOffsetWidth()/2 - 2, canvas.getOffsetHeight() );
+			getRenderer().setScissor( 0, 0, getRenderer().getAbsoluteWidth()/2 - 2, getRenderer().getAbsoluteHeight() );
 			getRenderer().render(getScene(), camera);
 		}
 	}
@@ -255,14 +254,14 @@ public final class MaterialsTextureFilter extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getRenderer().getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)
 		      {
 		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	Canvas3d canvas = renderingPanel.getRenderer().getCanvas();
-		    	  	rs.mouseX = (event.getX() - canvas.getWidth() / 2 ); 
-		    	  	rs.mouseY = (event.getY() - canvas.getHeight() / 2);
+
+		    	  	rs.mouseX = (event.getX() - renderingPanel.getRenderer().getAbsoluteWidth() / 2 ); 
+		    	  	rs.mouseY = (event.getY() - renderingPanel.getRenderer().getAbsoluteHeight() / 2);
 		      }
 		});
 	}
