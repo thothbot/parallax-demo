@@ -23,7 +23,8 @@
 package thothbot.parallax.demo.client.content.geometries;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
 import thothbot.parallax.core.shared.cameras.Camera;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -73,14 +74,6 @@ public class Cameras extends ContentWidget implements RequiresResize
 		Object3D cameraRig;
 		
 		Mesh mesh;
-		
-		@Override
-		protected void onResize() 
-		{
-			camera.setAspectRatio(0.5 * getRenderer().getAbsoluteAspectRation());
-			cameraPerspective.setAspectRatio(0.5 * getRenderer().getAbsoluteAspectRation());
-			cameraOrtho.setSize(0.5 * renderingPanel.getRenderer().getAbsoluteWidth(), renderingPanel.getRenderer().getAbsoluteHeight() );
-		}
 
 		@Override
 		protected void onStart()
@@ -92,14 +85,39 @@ public class Cameras extends ContentWidget implements RequiresResize
 					10000 );
 			
 			camera.getPosition().setZ(2500);
-			
-			this.cameraPerspective = new PerspectiveCamera( 
+			camera.addWebGlResizeEventHandler(new WebGlRendererResizeHandler() {
+				
+				@Override
+				public void onResize(WebGlRendererResizeEvent event) {
+					camera.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
+					
+				}
+			});
+
+			cameraPerspective = new PerspectiveCamera( 
 					50, 
 					getRenderer().getAbsoluteAspectRation() * 0.5, 
 					150, 
 					1000 );
+			cameraPerspective.addWebGlResizeEventHandler(new WebGlRendererResizeHandler() {
+				
+				@Override
+				public void onResize(WebGlRendererResizeEvent event) {
+					cameraPerspective.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
+					
+				}
+			});
 			
-			this.cameraOrtho = new OrthographicCamera( 0.5 * renderingPanel.getRenderer().getAbsoluteWidth(), renderingPanel.getRenderer().getAbsoluteHeight(),	150, 1000 );
+			
+			cameraOrtho = new OrthographicCamera( 0.5 * getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), 150, 1000 );
+			cameraOrtho.addWebGlResizeEventHandler(new WebGlRendererResizeHandler() {
+				
+				@Override
+				public void onResize(WebGlRendererResizeEvent event) {
+					cameraOrtho.setSize(0.5 * event.getRenderer().getAbsoluteWidth(), event.getRenderer().getAbsoluteHeight() );
+					
+				}
+			});
 			
 			this.cameraPerspectiveHelper = new CameraHelper( this.cameraPerspective );
 			getScene().add( this.cameraPerspectiveHelper );
