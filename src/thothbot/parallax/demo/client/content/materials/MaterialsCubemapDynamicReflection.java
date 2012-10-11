@@ -22,7 +22,7 @@
 
 package thothbot.parallax.demo.client.content.materials;
 
-import thothbot.parallax.core.client.AnimationReadyEvent;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.CubeCamera;

@@ -20,9 +20,9 @@
 package thothbot.parallax.demo.client;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.AnimationReadyHandler;
 import thothbot.parallax.core.client.AnimatedScene;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
+import thothbot.parallax.core.client.events.AnimationReadyHandler;
 import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;

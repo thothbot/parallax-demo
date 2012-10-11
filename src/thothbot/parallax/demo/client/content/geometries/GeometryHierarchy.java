@@ -22,8 +22,8 @@
 
 package thothbot.parallax.demo.client.content.geometries;
 
-import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.materials.MeshNormalMaterial;

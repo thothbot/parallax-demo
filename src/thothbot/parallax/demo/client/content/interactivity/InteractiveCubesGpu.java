@@ -22,22 +22,22 @@ package thothbot.parallax.demo.client.content.interactivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
+import thothbot.parallax.core.client.events.HasEventBus;
+import thothbot.parallax.core.client.events.ViewportResizeEvent;
+import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.gl2.WebGLRenderingContext;
 import thothbot.parallax.core.client.gl2.arrays.Uint8Array;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.PixelType;
-import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
-import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.HasEventBus;
 import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
@@ -74,7 +74,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene implements HasEventBus, WebGlRendererResizeHandler
+	class DemoScene extends DemoAnimatedScene implements HasEventBus, ViewportResizeHandler
 	{
 		PerspectiveCamera camera;
 		
@@ -91,7 +91,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 		Projector projector;
 
 		@Override
-		public void onResize(WebGlRendererResizeEvent event) 
+		public void onResize(ViewportResizeEvent event) 
 		{
 			pickingTexture.setWidth(event.getRenderer().getAbsoluteWidth());
 			pickingTexture.setHeight(event.getRenderer().getAbsoluteHeight());
@@ -100,7 +100,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			EVENT_BUS.addHandler(WebGlRendererResizeEvent.TYPE, this);
+			EVENT_BUS.addHandler(ViewportResizeEvent.TYPE, this);
 
 			camera = new PerspectiveCamera(
 					70, // fov

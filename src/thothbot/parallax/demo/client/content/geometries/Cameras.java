@@ -22,9 +22,9 @@
 
 package thothbot.parallax.demo.client.content.geometries;
 
-import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
-import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
+import thothbot.parallax.core.client.events.ViewportResizeEvent;
+import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.shared.cameras.Camera;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -85,10 +85,10 @@ public class Cameras extends ContentWidget implements RequiresResize
 					10000 );
 			
 			camera.getPosition().setZ(2500);
-			camera.addWebGlResizeEventHandler(new WebGlRendererResizeHandler() {
+			camera.addWebGlResizeEventHandler(new ViewportResizeHandler() {
 				
 				@Override
-				public void onResize(WebGlRendererResizeEvent event) {
+				public void onResize(ViewportResizeEvent event) {
 					camera.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
 					
 				}
@@ -99,10 +99,10 @@ public class Cameras extends ContentWidget implements RequiresResize
 					getRenderer().getAbsoluteAspectRation() * 0.5, 
 					150, 
 					1000 );
-			cameraPerspective.addWebGlResizeEventHandler(new WebGlRendererResizeHandler() {
+			cameraPerspective.addWebGlResizeEventHandler(new ViewportResizeHandler() {
 				
 				@Override
-				public void onResize(WebGlRendererResizeEvent event) {
+				public void onResize(ViewportResizeEvent event) {
 					cameraPerspective.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
 					
 				}
@@ -110,10 +110,10 @@ public class Cameras extends ContentWidget implements RequiresResize
 			
 			
 			cameraOrtho = new OrthographicCamera( 0.5 * getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), 150, 1000 );
-			cameraOrtho.addWebGlResizeEventHandler(new WebGlRendererResizeHandler() {
+			cameraOrtho.addWebGlResizeEventHandler(new ViewportResizeHandler() {
 				
 				@Override
-				public void onResize(WebGlRendererResizeEvent event) {
+				public void onResize(ViewportResizeEvent event) {
 					cameraOrtho.setSize(0.5 * event.getRenderer().getAbsoluteWidth(), event.getRenderer().getAbsoluteHeight() );
 					
 				}

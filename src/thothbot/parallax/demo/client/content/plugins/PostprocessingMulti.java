@@ -25,11 +25,12 @@ import net.sourceforge.htmlunit.corejs.javascript.Evaluator;
 
 import sun.misc.Perf.GetPerfAction;
 import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.events.HasEventBus;
+import thothbot.parallax.core.client.events.ViewportResizeEvent;
+import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
-import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
-import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
 import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
@@ -39,7 +40,6 @@ import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.HasEventBus;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -82,7 +82,7 @@ public final class PostprocessingMulti extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene implements HasEventBus, WebGlRendererResizeHandler
+	class DemoScene extends DemoAnimatedScene implements HasEventBus, ViewportResizeHandler
 	{
 		private static final String model = "./static/models/obj/leeperrysmith/LeePerrySmith.js";
 		private static final String texture = "./static/models/obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg";
@@ -100,7 +100,7 @@ public final class PostprocessingMulti extends ContentWidget
 		TexturePass renderScene;
 
 		@Override
-		public void onResize(WebGlRendererResizeEvent event) 
+		public void onResize(ViewportResizeEvent event) 
 		{
 /*
 			Canvas3d canvas = getRenderer().getCanvas();
@@ -133,7 +133,7 @@ public final class PostprocessingMulti extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			EVENT_BUS.addHandler(WebGlRendererResizeEvent.TYPE, this);
+			EVENT_BUS.addHandler(ViewportResizeEvent.TYPE, this);
 
 			int width = getRenderer().getAbsoluteWidth();
 			int height = getRenderer().getAbsoluteHeight();

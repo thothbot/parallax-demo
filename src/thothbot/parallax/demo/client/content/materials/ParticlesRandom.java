@@ -22,8 +22,8 @@ package thothbot.parallax.demo.client.content.materials;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Vector3;
