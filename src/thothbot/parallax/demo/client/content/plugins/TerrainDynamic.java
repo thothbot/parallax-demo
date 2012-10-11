@@ -29,6 +29,8 @@ import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
@@ -38,6 +40,7 @@ import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.HasEventBus;
 import thothbot.parallax.core.shared.core.Mathematics;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
@@ -97,7 +100,7 @@ public final class TerrainDynamic extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene implements Texture.ImageLoadHandler
+	class DemoScene extends DemoAnimatedScene implements Texture.ImageLoadHandler, HasEventBus, WebGlRendererResizeHandler
 	{
 		private static final String diffuseImage1 = "./static/textures/terrain/grasslight-big.jpg";
 		private static final String diffuseImage2 = "./static/textures/terrain/backgrounddetailed6.jpg";
@@ -145,17 +148,16 @@ public final class TerrainDynamic extends ContentWidget
 		private double oldTime;
 		
 		@Override
-		protected void onResize() 
+		public void onResize(WebGlRendererResizeEvent event) 
 		{
-			super.onResize();
-			SCREEN_WIDTH = renderingPanel.getRenderer().getAbsoluteWidth();
-			SCREEN_HEIGHT = renderingPanel.getRenderer().getAbsoluteHeight();
+			SCREEN_WIDTH = event.getRenderer().getAbsoluteWidth();
+			SCREEN_HEIGHT = event.getRenderer().getAbsoluteHeight();
 		}
 
 		@Override
 		protected void onStart()
 		{
-			
+			EVENT_BUS.addHandler(WebGlRendererResizeEvent.TYPE, this);
 			camera = new PerspectiveCamera(
 					40, // fov
 					getRenderer().getAbsoluteAspectRation(), // aspect 
@@ -168,8 +170,6 @@ public final class TerrainDynamic extends ContentWidget
 			camera.getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
 			
-
-			onResize();
 //			soundtrack = document.getElementById( "soundtrack" );
 
 			// SCENE (RENDER TARGET)

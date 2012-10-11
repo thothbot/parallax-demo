@@ -22,8 +22,11 @@ package thothbot.parallax.demo.client.content.materials;
 import java.util.Map;
 
 import thothbot.parallax.core.client.context.Canvas3d;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.shared.cameras.Camera;
+import thothbot.parallax.core.shared.core.HasEventBus;
 import thothbot.parallax.core.shared.core.Vector2;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -45,7 +48,7 @@ public final class MaterialsShaderMonjori extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene 
+	class DemoScene extends DemoAnimatedScene implements HasEventBus, WebGlRendererResizeHandler
 	{
 
 		Camera camera;
@@ -53,17 +56,16 @@ public final class MaterialsShaderMonjori extends ContentWidget
 		Map<String, Uniform> uniforms;
 		
 		@Override
-		protected void onResize() 
-		{
-			super.onResize();
-			
-			((Vector2)uniforms.get("resolution").getValue()).setX( renderingPanel.getRenderer().getAbsoluteWidth() );
-			((Vector2)uniforms.get("resolution").getValue()).setY( renderingPanel.getRenderer().getAbsoluteHeight() );
+		public void onResize(WebGlRendererResizeEvent event) 
+		{		
+			((Vector2)uniforms.get("resolution").getValue()).setX( event.getRenderer().getAbsoluteWidth() );
+			((Vector2)uniforms.get("resolution").getValue()).setY( event.getRenderer().getAbsoluteHeight() );
 		}
 
 		@Override
 		protected void onStart()
 		{
+			EVENT_BUS.addHandler(WebGlRendererResizeEvent.TYPE, this);
 			camera = new Camera(); 
 			
 			camera.getPosition().setZ(1);

@@ -30,11 +30,14 @@ import thothbot.parallax.core.client.gl2.WebGLRenderingContext;
 import thothbot.parallax.core.client.gl2.arrays.Uint8Array;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.PixelType;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeEvent;
+import thothbot.parallax.core.client.renderers.WebGlRendererResizeHandler;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.HasEventBus;
 import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
@@ -71,7 +74,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene 
+	class DemoScene extends DemoAnimatedScene implements HasEventBus, WebGlRendererResizeHandler
 	{
 		PerspectiveCamera camera;
 		
@@ -88,16 +91,17 @@ public final class InteractiveCubesGpu extends ContentWidget
 		Projector projector;
 
 		@Override
-		protected void onResize() 
+		public void onResize(WebGlRendererResizeEvent event) 
 		{
-			super.onResize();
-			pickingTexture.setWidth(getRenderer().getAbsoluteWidth());
-			pickingTexture.setHeight(getRenderer().getAbsoluteHeight());
+			pickingTexture.setWidth(event.getRenderer().getAbsoluteWidth());
+			pickingTexture.setHeight(event.getRenderer().getAbsoluteHeight());
 		}
 
 		@Override
 		protected void onStart()
 		{
+			EVENT_BUS.addHandler(WebGlRendererResizeEvent.TYPE, this);
+
 			camera = new PerspectiveCamera(
 					70, // fov
 					getRenderer().getAbsoluteAspectRation(), // aspect 

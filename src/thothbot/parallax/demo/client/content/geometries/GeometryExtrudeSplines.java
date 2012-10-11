@@ -25,7 +25,6 @@ import java.util.Map;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -81,14 +80,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.ListBox;
 
-public final class GeometryExtrudeSplines extends ContentWidget 
+public final class GeometryExtrudeSplines extends ContentWidget
 {
 
 	/*
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene 
+	class DemoScene extends DemoAnimatedScene
 	{
 
 		Object3D parent;
@@ -153,13 +152,6 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		             new Vector3(0, 40, 40),   new Vector3(0, -40, 40) )));
 			      
 		    return retval;
-		}
-				
-		@Override
-		protected void onResize() 
-		{
-			mainCamera.setAspectRatio(getRenderer().getAbsoluteAspectRation());
-			splineCamera.setAspectRatio(getRenderer().getAbsoluteAspectRation());
 		}
 
 		@Override
