@@ -71,13 +71,6 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 		
 		private Scene sceneCube;
 		private PerspectiveCamera cameraCube;
-				
-		@Override
-		protected void onResize()
-		{
-			super.onResize();
-			this.cameraCube.setAspectRatio(getRenderer().getAbsoluteAspectRation());
-		}
 
 		@Override
 		protected void onStart()

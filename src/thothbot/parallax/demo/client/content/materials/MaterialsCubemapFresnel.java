@@ -64,13 +64,6 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 		List<Mesh> spheres;
 		
 		int mouseX = 0, mouseY = 0;
-		
-		@Override
-		protected void onResize()
-		{
-			super.onResize();
-			this.cameraCube.setAspectRatio(getRenderer().getAbsoluteAspectRation());
-		}
 
 		@Override
 		protected void onStart()
