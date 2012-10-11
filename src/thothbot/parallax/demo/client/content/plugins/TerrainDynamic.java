@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
@@ -165,7 +164,7 @@ public final class TerrainDynamic extends ContentWidget
 					4000 // far 
 			); 
 						
-			cameraOrtho = new OrthographicCamera( renderingPanel.getRenderer().getAbsoluteWidth(), renderingPanel.getRenderer().getAbsoluteHeight(), -10000, 10000 );
+			cameraOrtho = new OrthographicCamera( getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), -10000, 10000 );
 			
 			camera.getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
@@ -179,7 +178,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// CAMERA
 
-			controls = new TrackballControls( camera, renderingPanel.getCanvas() );
+			controls = new TrackballControls( camera, getCanvas() );
 			controls.getTarget().set( 0 );
 
 			controls.setRotateSpeed(1.0);

@@ -104,8 +104,8 @@ public final class PostprocessingMulti extends ContentWidget
 		{
 /*
 			Canvas3d canvas = getRenderer().getCanvas();
-			int halfWidth = renderingPanel.getRenderer().getAbsoluteWidth() / 2;
-			int halfHeight = renderingPanel.getRenderer().getAbsoluteHeight() / 2;
+			int halfWidth = getRenderer().getAbsoluteWidth() / 2;
+			int halfHeight = getRenderer().getAbsoluteHeight() / 2;
 			
 			cameraPerspective.setAspectRatio( getRenderer().getAbsoluteAspectRation() );
 
@@ -125,7 +125,7 @@ public final class PostprocessingMulti extends ContentWidget
 
 			renderScene.getMaterial().getShader().getUniforms().get("tDiffuse").setValue( composerScene.getRenderTarget2() );
 
-			quadBG.getScale().set( renderingPanel.getRenderer().getAbsoluteWidth(), 1, renderingPanel.getRenderer().getAbsoluteHeight() );
+			quadBG.getScale().set( getRenderer().getAbsoluteWidth(), 1, getRenderer().getAbsoluteHeight() );
 			quadMask.getScale().set( halfWidth, 1, halfHeight );
 			*/
 		}

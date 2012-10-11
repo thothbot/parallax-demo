@@ -229,13 +229,13 @@ public class Cameras extends ContentWidget implements RequiresResize
 
 			activeHelper.setVisible(false);
 			
-			getRenderer().setViewport( 0, 0, renderingPanel.getRenderer().getAbsoluteWidth() / 2, renderingPanel.getRenderer().getAbsoluteHeight() );
+			getRenderer().setViewport( 0, 0, getRenderer().getAbsoluteWidth() / 2, getRenderer().getAbsoluteHeight() );
 
 			getRenderer().render( getScene(), activeCamera );
 
 			activeHelper.setVisible(true);
 			
-			getRenderer().setViewport( renderingPanel.getRenderer().getAbsoluteWidth() / 2, 0, renderingPanel.getRenderer().getAbsoluteWidth() / 2, renderingPanel.getRenderer().getAbsoluteHeight() );
+			getRenderer().setViewport( getRenderer().getAbsoluteWidth() / 2, 0, getRenderer().getAbsoluteWidth() / 2, getRenderer().getAbsoluteHeight() );
 			getRenderer().render(getScene(), camera);
 		}
 	}

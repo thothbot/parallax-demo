@@ -259,8 +259,6 @@ public class GeometryExtrudeShapes extends ContentWidget
 		{
 		}
 	}
-		
-	RenderingPanel renderingPanel;
 
 	public GeometryExtrudeShapes() 
 	{

@@ -25,7 +25,6 @@ package thothbot.parallax.demo.client.content.geometries;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -50,7 +49,6 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
-import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -129,7 +127,6 @@ public class Geometries extends ContentWidget
 			getScene().add( object5 );
 			
 			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new PlaneGeometry( 100, 100, 4, 4 ), materials );
-			Mesh Meshobject6 = (Mesh) object6.getChildren().get(0);
 			object6.getPosition().set( -200, 0, 0 );
 			getScene().add( object6 );
 			
@@ -147,7 +144,6 @@ public class Geometries extends ContentWidget
 				points.add( new Vector3( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
 	
 			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new LatheGeometry( points, 20 ), materials );
-			Mesh Meshobject8 = (Mesh) object8.getChildren().get(0);
 			object8.getPosition().set( 200, 0, 0 );
 			getScene().add( object8 );
 			
@@ -188,8 +184,6 @@ public class Geometries extends ContentWidget
 			getRenderer().render(getScene(), camera);
 		}
 	}
-	
-	RenderingPanel renderingPanel;
 
 	public Geometries() 
 	{

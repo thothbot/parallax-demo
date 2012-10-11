@@ -110,7 +110,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 			);
 			camera.getPosition().setZ(1000);
 			
-			controls = new TrackballControls( camera, renderingPanel.getCanvas()  );
+			controls = new TrackballControls( camera, getCanvas()  );
 			controls.setRotateSpeed(1.0);
 			controls.setZoomSpeed(1.2);
 			controls.setPanSpeed(0.8);

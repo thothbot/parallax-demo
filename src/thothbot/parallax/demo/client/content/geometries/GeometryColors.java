@@ -181,7 +181,7 @@ public class GeometryColors extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			camera.getPosition().addX(( - mouseX - renderingPanel.getRenderer().getAbsoluteWidth()/2.5 - camera.getPosition().getX()) );
+			camera.getPosition().addX(( - mouseX - getRenderer().getAbsoluteWidth()/2.5 - camera.getPosition().getX()) );
 			camera.getPosition().addY(( mouseY - getRenderer().getAbsoluteHeight()/2.5- camera.getPosition().getY()) );
 
 			camera.lookAt( getScene().getPosition());

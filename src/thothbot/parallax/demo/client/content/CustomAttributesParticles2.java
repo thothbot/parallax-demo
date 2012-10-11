@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.shaders.Attribute;
 import thothbot.parallax.core.client.shaders.Shader;
@@ -171,8 +170,6 @@ public class CustomAttributesParticles2 extends ContentWidget
 			getRenderer().render(getScene(), camera);
 		}
 	}
-
-	RenderingPanel renderingPanel;
 
 	public CustomAttributesParticles2() 
 	{

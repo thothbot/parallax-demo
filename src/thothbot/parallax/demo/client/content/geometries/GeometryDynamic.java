@@ -80,7 +80,7 @@ public class GeometryDynamic extends ContentWidget
 
 			getScene().setFog(new FogExp2( 0xAACCFF, 0.0007 ));
 
-			this.controls = new FirstPersonControls( camera, renderingPanel.getCanvas() );
+			this.controls = new FirstPersonControls( camera, getCanvas() );
 			controls.setMovementSpeed(500);
 			controls.setLookSpeed(0.1);
 
@@ -124,8 +124,6 @@ public class GeometryDynamic extends ContentWidget
 			getRenderer().render(getScene(), camera);
 		}
 	}
-		
-	RenderingPanel renderingPanel;
 
 	public GeometryDynamic()
 	{

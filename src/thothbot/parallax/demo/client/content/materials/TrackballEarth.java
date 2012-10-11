@@ -92,7 +92,7 @@ public final class TrackballEarth extends ContentWidget
 			
 			camera.getPosition().setZ(radius * 7);
 			
-			this.control = new TrackballControls( camera, renderingPanel.getCanvas() );
+			this.control = new TrackballControls( camera, getCanvas() );
 			this.control.setPanSpeed(0.2);
 			this.control.setDynamicDampingFactor(0.3);
 			this.control.setMinDistance(radius * 1.1);

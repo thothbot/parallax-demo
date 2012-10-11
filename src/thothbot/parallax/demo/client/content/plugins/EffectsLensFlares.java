@@ -77,7 +77,7 @@ public final class EffectsLensFlares extends ContentWidget
 			camera.getPosition().setZ(250);
 			
 			new LensFlarePlugin(getRenderer(), getScene());
-			controls = new FlyControls( camera, renderingPanel.getCanvas() );
+			controls = new FlyControls( camera, getCanvas() );
 
 			controls.setMovementSpeed( 2500 );
 			controls.setRollSpeed( Math.PI / 6.0 );

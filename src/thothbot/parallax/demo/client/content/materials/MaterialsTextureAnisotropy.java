@@ -20,10 +20,8 @@
 package thothbot.parallax.demo.client.content.materials;
 
 import thothbot.parallax.core.client.AnimationReadyEvent;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Mathematics;
@@ -148,10 +146,10 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			getRenderer().clear();
 			getRenderer().enableScissorTest( true );
 
-			getRenderer().setScissor( 0, 0, renderingPanel.getRenderer().getAbsoluteWidth()/2 - 2, renderingPanel.getRenderer().getAbsoluteHeight() );
+			getRenderer().setScissor( 0, 0, getRenderer().getAbsoluteWidth()/2 - 2, getRenderer().getAbsoluteHeight() );
 			getRenderer().render( sceneMaxAnisotropy, camera );
 
-			getRenderer().setScissor( renderingPanel.getRenderer().getAbsoluteWidth()/2, 0, renderingPanel.getRenderer().getAbsoluteWidth()/2 - 2, renderingPanel.getRenderer().getAbsoluteHeight()  );
+			getRenderer().setScissor( getRenderer().getAbsoluteWidth()/2, 0, getRenderer().getAbsoluteWidth()/2 - 2, getRenderer().getAbsoluteHeight()  );
 			getRenderer().render(getScene(), camera);
 		}
 	}

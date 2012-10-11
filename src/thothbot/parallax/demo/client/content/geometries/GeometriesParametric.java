@@ -25,14 +25,12 @@ package thothbot.parallax.demo.client.content.geometries;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.geometries.parametric.KleinParametricGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.MobiusParametricGeometry;
-import thothbot.parallax.core.shared.geometries.parametric.Mobius3dParametricGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -40,7 +38,6 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
-import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -141,8 +138,6 @@ public class GeometriesParametric extends ContentWidget
 			getRenderer().render(getScene(), camera);
 		}
 	}
-	
-	RenderingPanel renderingPanel;
 	
 	public GeometriesParametric()
 	{

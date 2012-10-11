@@ -93,7 +93,7 @@ public final class MaterialsLightmap extends ContentWidget
 
 			// CONTROLS
 
-			controls = new TrackballControls( camera, renderingPanel.getCanvas() );
+			controls = new TrackballControls( camera, getCanvas() );
 			controls.getTarget().setZ( 150 );
 
 			// LIGHTS

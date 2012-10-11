@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.shaders.Attribute;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
@@ -160,8 +159,6 @@ public class CustomAttributesParticles extends ContentWidget
 		}
 	}
 	
-	RenderingPanel renderingPanel;
-
 	public CustomAttributesParticles() 
 	{
 		super("Particles", "Here are used custom shaders and sprites. This example based on the three.js example.");
