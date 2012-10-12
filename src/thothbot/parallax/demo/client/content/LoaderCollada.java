@@ -72,7 +72,7 @@ public final class LoaderCollada extends ContentWidget
 				colladaLoader.load(model, new ColladaLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {
+					public void onModelLoaded() {
 //						assert(false);
 						// Add the COLLADA
 //						getScene().addChild( dae );

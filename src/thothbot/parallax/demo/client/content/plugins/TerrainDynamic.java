@@ -416,7 +416,7 @@ public final class TerrainDynamic extends ContentWidget
 				jsonLoader.load(parrotModel, new JsonLoader.ModelLoadHandler() {
 					
 					@Override
-					public void onModeLoad() {
+					public void onModelLoaded() {
 						Geometry geometry = jsonLoader.getGeometry();
 
 						morphColorsToFaceColors( geometry );
@@ -431,7 +431,7 @@ public final class TerrainDynamic extends ContentWidget
 				jsonLoader.load(flamingoModel, new JsonLoader.ModelLoadHandler() {
 					
 					@Override
-					public void onModeLoad() {
+					public void onModelLoaded() {
 						Geometry geometry = jsonLoader.getGeometry();
 
 						morphColorsToFaceColors( geometry );
@@ -442,7 +442,7 @@ public final class TerrainDynamic extends ContentWidget
 				jsonLoader.load(storkModel, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {
+					public void onModelLoaded() {
 						Geometry geometry = jsonLoader.getGeometry();
 
 						morphColorsToFaceColors( geometry );

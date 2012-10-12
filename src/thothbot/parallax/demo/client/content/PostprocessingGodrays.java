@@ -94,7 +94,7 @@ public final class PostprocessingGodrays extends ContentWidget
 				loader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {																					
+					public void onModelLoaded() {																					
 						Mesh mesh = loader.getMesh();
 						mesh.getPosition().set(0, -150, -150);
 						mesh.getScale().set(400);

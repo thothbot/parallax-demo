@@ -76,7 +76,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 				this.jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {																					
+					public void onModelLoaded() {																					
 						jsonLoader.getAnimation().setDuration(3000);
 
 						Mesh mesh = jsonLoader.getMesh();

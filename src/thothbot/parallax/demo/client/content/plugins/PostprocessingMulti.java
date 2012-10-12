@@ -161,7 +161,7 @@ public final class PostprocessingMulti extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {		
+					public void onModelLoaded() {		
 						createMesh( jsonLoader.getGeometry(), 100 );
 					}
 				});

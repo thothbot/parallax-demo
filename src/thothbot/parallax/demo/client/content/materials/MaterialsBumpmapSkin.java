@@ -21,7 +21,6 @@ package thothbot.parallax.demo.client.content.materials;
 
 import java.util.Map;
 
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
@@ -185,7 +184,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {		
+					public void onModelLoaded() {		
 						createScene( jsonLoader.getGeometry(), 100 );
 					}
 				});

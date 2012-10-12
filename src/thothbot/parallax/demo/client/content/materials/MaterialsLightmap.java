@@ -36,7 +36,6 @@ import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.demo.client.content.misc.MiscMemoryTestShaders.Resources;
 import thothbot.parallax.loader.shared.JsonLoader;
 
 import com.google.gwt.core.client.GWT;
@@ -86,7 +85,7 @@ public final class MaterialsLightmap extends ContentWidget
 					10000 // far 
 			); 
 			
-			camera.getPosition().set(700, -500, 1800);
+			camera.getPosition().set( 700, 180, -500 );
 
 			getScene().setFog( new Fog( 0xfafafa, 1000, 10000 ) );
 			getScene().getFog().getColor().setHSV( 0.6, 0.125, 1 );
@@ -141,12 +140,11 @@ public final class MaterialsLightmap extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModeLoad() {		
+					public void onModelLoaded() {		
 						Mesh mesh = new Mesh( jsonLoader.getGeometry(), new MeshFaceMaterial() );
 						mesh.getPosition().set( 0 );
 						mesh.getScale().set( 100 );
 						getScene().add( mesh );
-
 					}
 				});
 			}
