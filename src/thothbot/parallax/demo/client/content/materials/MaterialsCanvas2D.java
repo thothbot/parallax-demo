@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Face3;
@@ -197,10 +196,10 @@ public final class MaterialsCanvas2D extends ContentWidget
 			{
 				Face3 face = geometry_pieces.getFaces().get( i );
 
-//				if ( Math.random() > 0.7 )
-//					face.setMaterialIndex( (int)( Math.random() * materials.size()) );
+				if ( Math.random() > 0.7 )
+					face.setMaterialIndex( (int)( Math.random() * materials.size()) );
 
-//				else
+				else
 					face.setMaterialIndex( 0 );
 
 			}
