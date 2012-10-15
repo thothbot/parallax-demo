@@ -395,10 +395,10 @@ public final class TerrainDynamic extends ContentWidget
 						Geometry geometry = jsonLoader.getGeometry();
 
 						jsonLoader.morphColorsToFaceColors();
-						addMorph( geometry, 250, 500, startX -500, 500, 700 );
-						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, -200 );
-						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 200 );
-						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 1000 );
+						addMorph( geometry, 500, startX -500, 500, 700 );
+						addMorph( geometry, 500, startX - Math.random() * 500, 500, -200 );
+						addMorph( geometry, 500, startX - Math.random() * 500, 500, 200 );
+						addMorph( geometry, 500, startX - Math.random() * 500, 500, 1000 );
 						
 					}
 				});
@@ -410,7 +410,7 @@ public final class TerrainDynamic extends ContentWidget
 						Geometry geometry = jsonLoader.getGeometry();
 
 						jsonLoader.morphColorsToFaceColors();
-						addMorph( geometry, 500, 1000, startX - Math.random() * 500, 350, 40 );
+						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 40 );
 					}
 				});
 				
@@ -421,7 +421,7 @@ public final class TerrainDynamic extends ContentWidget
 						Geometry geometry = jsonLoader.getGeometry();
 
 						jsonLoader.morphColorsToFaceColors();
-						addMorph( geometry, 350, 1000, startX - Math.random() * 500, 350, 340 );
+						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 340 );
 					}
 				});
 
@@ -438,7 +438,7 @@ public final class TerrainDynamic extends ContentWidget
 			this.oldTime = Duration.currentTimeMillis();
 		}
 		
-		private void addMorph( Geometry geometry, double speed, int duration, double x, double y, double z ) 
+		private void addMorph( Geometry geometry, int duration, double x, double y, double z ) 
 		{
 			MeshLambertMaterial material = new MeshLambertMaterial();
 			material.setColor(new Color(0xffaa55));
@@ -447,7 +447,6 @@ public final class TerrainDynamic extends ContentWidget
 
 			MorphAnimMesh meshAnim = new MorphAnimMesh( geometry, material );
 
-//			meshAnim.speed = speed;
 			meshAnim.setDuration(duration);
 			meshAnim.setTime( (int)(600 * Math.random()) );
 
