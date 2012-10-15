@@ -72,6 +72,7 @@ import thothbot.parallax.demo.client.content.misc.PerformanceDoubleSided;
 import thothbot.parallax.demo.client.content.plugins.EffectsLensFlares;
 import thothbot.parallax.demo.client.content.plugins.EffectsSprites;
 import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
+import thothbot.parallax.demo.client.content.plugins.PostprocessingGodrays;
 import thothbot.parallax.demo.client.content.plugins.PostprocessingMulti;
 import thothbot.parallax.demo.client.content.plugins.TerrainDynamic;
 
@@ -379,14 +380,6 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
 		}
 		
-		// Post-processing
-//		{
-//			Category category = new Category("Post-processing");
-//			categoriesList.add(category);
-//			category.addExample(new PostprocessingGodrays(),
-//					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
-//		}
-		
 		// Animation
 		{
 			Category category = new Category("Animation");
@@ -411,16 +404,19 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Plugins");
 			categoriesList.add(category);
-//			category.addExample(new TerrainDynamic(),
-//					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
+			category.addExample(new TerrainDynamic(),
+					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
 			category.addExample(new HilbertCurves(),
 					RunAsyncCode.runAsyncCode(HilbertCurves.class));
-			category.addExample(new PostprocessingMulti(),
-					RunAsyncCode.runAsyncCode(PostprocessingMulti.class));
+//			category.addExample(new PostprocessingGodrays(),
+//					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
+//			category.addExample(new PostprocessingMulti(),
+//					RunAsyncCode.runAsyncCode(PostprocessingMulti.class));
 			category.addExample(new EffectsLensFlares(),
 					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
 			category.addExample(new EffectsSprites(),
 					RunAsyncCode.runAsyncCode(EffectsSprites.class));
+
 		}
 
 		// Miscellaneous

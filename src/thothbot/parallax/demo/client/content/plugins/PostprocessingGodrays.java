@@ -17,10 +17,9 @@
  * Parallax. If not, see http://www.gnu.org/licenses/.
  */
 
-package thothbot.parallax.demo.client.content;
+package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -33,8 +32,14 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.resources.GodRaysCombineShader;
+import thothbot.parallax.demo.resources.GodRaysGenerateShader;
+import thothbot.parallax.demo.resources.GodraysFakeSunShader;
 import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.client.RenderPass;
+import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
+import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -80,14 +85,13 @@ public final class PostprocessingGodrays extends ContentWidget
 			
 			MeshDepthMaterial materialDepth = new MeshDepthMaterial();
 
-			MeshBasicMaterial materialScene = new MeshBasicMaterial();
+			final MeshBasicMaterial materialScene = new MeshBasicMaterial();
 			materialScene.setColor(new Color(0x000000));
 			materialScene.setShading(Material.SHADING.FLAT);
 
 			// tree
 
 			final JsonLoader loader = new JsonLoader();
-//			loader.setMaterial(materialScene);
 
 			try
 			{
@@ -95,13 +99,15 @@ public final class PostprocessingGodrays extends ContentWidget
 
 					@Override
 					public void onModelLoaded() {																					
-						Mesh mesh = null;// = loader.getMesh();
-						mesh.getPosition().set(0, -150, -150);
-						mesh.getScale().set(400);
-						mesh.setMatrixAutoUpdate(false);
-						mesh.updateMatrix();
+						Mesh treeMesh = new Mesh( loader.getGeometry(), materialScene );
+						treeMesh.getPosition().set( 0, -150, -150 );
 
-						getScene().add(mesh);
+						treeMesh.getScale().set( 400 );
+
+						treeMesh.setMatrixAutoUpdate(false);
+						treeMesh.updateMatrix();
+
+						getScene().add( treeMesh );
 					}
 				});
 			}
@@ -123,6 +129,22 @@ public final class PostprocessingGodrays extends ContentWidget
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
 			getRenderer().setClearColorHex( bgColor, 1 );
+			
+			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
+			RenderPass renderModel = new RenderPass( getScene(), camera );
+			composer.addPass( renderModel );
+			
+			ShaderPass materialGodraysGenerate = new ShaderPass( new GodRaysGenerateShader() );
+			composer.addPass( materialGodraysGenerate );
+			
+			ShaderPass materialGodraysCombine = new ShaderPass( new GodRaysCombineShader() );
+			materialGodraysCombine.getUniforms().get("fGodRayIntensity").setValue( 0.75 );
+			composer.addPass( materialGodraysCombine );
+			
+			ShaderPass godraysFakeSunShader = new ShaderPass( new GodraysFakeSunShader() );
+			((Color)godraysFakeSunShader.getUniforms().get("bgColor").getValue()).setHex( bgColor );
+			((Color)godraysFakeSunShader.getUniforms().get("sunColor").getValue()).setHex( sunColor );
+			composer.addPass( godraysFakeSunShader );
 		}
 				
 		@Override
