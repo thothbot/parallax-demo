@@ -61,7 +61,7 @@ import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.client.RenderPass;
 import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
 import thothbot.parallax.plugins.postprocessing.client.TexturePass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.BleachbypassShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.BleachBypassShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.ColorifyShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.HorizontalBlurShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
@@ -200,7 +200,7 @@ public final class PostprocessingMulti extends ContentWidget
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 
-			BleachbypassShader shaderBleach = new BleachbypassShader();
+			BleachBypassShader shaderBleach = new BleachBypassShader();
 			SepiaShader shaderSepia = new SepiaShader();
 			VignetteShader shaderVignette = new VignetteShader();
 			CopyShader shaderCopy = new CopyShader();

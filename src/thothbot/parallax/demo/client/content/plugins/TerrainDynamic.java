@@ -65,7 +65,7 @@ import thothbot.parallax.plugins.postprocessing.client.BloomPass;
 import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.client.RenderPass;
 import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.BleachbypassShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.BleachBypassShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.HorizontalTiltShiftShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.LuminosityShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.NormalMapShader;
@@ -356,7 +356,7 @@ public final class TerrainDynamic extends ContentWidget
 			RenderPass renderModel = new RenderPass( getScene(), camera );
 			
 			BloomPass effectBloom = new BloomPass( 0.6 );
-			ShaderPass effectBleach = new ShaderPass( new BleachbypassShader() );
+			ShaderPass effectBleach = new ShaderPass( new BleachBypassShader() );
 			effectBleach.getUniforms().get( "opacity" ).setValue( 0.65 );
 
 			hblur = new ShaderPass( new HorizontalTiltShiftShader() );
