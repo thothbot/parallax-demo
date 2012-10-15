@@ -47,9 +47,9 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.BeckmannShader;
 import thothbot.parallax.demo.resources.SkinSimpleShader;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
-import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
+import thothbot.parallax.plugins.postprocessing.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.ShaderPass;
+import thothbot.parallax.plugins.postprocessing.shaders.CopyShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;

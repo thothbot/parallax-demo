@@ -36,10 +36,10 @@ import thothbot.parallax.demo.resources.GodRaysCombineShader;
 import thothbot.parallax.demo.resources.GodRaysGenerateShader;
 import thothbot.parallax.demo.resources.GodraysFakeSunShader;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
-import thothbot.parallax.plugins.postprocessing.client.RenderPass;
-import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
+import thothbot.parallax.plugins.postprocessing.Postprocessing;
+import thothbot.parallax.plugins.postprocessing.RenderPass;
+import thothbot.parallax.plugins.postprocessing.ShaderPass;
+import thothbot.parallax.plugins.postprocessing.shaders.CopyShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
