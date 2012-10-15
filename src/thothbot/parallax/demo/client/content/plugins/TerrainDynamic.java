@@ -111,10 +111,7 @@ public final class TerrainDynamic extends ContentWidget
 		private static final String parrotModel = "./static/models/animated/parrot.js";
 		private static final String flamingoModel = "./static/models/animated/flamingo.js";
 		private static final String storkModel = "./static/models/animated/stork.js";
-		
-		private static final boolean updateNoise = true;
-		private static final boolean animateTerrain = false;
-		
+			
 		PerspectiveCamera camera;
 		
 		OrthographicCamera cameraOrtho;
@@ -147,6 +144,7 @@ public final class TerrainDynamic extends ContentWidget
 		int screenWidth = 1000, screenHeight = 1000;
 		
 		private double oldTime;
+		private boolean updateNoise = true;
 		
 		@Override
 		public void onResize(ViewportResizeEvent event) 
@@ -378,8 +376,8 @@ public final class TerrainDynamic extends ContentWidget
 			composer.addPass( effectBloom );
 			composer.addPass( effectBleach );
 
-//			composer.addPass( hblur );
-//			composer.addPass( vblur );
+			composer.addPass( hblur );
+			composer.addPass( vblur );
 			
 			final JsonLoader jsonLoader = new JsonLoader();
 
@@ -499,8 +497,6 @@ public final class TerrainDynamic extends ContentWidget
 			{
 				controls.update();
 
-				double time = duration * 0.001;
-
 				double fLow = 0.4, fHigh = 0.825;
 
 				lightVal = Mathematics.clamp( lightVal + 0.5 * delta * lightDir, fLow, fHigh );
@@ -530,7 +526,7 @@ public final class TerrainDynamic extends ContentWidget
 					quadTarget.setMaterial( mlib.get( "normal" ));
 					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
 
-					//updateNoise = false;
+					updateNoise = false;
 				}
 
 				for ( int i = 0; i < morphs.size(); i ++ ) 
@@ -546,9 +542,10 @@ public final class TerrainDynamic extends ContentWidget
 						morph.getPosition().setX( -1500 - Math.random() * 500 );
 					}
 				}
+				
+				getRenderer().render( getScene(), camera );
 			}
 			
-			getRenderer().render( getScene(), camera );
 			this.oldTime = Duration.currentTimeMillis();
 		}
 	}
