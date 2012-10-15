@@ -19,10 +19,12 @@
 
 package thothbot.parallax.demo.client.content.plugins;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
@@ -51,6 +53,7 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.objects.MorphAnimMesh;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.core.shared.utils.UniformsUtils;
@@ -118,7 +121,7 @@ public final class TerrainDynamic extends ContentWidget
 		Scene sceneRenderTarget;
 		
 		Map<String, ShaderMaterial> mlib;
-		List<Mesh> morphs;
+		List<MorphAnimMesh> morphs;
 		
 		Map<String, Uniform> uniformsTerrain;
 		Map<String, Uniform> uniformsNoise;
@@ -130,7 +133,6 @@ public final class TerrainDynamic extends ContentWidget
 		PointLight pointLight;
 		
 		TrackballControls controls;
-		Postprocessing composer;
 		
 		Mesh terrain;
 		Mesh quadTarget;
@@ -142,15 +144,15 @@ public final class TerrainDynamic extends ContentWidget
 		double lightVal = 0;
 		int lightDir = 1;
 		
-		int SCREEN_WIDTH, SCREEN_HEIGHT;
+		int screenWidth = 1000, screenHeight = 1000;
 		
 		private double oldTime;
 		
 		@Override
 		public void onResize(ViewportResizeEvent event) 
 		{
-			SCREEN_WIDTH = event.getRenderer().getAbsoluteWidth();
-			SCREEN_HEIGHT = event.getRenderer().getAbsoluteHeight();
+			screenWidth = event.getRenderer().getAbsoluteWidth();
+			screenHeight = event.getRenderer().getAbsoluteHeight();
 		}
 
 		@Override
@@ -164,13 +166,13 @@ public final class TerrainDynamic extends ContentWidget
 					4000 // far 
 			); 
 						
-			cameraOrtho = new OrthographicCamera( getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), -10000, 10000 );
+			screenWidth = getRenderer().getAbsoluteWidth();
+			screenHeight = getRenderer().getAbsoluteHeight();
+			cameraOrtho = new OrthographicCamera( screenWidth, screenHeight, -10000, 10000 );
 			
 			camera.getPosition().set( -1200, 800, 1200 );
 			cameraOrtho.getPosition().setZ( 100 );
 			
-//			soundtrack = document.getElementById( "soundtrack" );
-
 			// SCENE (RENDER TARGET)
 
 			sceneRenderTarget = new Scene();
@@ -224,7 +226,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			NormalMapShader normalShader = new NormalMapShader();
 
-			Map<String, Uniform> uniformsNormal = UniformsUtils.clone( normalShader.getUniforms() );
+			Map<String, Uniform> uniformsNormal = normalShader.getUniforms();
 
 			uniformsNormal.get("height").setValue( 0.05 );
 			((Vector2)uniformsNormal.get("resolution").getValue()).set( rx, ry );
@@ -264,7 +266,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			TerrainShader terrainShader = new TerrainShader();
 
-			uniformsTerrain = UniformsUtils.clone( terrainShader.getUniforms() );
+			uniformsTerrain = terrainShader.getUniforms();
 
 			uniformsTerrain.get( "tNormal" ).setValue( normalMap );
 			uniformsTerrain.get( "uNormalScale" ).setValue( 3.5 );
@@ -276,23 +278,23 @@ public final class TerrainDynamic extends ContentWidget
 			uniformsTerrain.get( "tSpecular" ).setValue( specularMap );
 			uniformsTerrain.get( "tDetail" ).setValue( detailTexture );
 
-			uniformsTerrain.get( "enableDiffuse1" ).setValue( 1 );
-			uniformsTerrain.get( "enableDiffuse2" ).setValue( 1 );
-			uniformsTerrain.get( "enableSpecular" ).setValue( 1 );
+			uniformsTerrain.get( "enableDiffuse1" ).setValue( true );
+			uniformsTerrain.get( "enableDiffuse2" ).setValue( true );
+			uniformsTerrain.get( "enableSpecular" ).setValue( true );
 
 			((Color)uniformsTerrain.get( "uDiffuseColor" ).getValue()).setHex( 0xffffff );
 			((Color)uniformsTerrain.get( "uSpecularColor").getValue()).setHex( 0xffffff );
 			((Color)uniformsTerrain.get( "uAmbientColor" ).getValue()).setHex( 0x111111 );
 
 			uniformsTerrain.get( "uShininess" ).setValue( 30.0 );
-			uniformsTerrain.get( "uDisplacementScale" ).setValue( 375 );
+			uniformsTerrain.get( "uDisplacementScale" ).setValue( 375.0 );
 
-			((Vector2)uniformsTerrain.get( "uRepeatOverlay" ).getValue()).set( 6, 6 );
+			((Vector2)uniformsTerrain.get( "uRepeatOverlay" ).getValue()).set( 6.0, 6.0 );
 
 			uniformsNoise = new HashMap<String, Uniform>();
 			uniformsNoise.put("time", new Uniform(Uniform.TYPE.F, 1.0));
 			uniformsNoise.put("scale", new Uniform(Uniform.TYPE.V2, new Vector2( 1.5, 1.5 )));
-			uniformsNoise.put("offset", new Uniform(Uniform.TYPE.V2, new Vector2( 0, 0 )));
+			uniformsNoise.put("offset", new Uniform(Uniform.TYPE.V2, new Vector2( 0.0, 0.0 )));
 			
 			mlib = new HashMap<String, ShaderMaterial>();
 			
@@ -314,7 +316,7 @@ public final class TerrainDynamic extends ContentWidget
 			materialTerrain.setFog(true);
 			mlib.put("terrain", materialTerrain);
 
-			PlaneGeometry plane = new PlaneGeometry( SCREEN_WIDTH, SCREEN_HEIGHT );
+			PlaneGeometry plane = new PlaneGeometry( screenWidth, screenHeight );
 			MeshBasicMaterial planeMaterial = new MeshBasicMaterial();
 			planeMaterial.setColor(new Color(0x000000));
 			quadTarget = new Mesh( plane, planeMaterial );
@@ -323,7 +325,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// TERRAIN MESH
 
-			PlaneGeometry geometryTerrain = new PlaneGeometry( 6000, 6000, 256, 256 );
+			PlaneGeometry geometryTerrain = new PlaneGeometry( 6000, 6000, 64, 64 );
 
 			geometryTerrain.computeFaceNormals();
 			geometryTerrain.computeVertexNormals();
@@ -337,7 +339,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			// RENDERER
 
-			getRenderer().setClearColor(getScene().getFog().getColor(), 1.0);
+			getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 
@@ -346,7 +348,6 @@ public final class TerrainDynamic extends ContentWidget
 //			document.addEventListener( 'keydown', onKeyDown, false );
 
 			// COMPOSER
-
 			getRenderer().setAutoClear(false);
 			
 			RenderPass renderModel = new RenderPass( getScene(), camera );
@@ -360,57 +361,30 @@ public final class TerrainDynamic extends ContentWidget
 
 			int bluriness = 6;
 
-			hblur.getUniforms().get( "h" ).setValue( bluriness / SCREEN_WIDTH );
-			vblur.getUniforms().get( "v" ).setValue( bluriness / SCREEN_HEIGHT );
+			hblur.getUniforms().get( "h" ).setValue( bluriness / (double)screenWidth );
+			vblur.getUniforms().get( "v" ).setValue( bluriness / (double)screenHeight );
 			hblur.getUniforms().get( "r" ).setValue( 0.5 ); 
 			vblur.getUniforms().get( "r" ).setValue( 0.5 );
 			vblur.setRenderToScreen(true);
 
-			RenderTargetTexture renderTarget = new RenderTargetTexture( SCREEN_WIDTH, SCREEN_HEIGHT );
+			RenderTargetTexture renderTarget = new RenderTargetTexture( screenWidth, screenHeight );
 			specularMap.setMinFilter(TextureMinFilter.LINEAR);
 			specularMap.setMagFilter(TextureMagFilter.LINEAR);
 			specularMap.setFormat(PixelFormat.RGB);
 			specularMap.setStencilBuffer(false);
 			
-			composer = new Postprocessing( getRenderer(), getScene(), renderTarget );
+			Postprocessing composer = new Postprocessing( getRenderer(), getScene(), renderTarget );
 			composer.addPass( renderModel );
 			composer.addPass( effectBloom );
 			composer.addPass( effectBleach );
 
-			composer.addPass( hblur );
-			composer.addPass( vblur );
+//			composer.addPass( hblur );
+//			composer.addPass( vblur );
 			
-			this.oldTime = Duration.currentTimeMillis();
-		}
-		
-		private void addMorph( Geometry geometry, double speed, double duration, double x, double y, double z ) 
-		{
-			MeshLambertMaterial material = new MeshLambertMaterial();
-			material.setColor(new Color(0xffaa55));
-			material.setMorphTargets(true);
-			material.setVertexColors(Material.COLORS.FACE);
-
-//			MorphAnimMesh meshAnim = new MorphAnimMesh( geometry, material );
-//
-//			meshAnim.speed = speed;
-//			meshAnim.setDuration(duration);
-//			meshAnim.time = 600 * Math.random();
-//
-//			meshAnim.position.set( x, y, z );
-//			meshAnim.rotation.y = Math.PI/2;
-//
-//			meshAnim.castShadow = true;
-//			meshAnim.receiveShadow = false;
-//
-//			getScene().add( meshAnim );
-//
-//			morphs.add( meshAnim );
-
-			getScene().initWebGLObjects(getRenderer());
-
 			final JsonLoader jsonLoader = new JsonLoader();
 
 			final double startX = -3000;
+			morphs = new ArrayList<MorphAnimMesh>();
 			try
 			{
 				jsonLoader.load(parrotModel, new JsonLoader.ModelLoadHandler() {
@@ -419,7 +393,7 @@ public final class TerrainDynamic extends ContentWidget
 					public void onModelLoaded() {
 						Geometry geometry = jsonLoader.getGeometry();
 
-						morphColorsToFaceColors( geometry );
+						jsonLoader.morphColorsToFaceColors();
 						addMorph( geometry, 250, 500, startX -500, 500, 700 );
 						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, -200 );
 						addMorph( geometry, 250, 500, startX - Math.random() * 500, 500, 200 );
@@ -434,7 +408,7 @@ public final class TerrainDynamic extends ContentWidget
 					public void onModelLoaded() {
 						Geometry geometry = jsonLoader.getGeometry();
 
-						morphColorsToFaceColors( geometry );
+						jsonLoader.morphColorsToFaceColors();
 						addMorph( geometry, 500, 1000, startX - Math.random() * 500, 350, 40 );
 					}
 				});
@@ -445,7 +419,7 @@ public final class TerrainDynamic extends ContentWidget
 					public void onModelLoaded() {
 						Geometry geometry = jsonLoader.getGeometry();
 
-						morphColorsToFaceColors( geometry );
+						jsonLoader.morphColorsToFaceColors();
 						addMorph( geometry, 350, 1000, startX - Math.random() * 500, 350, 340 );
 					}
 				});
@@ -459,19 +433,34 @@ public final class TerrainDynamic extends ContentWidget
 			// PRE-INIT
 
 			getScene().initWebGLObjects(getRenderer());
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
-
-		private void morphColorsToFaceColors( Geometry geometry ) 
+		
+		private void addMorph( Geometry geometry, double speed, int duration, double x, double y, double z ) 
 		{
-			if ( geometry.getMorphColors() != null && geometry.getMorphColors().size() > 0 ) 
-			{
-				Geometry.MorphColor colorMap = geometry.getMorphColors().get(0);
+			MeshLambertMaterial material = new MeshLambertMaterial();
+			material.setColor(new Color(0xffaa55));
+			material.setMorphTargets(true);
+			material.setVertexColors(Material.COLORS.FACE);
 
-				for ( int i = 0; i < colorMap.colors.size(); i ++ ) 
-				{
-					geometry.getFaces().get(i).setColor( colorMap.colors.get(i) );
-				}
-			}
+			MorphAnimMesh meshAnim = new MorphAnimMesh( geometry, material );
+
+//			meshAnim.speed = speed;
+			meshAnim.setDuration(duration);
+			meshAnim.setTime( (int)(600 * Math.random()) );
+
+			meshAnim.getPosition().set( x, y, z );
+			meshAnim.getRotation().setY( Math.PI/2 );
+
+			meshAnim.setCastShadow(true);
+			meshAnim.setReceiveShadow(true);
+
+			getScene().add( meshAnim );
+
+			morphs.add( meshAnim );
+
+			getScene().initWebGLObjects(getRenderer());
 		}
 		
 		private void applyShader( Shader shader, Texture texture, RenderTargetTexture target ) 
@@ -482,14 +471,14 @@ public final class TerrainDynamic extends ContentWidget
 
 			Scene sceneTmp = new Scene();
 
-			Mesh meshTmp = new Mesh( new PlaneGeometry( SCREEN_WIDTH, SCREEN_HEIGHT ), shaderMaterial );
+			Mesh meshTmp = new Mesh( new PlaneGeometry( screenWidth, screenHeight ), shaderMaterial );
 			meshTmp.getPosition().setZ( -500 );
 
 			sceneTmp.add( meshTmp );
 
-//			getRenderer().render( sceneTmp, cameraOrtho, target, true );
+			getRenderer().render( sceneTmp, cameraOrtho, target, true );
 		}
-		
+
 		@Override
 		public void onImageLoad(Texture texture)
 		{
@@ -498,8 +487,6 @@ public final class TerrainDynamic extends ContentWidget
 			if ( textureCounter == 3 )	
 			{
 				terrain.setVisible(true);
-
-//				document.getElementById( "loading" ).style.display = "none";
 			}
 		}
 		
@@ -507,17 +494,6 @@ public final class TerrainDynamic extends ContentWidget
 		protected void onUpdate(double duration)
 		{
 			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
-
-			//			soundVal = Mathematics.clamp( soundVal + delta * soundDir, 0, 1 );
-			//
-			//			if ( soundVal !== oldSoundVal ) 
-			//			{
-			//				if ( soundtrack ) 
-			//				{
-			//					soundtrack.volume = soundVal;
-			//					oldSoundVal = soundVal;
-			//				}
-			//			}
 
 			if ( terrain.isVisible() ) 
 			{
@@ -548,30 +524,31 @@ public final class TerrainDynamic extends ContentWidget
 
 					((Vector2)uniformsTerrain.get( "uOffset" ).getValue()).setX( 4 * ((Vector2)uniformsNoise.get( "offset" ).getValue()).getX() );
 
-//					quadTarget.setMaterial( mlib.get( "heightmap" ));
-//					getRenderer().render( sceneRenderTarget, cameraOrtho, heightMap, true );
-//
-//					quadTarget.setMaterial( mlib.get( "normal" ));
-//					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
+					quadTarget.setMaterial( mlib.get( "heightmap" ));
+					getRenderer().render( sceneRenderTarget, cameraOrtho, heightMap, true );
+
+					quadTarget.setMaterial( mlib.get( "normal" ));
+					getRenderer().render( sceneRenderTarget, cameraOrtho, normalMap, true );
 
 					//updateNoise = false;
 				}
 
-//				for ( int i = 0; i < morphs.size(); i ++ ) 
-//				{
-//					Mesh morph = morphs.get( i );
-//
-//					morph.updateAnimation( 1000 * delta );
-//
-//					morph.getPosition().addX( morph.speed * delta );
-//
-//					if ( morph.getPosition().getX()  > 2000 )  
-//					{
-//						morph.getPosition().setX( -1500 - Math.random() * 500 );
-//					}
-//				}
+				for ( int i = 0; i < morphs.size(); i ++ ) 
+				{
+					MorphAnimMesh morph = morphs.get( i );
+
+					morph.updateAnimation( (int)(1000 * delta) );
+
+					morph.getPosition().addX( morph.getDuration() * delta );
+
+					if ( morph.getPosition().getX()  > 2000 )  
+					{
+						morph.getPosition().setX( -1500 - Math.random() * 500 );
+					}
+				}
 			}
 			
+			getRenderer().render( getScene(), camera );
 			this.oldTime = Duration.currentTimeMillis();
 		}
 	}
