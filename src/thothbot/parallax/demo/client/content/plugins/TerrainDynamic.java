@@ -390,7 +390,7 @@ public final class TerrainDynamic extends ContentWidget
 			material.setMorphTargets(true);
 			material.setVertexColors(Material.COLORS.FACE);
 
-//			MorphAnimation meshAnim = new MorphAnimation( geometry, material );
+//			MorphAnimMesh meshAnim = new MorphAnimMesh( geometry, material );
 //
 //			meshAnim.speed = speed;
 //			meshAnim.setDuration(duration);

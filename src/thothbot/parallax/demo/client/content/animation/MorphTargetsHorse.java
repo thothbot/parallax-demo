@@ -89,7 +89,6 @@ public final class MorphTargetsHorse extends ContentWidget
 
 					@Override
 					public void onModelLoaded() {																					
-						jsonLoader.getAnimation().setDuration(3000);
 
 						MeshLambertMaterial material = new MeshLambertMaterial();
 						material.setColor(new Color(0x606060));

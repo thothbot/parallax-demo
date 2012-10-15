@@ -87,7 +87,7 @@ public final class PostprocessingGodrays extends ContentWidget
 			// tree
 
 			final JsonLoader loader = new JsonLoader();
-			loader.setMaterial(materialScene);
+//			loader.setMaterial(materialScene);
 
 			try
 			{
@@ -95,7 +95,7 @@ public final class PostprocessingGodrays extends ContentWidget
 
 					@Override
 					public void onModelLoaded() {																					
-						Mesh mesh = loader.getMesh();
+						Mesh mesh = null;// = loader.getMesh();
 						mesh.getPosition().set(0, -150, -150);
 						mesh.getScale().set(400);
 						mesh.setMatrixAutoUpdate(false);

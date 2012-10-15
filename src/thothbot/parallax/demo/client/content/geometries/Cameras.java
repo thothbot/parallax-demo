@@ -85,7 +85,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 					10000 );
 			
 			camera.getPosition().setZ(2500);
-			camera.addWebGlResizeEventHandler(new ViewportResizeHandler() {
+			camera.addViewportResizeHandler(new ViewportResizeHandler() {
 				
 				@Override
 				public void onResize(ViewportResizeEvent event) {
@@ -99,7 +99,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 					getRenderer().getAbsoluteAspectRation() * 0.5, 
 					150, 
 					1000 );
-			cameraPerspective.addWebGlResizeEventHandler(new ViewportResizeHandler() {
+			cameraPerspective.addViewportResizeHandler(new ViewportResizeHandler() {
 				
 				@Override
 				public void onResize(ViewportResizeEvent event) {
@@ -110,7 +110,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 			
 			
 			cameraOrtho = new OrthographicCamera( 0.5 * getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), 150, 1000 );
-			cameraOrtho.addWebGlResizeEventHandler(new ViewportResizeHandler() {
+			cameraOrtho.addViewportResizeHandler(new ViewportResizeHandler() {
 				
 				@Override
 				public void onResize(ViewportResizeEvent event) {
