@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.controls.TrackballControls;
+import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
@@ -56,7 +56,6 @@ import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.objects.MorphAnimMesh;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -75,10 +74,13 @@ import thothbot.parallax.plugins.postprocessing.client.shaders.VerticalTiltShift
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public final class TerrainDynamic extends ContentWidget 
 {
@@ -112,6 +114,8 @@ public final class TerrainDynamic extends ContentWidget
 		private static final String flamingoModel = "./static/models/animated/flamingo.js";
 		private static final String storkModel = "./static/models/animated/stork.js";
 			
+		private static final int bluriness = 6;
+
 		PerspectiveCamera camera;
 		
 		OrthographicCamera cameraOrtho;
@@ -130,6 +134,8 @@ public final class TerrainDynamic extends ContentWidget
 		PointLight pointLight;
 		
 		TrackballControls controls;
+		
+		ShaderPass hblur, vblur; 
 		
 		Mesh terrain;
 		Mesh quadTarget;
@@ -151,6 +157,9 @@ public final class TerrainDynamic extends ContentWidget
 		{
 			screenWidth = event.getRenderer().getAbsoluteWidth();
 			screenHeight = event.getRenderer().getAbsoluteHeight();
+			
+			hblur.getUniforms().get( "h" ).setValue( bluriness / (double)screenWidth );
+			vblur.getUniforms().get( "v" ).setValue( bluriness / (double)screenHeight );
 		}
 
 		@Override
@@ -341,10 +350,6 @@ public final class TerrainDynamic extends ContentWidget
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 
-			// EVENTS
-
-//			document.addEventListener( 'keydown', onKeyDown, false );
-
 			// COMPOSER
 			getRenderer().setAutoClear(false);
 			
@@ -354,10 +359,8 @@ public final class TerrainDynamic extends ContentWidget
 			ShaderPass effectBleach = new ShaderPass( new BleachbypassShader() );
 			effectBleach.getUniforms().get( "opacity" ).setValue( 0.65 );
 
-			ShaderPass hblur = new ShaderPass( new HorizontalTiltShiftShader() );
-			ShaderPass vblur = new ShaderPass( new VerticalTiltShiftShader() );
-
-			int bluriness = 6;
+			hblur = new ShaderPass( new HorizontalTiltShiftShader() );
+			vblur = new ShaderPass( new VerticalTiltShiftShader() );
 
 			hblur.getUniforms().get( "h" ).setValue( bluriness / (double)screenWidth );
 			vblur.getUniforms().get( "v" ).setValue( bluriness / (double)screenHeight );
@@ -552,7 +555,28 @@ public final class TerrainDynamic extends ContentWidget
 		
 	public TerrainDynamic() 
 	{
-		super("Dynamic procedural terrain", "Used 3d simplex noise. Options - day / night: [n]; animate terrain: [m]. This example based on the three.js example.");
+		super("Dynamic procedural terrain", "Used 3d simplex noise. Options - day / night: [n]. This example based on the three.js example.");
+	}
+	
+	@Override
+	public void onAnimationReady(AnimationReadyEvent event)
+	{
+		super.onAnimationReady(event);
+		
+		RootPanel.get().addDomHandler(new KeyDownHandler() { 
+			
+			@Override
+			public void onKeyDown(KeyDownEvent event) 
+			{
+				DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+				switch(event.getNativeEvent().getKeyCode())
+				{
+				case 78: case 110:/*N*/	
+					rs.lightDir *= -1;
+					break;
+				}
+			}
+		}, KeyDownEvent.getType()); 
 	}
 	
 	@Override
