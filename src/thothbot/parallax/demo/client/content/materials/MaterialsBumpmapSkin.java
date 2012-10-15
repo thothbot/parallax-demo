@@ -49,7 +49,7 @@ import thothbot.parallax.demo.resources.SkinSimpleShader;
 import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -163,9 +163,9 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			// COMPOSER BECKMANN
 
 			ShaderPass effectBeckmann = new ShaderPass( new BeckmannShader() );
-			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
+			ShaderPass effectCopy = new ShaderPass( new CopyShader() );
 
-			effectScreen.setRenderToScreen(true);
+			effectCopy.setRenderToScreen(true);
 
 			RenderTargetTexture target = new RenderTargetTexture( 512, 512 );
 			target.setMinFilter(TextureMinFilter.LINEAR);

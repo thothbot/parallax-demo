@@ -40,7 +40,7 @@ import thothbot.parallax.plugins.postprocessing.client.BloomPass;
 import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.client.RenderPass;
 import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -135,14 +135,14 @@ public final class HilbertCurves extends ContentWidget
 			RenderPass renderModel = new RenderPass( getScene(), camera );
 			BloomPass effectBloom = new BloomPass( 1.3 );
 
-			ShaderPass effectScreen = new ShaderPass( new ScreenShader() );
-			effectScreen.setRenderToScreen(true);
+			ShaderPass effectCopy = new ShaderPass( new CopyShader() );
+			effectCopy.setRenderToScreen(true);
 
 			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
 
 			composer.addPass( renderModel );
 			composer.addPass( effectBloom );
-			composer.addPass( effectScreen );
+			composer.addPass( effectCopy );
 
 			getRenderer().setAutoClear(false);
 		}

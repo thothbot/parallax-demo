@@ -39,7 +39,7 @@ import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.plugins.postprocessing.client.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.client.RenderPass;
 import thothbot.parallax.plugins.postprocessing.client.ShaderPass;
-import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;

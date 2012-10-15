@@ -64,7 +64,7 @@ import thothbot.parallax.plugins.postprocessing.client.TexturePass;
 import thothbot.parallax.plugins.postprocessing.client.shaders.BleachbypassShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.ColorifyShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.HorizontalBlurShader;
-import thothbot.parallax.plugins.postprocessing.client.shaders.ScreenShader;
+import thothbot.parallax.plugins.postprocessing.client.shaders.CopyShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.SepiaShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.VerticalBlurShader;
 import thothbot.parallax.plugins.postprocessing.client.shaders.VignetteShader;
@@ -203,12 +203,12 @@ public final class PostprocessingMulti extends ContentWidget
 			BleachbypassShader shaderBleach = new BleachbypassShader();
 			SepiaShader shaderSepia = new SepiaShader();
 			VignetteShader shaderVignette = new VignetteShader();
-			ScreenShader shaderScreen = new ScreenShader();
+			CopyShader shaderCopy = new CopyShader();
 
 			ShaderPass effectBleach = new ShaderPass( shaderBleach );
 			ShaderPass effectSepia = new ShaderPass( shaderSepia );
 			ShaderPass effectVignette = new ShaderPass( shaderVignette );
-			ShaderPass effectScreen = new ShaderPass( shaderScreen );
+			ShaderPass effectScreen = new ShaderPass( shaderCopy );
 
 			effectBleach.getUniforms().get("opacity").setValue( 0.95 );
 			effectSepia.getUniforms().get("amount").setValue( 0.9 );
