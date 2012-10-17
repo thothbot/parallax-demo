@@ -169,14 +169,14 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 		panelLeft.setStyleName("corner-panel", true);
 		this.renderingPanel.add(panelLeft);
 		this.renderingPanel.setWidgetLeftWidth(panelLeft, 1, Unit.PX, 80, Unit.PX);
-		this.renderingPanel.setWidgetBottomHeight(panelLeft, 1, Unit.PX, 20, Unit.PX);
+		this.renderingPanel.setWidgetBottomHeight(panelLeft, 1, Unit.PX, 25, Unit.PX);
 		
 		FlowPanel panelRight = new FlowPanel();
 		panelRight.setStyleName("common-panel", true);
 		panelRight.setStyleName("corner-panel", true);
 		this.renderingPanel.add(panelRight);
 		this.renderingPanel.setWidgetRightWidth(panelRight, 1, Unit.PX, 80, Unit.PX);
-		this.renderingPanel.setWidgetBottomHeight(panelRight, 1, Unit.PX, 20, Unit.PX);
+		this.renderingPanel.setWidgetBottomHeight(panelRight, 1, Unit.PX, 25, Unit.PX);
 
 		final DemoScene rs = (DemoScene) this.renderingPanel.getAnimatedScene();
 
