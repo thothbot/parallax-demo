@@ -23,9 +23,10 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.AnimatedScene;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.events.AnimationReadyHandler;
+import thothbot.parallax.core.client.events.Context3dErrorEvent;
+import thothbot.parallax.core.client.events.Context3dErrorHandler;
 import thothbot.parallax.core.client.events.SceneLoadingEvent;
 import thothbot.parallax.core.client.events.SceneLoadingHandler;
-import thothbot.parallax.core.client.widget.LoadingPanel;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
 
@@ -47,7 +48,8 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 /**
  * A widget used to show Parallax examples.
  */
-public abstract class ContentWidget extends SimpleLayoutPanel implements AnimationReadyHandler, SceneLoadingHandler
+public abstract class ContentWidget extends SimpleLayoutPanel 
+	implements AnimationReadyHandler, SceneLoadingHandler, Context3dErrorHandler
 {
 
 	/**
@@ -243,6 +245,17 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 			this.renderingPanel.add(this.loadingPanel);
 		}
 	}
+	
+	@Override
+	public void onContextError(Context3dErrorEvent event) 
+	{
+		if(this.loadingPanel != null && this.loadingPanel.isVisible())
+		{
+			this.loadingPanel.hide();
+		}
+		
+		this.renderingPanel.add(new BadCanvasPanel(event.getMessage()));
+	}
 
 	/**
 	 * Called when an example attached with parent Widget.
@@ -299,6 +312,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 		        {
 		        	RenderingPanel renderingPanel = new RenderingPanel();
 		    		ContentWidget.this.renderingPanel = renderingPanel;
+		    		renderingPanel.addCanvas3dErrorHandler(ContentWidget.this);
 		    		renderingPanel.addSceneLoadingHandler(ContentWidget.this);
 		    		renderingPanel.addAnimationReadyHandler(ContentWidget.this);
 
