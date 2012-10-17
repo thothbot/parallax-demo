@@ -23,6 +23,10 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.AnimatedScene;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.events.AnimationReadyHandler;
+import thothbot.parallax.core.client.events.SceneLoadingEvent;
+import thothbot.parallax.core.client.events.SceneLoadingHandler;
+import thothbot.parallax.core.client.widget.LoadingPanel;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;
@@ -43,7 +47,7 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 /**
  * A widget used to show Parallax examples.
  */
-public abstract class ContentWidget extends SimpleLayoutPanel implements AnimationReadyHandler
+public abstract class ContentWidget extends SimpleLayoutPanel implements AnimationReadyHandler, SceneLoadingHandler
 {
 
 	/**
@@ -61,6 +65,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 	 * {@link RenderingPanel} where example will be shown
 	 */
 	protected RenderingPanel renderingPanel;
+
+	private LoadingPanel loadingPanel;
 	
 	/**
 	 * A description of an example.
@@ -221,6 +227,22 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
     		}
     	});
 	}
+	
+	@Override
+	public void onSceneLoading(SceneLoadingEvent event) 
+	{
+		Log.error(event.isLoaded());
+		if(event.isLoaded() && loadingPanel != null) 
+		{
+			loadingPanel.hide();
+		}
+		else if(this.loadingPanel == null)
+		{
+			this.loadingPanel = new LoadingPanel();
+			this.loadingPanel.show();
+			this.renderingPanel.add(this.loadingPanel);
+		}
+	}
 
 	/**
 	 * Called when an example attached with parent Widget.
@@ -277,10 +299,11 @@ public abstract class ContentWidget extends SimpleLayoutPanel implements Animati
 		        {
 		        	RenderingPanel renderingPanel = new RenderingPanel();
 		    		ContentWidget.this.renderingPanel = renderingPanel;
+		    		renderingPanel.addSceneLoadingHandler(ContentWidget.this);
+		    		renderingPanel.addAnimationReadyHandler(ContentWidget.this);
 
 		    		loadRenderingPanelAttributes(renderingPanel);
 		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
-		    		renderingPanel.addAnimationReadyEventHandler(ContentWidget.this);
 		    		
 		        	view.setRenderingPanel(renderingPanel);
 		        }
