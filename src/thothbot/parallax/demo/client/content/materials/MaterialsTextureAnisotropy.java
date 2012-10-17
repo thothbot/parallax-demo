@@ -190,7 +190,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			panelLeft.add(new Label("not supported"));
 			panelRight.add(new Label("not supported"));
 		}
-		
+
 		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
 		      @Override
 		      public void onMouseMove(MouseMoveEvent event)

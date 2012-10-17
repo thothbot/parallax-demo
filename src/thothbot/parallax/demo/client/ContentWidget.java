@@ -312,8 +312,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 		        {
 		        	RenderingPanel renderingPanel = new RenderingPanel();
 		    		ContentWidget.this.renderingPanel = renderingPanel;
-		    		renderingPanel.addCanvas3dErrorHandler(ContentWidget.this);
 		    		renderingPanel.addSceneLoadingHandler(ContentWidget.this);
+		    		renderingPanel.addCanvas3dErrorHandler(ContentWidget.this);
 		    		renderingPanel.addAnimationReadyHandler(ContentWidget.this);
 
 		    		loadRenderingPanelAttributes(renderingPanel);
