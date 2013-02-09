@@ -20,10 +20,10 @@ package thothbot.parallax.demo.client.content.geometries;
 
 import thothbot.parallax.core.client.gl2.arrays.Float32Array;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.GeometryBuffer;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
 import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;

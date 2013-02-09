@@ -24,10 +24,8 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
-import thothbot.parallax.core.shared.core.Ray;
-import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.core.Raycaster;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
@@ -35,6 +33,10 @@ import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material.SHADING;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Mathematics;
+import thothbot.parallax.core.shared.math.Ray;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -69,7 +71,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		PerspectiveCamera camera;
 		
 		Projector projector;
-		Ray ray;
+		Raycaster raycaster;
 		
 		Mesh rollOverMesh;
 		Mesh plane;
@@ -149,14 +151,14 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 				theta += mouse2D.getX() * 3;
 			}
 
-			ray = projector.pickingRay( mouse2D.clone(), camera );
+			raycaster = projector.pickingRay( mouse2D.clone(), camera );
 
-			List<Ray.Intersect> intersects = ray.intersectObjects( getScene().getChildren() );
+			List<Raycaster.Intersect> intersects = raycaster.intersectObjects( getScene().getChildren() );
 
 			if ( intersects.size() > 0 ) 
 			{
 
-				Ray.Intersect intersector = getRealIntersector( intersects );
+				Raycaster.Intersect intersector = getRealIntersector( intersects );
 				if ( intersector != null ) 
 				{
 					setVoxelPosition( intersector );
@@ -164,19 +166,19 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 				}
 			}
 
-			camera.getPosition().setX( 1400 * Math.sin( theta * Math.PI / 360 ) );
-			camera.getPosition().setZ( 1400 * Math.cos( theta * Math.PI / 360 ) );
+			camera.getPosition().setX( 1400 * Math.sin( Mathematics.degToRad( theta ) ) );
+			camera.getPosition().setZ( 1400 * Math.cos( Mathematics.degToRad( theta ) ) );
 
 			camera.lookAt( getScene().getPosition() );
 			
 			getRenderer().render(getScene(), camera);
 		}
 		
-		public Ray.Intersect getRealIntersector( List<Ray.Intersect> intersects ) 
+		public Raycaster.Intersect getRealIntersector( List<Raycaster.Intersect> intersects ) 
 		{
 			for( int i = 0; i < intersects.size(); i++ ) 
 			{
-				Ray.Intersect intersector = intersects.get( i );
+				Raycaster.Intersect intersector = intersects.get( i );
 
 				if ( intersector.object != rollOverMesh ) 
 				{
@@ -187,9 +189,10 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			return null;
 		}
 
-		public void  setVoxelPosition( Ray.Intersect intersector ) 
+		public void  setVoxelPosition( Raycaster.Intersect intersector ) 
 		{
 			tmpVec.copy( intersector.face.getNormal() );
+			tmpVec.apply( intersector.object.getMatrixRotationWorld() );
 
 			voxelPosition.add( intersector.point, intersector.object.getMatrixRotationWorld().multiplyVector3( tmpVec ) );
 
@@ -222,11 +225,11 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 		
-		List<Ray.Intersect> intersects = rs.ray.intersectObjects( rs.getScene().getChildren() );
+		List<Raycaster.Intersect> intersects = rs.raycaster.intersectObjects( rs.getScene().getChildren() );
 
 		if ( intersects.size() > 0 ) 
 		{
-			Ray.Intersect intersector = rs.getRealIntersector( intersects );
+			Raycaster.Intersect intersector = rs.getRealIntersector( intersects );
 
 			// delete cube
 			if ( rs.isCtrlDown ) 

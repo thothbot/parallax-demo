@@ -26,9 +26,9 @@ import thothbot.parallax.core.client.shaders.ChunksVertexShader;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.shaders.UniformsLib;
-import thothbot.parallax.core.shared.core.Color;
-import thothbot.parallax.core.shared.core.Vector2;
-import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Vector2;
+import thothbot.parallax.core.shared.math.Vector3;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.TextResource;

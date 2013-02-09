@@ -25,16 +25,17 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
-import thothbot.parallax.core.shared.core.Ray;
-import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.core.Raycaster;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Ray;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
@@ -138,9 +139,9 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 				object.getPosition().setY( Math.random() * 600 - 300 );
 				object.getPosition().setZ( Math.random() * 800 - 400 );
 
-				object.getRotation().setX( ( Math.random() * 360 ) * Math.PI / 180 );
-				object.getRotation().setY( ( Math.random() * 360 ) * Math.PI / 180 ); 
-				object.getRotation().setZ( ( Math.random() * 360 ) * Math.PI / 180 );
+				object.getRotation().setX( Math.random() * 2 * Math.PI );
+				object.getRotation().setY( Math.random() * 2 * Math.PI ); 
+				object.getRotation().setZ( Math.random() * 2 * Math.PI );
 
 				object.getScale().setX( Math.random() * 2 + 1 );
 				object.getScale().setY( Math.random() * 2 + 1 );
@@ -223,8 +224,9 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaY, 0.5 );
 		rs.projector.unprojectVector( vector, rs.camera );
 
-		Ray ray = new Ray( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
-		List<Ray.Intersect> intersects = ray.intersectObjects( rs.objects );
+		Raycaster raycaster = new Raycaster( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
+		
+		List<Raycaster.Intersect> intersects = raycaster.intersectObjects( rs.objects );
 
 		if ( intersects.size() > 0 ) 
 		{
@@ -232,7 +234,7 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 
 			rs.selected = intersects.get( 0 ).object; 
 
-			List<Ray.Intersect> intersects2 = ray.intersectObject( rs.plane );
+			List<Raycaster.Intersect>  intersects2 = raycaster.intersectObject( rs.plane );
 			rs.offset.copy( intersects2.get( 0 ).point ).sub( rs.plane.getPosition() );
 
 			getWidget().getElement().getStyle().setCursor(Cursor.MOVE);	
@@ -254,16 +256,16 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaX, 0.5 );
 		rs.projector.unprojectVector( vector, rs.camera );
 
-		Ray ray = new Ray( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
+		Raycaster raycaster = new Raycaster( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
 
 		if ( rs.selected != null ) 
 		{
-			List<Ray.Intersect> intersects = ray.intersectObject( rs.plane );
+			List<Raycaster.Intersect> intersects = raycaster.intersectObject( rs.plane );
 			rs.selected.getPosition().copy( intersects.get( 0 ).point.sub( rs.offset ) );
 			return;
 		}
 
-		List<Ray.Intersect> intersects = ray.intersectObjects( rs.objects );
+		List<Raycaster.Intersect> intersects = raycaster.intersectObjects( rs.objects );
 
 		if ( intersects.size() > 0 ) 
 		{

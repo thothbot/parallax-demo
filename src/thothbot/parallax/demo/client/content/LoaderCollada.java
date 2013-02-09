@@ -20,15 +20,15 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Line;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;

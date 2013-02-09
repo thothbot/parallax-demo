@@ -27,10 +27,10 @@ import com.google.gwt.core.client.Duration;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Vector3;
 import thothbot.parallax.core.shared.geometries.ParametricGeometry;
 import thothbot.parallax.core.shared.geometries.ParametricGeometry.ParametricFunction;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
 
 /**

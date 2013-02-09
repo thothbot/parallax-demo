@@ -24,13 +24,15 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Color;
 import thothbot.parallax.core.shared.core.Projector;
-import thothbot.parallax.core.shared.core.Ray;
-import thothbot.parallax.core.shared.core.Vector3;
+import thothbot.parallax.core.shared.core.Raycaster;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
+import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Mathematics;
+import thothbot.parallax.core.shared.math.Ray;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -99,9 +101,9 @@ public final class InteractiveCubes extends ContentWidget
 				object.getPosition().setY( Math.random() * 800 - 400 );
 				object.getPosition().setZ( Math.random() * 800 - 400 );
 
-				object.getRotation().setX( ( Math.random() * 360 ) * Math.PI / 180 );
-				object.getRotation().setY( ( Math.random() * 360 ) * Math.PI / 180 );
-				object.getRotation().setZ( ( Math.random() * 360 ) * Math.PI / 180 );
+				object.getRotation().setX( Math.random() * 2 * Math.PI );
+				object.getRotation().setY( Math.random() * 2 * Math.PI );
+				object.getRotation().setZ( Math.random() * 2 * Math.PI );
 
 				object.getScale().setX( Math.random() + 0.5 );
 				object.getScale().setY( Math.random() + 0.5 );
@@ -120,9 +122,9 @@ public final class InteractiveCubes extends ContentWidget
 		protected void onUpdate(double duration)
 		{
 			Log.error(mouseDeltaX, mouseDeltaY);
-			camera.getPosition().setX( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
-			camera.getPosition().setY( radius * Math.sin( duration / 100 * Math.PI / 360 ) );
-			camera.getPosition().setZ( radius * Math.cos( duration / 100 * Math.PI / 360 ) );
+			camera.getPosition().setX( radius * Math.sin( Mathematics.degToRad(duration / 100)) );
+			camera.getPosition().setY( radius * Math.sin( Mathematics.degToRad(duration / 100)) );
+			camera.getPosition().setZ( radius * Math.cos( Mathematics.degToRad(duration / 100)) );
 
 			camera.lookAt( getScene().getPosition() );
 
@@ -131,9 +133,11 @@ public final class InteractiveCubes extends ContentWidget
 			Vector3 vector = new Vector3( mouseDeltaX, mouseDeltaY, 1 );
 			projector.unprojectVector( vector, camera );
 
+			Raycaster raycaster = new Raycaster( camera.getPosition(), vector.sub( camera.getPosition() ).normalize() );
+			
 			Ray ray = new Ray( camera.getPosition(), vector.sub( camera.getPosition() ).normalize() );
 
-			List<Ray.Intersect> intersects = ray.intersectObjects( getScene().getChildren() );
+			List<Raycaster.Intersect> intersects = raycaster.intersectObjects( getScene().getChildren() );
 
 			if ( intersects.size() > 0 ) 
 			{
