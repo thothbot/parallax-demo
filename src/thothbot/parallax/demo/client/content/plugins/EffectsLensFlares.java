@@ -30,13 +30,12 @@ import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Fog;
-import thothbot.parallax.core.shared.utils.ColorUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugins.lensflare.LensFlare;
-import thothbot.parallax.plugins.lensflare.LensFlarePlugin;
 import thothbot.parallax.plugins.lensflare.LensFlare.LensSprite;
+import thothbot.parallax.plugins.lensflare.LensFlarePlugin;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -154,9 +153,8 @@ public final class EffectsLensFlares extends ContentWidget
 			light.getColor().setHSV( h, s, v );
 
 			Color flareColor = new Color( 0xffffff );
-			flareColor.copy( light.getColor() );
-			ColorUtils.adjustHSV( flareColor, 0, -0.5, 0.5 );
-
+			flareColor.setHSV( h, s - 0.5, v + 0.5 );
+			
 			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0, Material.BLENDING.ADDITIVE, flareColor );
 
 			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );

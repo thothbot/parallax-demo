@@ -21,16 +21,15 @@ package thothbot.parallax.demo.client.content.materials;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.scenes.FogExp2;
-import thothbot.parallax.core.shared.utils.ColorUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -128,8 +127,8 @@ public final class ParticlesRandom extends ContentWidget
 			for ( int i = 0; i < materials.size(); i ++ ) 
 			{
 				ParticleBasicMaterial material = materials.get(i);
-				ColorUtils.HSV hsv = ColorUtils.rgbToHsv( material.getColor() );
-				material.getColor().setHSV( Math.abs(Math.sin( hsv.hue + time )), hsv.saturation, hsv.value );
+				Color.HSL hsv = material.getColor().getHSL();
+				material.getColor().setHSL( Math.abs(Math.sin( hsv.hue + time )), hsv.saturation, hsv.lightness );
 			}
 			
 			getRenderer().render(getScene(), camera);
