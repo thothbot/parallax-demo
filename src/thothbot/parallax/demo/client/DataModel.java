@@ -40,6 +40,7 @@ import thothbot.parallax.demo.client.content.geometries.GeometryCube;
 import thothbot.parallax.demo.client.content.geometries.GeometryDynamic;
 import thothbot.parallax.demo.client.content.geometries.GeometryExtrudeSplines;
 import thothbot.parallax.demo.client.content.geometries.GeometryHierarchy;
+import thothbot.parallax.demo.client.content.geometries.GeometryNormals;
 import thothbot.parallax.demo.client.content.geometries.GeometryShapes;
 import thothbot.parallax.demo.client.content.geometries.LinesSphere;
 import thothbot.parallax.demo.client.content.interactivity.InteractiveCubes;
@@ -311,6 +312,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(BufferGeometry.class));
 			category.addExample(new BufferGeometryParticles(),
 					RunAsyncCode.runAsyncCode(BufferGeometryParticles.class));
+			category.addExample(new GeometryNormals(),
+					RunAsyncCode.runAsyncCode(GeometryNormals.class));
 		}
 		
 		// Interactivity 
