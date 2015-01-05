@@ -23,24 +23,28 @@ import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.renderers.Water;
 import thothbot.parallax.core.client.shaders.CubeMapShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.HemisphereLight;
 import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.Material.COLORS;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.demo.resources.Water;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -72,6 +76,7 @@ public final class ShaderOcean extends ContentWidget {
 		FirstPersonControls controls;
 		
 		Water water;
+		Mesh sphere;
 		
 		private double oldTime;
 		
@@ -92,7 +97,7 @@ public final class ShaderOcean extends ContentWidget {
 					3000000 // far 
 			); 
 			
-			camera.getPosition().set( 2000, 750, 20000 );
+			camera.getPosition().set( 2000, 750, 2000 );
 			
 			this.controls = new FirstPersonControls( camera, getCanvas() );
 			controls.setMovementSpeed(500);
@@ -114,7 +119,9 @@ public final class ShaderOcean extends ContentWidget {
 				
 				@Override
 				public void onImageLoad(Texture texture) {
-					water.material.getShader().getUniforms().get("normalSampler").setValue(  texture );
+					//water.material.getShader().getUniforms().get("normalSampler").setValue(  texture );
+					water.normalSampler = texture;
+					water.updateUniforms();
 				}
 			});
 			
@@ -147,23 +154,38 @@ public final class ShaderOcean extends ContentWidget {
 			Mesh mesh = new Mesh( new CubeGeometry( 1000000, 1000000, 1000000 ), sMaterial );
 			getScene().add( mesh );
 
+			// Sphere
+			IcosahedronGeometry geometry = new IcosahedronGeometry( 400, 4 );
 
+			for ( int i = 0, j = geometry.getFaces().size(); i < j; i ++ ) {
+
+				geometry.getFaces().get(i).getColor().setHex( Mathematics.randInt(0x111111, 0xffffff) );
+
+			}
+
+			MeshPhongMaterial sphereMaterial = new MeshPhongMaterial();
+			sphereMaterial.setVertexColors(COLORS.FACE);
+			sphereMaterial.setShininess(100.0);
+			
+			sphere = new Mesh( geometry, sphereMaterial );
+//			getScene().add( sphere );			
 		}
 		
 		@Override
 		protected void onUpdate(double duration)
 		{
-//			var time = performance.now() * 0.001;
+			double time = Duration.currentTimeMillis() * 0.001;
 
-//			sphere.position.y = Math.sin( time ) * 500 + 250;
-//			sphere.rotation.x = time * 0.5;
-//			sphere.rotation.z = time * 0.51;
+			sphere.getPosition().setY( Math.sin( time ) * 500 + 250 );
+			sphere.getRotation().setY( time * 0.5 );
+			sphere.getRotation().setZ( time * 0.51 );
 
 			water.material.getShader().getUniforms().get("time").setValue(  (Double)water.material.getShader().getUniforms().get("time").getValue() + 1.0 / 60.0 );
 			water.render();
 			controls.update((Duration.currentTimeMillis() - this.oldTime) * 0.001);
 			this.oldTime = Duration.currentTimeMillis();
 			getRenderer().render(getScene(), camera);
+			Log.error(camera.getPosition(), camera.getRotation(), camera.getMatrix());
 
 		}
 	}
