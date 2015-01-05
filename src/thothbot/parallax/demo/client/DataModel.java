@@ -64,6 +64,7 @@ import thothbot.parallax.demo.client.content.materials.MaterialsTextures;
 import thothbot.parallax.demo.client.content.materials.MaterialsWireframe;
 import thothbot.parallax.demo.client.content.materials.ParticlesRandom;
 import thothbot.parallax.demo.client.content.materials.ParticlesTrails;
+import thothbot.parallax.demo.client.content.materials.ShaderOcean;
 import thothbot.parallax.demo.client.content.materials.TrackballEarth;
 import thothbot.parallax.demo.client.content.misc.MiscLookAt;
 import thothbot.parallax.demo.client.content.misc.MiscMemoryTestGeometries;
@@ -370,6 +371,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsShaderLava.class));
 			category.addExample(new MaterialsShaderMonjori(),
 					RunAsyncCode.runAsyncCode(MaterialsShaderMonjori.class));
+			category.addExample(new ShaderOcean(),
+					RunAsyncCode.runAsyncCode(ShaderOcean.class));
 		}
 
 		// Custom Attributes
