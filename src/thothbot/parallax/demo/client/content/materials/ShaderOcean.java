@@ -220,7 +220,7 @@ public final class ShaderOcean extends ContentWidget {
 
 	@Override
 	public ImageResource getIcon() {
-		return Demo.resources.exampleMaterialsShaderLava();
+		return Demo.resources.exampleMaterialsShaderOcean();
 	}
 
 }

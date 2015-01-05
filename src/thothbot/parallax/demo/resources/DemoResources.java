@@ -157,6 +157,9 @@ public interface DemoResources extends ClientBundle
 	@Source("images/example_materials_shader_lava.jpg")
 	ImageResource exampleMaterialsShaderLava();
 	
+	@Source("images/example_materials_shader_ocean.jpg")
+	ImageResource exampleMaterialsShaderOcean();
+	
 	@Source("images/example_materials_shader_monjori.jpg")
 	ImageResource exampleMaterialsShaderMonjori();
 	
