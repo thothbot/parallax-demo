@@ -25,7 +25,7 @@ import thothbot.parallax.core.client.textures.DataTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
@@ -228,7 +228,7 @@ public final class ClothSimulation extends ContentWidget
 
 			// poles
 
-			CubeGeometry poleGeo = new CubeGeometry( 5, 750, 5 );
+			BoxGeometry poleGeo = new BoxGeometry( 5, 750, 5 );
 			MeshPhongMaterial poleMat = new MeshPhongMaterial();
 			poleMat.setColor(new Color(0xffffff));
 			poleMat.setSpecular(new Color(0x111111));
@@ -249,14 +249,14 @@ public final class ClothSimulation extends ContentWidget
 			mesh3.setCastShadow(true);
 			getScene().add( mesh3 );
 
-			Mesh mesh4 = new Mesh( new CubeGeometry( 255, 5, 5 ), poleMat );
+			Mesh mesh4 = new Mesh( new BoxGeometry( 255, 5, 5 ), poleMat );
 			mesh4.getPosition().setY( -250 + 750/2 );
 			mesh4.getPosition().setX( 0 );
 			mesh4.setReceiveShadow(true);
 			mesh4.setCastShadow(true);
 			getScene().add( mesh4 );
 
-			CubeGeometry gg = new CubeGeometry( 10, 10, 10 );
+			BoxGeometry gg = new BoxGeometry( 10, 10, 10 );
 			Mesh mesh5 = new Mesh( gg, poleMat );
 			mesh5.getPosition().setY( -250 );
 			mesh5.getPosition().setX( 125 );

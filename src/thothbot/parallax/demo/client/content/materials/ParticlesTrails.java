@@ -24,7 +24,7 @@ import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
@@ -80,7 +80,7 @@ public final class ParticlesTrails extends ContentWidget
 
 			}
 
-			ParticleBasicMaterial material = new ParticleBasicMaterial();
+			PointCloudMaterial material = new PointCloudMaterial();
 			material.setSize( 1.0 );
 			material.setVertexColors(  Material.COLORS.VERTEX );
 			material.setDepthTest( false );

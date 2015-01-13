@@ -113,8 +113,6 @@ public class Water extends Mirror {
 		this.updateTextureMatrix();
 		this.render();
 	}
-
-	private double sign(double x) { return x != 0 ? x < 0 ? -1.0 : 1.0 : 0; }
 	
 	@Override
 	protected void updateTextureMatrix() {
@@ -151,7 +149,7 @@ public class Water extends Mirror {
 		this.mirrorCamera.getPosition().copy( view );
 		this.mirrorCamera.setUp(this.up);
 		this.mirrorCamera.lookAt( target );
-		this.mirrorCamera.setAspectRatio( this.camera.getAspectRation() );
+		this.mirrorCamera.setAspect( this.camera.getAspect() );
 
 		this.mirrorCamera.updateProjectionMatrix();
 		this.mirrorCamera.updateMatrixWorld(false);
@@ -175,8 +173,8 @@ public class Water extends Mirror {
 		Vector4 q = new Vector4();
 		Matrix4 projectionMatrix = this.mirrorCamera.getProjectionMatrix();
 
-		q.setX( (sign(this.clipPlane.getX()) + projectionMatrix.getArray().get(8)) / projectionMatrix.getArray().get(0) );
-		q.setY( (sign(this.clipPlane.getY()) + projectionMatrix.getArray().get(9)) / projectionMatrix.getArray().get(5) );
+		q.setX( (Mathematics.sign(this.clipPlane.getX()) + projectionMatrix.getArray().get(8)) / projectionMatrix.getArray().get(0) );
+		q.setY( (Mathematics.sign(this.clipPlane.getY()) + projectionMatrix.getArray().get(9)) / projectionMatrix.getArray().get(5) );
 		q.setZ( -1.0 );
 		q.setW( (1.0 + projectionMatrix.getArray().get(10)) / projectionMatrix.getArray().get(14) );
 

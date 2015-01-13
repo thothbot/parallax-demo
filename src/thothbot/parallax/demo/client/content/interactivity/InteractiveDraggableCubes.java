@@ -25,9 +25,11 @@ import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.DimensionalObject;
+import thothbot.parallax.core.shared.core.GeometryObject;
 import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.core.Raycaster;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
@@ -36,8 +38,6 @@ import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Ray;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.DimensionalObject;
-import thothbot.parallax.core.shared.objects.GeometryObject;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -125,7 +125,7 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 
 			getScene().add( light );
 
-			CubeGeometry geometry = new CubeGeometry( 40, 40, 40 );
+			BoxGeometry geometry = new BoxGeometry( 40, 40, 40 );
 
 			objects = new ArrayList<Mesh>();
 			for ( int i = 0; i < 200; i ++ ) 

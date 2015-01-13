@@ -24,8 +24,9 @@ import java.util.List;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.geometries.CircleGeometry;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.CylinderGeometry;
 import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
 import thothbot.parallax.core.shared.geometries.LatheGeometry;
@@ -44,7 +45,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -102,7 +102,7 @@ public class Geometries extends ContentWidget
 			bmaterial.setOpacity( 0.1 );
 			materials.add(bmaterial);
 	
-			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new CubeGeometry( 100, 100, 100, 4, 4, 4 ), materials );
+			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new BoxGeometry( 100, 100, 100, 4, 4, 4 ), materials );
 			object1.getPosition().set( -200, 0, 400 );
 			getScene().add( object1 );
 			

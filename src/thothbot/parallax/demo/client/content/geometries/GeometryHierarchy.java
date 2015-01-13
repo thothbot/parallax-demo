@@ -21,10 +21,10 @@ package thothbot.parallax.demo.client.content.geometries;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.core.Object3D;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.materials.MeshNormalMaterial;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -66,7 +66,7 @@ public final class GeometryHierarchy extends ContentWidget
 
 			getScene().setFog(new Fog( 0xffffff, 1, 10000));
 
-			CubeGeometry geometry = new CubeGeometry( 100, 100, 100 );
+			BoxGeometry geometry = new BoxGeometry( 100, 100, 100 );
 			MeshNormalMaterial material = new MeshNormalMaterial();
 
 			this.group = new Object3D();
@@ -90,7 +90,7 @@ public final class GeometryHierarchy extends ContentWidget
 			getScene().add( group );
 
 			getRenderer().setSortObjects(false);
-			getRenderer().setClearColorHex(0xeeeeee);
+			getRenderer().setClearColor(0xeeeeee);
 		}
 		
 		@Override

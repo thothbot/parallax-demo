@@ -23,12 +23,12 @@ import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.shaders.CubeMapShader;
+import thothbot.parallax.core.client.shaders.CubeShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
@@ -146,12 +146,12 @@ public final class ShaderOcean extends ContentWidget {
 			
 			// Skybox
 
-			ShaderMaterial sMaterial = new ShaderMaterial( new CubeMapShader() );
+			ShaderMaterial sMaterial = new ShaderMaterial( new CubeShader() );
 			sMaterial.getShader().getUniforms().get("tCube").setValue( textureCube ); 
 			sMaterial.setDepthWrite( false );
 			sMaterial.setSide(Material.SIDE.BACK);
 			
-			Mesh mesh = new Mesh( new CubeGeometry( 1000000, 1000000, 1000000 ), sMaterial );
+			Mesh mesh = new Mesh( new BoxGeometry( 1000000, 1000000, 1000000 ), sMaterial );
 			getScene().add( mesh );
 
 			// Sphere

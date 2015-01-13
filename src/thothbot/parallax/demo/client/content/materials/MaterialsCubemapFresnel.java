@@ -24,11 +24,11 @@ import java.util.List;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
-import thothbot.parallax.core.client.shaders.CubeMapShader;
+import thothbot.parallax.core.client.shaders.CubeShader;
 import thothbot.parallax.core.client.shaders.FresnelShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -114,13 +114,13 @@ public final class MaterialsCubemapFresnel extends ContentWidget
 			getScene().setMatrixAutoUpdate(false);
 
 			// Skybox
-			CubeMapShader shaderCube = new CubeMapShader();
+			CubeShader shaderCube = new CubeShader();
 			shaderCube.getUniforms().get("tCube").setValue(textureCube);
 
 			ShaderMaterial sMaterial = new ShaderMaterial(shaderCube);
 			sMaterial.setSide(Material.SIDE.BACK);
 
-			Mesh mesh = new Mesh( new CubeGeometry( 100000, 100000, 100000 ), sMaterial );
+			Mesh mesh = new Mesh( new BoxGeometry( 100000, 100000, 100000 ), sMaterial );
 			sceneCube.add( mesh );
 
 			//

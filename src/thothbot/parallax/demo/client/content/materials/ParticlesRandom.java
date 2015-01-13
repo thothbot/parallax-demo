@@ -23,11 +23,11 @@ import java.util.List;
 
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.scenes.FogExp2;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -53,7 +53,7 @@ public final class ParticlesRandom extends ContentWidget
 
 		PerspectiveCamera camera;
 		
-		List<ParticleBasicMaterial> materials;
+		List<PointCloudMaterial> materials;
 		
 		int mouseX = 0, mouseY = 0;
 
@@ -84,12 +84,12 @@ public final class ParticlesRandom extends ContentWidget
 
 			}
 
-			materials = new ArrayList<ParticleBasicMaterial>();
+			materials = new ArrayList<PointCloudMaterial>();
 			int max = 5;
 
 			for ( int i = 0; i < max; i ++ ) 
 			{
-				ParticleBasicMaterial material = new ParticleBasicMaterial();
+				PointCloudMaterial material = new PointCloudMaterial();
 				material.setSize( 5 - i );
 				material.getColor().setHSV( 1.0 - i * 0.05, 1.0, 1.0 );
 				materials.add(material);
@@ -126,7 +126,7 @@ public final class ParticlesRandom extends ContentWidget
 
 			for ( int i = 0; i < materials.size(); i ++ ) 
 			{
-				ParticleBasicMaterial material = materials.get(i);
+				PointCloudMaterial material = materials.get(i);
 				Color.HSL hsv = material.getColor().getHSL();
 				material.getColor().setHSL( Math.abs(Math.sin( hsv.hue + time )), hsv.saturation, hsv.lightness );
 			}

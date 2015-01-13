@@ -101,7 +101,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			line_material.setColor( new Color( 0xffffff) );
 			line_material.setOpacity( 0.2 );
 
-			Line line = new Line( geometry, line_material, Line.TYPE.PIECES );
+			Line line = new Line( geometry, line_material, Line.MODE.PIECES );
 			getScene().add( line );
 
 			// Materials

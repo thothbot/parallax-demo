@@ -25,9 +25,10 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Face3;
-import thothbot.parallax.core.shared.core.Face4;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -36,7 +37,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -119,12 +119,6 @@ public class GeometryColors extends ContentWidget
 							: (j == 1 ) ? f.getB()
 							: (j == 2 ) ? f.getC() : 0;
 
-					if(j == 3)
-					{
-						Face4 f14 = (Face4) f;
-						vertexIndex = f14.getD();
-					}
-
 					Vector3 p = geometry.getVertices().get( vertexIndex );
 
 					Color color = new Color( 0xffffff );
@@ -158,17 +152,17 @@ public class GeometryColors extends ContentWidget
 			bmaterial.setTransparent( true );
 			materials.add(bmaterial);
 
-			DimensionalObject group1 = SceneUtils.createMultiMaterialObject( geometry, materials );
+			Object3D group1 = SceneUtils.createMultiMaterialObject( geometry, materials );
 			group1.getPosition().setX(-400);
 			group1.getRotation().setX(-1.87);
 			getScene().add( group1 );
 
-			DimensionalObject group2 = SceneUtils.createMultiMaterialObject( geometry2, materials );
+			Object3D group2 = SceneUtils.createMultiMaterialObject( geometry2, materials );
 			group2.getPosition().setX(400);
 			group2.getRotation().setX(0);
 			getScene().add( group2 );
 
-			DimensionalObject group3 = SceneUtils.createMultiMaterialObject( geometry3, materials );
+			Object3D group3 = SceneUtils.createMultiMaterialObject( geometry3, materials );
 			group3.getPosition().setX(0);
 			group3.getRotation().setX(0);
 			getScene().add( group3 );

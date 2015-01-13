@@ -26,7 +26,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.core.Raycaster;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -76,7 +76,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		Mesh rollOverMesh;
 		Mesh plane;
 		
-		CubeGeometry cubeGeo;
+		BoxGeometry cubeGeo;
 		MeshLambertMaterial cubeMaterial;
 		
 		Vector3 mouse2D;
@@ -106,7 +106,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			
 			// roll-over helpers
 
-			CubeGeometry rollOverGeo = new CubeGeometry( 50, 50, 50 );
+			BoxGeometry rollOverGeo = new BoxGeometry( 50, 50, 50 );
 			MeshBasicMaterial rollOverMaterial = new MeshBasicMaterial();
 			rollOverMaterial.setColor(new Color(0xff0000));
 			rollOverMaterial.setOpacity(0.5);
@@ -116,7 +116,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 
 			// cubes
 
-			cubeGeo = new CubeGeometry( 50, 50, 50 );
+			cubeGeo = new BoxGeometry( 50, 50, 50 );
 			cubeMaterial = new MeshLambertMaterial();
 			cubeMaterial.setShading(SHADING.FLAT);
 			cubeMaterial.setMap(new Texture( texture ));

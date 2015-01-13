@@ -85,7 +85,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 				
 				@Override
 				public void onResize(ViewportResizeEvent event) {
-					camera.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
+					camera.setAspect(0.5 * event.getRenderer().getAbsoluteAspectRation());
 					
 				}
 			});

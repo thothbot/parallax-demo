@@ -23,13 +23,13 @@ import java.util.List;
 
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.client.shaders.CubeMapShader;
+import thothbot.parallax.core.client.shaders.CubeShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.client.textures.Texture.MAPPING_MODE;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -118,12 +118,12 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 			}
 
 			// Skybox
-			ShaderMaterial sMaterial = new ShaderMaterial(new CubeMapShader());
+			ShaderMaterial sMaterial = new ShaderMaterial(new CubeShader());
 			sMaterial.getShader().getUniforms().get("tCube").setValue( textureCube ); 
 			sMaterial.setDepthWrite( false );
 			sMaterial.setSide( Material.SIDE.BACK );
 			
-			Mesh mesh = new Mesh( new CubeGeometry( 100, 100, 100 ), sMaterial );
+			Mesh mesh = new Mesh( new BoxGeometry( 100, 100, 100 ), sMaterial );
 			sceneCube.add( mesh );
 			
 			getRenderer().setAutoClear(false);

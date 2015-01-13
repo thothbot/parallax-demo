@@ -21,7 +21,6 @@ package thothbot.parallax.demo.client.content.plugins;
 import java.util.Map;
 
 import net.sourceforge.htmlunit.corejs.javascript.Evaluator;
-
 import sun.misc.Perf.GetPerfAction;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.HasEventBus;

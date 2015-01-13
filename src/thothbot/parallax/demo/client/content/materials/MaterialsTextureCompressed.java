@@ -26,7 +26,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.textures.CompressedTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.Material.BLENDING;
 import thothbot.parallax.core.shared.materials.Material.SIDE;
@@ -69,7 +69,7 @@ public final class MaterialsTextureCompressed extends ContentWidget
 			
 			camera.getPosition().setZ(1000);
 			
-			Geometry geometry = new CubeGeometry( 200, 200, 200 );
+			Geometry geometry = new BoxGeometry( 200, 200, 200 );
 
 			/*
 			This is how compressed textures are supposed to be used:

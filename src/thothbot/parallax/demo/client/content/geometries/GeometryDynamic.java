@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.controls.FirstPersonControls;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.math.Color;
@@ -82,7 +83,6 @@ public class GeometryDynamic extends ContentWidget
 
 			this.geometry = new PlaneGeometry( 20000, 20000, worldWidth - 1, worldDepth - 1 );
 			this.geometry.applyMatrix(new Matrix4().makeRotationX( - Math.PI / 2.0 ));
-			this.geometry.setDynamic( true );
 
 			for ( int i = 0, il = this.geometry.getVertices().size(); i < il; i ++ )
 				this.geometry.getVertices().get( i ).setY(35.0 * Math.sin( i/2.0 ));
@@ -111,7 +111,7 @@ public class GeometryDynamic extends ContentWidget
 			for ( int i = 0, l = this.geometry.getVertices().size(); i < l; i ++ )
 				this.geometry.getVertices().get( i ).setY(35.0 * Math.sin( i / 5.0 + ( duration * 0.01 + i ) / 7.0 ));
 		
-			this.mesh.getGeometry().setVerticesNeedUpdate(true);
+			((Geometry)this.mesh.getGeometry()).verticesNeedUpdate = true;
 			
 			this.controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001);
 

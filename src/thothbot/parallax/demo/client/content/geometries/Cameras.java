@@ -25,15 +25,15 @@ import thothbot.parallax.core.shared.cameras.Camera;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.helpers.CameraHelper;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -85,7 +85,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 				
 				@Override
 				public void onResize(ViewportResizeEvent event) {
-					camera.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
+					camera.setAspect(0.5 * event.getRenderer().getAbsoluteAspectRation());
 					
 				}
 			});
@@ -99,7 +99,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 				
 				@Override
 				public void onResize(ViewportResizeEvent event) {
-					cameraPerspective.setAspectRatio(0.5 * event.getRenderer().getAbsoluteAspectRation());
+					cameraPerspective.setAspect(0.5 * event.getRenderer().getAbsoluteAspectRation());
 					
 				}
 			});
@@ -174,7 +174,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 				geometry.getVertices().add( vertex );
 			}
 			
-			ParticleBasicMaterial popt = new ParticleBasicMaterial();
+			PointCloudMaterial popt = new PointCloudMaterial();
 			popt.setColor( new Color(0x888888) );
 	
 			ParticleSystem particles = new ParticleSystem( geometry, popt );
@@ -199,7 +199,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 
 			if ( activeCamera.equals(cameraPerspective) ) 
 			{
-				cameraPerspective.setFieldOfView(35.0 + 30.0 * Math.sin( 0.5 * r ));
+				cameraPerspective.setFov(35.0 + 30.0 * Math.sin( 0.5 * r ));
 				cameraPerspective.setFar(mesh.getPosition().length());
 				cameraPerspective.updateProjectionMatrix();
 

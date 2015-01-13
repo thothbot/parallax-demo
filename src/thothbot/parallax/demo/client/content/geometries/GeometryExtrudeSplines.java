@@ -26,6 +26,7 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.curves.Curve;
 import thothbot.parallax.core.shared.curves.SplineCurve3;
 import thothbot.parallax.core.shared.curves.SplineCurve3Closed;
@@ -52,7 +53,6 @@ import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -234,7 +234,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	    	// 3d shape
 	    	this.tubeMesh = (Object3D) SceneUtils.createMultiMaterialObject(geometry, Arrays.asList(material1, material2));
 	    	
-    		this.tubeMesh.add(geometry.getDebug());
+//    		this.tubeMesh.add(geometry.getDebug());
 
 	    	this.parent.add(this.tubeMesh);
 	    }
@@ -279,7 +279,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 				lookAt.copy( pos ).add( dir );
 
 			this.splineCamera.getMatrix().lookAt( this.splineCamera.getPosition(), lookAt, this.normal );
-			this.splineCamera.getRotation().setEulerFromRotationMatrix(splineCamera.getMatrix(), splineCamera.getEulerOrder());
+			this.splineCamera.getRotation().setFromRotationMatrix(splineCamera.getMatrix(), splineCamera.getRotation().getOrder());
 			
 			this.cameraHelper.update();
 

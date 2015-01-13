@@ -20,9 +20,9 @@ package thothbot.parallax.demo.client.content.geometries;
 
 import thothbot.parallax.core.client.gl2.arrays.Float32Array;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.GeometryBuffer;
+import thothbot.parallax.core.shared.core.BufferGeometry;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
-import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.scenes.Fog;
@@ -65,7 +65,7 @@ public final class BufferGeometryParticles extends ContentWidget
 
 			int particles = 500000;
 
-			GeometryBuffer geometry = new GeometryBuffer();
+			BufferGeometry geometry = new BufferGeometry();
 			geometry.setVerticesNeedUpdate(true);
 			geometry.setColorsNeedUpdate(true);
 			geometry.setWebGlVertexArray(Float32Array.create(particles * 3 * 3));
@@ -105,7 +105,7 @@ public final class BufferGeometryParticles extends ContentWidget
 			geometry.computeBoundingSphere();
 
 			//
-			ParticleBasicMaterial material = new ParticleBasicMaterial();
+			PointCloudMaterial material = new PointCloudMaterial();
 			material.setVertexColors(COLORS.VERTEX);
 			material.setSize(15.0);
 

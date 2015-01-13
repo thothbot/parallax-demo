@@ -107,7 +107,7 @@ public final class LoaderCollada extends ContentWidget
 
 			}
 
-			Line line = new Line( geometry, line_material, Line.TYPE.PIECES);
+			Line line = new Line( geometry, line_material, Line.MODE.PIECES);
 			getScene().add( line );
 
 			MeshBasicMaterial sMaterial = new MeshBasicMaterial();

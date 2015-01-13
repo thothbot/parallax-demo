@@ -27,6 +27,7 @@ import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.Camera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.helpers.ArrowHelper;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -37,7 +38,6 @@ import thothbot.parallax.core.shared.math.Plane;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.math.Vector4;
 import thothbot.parallax.core.shared.objects.Line;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.core.shared.utils.UniformsUtils;
 

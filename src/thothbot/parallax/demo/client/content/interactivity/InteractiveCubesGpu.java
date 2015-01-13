@@ -37,7 +37,7 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Projector;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
@@ -172,7 +172,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 				scale.setZ( Math.random() * 200 + 100 );
 
 				//give the geom's vertices a random color, to be displayed
-				CubeGeometry geom = new CubeGeometry(1, 1, 1);
+				BoxGeometry geom = new BoxGeometry(1, 1, 1);
 				Color color = new Color((int)(Math.random() * 0xffffff));
 				applyVertexColors(geom, color);
 				Mesh cube = new Mesh(geom);
@@ -182,7 +182,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 				GeometryUtils.merge(geometry, cube);
 
 				//give the pickingGeom's vertices a color corresponding to the "id"
-				CubeGeometry pickingGeom = new CubeGeometry(1, 1, 1);
+				BoxGeometry pickingGeom = new BoxGeometry(1, 1, 1);
 				Color pickingColor = new Color(i);
 				applyVertexColors(pickingGeom, pickingColor);
 				Mesh pickingCube = new Mesh(pickingGeom);
@@ -208,7 +208,7 @@ public final class InteractiveCubesGpu extends ContentWidget
 
 			MeshLambertMaterial highlightBoxMaterial = new MeshLambertMaterial();
 			highlightBoxMaterial.setColor(new Color(0xffff00));
-			highlightBox = new Mesh( new CubeGeometry(1, 1, 1), highlightBoxMaterial );
+			highlightBox = new Mesh( new BoxGeometry(1, 1, 1), highlightBoxMaterial );
 			getScene().add( highlightBox );
 
 			projector = new Projector();

@@ -32,7 +32,7 @@ import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
-import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector2;
@@ -184,39 +184,39 @@ public final class TrackballEarth extends ContentWidget
 
 			}
 
-			ParticleBasicMaterial pbOpt = new ParticleBasicMaterial();
+			PointCloudMaterial pbOpt = new PointCloudMaterial();
 			pbOpt.setColor( new Color(0x555555) );
 			pbOpt.setSize( 2 );
 			pbOpt.setSizeAttenuation(false);
 			
-			List<ParticleBasicMaterial> starsMaterials = new ArrayList<ParticleBasicMaterial>();
+			List<PointCloudMaterial> starsMaterials = new ArrayList<PointCloudMaterial>();
 			starsMaterials.add(pbOpt);
 			
-			ParticleBasicMaterial pbOpt1 = new ParticleBasicMaterial();
+			PointCloudMaterial pbOpt1 = new PointCloudMaterial();
 			pbOpt1.setColor( new Color(0x555555) );
 			pbOpt1.setSize( 1 );
 			pbOpt1.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt1);
 			
-			ParticleBasicMaterial pbOpt2 = new ParticleBasicMaterial();
+			PointCloudMaterial pbOpt2 = new PointCloudMaterial();
 			pbOpt2.setColor( new Color(0x333333) );
 			pbOpt2.setSize( 2 );
 			pbOpt2.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt2);
 			
-			ParticleBasicMaterial pbOpt3 = new ParticleBasicMaterial();
+			PointCloudMaterial pbOpt3 = new PointCloudMaterial();
 			pbOpt3.setColor( new Color(0x3a3a3a) );
 			pbOpt3.setSize( 1 );
 			pbOpt3.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt3);
 			
-			ParticleBasicMaterial pbOpt4 = new ParticleBasicMaterial();
+			PointCloudMaterial pbOpt4 = new PointCloudMaterial();
 			pbOpt4.setColor( new Color(0x1a1a1a) );
 			pbOpt4.setSize( 2 );
 			pbOpt4.setSizeAttenuation(false);
 			starsMaterials.add(pbOpt4);
 			
-			ParticleBasicMaterial pbOpt5 = new ParticleBasicMaterial();
+			PointCloudMaterial pbOpt5 = new PointCloudMaterial();
 			pbOpt5.setColor( new Color(0x1a1a1a) );
 			pbOpt5.setSize( 1 );
 			pbOpt5.setSizeAttenuation(false);

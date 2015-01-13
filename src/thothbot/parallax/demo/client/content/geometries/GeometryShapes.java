@@ -26,8 +26,10 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.curves.SplineCurve3;
 import thothbot.parallax.core.shared.curves.Path;
 import thothbot.parallax.core.shared.curves.Shape;
@@ -35,13 +37,11 @@ import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.materials.ParticleBasicMaterial;
+import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector2;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.DimensionalObject;
 import thothbot.parallax.core.shared.objects.Line;
-import thothbot.parallax.core.shared.objects.Object3D;
 import thothbot.parallax.core.shared.objects.ParticleSystem;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -392,7 +392,7 @@ public final class GeometryShapes extends ContentWidget
 
 			// vertices from real points
 
-			ParticleBasicMaterial particleMat = new ParticleBasicMaterial();
+			PointCloudMaterial particleMat = new PointCloudMaterial();
 			particleMat.setColor(color);
 			particleMat.setSize(2);
 			particleMat.setOpacity(0.75);
@@ -418,7 +418,7 @@ public final class GeometryShapes extends ContentWidget
 
 			// equidistance sampled points
 
-			ParticleBasicMaterial particles2Mat = new ParticleBasicMaterial();
+			PointCloudMaterial particles2Mat = new PointCloudMaterial();
 			particles2Mat.setColor(color);
 			particles2Mat.setSize(2);
 			particles2Mat.setOpacity(0.5);

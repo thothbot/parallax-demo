@@ -27,7 +27,7 @@ import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.geometries.CubeGeometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
@@ -89,9 +89,9 @@ public final class MaterialsWireframe extends ContentWidget
 			
 			double size = 150;
 
-			CubeGeometry geometryLines = new CubeGeometry( size, size, size );
-			CubeGeometry geometryQuads = new CubeGeometry( size, size, size );
-			CubeGeometry geometryTris = new CubeGeometry( size, size, size );
+			BoxGeometry geometryLines = new BoxGeometry( size, size, size );
+			BoxGeometry geometryQuads = new BoxGeometry( size, size, size );
+			BoxGeometry geometryTris = new BoxGeometry( size, size, size );
 
 			GeometryUtils.triangulateQuads( geometryTris );
 

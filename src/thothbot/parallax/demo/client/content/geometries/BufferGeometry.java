@@ -24,7 +24,7 @@ import thothbot.parallax.core.client.gl2.arrays.Float32Array;
 import thothbot.parallax.core.client.gl2.arrays.Int16Array;
 import thothbot.parallax.core.client.gl2.arrays.Uint16Array;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.GeometryBuffer;
+import thothbot.parallax.core.shared.core.BufferGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
@@ -85,7 +85,7 @@ public final class BufferGeometry extends ContentWidget
 
 			int triangles = 160000;
 
-			GeometryBuffer geometry = new GeometryBuffer();
+			BufferGeometry geometry = new BufferGeometry();
 			geometry.setElementsNeedUpdate(true);
 			geometry.setVerticesNeedUpdate(true);
 			geometry.setNormalsNeedUpdate(true);
@@ -207,7 +207,7 @@ public final class BufferGeometry extends ContentWidget
 
 			}
 
-			geometry.offsets = new ArrayList<GeometryBuffer.Offset>();
+			geometry.offsets = new ArrayList<BufferGeometry.Offset>();
 
 			int start = 0;
 			int index = 0;
@@ -216,7 +216,7 @@ public final class BufferGeometry extends ContentWidget
 			for ( ;; ) 
 			{
 				int count = Math.min( chunkSize * 3, left );
-				GeometryBuffer.Offset chunk = new GeometryBuffer.Offset();
+				BufferGeometry.Offset chunk = new BufferGeometry.Offset();
 				chunk.start = start;
 				chunk.count = count;
 				chunk.index = index;
