@@ -28,6 +28,7 @@ import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
@@ -149,7 +150,7 @@ public final class LinesSphere extends ContentWidget
 
 			for ( int i = 0; i < getScene().getChildren().size(); i ++ ) 
 			{
-				DimensionalObject object = getScene().getChildren().get(i);
+				Object3D object = getScene().getChildren().get(i);
 
 				if ( object instanceof Line ) 
 				{

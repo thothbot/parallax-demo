@@ -24,7 +24,6 @@ import thothbot.parallax.core.client.gl2.arrays.Float32Array;
 import thothbot.parallax.core.client.gl2.arrays.Int16Array;
 import thothbot.parallax.core.client.gl2.arrays.Uint16Array;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.BufferGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
@@ -86,10 +85,10 @@ public final class BufferGeometry extends ContentWidget
 			int triangles = 160000;
 
 			BufferGeometry geometry = new BufferGeometry();
-			geometry.setElementsNeedUpdate(true);
-			geometry.setVerticesNeedUpdate(true);
-			geometry.setNormalsNeedUpdate(true);
-			geometry.setColorsNeedUpdate(true);
+//			geometry.setElementsNeedUpdate(true);
+//			geometry.setVerticesNeedUpdate(true);
+//			geometry.setNormalsNeedUpdate(true);
+//			geometry.setColorsNeedUpdate(true);
 			geometry.setWebGlIndexArray(Uint16Array.create(triangles * 3));
 			geometry.setWebGlVertexArray(Float32Array.create(triangles * 3 * 3));
 			geometry.setWebGlNormalArray(Float32Array.create(triangles * 3 * 3));

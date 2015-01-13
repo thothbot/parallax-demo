@@ -25,7 +25,6 @@ import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.GeometryObject;
-import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.core.Raycaster;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;

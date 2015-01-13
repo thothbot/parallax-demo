@@ -33,7 +33,6 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Vector4;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.GeometryUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -93,7 +92,7 @@ public final class MaterialsWireframe extends ContentWidget
 			BoxGeometry geometryQuads = new BoxGeometry( size, size, size );
 			BoxGeometry geometryTris = new BoxGeometry( size, size, size );
 
-			GeometryUtils.triangulateQuads( geometryTris );
+//			GeometryUtils.triangulateQuads( geometryTris );
 
 			// wireframe using gl.LINES
 

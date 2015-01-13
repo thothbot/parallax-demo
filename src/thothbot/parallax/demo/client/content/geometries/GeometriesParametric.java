@@ -25,6 +25,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.DimensionalObject;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.geometries.parametric.KleinParametricGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.MobiusParametricGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
@@ -94,18 +95,18 @@ public class GeometriesParametric extends ContentWidget
 			materials.add(bmaterial);
 			
 			// KleinParametricGeometry Bottle
-			DimensionalObject object1 = SceneUtils.createMultiMaterialObject(new KleinParametricGeometry(20, 20), materials );
+			Object3D object1 = SceneUtils.createMultiMaterialObject(new KleinParametricGeometry(20, 20), materials );
 			object1.getPosition().set( 0, 0, 0 );
 			object1.getScale().multiply(20);
 			getScene().add( object1 );
 			
 			// MobiusParametricGeometry Strip
-			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new MobiusParametricGeometry(20, 20), materials );
+			Object3D object2 = SceneUtils.createMultiMaterialObject( new MobiusParametricGeometry(20, 20), materials );
 			object2.getPosition().set( 10, 0, 0 );
 			object2.getScale().multiply(100);
 			getScene().add( object2 );
 			
-			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new PlaneParametricGeometry(200, 200, 10, 20), materials );
+			Object3D object3 = SceneUtils.createMultiMaterialObject( new PlaneParametricGeometry(200, 200, 10, 20), materials );
 			object3.getPosition().set( 20, 0, 0 );
 			getScene().add( object3 );
 			
@@ -125,7 +126,7 @@ public class GeometriesParametric extends ContentWidget
 
 			for ( int i = 0, l = getScene().getChildren().size(); i < l; i ++ ) 
 			{
-				DimensionalObject object = getScene().getChildren().get( i );
+				Object3D object = getScene().getChildren().get( i );
 
 				object.getRotation().addX(0.01);
 				object.getRotation().addY(0.005);

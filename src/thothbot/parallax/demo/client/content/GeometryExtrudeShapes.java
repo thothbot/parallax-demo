@@ -25,7 +25,6 @@ import java.util.List;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.DimensionalObject;
-import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.curves.SplineCurve3;
@@ -140,12 +139,12 @@ public class GeometryExtrudeShapes extends ContentWidget
 					new Vector3(40, 40, 0),
 					new Vector3(-40, 40, 20)));
 
-			ExtrudeGeometry.ExtrudeGeometryParameters extrudeParameters = new ExtrudeGeometry.ExtrudeGeometryParameters();
-			extrudeParameters.amount = 200;
-			extrudeParameters.bevelEnabled = true;
-			extrudeParameters.bevelSegments = 2;
-			extrudeParameters.steps = 150;
-			extrudeParameters.extrudePath = randomSpline;
+//			ExtrudeGeometry.ExtrudeGeometryParameters extrudeParameters = new ExtrudeGeometry.ExtrudeGeometryParameters();
+//			extrudeParameters.amount = 200;
+//			extrudeParameters.bevelEnabled = true;
+//			extrudeParameters.bevelSegments = 2;
+//			extrudeParameters.steps = 150;
+//			extrudeParameters.extrudePath = randomSpline;
 
 			// CircleGeometry
 
@@ -206,7 +205,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 			}
 
 			Shape starShape = new Shape(pts);
-			ExtrudeGeometry circle3d = starShape.extrude( extrudeParameters ); //circleShape rectShape smileyShape starShape
+//			ExtrudeGeometry circle3d = starShape.extrude( extrudeParameters ); //circleShape rectShape smileyShape starShape
 
 //			TubeGeometry tubeGeometry = new TubeGeometry((CurvePath) extrudeParameters.extrudePath, 150, 4.0, 5, false, true);     
 
@@ -237,7 +236,7 @@ public class GeometryExtrudeShapes extends ContentWidget
 			List<Material> materials= new ArrayList<Material>();
 			materials.add(ml);
 			materials.add(mb);
-			DimensionalObject mesh = SceneUtils.createMultiMaterialObject( geometry, materials );     
+			Object3D mesh = SceneUtils.createMultiMaterialObject( geometry, materials );     
 
 			mesh.getPosition().set( x, y, z - 75.0 );
 

@@ -38,7 +38,7 @@ import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector2;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -224,7 +224,7 @@ public final class TrackballEarth extends ContentWidget
 
 			for ( int i = 10; i < 30; i ++ ) 
 			{
-				ParticleSystem stars = new ParticleSystem( starsGeometry, starsMaterials.get( i % 6 ) );
+				PointCloud stars = new PointCloud( starsGeometry, starsMaterials.get( i % 6 ) );
 
 				stars.getRotation().setX( Math.random() * 6.0 );
 				stars.getRotation().setY( Math.random() * 6.0 );

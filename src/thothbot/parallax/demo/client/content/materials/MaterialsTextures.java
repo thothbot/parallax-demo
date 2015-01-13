@@ -28,6 +28,7 @@ import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
+import thothbot.parallax.core.shared.materials.HasShading;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
@@ -101,7 +102,7 @@ public final class MaterialsTextures extends ContentWidget
 			mp1.setSpecular(specular);
 			mp1.setShininess(shininess);
 			mp1.setShading(shading);
-			mp1.setPerPixel(true);
+//			mp1.setPerPixel(true);
 			materials.add(mp1);
 
 			MeshPhongMaterial mp2 = new MeshPhongMaterial();
@@ -113,7 +114,7 @@ public final class MaterialsTextures extends ContentWidget
 			mp2.setSpecular(specular);
 			mp2.setShininess(shininess);
 			mp2.setShading(shading);
-			mp2.setPerPixel(true);
+//			mp2.setPerPixel(true);
 			materials.add(mp2);
 			
 			MeshPhongMaterial mp3 = new MeshPhongMaterial();
@@ -125,7 +126,7 @@ public final class MaterialsTextures extends ContentWidget
 			mp3.setSpecular(specular);
 			mp3.setShininess(shininess);
 			mp3.setShading(shading);
-			mp3.setPerPixel(true);
+//			mp3.setPerPixel(true);
 			materials.add(mp3);
 			
 			MeshPhongMaterial mp4 = new MeshPhongMaterial();
@@ -137,7 +138,7 @@ public final class MaterialsTextures extends ContentWidget
 			mp4.setSpecular(specular);
 			mp4.setShininess(shininess);
 			mp4.setShading(shading);
-			mp4.setPerPixel(true);
+//			mp4.setPerPixel(true);
 			materials.add(mp4);
 			
 			MeshLambertMaterial ml1 = new MeshLambertMaterial();
@@ -180,7 +181,7 @@ public final class MaterialsTextures extends ContentWidget
 			mpb1.setShininess(shininess);
 			mpb1.setMetal(true);
 			mpb1.setShading(shading);
-			mpb1.setPerPixel(true);
+//			mpb1.setPerPixel(true);
 			materials.add(mpb1);
 			
 			MeshPhongMaterial mpb2 = new MeshPhongMaterial();
@@ -193,7 +194,7 @@ public final class MaterialsTextures extends ContentWidget
 			mpb2.setShininess(shininess);
 			mpb2.setMetal(true);
 			mpb2.setShading(shading);
-			mpb2.setPerPixel(true);
+//			mpb2.setPerPixel(true);
 			materials.add(mpb2);
 
 			MeshPhongMaterial mpb3 = new MeshPhongMaterial();
@@ -206,7 +207,7 @@ public final class MaterialsTextures extends ContentWidget
 			mpb3.setShininess(shininess);
 			mpb3.setMetal(true);
 			mpb3.setShading(shading);
-			mpb3.setPerPixel(true);
+//			mpb3.setPerPixel(true);
 			materials.add(mpb3);
 
 			MeshPhongMaterial mpb4 = new MeshPhongMaterial();
@@ -219,7 +220,7 @@ public final class MaterialsTextures extends ContentWidget
 			mpb4.setShininess(shininess);
 			mpb4.setMetal(true);
 			mpb4.setShading(shading);
-			mpb4.setPerPixel(true);
+//			mpb4.setPerPixel(true);
 			materials.add(mpb4);
 
 			// Spheres geometry
@@ -230,7 +231,7 @@ public final class MaterialsTextures extends ContentWidget
 			for ( int i = 0, l = materials.size(); i < l; i ++ ) 
 			{
 				Material material = materials.get( i );
-				SphereGeometry geometry = (material.getShading() == Material.SHADING.FLAT) ? geometry_flat : geometry_smooth;
+				SphereGeometry geometry = (((HasShading)material).getShading() == Material.SHADING.FLAT) ? geometry_flat : geometry_smooth;
 				Mesh sphere = new Mesh( geometry, material );
 
 				sphere.getPosition().setX( ( i % 4 ) * 200 - 200 );
@@ -261,7 +262,7 @@ public final class MaterialsTextures extends ContentWidget
 			pointLight.setPosition( particleLight.getPosition() );
 
 			//
-			getRenderer().setClearColorHex(0x0a0a0a);
+			getRenderer().setClearColor(0x0a0a0a);
 			getRenderer().setSortObjects(true);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);

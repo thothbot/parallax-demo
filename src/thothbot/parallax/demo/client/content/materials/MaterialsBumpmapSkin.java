@@ -195,7 +195,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			//
 
-			getRenderer().setClearColorHex(0x4c5159);
+			getRenderer().setClearColor(0x4c5159);
 
 			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
 			shadowMap.setCullFrontFaces(false);

@@ -25,10 +25,11 @@ import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.core.shared.scenes.FogExp2;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -94,7 +95,7 @@ public final class ParticlesRandom extends ContentWidget
 				material.getColor().setHSV( 1.0 - i * 0.05, 1.0, 1.0 );
 				materials.add(material);
 
-				ParticleSystem particles = new ParticleSystem( geometry, material );
+				PointCloud particles = new PointCloud( geometry, material );
 
 				particles.getRotation().setX( Math.random() * 6 );
 				particles.getRotation().setY( Math.random() * 6 );
@@ -116,9 +117,9 @@ public final class ParticlesRandom extends ContentWidget
 
 			for ( int i = 0; i < getScene().getChildren().size(); i ++ ) 
 			{
-				DimensionalObject object = getScene().getChildren().get(i);
+				Object3D object = getScene().getChildren().get(i);
 
-				if ( object instanceof ParticleSystem ) 
+				if ( object instanceof PointCloud ) 
 				{
 					object.getRotation().setY( time * ( i < 4 ? i + 1 : - ( i + 1 ) ) );
 				}

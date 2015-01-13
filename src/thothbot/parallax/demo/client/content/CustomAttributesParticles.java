@@ -33,7 +33,7 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -72,7 +72,7 @@ public class CustomAttributesParticles extends ContentWidget
 		
 		PerspectiveCamera camera;
 		Map<String, Attribute> attributes;
-		ParticleSystem sphere;
+		PointCloud sphere;
 
 		@Override
 		protected void onStart()
@@ -116,10 +116,9 @@ public class CustomAttributesParticles extends ContentWidget
 				geometry.getVertices().add( vertex );
 			}
 
-			this.sphere = new ParticleSystem( geometry, shaderMaterial );
-			this.sphere.setDynamic(true);
+			this.sphere = new PointCloud( geometry, shaderMaterial );
 
-			List<Vector3> vertices = sphere.getGeometry().getVertices();
+			List<Vector3> vertices = ((Geometry)sphere.getGeometry()).getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
 			List<Color> values_color = (List<Color>) attributes.get("customColor").getValue();
 

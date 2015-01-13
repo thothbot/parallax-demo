@@ -122,20 +122,20 @@ public final class MorphTargetsHorse extends ContentWidget
 
 				int keyframe = (int)Math.floor( time / interpolation );
 
-				if ( keyframe != currentKeyframe ) 
-				{
-					mesh.getMorphTargetInfluences().set( lastKeyframe, 0.0 );
-					mesh.getMorphTargetInfluences().set( currentKeyframe, 1.0 );
-					mesh.getMorphTargetInfluences().set( keyframe, 0.0 );
-
-					lastKeyframe = currentKeyframe;
-					currentKeyframe = keyframe;
-				}
-
-				mesh.getMorphTargetInfluences().set( keyframe, 
-						(double)( time % interpolation ) / interpolation);
-				mesh.getMorphTargetInfluences().set( lastKeyframe,
-						1.0 - mesh.getMorphTargetInfluences().get( keyframe ));
+//				if ( keyframe != currentKeyframe ) 
+//				{
+//					mesh.getMorphTargetInfluences().set( lastKeyframe, 0.0 );
+//					mesh.getMorphTargetInfluences().set( currentKeyframe, 1.0 );
+//					mesh.getMorphTargetInfluences().set( keyframe, 0.0 );
+//
+//					lastKeyframe = currentKeyframe;
+//					currentKeyframe = keyframe;
+//				}
+//
+//				mesh.getMorphTargetInfluences().set( keyframe, 
+//						(double)( time % interpolation ) / interpolation);
+//				mesh.getMorphTargetInfluences().set( lastKeyframe,
+//						1.0 - mesh.getMorphTargetInfluences().get( keyframe ));
 			}
 			
 			getRenderer().render(getScene(), camera);

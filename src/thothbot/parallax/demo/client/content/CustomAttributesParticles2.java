@@ -29,13 +29,13 @@ import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
-import thothbot.parallax.core.shared.utils.GeometryUtils;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -74,7 +74,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 		
 		PerspectiveCamera camera;
 		Map<String, Attribute> attributes;
-		ParticleSystem sphere;
+		PointCloud sphere;
 		int vc1;
 
 		@Override
@@ -113,15 +113,14 @@ public class CustomAttributesParticles2 extends ContentWidget
 	
 			BoxGeometry geometry2 = new BoxGeometry( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 );
 	
-			GeometryUtils.merge( geometry, geometry2 );
+//			GeometryUtils.merge( geometry, geometry2 );
 	
-			this.sphere = new ParticleSystem( geometry, shaderMaterial );
+			this.sphere = new PointCloud( geometry, shaderMaterial );
 	
-			sphere.setDynamic(true);
 			// TODO: Fix this
 //			sphere.sortParticles = true;
 	
-			List<Vector3> vertices = sphere.getGeometry().getVertices();
+			List<Vector3> vertices = ((Geometry)sphere.getGeometry()).getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
 			List<Color> values_color = (List<Color>) attributes.get("customColor").getValue();
 		

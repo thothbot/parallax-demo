@@ -34,7 +34,7 @@ import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -177,7 +177,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 			PointCloudMaterial popt = new PointCloudMaterial();
 			popt.setColor( new Color(0x888888) );
 	
-			ParticleSystem particles = new ParticleSystem( geometry, popt );
+			PointCloud particles = new PointCloud( geometry, popt );
 			getScene().add( particles );
 	
 			//

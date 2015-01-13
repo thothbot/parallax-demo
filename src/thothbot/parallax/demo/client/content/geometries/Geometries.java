@@ -25,6 +25,7 @@ import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.DimensionalObject;
+import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.geometries.CircleGeometry;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.CylinderGeometry;
@@ -102,35 +103,35 @@ public class Geometries extends ContentWidget
 			bmaterial.setOpacity( 0.1 );
 			materials.add(bmaterial);
 	
-			DimensionalObject object1 = SceneUtils.createMultiMaterialObject( new BoxGeometry( 100, 100, 100, 4, 4, 4 ), materials );
+			Object3D object1 = SceneUtils.createMultiMaterialObject( new BoxGeometry( 100, 100, 100, 4, 4, 4 ), materials );
 			object1.getPosition().set( -200, 0, 400 );
 			getScene().add( object1 );
 			
-			DimensionalObject object2 = SceneUtils.createMultiMaterialObject( new CylinderGeometry( 25, 75, 100, 40, 5 ), materials );
+			Object3D object2 = SceneUtils.createMultiMaterialObject( new CylinderGeometry( 25, 75, 100, 40, 5 ), materials );
 			object2.getPosition().set( 0, 0, 400 );
 			getScene().add( object2 );
 			
-			DimensionalObject object3 = SceneUtils.createMultiMaterialObject( new IcosahedronGeometry( 75, 1 ), materials );
+			Object3D object3 = SceneUtils.createMultiMaterialObject( new IcosahedronGeometry( 75, 1 ), materials );
 			object3.getPosition().set( -200, 0, 200 );
 			getScene().add( object3 );
 			
-			DimensionalObject object4 = SceneUtils.createMultiMaterialObject( new OctahedronGeometry( 75, 2 ), materials );
+			Object3D object4 = SceneUtils.createMultiMaterialObject( new OctahedronGeometry( 75, 2 ), materials );
 			object4.getPosition().set( 0, 0, 200 );
 			getScene().add( object4 );
 			
-			DimensionalObject object5 = SceneUtils.createMultiMaterialObject( new TetrahedronGeometry( 75, 0 ), materials );
+			Object3D object5 = SceneUtils.createMultiMaterialObject( new TetrahedronGeometry( 75, 0 ), materials );
 			object5.getPosition().set( 200, 0, 200 );
 			getScene().add( object5 );
 			
-			DimensionalObject object6 = SceneUtils.createMultiMaterialObject( new PlaneGeometry( 100, 100, 4, 4 ), materials );
+			Object3D object6 = SceneUtils.createMultiMaterialObject( new PlaneGeometry( 100, 100, 4, 4 ), materials );
 			object6.getPosition().set( -200, 0, 0 );
 			getScene().add( object6 );
 			
-			DimensionalObject object6a = SceneUtils.createMultiMaterialObject( new CircleGeometry( 50, 10, 0, Math.PI ), materials );
+			Object3D object6a = SceneUtils.createMultiMaterialObject( new CircleGeometry( 50, 10, 0, Math.PI ), materials );
 			object6a.getRotation().setX( Math.PI / 2.0 );
 			object6.add( object6a );
 			
-			DimensionalObject object7 = SceneUtils.createMultiMaterialObject( new SphereGeometry( 75, 20, 10 ), materials );
+			Object3D object7 = SceneUtils.createMultiMaterialObject( new SphereGeometry( 75, 20, 10 ), materials );
 			object7.getPosition().set( 0, 0, 0 );
 			getScene().add( object7 );
 		
@@ -139,15 +140,15 @@ public class Geometries extends ContentWidget
 			for ( int i = 0; i < 50; i ++ )
 				points.add( new Vector3( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
 	
-			DimensionalObject object8 = SceneUtils.createMultiMaterialObject( new LatheGeometry( points, 20 ), materials );
+			Object3D object8 = SceneUtils.createMultiMaterialObject( new LatheGeometry( points, 20 ), materials );
 			object8.getPosition().set( 200, 0, 0 );
 			getScene().add( object8 );
 			
-			DimensionalObject object9 = SceneUtils.createMultiMaterialObject( new TorusGeometry( 50, 20, 20, 20 ), materials );
+			Object3D object9 = SceneUtils.createMultiMaterialObject( new TorusGeometry( 50, 20, 20, 20 ), materials );
 			object9.getPosition().set( -200, 0, -200 );
 			getScene().add( object9 );
 
-			DimensionalObject object10 = SceneUtils.createMultiMaterialObject( new TorusKnotGeometry( 50, 10, 50, 20 ), materials );
+			Object3D object10 = SceneUtils.createMultiMaterialObject( new TorusKnotGeometry( 50, 10, 50, 20 ), materials );
 			object10.getPosition().set( 0, 0, -200 );
 			getScene().add( object10 );
 	
@@ -171,7 +172,7 @@ public class Geometries extends ContentWidget
 
 			for ( int i = 0, l = getScene().getChildren().size(); i < l; i ++ ) 
 			{
-				DimensionalObject object = getScene().getChildren().get( i );
+				Object3D object = getScene().getChildren().get( i );
 
 				object.getRotation().addX(0.01);
 				object.getRotation().addY(0.005);

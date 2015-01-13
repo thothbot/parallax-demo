@@ -29,6 +29,7 @@ import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
+import thothbot.parallax.core.shared.materials.HasShading;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -200,7 +201,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			}
 
-			geometry_pieces.setMaterials(materials);
+			geometry_pieces.materials = materials;
 
 			materials.add( new MeshFaceMaterial() );
 
@@ -212,7 +213,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 				Geometry geometryMesh = material.getClass() == MeshFaceMaterial.class 
 							? geometry_pieces 
-							: ( material.getShading() == Material.SHADING.FLAT 
+							: ( ((HasShading)material).getShading() == Material.SHADING.FLAT 
 								? geometry_flat 
 								: geometry_smooth );
 

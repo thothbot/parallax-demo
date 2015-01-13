@@ -160,7 +160,7 @@ public final class MaterialsBumpmap extends ContentWidget
 			material.setColor(new Color(0x552811));
 			material.setSpecular(new Color(0x333333));
 			material.setShininess(25);
-			material.setPerPixel(true);
+//			material.setPerPixel(true);
 			material.setBumpMap(mapHeight);
 			material.setBumpScale(19);
 			material.setMetal(false);
@@ -186,7 +186,7 @@ public final class MaterialsBumpmap extends ContentWidget
 
 			//
 
-			getRenderer().setClearColorHex(0x060708);
+			getRenderer().setClearColor(0x060708);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 			getRenderer().setPhysicallyBasedShading(true);

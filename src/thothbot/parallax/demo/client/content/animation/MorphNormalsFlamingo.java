@@ -146,7 +146,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 						material2.setMorphNormals(true);
 						material2.setVertexColors(Material.COLORS.FACE);
 						material2.setShading(Material.SHADING.SMOOTH); 
-						material2.setPerPixel(false);
+//						material2.setPerPixel(false);
  
 						MorphAnimMesh meshAnim2 = new MorphAnimMesh( jsonLoader.getGeometry(), material2 );
 
@@ -185,7 +185,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			for ( int i = 0; i < morphs.size(); i ++ ) 
 			{
 				MorphAnimMesh morph = morphs.get( i );
-				morph.updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime) );
+//				morph.updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime) );
 			}
 
 			getRenderer().clear();

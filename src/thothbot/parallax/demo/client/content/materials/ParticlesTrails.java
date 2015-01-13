@@ -27,7 +27,7 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -87,7 +87,7 @@ public final class ParticlesTrails extends ContentWidget
 			material.setOpacity( 0.5 );
 			material.setSizeAttenuation(false);
 
-			ParticleSystem mesh = new ParticleSystem( geometry, material );
+			PointCloud mesh = new PointCloud( geometry, material );
 			getScene().add( mesh );
 
 			getRenderer().setSortObjects(false);

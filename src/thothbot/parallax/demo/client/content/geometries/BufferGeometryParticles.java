@@ -24,7 +24,7 @@ import thothbot.parallax.core.shared.core.BufferGeometry;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
 import thothbot.parallax.core.shared.materials.PointCloudMaterial;
 import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.objects.ParticleSystem;
+import thothbot.parallax.core.shared.objects.PointCloud;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -45,7 +45,7 @@ public final class BufferGeometryParticles extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		PerspectiveCamera camera;
-		ParticleSystem particleSystem;
+		PointCloud particleSystem;
 
 		@Override
 		protected void onStart()
@@ -66,13 +66,13 @@ public final class BufferGeometryParticles extends ContentWidget
 			int particles = 500000;
 
 			BufferGeometry geometry = new BufferGeometry();
-			geometry.setVerticesNeedUpdate(true);
-			geometry.setColorsNeedUpdate(true);
-			geometry.setWebGlVertexArray(Float32Array.create(particles * 3 * 3));
-			geometry.setWebGlColorArray(Float32Array.create(particles * 3 * 3));
+//			geometry.setVerticesNeedUpdate(true);
+//			geometry.setColorsNeedUpdate(true);
+			geometry.__vertexArray = Float32Array.create(particles * 3 * 3);
+			geometry.__colorArray = Float32Array.create(particles * 3 * 3);
 
-			Float32Array positions = geometry.getWebGlVertexArray();
-			Float32Array colors = geometry.getWebGlColorArray();
+			Float32Array positions = geometry.__vertexArray;
+			Float32Array colors = geometry.__colorArray;
 			
 			Color color = new Color();
 			double n = 1000, n2 = n/2;	// particles spread in the cube
@@ -109,7 +109,7 @@ public final class BufferGeometryParticles extends ContentWidget
 			material.setVertexColors(COLORS.VERTEX);
 			material.setSize(15.0);
 
-			particleSystem = new ParticleSystem( geometry, material );
+			particleSystem = new PointCloud( geometry, material );
 			getScene().add( particleSystem );
 
 			//

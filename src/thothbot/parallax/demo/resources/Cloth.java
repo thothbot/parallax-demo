@@ -49,25 +49,25 @@ import thothbot.parallax.core.shared.objects.Mesh;
  */
 public class Cloth 
 {
-	public class ClothPlane extends ParametricGeometry
-	{
-
-		public ClothPlane(final double width, final double height, int slices, int stacks)
-		{
-			super(new ParametricFunction() {
-				
-				@Override
-				public Vector3 run(double u, double v)
-				{
-					double x = (u-0.5) * width;
-					double y = (v+0.5) * height;
-
-					return new Vector3(x, y, 0);
-				}
-			}, slices, stacks, true);
-		}
-
-	}
+//	public class ClothPlane extends ParametricGeometry
+//	{
+//
+//		public ClothPlane(final double width, final double height, int slices, int stacks)
+//		{
+//			super(new ParametricFunction() {
+//				
+//				@Override
+//				public Vector3 run(double u, double v)
+//				{
+//					double x = (u-0.5) * width;
+//					double y = (v+0.5) * height;
+//
+//					return new Vector3(x, y, 0);
+//				}
+//			}, slices, stacks, true);
+//		}
+//
+//	}
 	
 	class Particle
 	{
@@ -325,8 +325,8 @@ public class Cloth
 			clothGeometry.getVertices().get( i ).copy( particles.get( i ).position );
 		}
 		
-		clothGeometry.setNormalsNeedUpdate(true);
-		clothGeometry.setVerticesNeedUpdate(true);
+		clothGeometry.normalsNeedUpdate  = true;
+		clothGeometry.verticesNeedUpdate = true;
 
 		ball.getPosition().copy( ballPosition );
 	}
