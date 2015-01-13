@@ -66,16 +66,7 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 		
 		@Override
 		protected void onUpdate(double duration)
-		{
-			if(mesh != null)
-			{
-				getScene().remove( mesh );
-				mesh.deallocate( getRenderer() );
-			}
-
-			if(texture != null)
-				texture.deallocate( getRenderer() );
-			
+		{			
 			SphereGeometry geometry = new SphereGeometry( 50, (int)(Math.random() * 64), (int)(Math.random() * 32) );
 
 			texture = new Texture( generateTexture() );
@@ -90,6 +81,14 @@ public final class MiscMemoryTestGeometries extends ContentWidget
 			getScene().add( mesh );
 			
 			getRenderer().render(getScene(), camera);
+			
+			getScene().remove( mesh );
+			
+			// clean up
+
+			geometry.dispose();
+//			material.dispose();
+//			texture.dispose();
 		}
 		
 		private CanvasElement generateTexture() 

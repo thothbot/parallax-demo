@@ -90,7 +90,7 @@ public final class PerformanceDoubleSided extends ContentWidget
 			material.setEnvMap( reflectionCube );
 			material.setCombine( Texture.OPERATIONS.MIX );
 			material.setReflectivity( 0.1 );
-			material.setPerPixel(true);
+//			material.setPerPixel(true);
 			material.setWrapAround(true); 
 			material.getWrapRGB().set( 0.5, 0.5, 0.5 );
 			material.setSide(Material.SIDE.DOUBLE);

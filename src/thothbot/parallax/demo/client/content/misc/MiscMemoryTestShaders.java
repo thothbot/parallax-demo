@@ -95,7 +95,7 @@ public final class MiscMemoryTestShaders extends ContentWidget
 				meshes.add( mesh );
 			}
 
-			getRenderer().setClearColorHex(0xeeeeee);
+			getRenderer().setClearColor(0xeeeeee);
 		}
 
 		private void generateFragmentShader(Shader shader) 

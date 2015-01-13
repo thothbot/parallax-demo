@@ -127,7 +127,7 @@ public final class PostprocessingGodrays extends ContentWidget
 					
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
-			getRenderer().setClearColorHex( bgColor, 1 );
+			getRenderer().setClearColor( bgColor, 1 );
 			
 			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
 			RenderPass renderModel = new RenderPass( getScene(), camera );

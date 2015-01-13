@@ -432,7 +432,7 @@ public final class TerrainDynamic extends ContentWidget
 			
 			// PRE-INIT
 
-			getScene().initWebGLObjects(getRenderer());
+//			getScene().initWebGLObjects(getRenderer());
 			
 			this.oldTime = Duration.currentTimeMillis();
 		}
@@ -459,7 +459,7 @@ public final class TerrainDynamic extends ContentWidget
 
 			morphs.add( meshAnim );
 
-			getScene().initWebGLObjects(getRenderer());
+//			getScene().initWebGLObjects(getRenderer());
 		}
 		
 		private void applyShader( Shader shader, Texture texture, RenderTargetTexture target ) 
@@ -534,7 +534,7 @@ public final class TerrainDynamic extends ContentWidget
 				{
 					MorphAnimMesh morph = morphs.get( i );
 
-					morph.updateAnimation( (int)(1000 * delta) );
+//					morph.updateAnimation( (int)(1000 * delta) );
 
 					morph.getPosition().addX( morph.getDuration() * delta );
 

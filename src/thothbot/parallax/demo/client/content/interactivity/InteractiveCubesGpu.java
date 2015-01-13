@@ -36,7 +36,6 @@ import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Projector;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.SpotLight;
@@ -48,7 +47,6 @@ import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.GeometryUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -72,205 +70,205 @@ public final class InteractiveCubesGpu extends ContentWidget
 	/*
 	 * Prepare Rendering Scene
 	 */
-	@DemoSource
-	class DemoScene extends DemoAnimatedScene implements HasEventBus, ViewportResizeHandler
-	{
-		PerspectiveCamera camera;
-		
-		Vector3 offset = new Vector3(10, 10, 10);
-		int mouseX = 0, mouseY = 0;
-
-		Scene pickingScene;
-		TrackballControls controls;
-		RenderTargetTexture pickingTexture;
-		
-		Mesh highlightBox;
-		List<Picking> pickingData;
-		
-		Projector projector;
-
-		@Override
-		public void onResize(ViewportResizeEvent event) 
-		{
-			pickingTexture.setWidth(event.getRenderer().getAbsoluteWidth());
-			pickingTexture.setHeight(event.getRenderer().getAbsoluteHeight());
-		}
-
-		@Override
-		protected void onStart()
-		{
-			EVENT_BUS.addHandler(ViewportResizeEvent.TYPE, this);
-
-			camera = new PerspectiveCamera(
-					70, // fov
-					getRenderer().getAbsoluteAspectRation(), // aspect 
-					1, // near
-					10000 // far 
-			);
-			camera.getPosition().setZ(1000);
-			
-			controls = new TrackballControls( camera, getCanvas()  );
-			controls.setRotateSpeed(1.0);
-			controls.setZoomSpeed(1.2);
-			controls.setPanSpeed(0.8);
-			controls.setZoom(true);
-			controls.setPan(true);
-			controls.setStaticMoving(true);
-			controls.setDynamicDampingFactor(0.3);
-
-			pickingScene = new Scene();
-
-			pickingTexture = new RenderTargetTexture(getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight());
-			pickingTexture.setGenerateMipmaps(false);
-
-			getScene().add( new AmbientLight( 0x555555 ) );
-
-			SpotLight light = new SpotLight( 0xffffff, 1.5 );
-			
-			light.getPosition().set( 0, 500, 2000 );
-			light.setCastShadow(true);
-
-			light.setShadowCameraNear(200);
-			light.setShadowCameraFar(((PerspectiveCamera)camera).getFar());
-			light.setShadowCameraFov(50);
-
-			light.setShadowBias(-0.00022);
-			light.setShadowDarkness(0.5);
-
-			light.setShadowMapWidth(1024);
-			light.setShadowMapHeight(1024);
-
-			getScene().add( light );
-
-			Geometry geometry = new Geometry();
-			Geometry pickingGeometry = new Geometry();
-			MeshBasicMaterial pickingMaterial = new MeshBasicMaterial();
-			pickingMaterial.setVertexColors(COLORS.VERTEX);
-
-			MeshLambertMaterial defaultMaterial = new MeshLambertMaterial();
-			defaultMaterial.setColor(new Color(0xffffff));
-			defaultMaterial.setShading(SHADING.FLAT);
-			defaultMaterial.setVertexColors(COLORS.VERTEX);
-
-			pickingData = new ArrayList<Picking>();
-			
-			for ( int i = 0; i < 500; i ++ ) 
-			{
-				Vector3 position = new Vector3();
-				position.setX( Math.random() * 10000 - 5000 );
-				position.setY( Math.random() * 6000 - 3000 );
-				position.setZ( Math.random() * 8000 - 4000 );
-
-				Vector3 rotation = new Vector3();
-				rotation.setX( ( Math.random() * 2 * Math.PI) );
-				rotation.setY( ( Math.random() * 2 * Math.PI) );
-				rotation.setZ( ( Math.random() * 2 * Math.PI) );
-
-				Vector3 scale = new Vector3();
-				scale.setX( Math.random() * 200 + 100 );
-				scale.setY( Math.random() * 200 + 100 );
-				scale.setZ( Math.random() * 200 + 100 );
-
-				//give the geom's vertices a random color, to be displayed
-				BoxGeometry geom = new BoxGeometry(1, 1, 1);
-				Color color = new Color((int)(Math.random() * 0xffffff));
-				applyVertexColors(geom, color);
-				Mesh cube = new Mesh(geom);
-				cube.getPosition().copy(position);
-				cube.getRotation().copy(rotation);
-				cube.getScale().copy(scale);
-				GeometryUtils.merge(geometry, cube);
-
-				//give the pickingGeom's vertices a color corresponding to the "id"
-				BoxGeometry pickingGeom = new BoxGeometry(1, 1, 1);
-				Color pickingColor = new Color(i);
-				applyVertexColors(pickingGeom, pickingColor);
-				Mesh pickingCube = new Mesh(pickingGeom);
-				pickingCube.getPosition().copy(position);
-				pickingCube.getRotation().copy(rotation);
-				pickingCube.getScale().copy(scale);
-				GeometryUtils.merge(pickingGeometry, pickingCube);
-
-				Picking picking = new Picking();
-				picking.position = position;
-				picking.rotation = rotation;
-				picking.scale = scale;
-
-				pickingData.add(picking);
-			}
-			
-			Mesh drawnObject = new Mesh(geometry, defaultMaterial);
-			drawnObject.setCastShadow(true);
-			drawnObject.setReceiveShadow(true);
-			getScene().add(drawnObject);
-
-			pickingScene.add(new Mesh(pickingGeometry, pickingMaterial));
-
-			MeshLambertMaterial highlightBoxMaterial = new MeshLambertMaterial();
-			highlightBoxMaterial.setColor(new Color(0xffff00));
-			highlightBox = new Mesh( new BoxGeometry(1, 1, 1), highlightBoxMaterial );
-			getScene().add( highlightBox );
-
-			projector = new Projector();
-			getRenderer().setSortObjects(false);
-//			getRenderer().setShadowMapEnabled(true);
-//			getRenderer().setShadowMapSoft(true);
-		}
-		
-		private void applyVertexColors(Geometry g, Color c) 
-		{
-			for(Face3 f: g.getFaces())
-			{
-				int n = (f.getClass() == Face3.class) ? 3 : 4;
-				for(int j = 0; j < n; j++)
-				{
-					f.getVertexColors().add( c );
-				}
-			}
-		}
-		
-		@Override
-		protected void onUpdate(double duration)
-		{
-			controls.update();
-
-			pick();
-			
-			getRenderer().render(getScene(), camera);
-		}
-		
-		private void pick() 
-		{
-			//render the picking scene off-screen
-			WebGLRenderingContext gl = getRenderer().getGL();
-			getRenderer().render(pickingScene, camera, pickingTexture);
-			Uint8Array pixelBuffer = Uint8Array.create(4);
-
-			//read the pixel under the mouse from the texture
-			gl.readPixels(mouseX, pickingTexture.getHeight() - mouseY, 1, 1, PixelFormat.RGBA, PixelType.UNSIGNED_BYTE, pixelBuffer);
-
-			//interpret the pixel as an ID
-
-			int id = ( pixelBuffer.get(0) << 16 ) | (  pixelBuffer.get(1) << 8 ) | pixelBuffer.get(2);
-			if( pickingData.size() > id )
-			{
-				Picking data = pickingData.get(id);
-				//move our highlightBox so that it surrounds the picked object
-				if(data.position != null && data.rotation != null && data.scale != null)
-				{
-					highlightBox.getPosition().copy(data.position);
-					highlightBox.getRotation().copy(data.rotation);
-					highlightBox.getScale().copy(data.scale).add(offset);
-					highlightBox.setVisible(true);
-				}
-			} 
-			else 
-			{
-				highlightBox.setVisible(false);
-			}
-		}
-	}
-		
+//	@DemoSource
+//	class DemoScene extends DemoAnimatedScene implements HasEventBus, ViewportResizeHandler
+//	{
+//		PerspectiveCamera camera;
+//		
+//		Vector3 offset = new Vector3(10, 10, 10);
+//		int mouseX = 0, mouseY = 0;
+//
+//		Scene pickingScene;
+//		TrackballControls controls;
+//		RenderTargetTexture pickingTexture;
+//		
+//		Mesh highlightBox;
+//		List<Picking> pickingData;
+//		
+//		Projector projector;
+//
+//		@Override
+//		public void onResize(ViewportResizeEvent event) 
+//		{
+//			pickingTexture.setWidth(event.getRenderer().getAbsoluteWidth());
+//			pickingTexture.setHeight(event.getRenderer().getAbsoluteHeight());
+//		}
+//
+//		@Override
+//		protected void onStart()
+//		{
+//			EVENT_BUS.addHandler(ViewportResizeEvent.TYPE, this);
+//
+//			camera = new PerspectiveCamera(
+//					70, // fov
+//					getRenderer().getAbsoluteAspectRation(), // aspect 
+//					1, // near
+//					10000 // far 
+//			);
+//			camera.getPosition().setZ(1000);
+//			
+//			controls = new TrackballControls( camera, getCanvas()  );
+//			controls.setRotateSpeed(1.0);
+//			controls.setZoomSpeed(1.2);
+//			controls.setPanSpeed(0.8);
+//			controls.setZoom(true);
+//			controls.setPan(true);
+//			controls.setStaticMoving(true);
+//			controls.setDynamicDampingFactor(0.3);
+//
+//			pickingScene = new Scene();
+//
+//			pickingTexture = new RenderTargetTexture(getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight());
+//			pickingTexture.setGenerateMipmaps(false);
+//
+//			getScene().add( new AmbientLight( 0x555555 ) );
+//
+//			SpotLight light = new SpotLight( 0xffffff, 1.5 );
+//			
+//			light.getPosition().set( 0, 500, 2000 );
+//			light.setCastShadow(true);
+//
+//			light.setShadowCameraNear(200);
+//			light.setShadowCameraFar(((PerspectiveCamera)camera).getFar());
+//			light.setShadowCameraFov(50);
+//
+//			light.setShadowBias(-0.00022);
+//			light.setShadowDarkness(0.5);
+//
+//			light.setShadowMapWidth(1024);
+//			light.setShadowMapHeight(1024);
+//
+//			getScene().add( light );
+//
+//			Geometry geometry = new Geometry();
+//			Geometry pickingGeometry = new Geometry();
+//			MeshBasicMaterial pickingMaterial = new MeshBasicMaterial();
+//			pickingMaterial.setVertexColors(COLORS.VERTEX);
+//
+//			MeshLambertMaterial defaultMaterial = new MeshLambertMaterial();
+//			defaultMaterial.setColor(new Color(0xffffff));
+//			defaultMaterial.setShading(SHADING.FLAT);
+//			defaultMaterial.setVertexColors(COLORS.VERTEX);
+//
+//			pickingData = new ArrayList<Picking>();
+//			
+//			for ( int i = 0; i < 500; i ++ ) 
+//			{
+//				Vector3 position = new Vector3();
+//				position.setX( Math.random() * 10000 - 5000 );
+//				position.setY( Math.random() * 6000 - 3000 );
+//				position.setZ( Math.random() * 8000 - 4000 );
+//
+//				Vector3 rotation = new Vector3();
+//				rotation.setX( ( Math.random() * 2 * Math.PI) );
+//				rotation.setY( ( Math.random() * 2 * Math.PI) );
+//				rotation.setZ( ( Math.random() * 2 * Math.PI) );
+//
+//				Vector3 scale = new Vector3();
+//				scale.setX( Math.random() * 200 + 100 );
+//				scale.setY( Math.random() * 200 + 100 );
+//				scale.setZ( Math.random() * 200 + 100 );
+//
+//				//give the geom's vertices a random color, to be displayed
+//				BoxGeometry geom = new BoxGeometry(1, 1, 1);
+//				Color color = new Color((int)(Math.random() * 0xffffff));
+//				applyVertexColors(geom, color);
+//				Mesh cube = new Mesh(geom);
+//				cube.getPosition().copy(position);
+//				cube.getRotation().copy(rotation);
+//				cube.getScale().copy(scale);
+//				GeometryUtils.merge(geometry, cube);
+//
+//				//give the pickingGeom's vertices a color corresponding to the "id"
+//				BoxGeometry pickingGeom = new BoxGeometry(1, 1, 1);
+//				Color pickingColor = new Color(i);
+//				applyVertexColors(pickingGeom, pickingColor);
+//				Mesh pickingCube = new Mesh(pickingGeom);
+//				pickingCube.getPosition().copy(position);
+//				pickingCube.getRotation().copy(rotation);
+//				pickingCube.getScale().copy(scale);
+//				GeometryUtils.merge(pickingGeometry, pickingCube);
+//
+//				Picking picking = new Picking();
+//				picking.position = position;
+//				picking.rotation = rotation;
+//				picking.scale = scale;
+//
+//				pickingData.add(picking);
+//			}
+//			
+//			Mesh drawnObject = new Mesh(geometry, defaultMaterial);
+//			drawnObject.setCastShadow(true);
+//			drawnObject.setReceiveShadow(true);
+//			getScene().add(drawnObject);
+//
+//			pickingScene.add(new Mesh(pickingGeometry, pickingMaterial));
+//
+//			MeshLambertMaterial highlightBoxMaterial = new MeshLambertMaterial();
+//			highlightBoxMaterial.setColor(new Color(0xffff00));
+//			highlightBox = new Mesh( new BoxGeometry(1, 1, 1), highlightBoxMaterial );
+//			getScene().add( highlightBox );
+//
+//			projector = new Projector();
+//			getRenderer().setSortObjects(false);
+////			getRenderer().setShadowMapEnabled(true);
+////			getRenderer().setShadowMapSoft(true);
+//		}
+//		
+//		private void applyVertexColors(Geometry g, Color c) 
+//		{
+//			for(Face3 f: g.getFaces())
+//			{
+//				int n = (f.getClass() == Face3.class) ? 3 : 4;
+//				for(int j = 0; j < n; j++)
+//				{
+//					f.getVertexColors().add( c );
+//				}
+//			}
+//		}
+//		
+//		@Override
+//		protected void onUpdate(double duration)
+//		{
+//			controls.update();
+//
+//			pick();
+//			
+//			getRenderer().render(getScene(), camera);
+//		}
+//		
+//		private void pick() 
+//		{
+//			//render the picking scene off-screen
+//			WebGLRenderingContext gl = getRenderer().getGL();
+//			getRenderer().render(pickingScene, camera, pickingTexture);
+//			Uint8Array pixelBuffer = Uint8Array.create(4);
+//
+//			//read the pixel under the mouse from the texture
+//			gl.readPixels(mouseX, pickingTexture.getHeight() - mouseY, 1, 1, PixelFormat.RGBA, PixelType.UNSIGNED_BYTE, pixelBuffer);
+//
+//			//interpret the pixel as an ID
+//
+//			int id = ( pixelBuffer.get(0) << 16 ) | (  pixelBuffer.get(1) << 8 ) | pixelBuffer.get(2);
+//			if( pickingData.size() > id )
+//			{
+//				Picking data = pickingData.get(id);
+//				//move our highlightBox so that it surrounds the picked object
+//				if(data.position != null && data.rotation != null && data.scale != null)
+//				{
+//					highlightBox.getPosition().copy(data.position);
+//					highlightBox.getRotation().copy(data.rotation);
+//					highlightBox.getScale().copy(data.scale).add(offset);
+//					highlightBox.setVisible(true);
+//				}
+//			} 
+//			else 
+//			{
+//				highlightBox.setVisible(false);
+//			}
+//		}
+//	}
+//		
 	public InteractiveCubesGpu() 
 	{
 		super("GPU picking", "This example based on the three.js example.");
@@ -288,22 +286,22 @@ public final class InteractiveCubesGpu extends ContentWidget
 	{
 		super.onAnimationReady(event);
 
-		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
-		      @Override
-		      public void onMouseMove(MouseMoveEvent event)
-		      {
-		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		    	  	rs.mouseX = event.getX(); 
-		    	  	rs.mouseY = event.getY();
-		      }
-		});
+//		this.renderingPanel.getCanvas().addMouseMoveHandler(new MouseMoveHandler() {
+//		      @Override
+//		      public void onMouseMove(MouseMoveEvent event)
+//		      {
+//		    	  	DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+//		    	  	rs.mouseX = event.getX(); 
+//		    	  	rs.mouseY = event.getY();
+//		      }
+//		});
 	}
 	
-	@Override
-	public DemoScene onInitialize()
-	{
-		return new DemoScene();
-	}
+//	@Override
+//	public DemoScene onInitialize()
+//	{
+//		return new DemoScene();
+//	}
 
 	@Override
 	public ImageResource getIcon()
@@ -326,5 +324,11 @@ public final class InteractiveCubesGpu extends ContentWidget
 				callback.onSuccess(onInitialize());
 			}
 		});
+	}
+
+	@Override
+	protected DemoAnimatedScene onInitialize() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -95,7 +95,7 @@ public final class EffectsLensFlares extends ContentWidget
 			material.setAmbient(new Color(0xffffff));
 			material.setSpecular(new Color(0xffffff));
 			material.setShininess(50);
-			material.setPerPixel(true);
+//			material.setPerPixel(true);
 			
 			for ( int i = 0; i < 3000; i ++ ) 
 			{

@@ -193,7 +193,7 @@ public final class PostprocessingMulti extends ContentWidget
 
 			//
 
-			getRenderer().setClearColorHex( 0x000000, 1 );
+			getRenderer().setClearColor( 0x000000, 1 );
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
