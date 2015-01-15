@@ -189,7 +189,6 @@ public final class MaterialsBumpmap extends ContentWidget
 			getRenderer().setClearColor(0x060708);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
-			getRenderer().setPhysicallyBasedShading(true);
 		}
 		
 		private void createScene( Geometry geometry, double scale, Material material ) 

@@ -96,7 +96,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			material1.setColor(new Color(0xffffff));
 			material1.setMap(texture1);
 
-			texture1.setAnisotropy( getRenderer().getGPUmaxAnisotropy() );
+			texture1.setAnisotropy( getRenderer().getMaxAnisotropy() );
 			texture1.setWrapS(TextureWrapMode.REPEAT);
 			texture1.setWrapT(TextureWrapMode.REPEAT);
 			texture1.getRepeat().set( 512, 512 );
@@ -179,9 +179,9 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 
 		final DemoScene rs = (DemoScene) this.renderingPanel.getAnimatedScene();
 
-		if ( this.renderingPanel.getRenderer().getGPUmaxAnisotropy() > 0 ) 
+		if ( this.renderingPanel.getRenderer().getMaxAnisotropy() > 0 ) 
 		{
-			panelLeft.add(new Label("Anisotropy: " + this.renderingPanel.getRenderer().getGPUmaxAnisotropy()));
+			panelLeft.add(new Label("Anisotropy: " + this.renderingPanel.getRenderer().getMaxAnisotropy()));
 			panelRight.add(new Label("Anisotropy: " + 1));
 		} 
 		else

@@ -129,7 +129,6 @@ public final class MaterialsLightmap extends ContentWidget
 			getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
-			getRenderer().setPhysicallyBasedShading(true);
 
 			// MODEL
 

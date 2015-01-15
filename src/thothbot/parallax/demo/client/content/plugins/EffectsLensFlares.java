@@ -135,11 +135,9 @@ public final class EffectsLensFlares extends ContentWidget
 			addLight( 0.995, 0.025, 0.99, 5000, 5000, -1000 );
 
 			// renderer
-			getRenderer().setMaxLights(8);
 			getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
-			getRenderer().setPhysicallyBasedShading(true);
 			
 			this.oldTime = Duration.currentTimeMillis();
 		}

@@ -266,7 +266,6 @@ public final class MaterialsTextures extends ContentWidget
 			getRenderer().setSortObjects(true);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
-			getRenderer().setPhysicallyBasedShading(true);
 		}
 		
 		@Override

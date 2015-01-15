@@ -25,11 +25,12 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.GeometryObject;
 import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
+import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
@@ -74,7 +75,7 @@ public class GeometryColors extends ContentWidget
 					10000 
 			);
 			
-			camera.getPosition().setZ(2000);
+			camera.getPosition().setZ(1800);
 			
 			DirectionalLight light = new DirectionalLight( 0xffffff );
 			light.getPosition().set( 0, 0, 1 );
@@ -82,7 +83,7 @@ public class GeometryColors extends ContentWidget
 			
 			MeshBasicMaterial shadowMaterial = new MeshBasicMaterial();
 			shadowMaterial.setMap( new Texture(texture) );
-			Geometry shadowGeo = new PlaneGeometry( 300, 300, 1, 1 );
+			PlaneBufferGeometry shadowGeo = new PlaneBufferGeometry( 300, 300, 1, 1 );
 			
 			Mesh mesh1 = new Mesh( shadowGeo, shadowMaterial );
 			mesh1.getPosition().setY(-250);
@@ -111,7 +112,7 @@ public class GeometryColors extends ContentWidget
 			{
 				Face3 f  = geometry.getFaces().get( i );
 
-				int n = ( f.getClass() == Face3.class ) ? 3 : 4;
+				int n = 3;
 
 				for( int j = 0; j < n; j++ ) 
 				{
@@ -122,17 +123,17 @@ public class GeometryColors extends ContentWidget
 					Vector3 p = geometry.getVertices().get( vertexIndex );
 
 					Color color = new Color( 0xffffff );
-					color.setHSV( ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0, 1.0 );
+					color.setHSV( ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0, 0.5 );
 
 					geometry.getFaces().get( i ).getVertexColors().add(color);
 
 					Color color2 = new Color( 0xffffff );
-					color2.setHSV( 0.0, ( p.getY() / (double)radius + 1.0 ) / 2.0, 1.0 );
+					color2.setHSV( 0.0, ( p.getY() / (double)radius + 1.0 ) / 2.0, 0.5 );
 
 					geometry2.getFaces().get( i ).getVertexColors().add(color2);
 
 					Color color3 = new Color( 0xffffff );
-					color3.setHSV( (0.125 * vertexIndex / (double)geometry.getVertices().size()), 1.0, 1.0 );
+					color3.setHSV( (0.125 * vertexIndex / (double)geometry.getVertices().size()), 1.0, 0.5 );
 
 					geometry3.getFaces().get( i ).getVertexColors().add(color3);
 				}
@@ -171,8 +172,8 @@ public class GeometryColors extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
-			camera.getPosition().addX(( - mouseX - getRenderer().getAbsoluteWidth()/2.5 - camera.getPosition().getX()) );
-			camera.getPosition().addY(( mouseY - getRenderer().getAbsoluteHeight()/2.5- camera.getPosition().getY()) );
+			camera.getPosition().addX(( - mouseX - camera.getPosition().getX()) * 0.05 );
+			camera.getPosition().addY(( mouseY - camera.getPosition().getY()) * 0.05 );
 
 			camera.lookAt( getScene().getPosition());
 			

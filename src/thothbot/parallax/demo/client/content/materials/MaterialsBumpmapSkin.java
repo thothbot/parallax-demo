@@ -203,7 +203,6 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
-			getRenderer().setPhysicallyBasedShading(true);
 		}
 		
 		private void createScene( Geometry geometry, double scale ) 
