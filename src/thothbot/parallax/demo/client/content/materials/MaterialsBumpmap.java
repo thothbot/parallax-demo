@@ -84,7 +84,7 @@ public final class MaterialsBumpmap extends ContentWidget
 			//
 
 			PointLight pointLight = new PointLight( 0xffffff, 1.5, 1000 );
-			pointLight.getColor().setHSV( 0.05, 0.05, 1 );
+			pointLight.getColor().setHSV( 0.05, 1.0, 0.95 );
 			pointLight.getPosition().set( 0, 0, 600 );
 
 			getScene().add( pointLight );
@@ -93,7 +93,7 @@ public final class MaterialsBumpmap extends ContentWidget
 
 			SpotLight spotLight = new SpotLight( 0xffffff, 1.5 );
 			spotLight.getPosition().set( 0.05, 0.05, 1 );
-			spotLight.getColor().setHSV( 0.6, 0.05, 1 );
+			spotLight.getColor().setHSV( 0.6, 1.0, 0.95 );
 			getScene().add( spotLight );
 
 			spotLight.getPosition().multiply( 700 );
@@ -117,7 +117,7 @@ public final class MaterialsBumpmap extends ContentWidget
 
 			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 1.5 );
 			directionalLight.getPosition().set( 1, -0.5, 1 );
-			directionalLight.getColor().setHSV( 0.6, 0.05, 1 );
+			directionalLight.getColor().setHSV( 0.6, 1, 0.95 );
 			getScene().add( directionalLight );
 
 			directionalLight.getPosition().multiply( 500 );
@@ -143,7 +143,7 @@ public final class MaterialsBumpmap extends ContentWidget
 
 			DirectionalLight directionalLight2 = new DirectionalLight( 0xffffff, 1.2 );
 			directionalLight2.getPosition().set( 1, -0.5, -1 );
-			directionalLight2.getColor().setHSV( 0.08, 0.35, 1 );
+			directionalLight2.getColor().setHSV( 0.08, 1.0, 0.825 );
 			getScene().add( directionalLight2 );
 
 			Texture mapHeight = new Texture( texture );
@@ -160,7 +160,6 @@ public final class MaterialsBumpmap extends ContentWidget
 			material.setColor(new Color(0x552811));
 			material.setSpecular(new Color(0x333333));
 			material.setShininess(25);
-//			material.setPerPixel(true);
 			material.setBumpMap(mapHeight);
 			material.setBumpScale(19);
 			material.setMetal(false);
@@ -181,8 +180,8 @@ public final class MaterialsBumpmap extends ContentWidget
 				Log.error("Error while loading JSON file.");
 			}
 			
-			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
-			shadowMap.setCullFrontFaces(false);
+//			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
+//			shadowMap.setCullFrontFaces(false);
 
 			//
 
