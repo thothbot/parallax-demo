@@ -20,6 +20,7 @@ package thothbot.parallax.demo.client.content.geometries;
 
 import thothbot.parallax.core.client.gl2.arrays.Float32Array;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.BufferAttribute;
 import thothbot.parallax.core.shared.core.BufferGeometry;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
 import thothbot.parallax.core.shared.materials.PointCloudMaterial;
@@ -66,13 +67,9 @@ public final class BufferGeometryParticles extends ContentWidget
 			int particles = 500000;
 
 			BufferGeometry geometry = new BufferGeometry();
-//			geometry.setVerticesNeedUpdate(true);
-//			geometry.setColorsNeedUpdate(true);
-			geometry.__vertexArray = Float32Array.create(particles * 3 * 3);
-			geometry.__colorArray = Float32Array.create(particles * 3 * 3);
 
-			Float32Array positions = geometry.__vertexArray;
-			Float32Array colors = geometry.__colorArray;
+			Float32Array positions = Float32Array.create( particles * 3 );
+			Float32Array colors = Float32Array.create( particles * 3 );
 			
 			Color color = new Color();
 			double n = 1000, n2 = n/2;	// particles spread in the cube
@@ -102,7 +99,11 @@ public final class BufferGeometryParticles extends ContentWidget
 				colors.set( i + 2, color.getB() );
 			}
 
+			geometry.addAttribute( "position", new BufferAttribute( positions, 3 ) );
+			geometry.addAttribute( "color", new BufferAttribute( colors, 3 ) );
+
 			geometry.computeBoundingSphere();
+
 
 			//
 			PointCloudMaterial material = new PointCloudMaterial();
