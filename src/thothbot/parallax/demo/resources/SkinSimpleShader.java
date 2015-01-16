@@ -81,11 +81,11 @@ public final class SkinSimpleShader extends Shader
 		this.addUniform("tDiffuse", new Uniform(Uniform.TYPE.T ));
 		this.addUniform("tBeckmann", new Uniform(Uniform.TYPE.T ));
 
-		this.addUniform("uDiffuseColor", new Uniform(Uniform.TYPE.C, new Color( 0xeeeeee ) ));
-		this.addUniform("uSpecularColor", new Uniform(Uniform.TYPE.C, new Color( 0x111111 ) ));
-		this.addUniform("uAmbientColor", new Uniform(Uniform.TYPE.C, new Color( 0x050505 ) ));
+		this.addUniform("diffuse", new Uniform(Uniform.TYPE.C, new Color( 0xeeeeee ) ));
+		this.addUniform("specular", new Uniform(Uniform.TYPE.C, new Color( 0x111111 ) ));
+		this.addUniform("ambient", new Uniform(Uniform.TYPE.C, new Color( 0x050505 ) ));
 		
-		this.addUniform("uOpacity", new Uniform(Uniform.TYPE.F, 1.0 ));
+		this.addUniform("opacity", new Uniform(Uniform.TYPE.F, 1.0 ));
 		
 		this.addUniform("uRoughness", new Uniform(Uniform.TYPE.F, 0.15 ));
 		this.addUniform("uSpecularBrightness", new Uniform(Uniform.TYPE.F, 0.75 ));

@@ -4,10 +4,10 @@
 uniform bool enableBump;
 uniform bool enableSpecular;
 
-uniform vec3 uAmbientColor;
-uniform vec3 uDiffuseColor;
-uniform vec3 uSpecularColor;
-uniform float uOpacity;
+uniform vec3 ambient;
+uniform vec3 diffuse;
+uniform vec3 specular;
+uniform float opacity;
 
 uniform float uRoughness;
 uniform float uSpecularBrightness;
@@ -35,7 +35,7 @@ uniform vec3 ambientLightColor;
 
 	uniform vec3 hemisphereLightSkyColor[ MAX_HEMI_LIGHTS ];
 	uniform vec3 hemisphereLightGroundColor[ MAX_HEMI_LIGHTS ];
-	uniform vec3 hemisphereLightPosition[ MAX_HEMI_LIGHTS ];
+	uniform vec3 hemisphereLightDirection[ MAX_HEMI_LIGHTS ];
 
 #endif
 
@@ -51,7 +51,7 @@ varying vec3 vViewPosition;
 
 [*]
 
-// Fresnel term
+			// Fresnel term
 
 float fresnelReflectance( vec3 H, vec3 V, float F0 ) {
 
@@ -62,7 +62,7 @@ float fresnelReflectance( vec3 H, vec3 V, float F0 ) {
 
 }
 
-// Kelemen/Szirmay-Kalos specular BRDF
+			// Kelemen/Szirmay-Kalos specular BRDF
 
 float KS_Skin_Specular( vec3 N, 		// Bumped surface normal
 						vec3 L, 		// Points to light
@@ -96,7 +96,7 @@ float KS_Skin_Specular( vec3 N, 		// Bumped surface normal
 
 void main() {
 
-	gl_FragColor = vec4( vec3( 1.0 ), uOpacity );
+	gl_FragColor = vec4( vec3( 1.0 ), opacity );
 
 	vec4 colDiffuse = texture2D( tDiffuse, vUv );
 	colDiffuse.rgb *= colDiffuse.rgb;
@@ -125,7 +125,7 @@ void main() {
 
 	#endif
 
-	// point lights
+				// point lights
 
 	vec3 specularTotal = vec3( 0.0 );
 
@@ -152,15 +152,15 @@ void main() {
 
 			float pointSpecularWeight = KS_Skin_Specular( normal, lVector, viewPosition, uRoughness, uSpecularBrightness );
 
-			pointTotal    += lDistance * uDiffuseColor * pointLightColor[ i ] * pointDiffuseWeight;
-			specularTotal += lDistance * uSpecularColor * pointLightColor[ i ] * pointSpecularWeight * specularStrength;
+			pointTotal    += lDistance * diffuse * pointLightColor[ i ] * pointDiffuseWeight;
+			specularTotal += lDistance * specular * pointLightColor[ i ] * pointSpecularWeight * specularStrength;
 
 		}
 
 	#endif
 
-	// directional lights
-				
+				// directional lights
+
 	#if MAX_DIR_LIGHTS > 0
 
 		vec3 dirTotal = vec3( 0.0 );
@@ -177,14 +177,14 @@ void main() {
 
 			float dirSpecularWeight =  KS_Skin_Specular( normal, dirVector, viewPosition, uRoughness, uSpecularBrightness );
 
-			dirTotal 	   += uDiffuseColor * directionalLightColor[ i ] * dirDiffuseWeight;
-			specularTotal += uSpecularColor * directionalLightColor[ i ] * dirSpecularWeight * specularStrength;
+			dirTotal 	   += diffuse * directionalLightColor[ i ] * dirDiffuseWeight;
+			specularTotal += specular * directionalLightColor[ i ] * dirSpecularWeight * specularStrength;
 
 		}
 
 	#endif
 
-	// hemisphere lights
+				// hemisphere lights
 
 	#if MAX_HEMI_LIGHTS > 0
 
@@ -192,31 +192,31 @@ void main() {
 
 		for ( int i = 0; i < MAX_HEMI_LIGHTS; i ++ ) {
 
-			vec4 lPosition = viewMatrix * vec4( hemisphereLightPosition[ i ], 1.0 );
-			vec3 lVector = normalize( lPosition.xyz + vViewPosition.xyz );
+			vec4 lDirection = viewMatrix * vec4( hemisphereLightDirection[ i ], 0.0 );
+			vec3 lVector = normalize( lDirection.xyz );
 
 			float dotProduct = dot( normal, lVector );
 			float hemiDiffuseWeight = 0.5 * dotProduct + 0.5;
 
-			hemiTotal += uDiffuseColor * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight );
+			hemiTotal += diffuse * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight );
 
-			// specular (sky light)
+						// specular (sky light)
 
 			float hemiSpecularWeight = 0.0;
 			hemiSpecularWeight += KS_Skin_Specular( normal, lVector, viewPosition, uRoughness, uSpecularBrightness );
 
-			// specular (ground light)
+						// specular (ground light)
 
-			vec3 lVectorGround = normalize( -lPosition.xyz + vViewPosition.xyz );
+			vec3 lVectorGround = -lVector;
 			hemiSpecularWeight += KS_Skin_Specular( normal, lVectorGround, viewPosition, uRoughness, uSpecularBrightness );
 
-			specularTotal += uSpecularColor * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight ) * hemiSpecularWeight * specularStrength;
+			specularTotal += specular * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight ) * hemiSpecularWeight * specularStrength;
 
 		}
 
 	#endif
 
-	// all lights contribution summation
+				// all lights contribution summation
 
 	vec3 totalLight = vec3( 0.0 );
 
@@ -232,7 +232,7 @@ void main() {
 		totalLight += hemiTotal;
 	#endif
 
-	gl_FragColor.xyz = gl_FragColor.xyz * ( totalLight + ambientLightColor * uAmbientColor ) + specularTotal;
+	gl_FragColor.xyz = gl_FragColor.xyz * ( totalLight + ambientLightColor * ambient ) + specularTotal;
 
 [*]
 

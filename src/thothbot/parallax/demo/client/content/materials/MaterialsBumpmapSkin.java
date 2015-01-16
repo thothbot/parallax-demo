@@ -131,7 +131,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 0.85 );
 			directionalLight.getPosition().set( 1, -0.5, 1 );
-			directionalLight.getColor().setHSV( 0.6, 0.3, 1 );
+			directionalLight.getColor().setHSV( 0.6, 1.0, 0.85 );
 			getScene().add( directionalLight );
 
 			directionalLight.getPosition().multiply( 500 );
@@ -197,8 +197,8 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			getRenderer().setClearColor(0x4c5159);
 
-			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
-			shadowMap.setCullFrontFaces(false);
+//			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
+//			shadowMap.setCullFrontFaces(false);
 
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
@@ -243,9 +243,9 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 			uniforms.get( "bumpMap" ).setValue( mapHeight );
 			uniforms.get( "specularMap" ).setValue( mapSpecular );
 
-			((Color)uniforms.get( "uAmbientColor" ).getValue()).setHex( 0xa0a0a0 );
-			((Color)uniforms.get( "uDiffuseColor" ).getValue()).setHex( 0xa0a0a0 );
-			((Color)uniforms.get( "uSpecularColor" ).getValue()).setHex( 0xa0a0a0 );
+			((Color)uniforms.get( "ambient" ).getValue()).setHex( 0xa0a0a0 );
+			((Color)uniforms.get( "diffuse" ).getValue()).setHex( 0xa0a0a0 );
+			((Color)uniforms.get( "specular" ).getValue()).setHex( 0xa0a0a0 );
 
 			uniforms.get( "uRoughness" ).setValue( 0.145 );
 			uniforms.get( "uSpecularBrightness" ).setValue( 0.75 );
