@@ -19,7 +19,6 @@
 package thothbot.parallax.demo.client.content.materials;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
@@ -86,6 +85,7 @@ public final class ParticlesTrails extends ContentWidget
 			material.setDepthTest( false );
 			material.setOpacity( 0.5 );
 			material.setSizeAttenuation(false);
+			material.setTransparent(true);
 
 			PointCloud mesh = new PointCloud( geometry, material );
 			getScene().add( mesh );

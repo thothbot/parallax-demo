@@ -25,6 +25,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Face3;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.core.GeometryObject;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -99,8 +100,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 			}
 
 			LineBasicMaterial line_material = new LineBasicMaterial();
-			line_material.setColor( new Color( 0xffffff) );
-			line_material.setOpacity( 0.2 );
+			line_material.setColor( new Color( 0x303030) );
 
 			Line line = new Line( geometry, line_material, Line.MODE.PIECES );
 			getScene().add( line );
@@ -108,7 +108,6 @@ public final class MaterialsCanvas2D extends ContentWidget
 			// Materials
 
 			Texture texture = new Texture( generateTexture() );
-
 			texture.setNeedsUpdate(true);
 
 			this.materials = new ArrayList<Material>();
@@ -201,7 +200,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			}
 
-//			geometry_pieces.materials = materials;
+//			((GeometryObject)geometry_pieces).setmmaterials = materials;
 
 			materials.add( new MeshFaceMaterial() );
 
@@ -211,9 +210,9 @@ public final class MaterialsCanvas2D extends ContentWidget
 			{
 				Material material = materials.get( i );
 
-				Geometry geometryMesh = material.getClass() == MeshFaceMaterial.class 
+				Geometry geometryMesh = material.getClass() == MeshFaceMaterial.class && 1==2
 							? geometry_pieces 
-							: ( ((HasShading)material).getShading() == Material.SHADING.FLAT 
+							: ( material instanceof HasShading && ((HasShading)material).getShading() == Material.SHADING.FLAT 
 								? geometry_flat 
 								: geometry_smooth );
 
