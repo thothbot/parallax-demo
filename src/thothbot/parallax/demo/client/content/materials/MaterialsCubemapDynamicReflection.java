@@ -27,6 +27,7 @@ import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.geometries.TorusKnotGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -85,8 +86,6 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 					1000 // far 
 			); 
 			
-			camera.getPosition().setZ(400);
-
 			Texture texture = new Texture(DemoScene.texture);
 			MeshBasicMaterial mbOpt = new MeshBasicMaterial();
 			mbOpt.setMap( texture );
@@ -102,13 +101,13 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			MeshBasicMaterial material = new MeshBasicMaterial(); 
 			material.setEnvMap( cubeCamera.getRenderTarget() );
 			
-			sphere = new Mesh( new SphereGeometry( 20, 60, 40 ), material );
+			sphere = new Mesh( new SphereGeometry( 20, 30, 15 ), material );
 			getScene().add( sphere );
 
 			cube = new Mesh( new BoxGeometry( 20, 20, 20 ), material );
 			getScene().add( cube );
 
-			torus = new Mesh( new TorusKnotGeometry( 20, 5, 100, 100 ), material );
+			torus = new Mesh( new TorusKnotGeometry( 20, 5, 100, 25 ), material );
 			getScene().add( torus );
 			
 			getRenderer().render( getScene(), camera );
@@ -120,8 +119,8 @@ public final class MaterialsCubemapDynamicReflection extends ContentWidget
 			this.lon += .15;
 
 			this.lat = Math.max( - 85.0, Math.min( 85.0, this.lat ) );
-			this.phi = ( 90 - lat ) * Math.PI / 180.0;
-			this.theta = this.lon * Math.PI / 180.0;
+			this.phi = Mathematics.degToRad( 90 - lat ) ;
+			this.theta = Mathematics.degToRad( this.lon );
 
 			this.sphere.getPosition().setX(Math.sin( duration * 0.001 ) * 30.0 );
 			this.sphere.getPosition().setY(Math.sin( duration * 0.0011 ) * 30.0 );
