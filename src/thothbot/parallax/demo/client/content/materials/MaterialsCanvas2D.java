@@ -201,7 +201,7 @@ public final class MaterialsCanvas2D extends ContentWidget
 
 			}
 
-			geometry_pieces.materials = materials;
+//			geometry_pieces.materials = materials;
 
 			materials.add( new MeshFaceMaterial() );
 

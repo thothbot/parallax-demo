@@ -87,7 +87,7 @@ public final class MaterialsLightmap extends ContentWidget
 			camera.getPosition().set( 700, 180, -500 );
 
 			getScene().setFog( new Fog( 0xfafafa, 1000, 10000 ) );
-			getScene().getFog().getColor().setHSV( 0.6, 0.125, 1 );
+//			getScene().getFog().getColor().setHSV( 0.6, 0.125, 1 );
 
 			// CONTROLS
 
@@ -102,8 +102,8 @@ public final class MaterialsLightmap extends ContentWidget
 
 
 			HemisphereLight hemiLight = new HemisphereLight( 0xffffff, 0xffffff, 1.25 );
-			hemiLight.getColor().setHSV( 0.6, 0.45, 1 );
-			hemiLight.getGroundColor().setHSV( 0.1, 0.45, 0.95 );
+			hemiLight.getColor().setHSV( 0.6, 1.0, 0.75 );
+			hemiLight.getGroundColor().setHSV( 0.1, 0.8, 0.7 );
 			hemiLight.getPosition().setY( 500 );
 			getScene().add( hemiLight );
 
@@ -139,7 +139,7 @@ public final class MaterialsLightmap extends ContentWidget
 
 					@Override
 					public void onModelLoaded() {		
-						Mesh mesh = new Mesh( jsonLoader.getGeometry(), new MeshFaceMaterial() );
+						Mesh mesh = new Mesh( jsonLoader.getGeometry(), new MeshFaceMaterial(jsonLoader.getMaterials()) );
 						mesh.getPosition().set( 0 );
 						mesh.getScale().set( 100 );
 						getScene().add( mesh );
