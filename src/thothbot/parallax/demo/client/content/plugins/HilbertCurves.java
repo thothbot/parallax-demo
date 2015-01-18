@@ -87,13 +87,13 @@ public final class HilbertCurves extends ContentWidget
 				geometry.getVertices().add( points.get( i ) );
 
 				colors.add( new Color( 0xffffff ) );
-				colors.get( i ).setHSV( 0.6, ( 200 + points.get( i ).getX() ) / 400.0, 1.0 );
+				colors.get( i ).setHSL( 0.6, ( 200 + points.get( i ).getX() ) / 400.0, 1.0 );
 
 				colors2.add( new Color( 0xffffff ) );
-				colors2.get( i ).setHSV( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400.0 );
+				colors2.get( i ).setHSL( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400.0 );
 
 				colors3.add( new Color( 0xffffff ) );
-				colors3.get( i ).setHSV( i / (double)points.size(), 1.0, 1.0 );
+				colors3.get( i ).setHSL( i / (double)points.size(), 1.0, 1.0 );
 			}
 
 			geometry2.setVertices(geometry.getVertices()); 

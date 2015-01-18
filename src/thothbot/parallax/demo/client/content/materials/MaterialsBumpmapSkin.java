@@ -131,7 +131,7 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			DirectionalLight directionalLight = new DirectionalLight( 0xffffff, 0.85 );
 			directionalLight.getPosition().set( 1, -0.5, 1 );
-			directionalLight.getColor().setHSV( 0.6, 1.0, 0.85 );
+			directionalLight.getColor().setHSL( 0.6, 1.0, 0.85 );
 			getScene().add( directionalLight );
 
 			directionalLight.getPosition().multiply( 500 );
@@ -197,8 +197,8 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			getRenderer().setClearColor(0x4c5159);
 
-//			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
-//			shadowMap.setCullFrontFaces(false);
+			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
+			shadowMap.setCullFrontFaces(false);
 
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);

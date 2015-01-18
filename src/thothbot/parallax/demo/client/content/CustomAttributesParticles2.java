@@ -131,12 +131,12 @@ public class CustomAttributesParticles2 extends ContentWidget
 				if ( v < vc1 ) 
 				{	
 					values_size.add( v, 10.0);
-					values_color.get( v ).setHSV( 0.01 + 0.1 * ( v / (double)vc1 ), 0.99, ( vertices.get( v ).getY() + radius ) / ( 2.0 *radius ) );
+					values_color.get( v ).setHSL( 0.01 + 0.1 * ( v / (double)vc1 ), 0.99, ( vertices.get( v ).getY() + radius ) / ( 2.0 *radius ) );
 				} 
 				else 
 				{
 					values_size.add( v, 40.0);
-					values_color.get( v ).setHSV( 0.6, 0.75, 0.5 + vertices.get( v ).getY() / ( 0.8 * radius ) );
+					values_color.get( v ).setHSL( 0.6, 0.75, 0.5 + vertices.get( v ).getY() / ( 0.8 * radius ) );
 				}
 	
 			}

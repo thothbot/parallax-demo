@@ -102,8 +102,8 @@ public final class MaterialsLightmap extends ContentWidget
 
 
 			HemisphereLight hemiLight = new HemisphereLight( 0xffffff, 0xffffff, 1.25 );
-			hemiLight.getColor().setHSV( 0.6, 1.0, 0.75 );
-			hemiLight.getGroundColor().setHSV( 0.1, 0.8, 0.7 );
+			hemiLight.getColor().setHSL( 0.6, 1.0, 0.75 );
+			hemiLight.getGroundColor().setHSL( 0.1, 0.8, 0.7 );
 			hemiLight.getPosition().setY( 500 );
 			getScene().add( hemiLight );
 

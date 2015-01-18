@@ -75,7 +75,7 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 			sceneMaxAnisotropy = new Scene();
 			
 			sceneMaxAnisotropy.setFog( new Fog( 0xffffff, 1, 25000 ) );
-			sceneMaxAnisotropy.getFog().getColor().setHSV( 0.6, 0.05, 1 );
+			sceneMaxAnisotropy.getFog().getColor().setHSL( 0.6, 0.05, 1 );
 			getScene().setFog(sceneMaxAnisotropy.getFog());
 
 			sceneMaxAnisotropy.add( new AmbientLight( 0xeef0ff ) );

@@ -202,7 +202,7 @@ public final class TerrainDynamic extends ContentWidget
 			// SCENE (FINAL)
 
 			getScene().setFog( new Fog( 0x050505, 2000, 4000 ) );
-			getScene().getFog().getColor().setHSV( 0.102, 0.9, 0.825 );
+			getScene().getFog().getColor().setHSL( 0.102, 0.9, 0.825 );
 
 			// LIGHTS
 
@@ -504,7 +504,7 @@ public final class TerrainDynamic extends ContentWidget
 				double valNorm = ( lightVal - fLow ) / ( fHigh - fLow );
 
 				double sat = Mathematics.mapLinear( valNorm, 0, 1, 0.95, 0.25 );
-				getScene().getFog().getColor().setHSV( 0.1, sat, lightVal );
+				getScene().getFog().getColor().setHSL( 0.1, sat, lightVal );
 
 				getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
 

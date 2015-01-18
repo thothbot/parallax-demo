@@ -83,7 +83,7 @@ public final class EffectsLensFlares extends ContentWidget
 			controls.setDragToLook( false );
 			
 			Fog fog = new Fog( 0x000000, 3500, 15000 );
-			fog.getColor().setHSV( 0.51, 0.6, 0.025 );
+			fog.getColor().setHSL( 0.51, 0.6, 0.025 );
 			getScene().setFog(fog);
 
 			// world
@@ -118,7 +118,7 @@ public final class EffectsLensFlares extends ContentWidget
 			// lights
 
 			AmbientLight ambient = new AmbientLight( 0xffffff );
-			ambient.getColor().setHSV( 0.1, 0.5, 0.3 );
+			ambient.getColor().setHSL( 0.1, 0.5, 0.3 );
 			getScene().add( ambient );
 
 
@@ -126,7 +126,7 @@ public final class EffectsLensFlares extends ContentWidget
 			dirLight.getPosition().set( 0, -1, 0 ).normalize();
 			getScene().add( dirLight );
 
-			dirLight.getColor().setHSV( 0.1, 0.725, 0.9 );
+			dirLight.getColor().setHSL( 0.1, 0.725, 0.9 );
 
 			// lens flares
 
@@ -148,10 +148,10 @@ public final class EffectsLensFlares extends ContentWidget
 			light.getPosition().set( x, y, z );
 			getScene().add( light );
 
-			light.getColor().setHSV( h, s, v );
+			light.getColor().setHSL( h, s, v );
 
 			Color flareColor = new Color( 0xffffff );
-			flareColor.setHSV( h, s - 0.5, v + 0.5 );
+			flareColor.setHSL( h, s - 0.5, v + 0.5 );
 			
 			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0, Material.BLENDING.ADDITIVE, flareColor );
 

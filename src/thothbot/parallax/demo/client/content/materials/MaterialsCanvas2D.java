@@ -301,12 +301,12 @@ public final class MaterialsCanvas2D extends ContentWidget
 				if(i > 9 && material instanceof MeshPhongMaterial)
 				{
 					((MeshPhongMaterial)material).getEmissive()
-						.setHSV( 0.54, 1.0, 0.7 * ( 0.5 + 0.5 * Math.sin( 35 * timer ) ) );	
+						.setHSL( 0.54, 1.0, 0.7 * ( 0.5 + 0.5 * Math.sin( 35 * timer ) ) );	
 				}
 				else if(i > 9 && material instanceof MeshLambertMaterial)
 				{
 					((MeshLambertMaterial)material).getEmissive()
-						.setHSV( 0.04, 1.0, 0.7 * ( 0.5 + 0.5 * Math.cos( 35 * timer ) ) );	
+						.setHSL( 0.04, 1.0, 0.7 * ( 0.5 + 0.5 * Math.cos( 35 * timer ) ) );	
 				}
 			}
 			

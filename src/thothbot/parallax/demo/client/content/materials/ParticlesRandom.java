@@ -92,7 +92,7 @@ public final class ParticlesRandom extends ContentWidget
 			{
 				PointCloudMaterial material = new PointCloudMaterial();
 				material.setSize( 5 - i );
-				material.getColor().setHSV( 1.0 - i * 0.05, 1.0, 1.0 );
+				material.getColor().setHSL( 1.0 - i * 0.05, 1.0, 1.0 );
 				materials.add(material);
 
 				PointCloud particles = new PointCloud( geometry, material );

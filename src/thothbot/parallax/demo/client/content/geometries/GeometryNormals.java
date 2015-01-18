@@ -18,7 +18,20 @@
 
 package thothbot.parallax.demo.client.content.geometries;
 
+import thothbot.parallax.core.client.controls.TrackballControls;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.Face3;
+import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.geometries.BoxGeometry;
+import thothbot.parallax.core.shared.helpers.ArrowHelper;
+import thothbot.parallax.core.shared.lights.PointLight;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Matrix4;
+import thothbot.parallax.core.shared.math.Vector3;
+import thothbot.parallax.core.shared.objects.Group;
+import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -37,7 +50,9 @@ public class GeometryNormals extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		PerspectiveCamera camera;
-
+		
+		private TrackballControls control;
+		
 		@Override
 		protected void onStart()
 		{
@@ -47,20 +62,127 @@ public class GeometryNormals extends ContentWidget
 					1, // near
 					1000 // far 
 			);
-			camera.getPosition().setZ(400);
+			camera.getPosition().setZ(500);
+			
+			this.control = new TrackballControls( camera, getCanvas() );
+			this.control.setPanSpeed(0.2);
+			this.control.setDynamicDampingFactor(0.3);
+			
+			PointLight light = new PointLight( 0xffffff, 1.5, 0.0 );
+			light.getPosition().set( 1000, 1000, 2000 );
+			getScene().add( light );
+
+			Geometry geometry = new BoxGeometry(200, 200, 200, 2, 2, 2);
+			MeshBasicMaterial material = new MeshBasicMaterial();
+			material.setColor(new Color((int)(Math.random() * 0xffffff)));
+			material.setWireframe(false);
+
+			geometry.computeBoundingSphere();
+			
+			double scaleFactor = 160.0 / geometry.getBoundingSphere().getRadius();
+			geometry.applyMatrix( new Matrix4().makeScale( scaleFactor, scaleFactor, scaleFactor ) );
+
+			Geometry originalGeometry = geometry.clone();
+			originalGeometry.computeFaceNormals();
+			originalGeometry.computeVertexNormals( true );
+
+			// in case of duplicated vertices
+			geometry.mergeVertices();
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals( true );
+
+			for ( int i = 0; i < geometry.getFaces().size(); i ++ ) {
+
+				Face3 f  = geometry.getFaces().get( i );
+				int n = 3;
+
+				for( int j = 0; j < n; j++ ) {
+					int vertexIndex = f.getFlat()[j];
+					Vector3 p = geometry.getVertices().get( vertexIndex );
+
+					Color color = new Color( 0xffffff );
+					color.setHSL( ( p.getY() ) / 400.0 + 0.5, 1.0, 0.5 );
+
+					f.getVertexColors().add( j, color);
+
+				}
+
+			}
+			
+			Group group = new Group();
+			getScene().add( group );
+			
+			MeshBasicMaterial meshMaterial = new MeshBasicMaterial();
+			meshMaterial.setColor(new Color(0xfefefe));
+			meshMaterial.setWireframe(true);
+			meshMaterial.setOpacity(0.5);
+			Mesh mesh = new Mesh( geometry, meshMaterial );
+			group.add( mesh );
+
+			int normalLength = 15;
+			
+			for( int f = 0, fl = geometry.getFaces().size(); f < fl; f ++ ) {
+				Face3 face = geometry.getFaces().get( f );
+
+				Vector3 centroid = new Vector3()
+					.add( geometry.getVertices().get( face.getA() ) )
+					.add( geometry.getVertices().get( face.getB() ) )
+					.add( geometry.getVertices().get( face.getC() ) )
+					.divide( 3.0 );
+
+				ArrowHelper arrow = new ArrowHelper( 
+						face.getNormal(),
+						centroid,
+						normalLength,
+						0x3333FF );
+				mesh.add( arrow );
+			}
+			
+			for( int f = 0, fl = originalGeometry.getFaces().size(); f < fl; f ++ ) {
+				Face3 face = originalGeometry.getFaces().get( f );
+				if( face.getVertexNormals() == null ) {
+					continue;
+				}
+				Log.error(face.getVertexNormals().size());
+				for( int v = 0, vl = face.getVertexNormals().size(); v < vl; v ++ ) {
+					ArrowHelper arrow = new ArrowHelper( 
+							face.getVertexNormals().get( v ),
+							originalGeometry.getVertices().get( face.getFlat()[ v ] ),
+							normalLength,
+							0xFF3333 );
+					mesh.add( arrow );
+				}
+			}
+
+			for( int f = 0, fl = ((Geometry)mesh.getGeometry()).getFaces().size(); f < fl; f ++ ) {
+				Face3 face =((Geometry)mesh.getGeometry()).getFaces().get( f );
+				if( face.getVertexNormals() == null ) {
+					continue;
+				}
+				for( int v = 0, vl = face.getVertexNormals().size(); v < vl; v ++ ) {
+					ArrowHelper arrow = new ArrowHelper( 
+							face.getVertexNormals().get( v ),
+							((Geometry)mesh.getGeometry()).getVertices().get( face.getFlat()[ v ] ),
+							normalLength,
+							0x000000 );
+					mesh.add( arrow );
+				}
+			}
+			
+			getRenderer().setClearColor( 0xf0f0f0 );
 		}
 		
 		@Override
 		protected void onUpdate(double duration)
 		{
-			
+			this.control.update();
 			getRenderer().render(getScene(), camera);
 		}
 	}
 		
 	public GeometryNormals() 
 	{
-		super("Normals", "This example based on the three.js example.");
+		super("Normals", "This example based on the three.js example. <br/> Blue Arrows: Face Normals. Red Arrows: Vertex Normals before Geometry.mergeVertices. Black Arrows: Vertex Normals after Geometry.mergeVertices.");
 	}
 	
 	@Override
@@ -72,7 +194,7 @@ public class GeometryNormals extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleGeometryNormals();
 	}
 	
 	@Override
