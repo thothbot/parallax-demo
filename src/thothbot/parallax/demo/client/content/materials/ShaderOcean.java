@@ -119,7 +119,6 @@ public final class ShaderOcean extends ContentWidget {
 				
 				@Override
 				public void onImageLoad(Texture texture) {
-					//water.material.getShader().getUniforms().get("normalSampler").setValue(  texture );
 					water.normalSampler = texture;
 					water.updateUniforms();
 				}
@@ -132,7 +131,7 @@ public final class ShaderOcean extends ContentWidget {
 					new PlaneGeometry(this.width * 500, this.height * 500),
 //					new PlaneBufferGeometry( this.width * 500, this.height * 500 ),
 					water.material
-				);
+			);
 						
 			mirrorMesh.add( water );
 			mirrorMesh.getRotation().setX( - Math.PI * 0.5 );
@@ -165,10 +164,11 @@ public final class ShaderOcean extends ContentWidget {
 
 			MeshPhongMaterial sphereMaterial = new MeshPhongMaterial();
 			sphereMaterial.setVertexColors(COLORS.FACE);
+			sphereMaterial.setEnvMap(textureCube);
 			sphereMaterial.setShininess(100.0);
 			
 			sphere = new Mesh( geometry, sphereMaterial );
-//			getScene().add( sphere );			
+			getScene().add( sphere );			
 		}
 		
 		@Override

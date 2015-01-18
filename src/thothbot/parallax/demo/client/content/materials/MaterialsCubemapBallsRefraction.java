@@ -21,11 +21,9 @@ package thothbot.parallax.demo.client.content.materials;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.shaders.CubeShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
-import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.client.textures.Texture.MAPPING_MODE;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
@@ -93,7 +91,7 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 
 			CubeTexture textureCube = new CubeTexture( textures );
 			textureCube.setMapping(MAPPING_MODE.CUBE_REFRACTION);
-			
+//			
 			MeshBasicMaterial material = new MeshBasicMaterial();
 			material.setColor( new Color(0xffffff) );
 			material.setEnvMap( textureCube );
