@@ -29,6 +29,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
+import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
@@ -89,7 +90,7 @@ public final class TrackballEarth extends ContentWidget
 					1e7f // far 
 			); 
 			
-			camera.getPosition().setZ(radius * 7);
+			camera.getPosition().setZ(radius * 5);
 			
 			this.control = new TrackballControls( camera, getCanvas() );
 			this.control.setPanSpeed(0.2);
@@ -100,6 +101,9 @@ public final class TrackballEarth extends ContentWidget
 			DirectionalLight dirLight = new DirectionalLight( 0xFFFFFF );
 			dirLight.getPosition().set( -1, 0, 1 ).normalize();
 			getScene().add( dirLight );
+			
+			AmbientLight ambientLight = new AmbientLight( 0x000000 );
+			getScene().add( ambientLight );
 
 			Texture planetTexture   = new Texture( earthAtmos );
 			Texture cloudsTexture   = new Texture( earthClouds );
@@ -122,15 +126,11 @@ public final class TrackballEarth extends ContentWidget
 			uniforms.get("enableDiffuse").setValue( true );
 			uniforms.get("enableSpecular").setValue( true );
 
-			((Color)uniforms.get("uDiffuseColor").getValue()).setHex( 0xffffff );
-			((Color)uniforms.get("uSpecularColor").getValue()).setHex( 0x666666 );
-			((Color)uniforms.get("uAmbientColor").getValue()).setHex( 0x000000 );
+			((Color)uniforms.get("diffuse").getValue()).setHex( 0xffffff );
+			((Color)uniforms.get("specular").getValue()).setHex( 0x666666 );
+			((Color)uniforms.get("ambient").getValue()).setHex( 0x000000 );
 
-			uniforms.get("uShininess").setValue( 20.0 );
-
-			((Color)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
-			((Color)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
-			((Color)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
+			uniforms.get("shininess").setValue( 15.0 );
 
 			// planet
 

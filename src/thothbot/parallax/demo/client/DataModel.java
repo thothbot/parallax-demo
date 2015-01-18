@@ -342,12 +342,12 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MaterialsLightmap.class));
 			category.addExample(new MaterialsWireframe(),
 					RunAsyncCode.runAsyncCode(MaterialsWireframe.class));
-			category.addExample(new MaterialsCanvas2D(),
-					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
+//			category.addExample(new MaterialsCanvas2D(),
+//					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
 			category.addExample(new MaterialsTextures(),
 					RunAsyncCode.runAsyncCode(MaterialsTextures.class));
-			category.addExample(new MaterialsTextureCompressed(),
-					RunAsyncCode.runAsyncCode(MaterialsTextureCompressed.class));
+//			category.addExample(new MaterialsTextureCompressed(),
+//					RunAsyncCode.runAsyncCode(MaterialsTextureCompressed.class));
 			category.addExample(new MaterialsCubemapFresnel(),
 					RunAsyncCode.runAsyncCode(MaterialsCubemapFresnel.class));
 			category.addExample(new MaterialsCubemapBallsReflection(),
