@@ -1,3 +1,4 @@
+uniform float amplitude;
 attribute float size;
 attribute vec3 ca;
 

@@ -87,7 +87,7 @@ public class CustomAttributesParticles extends ContentWidget
 
 			this.attributes = new HashMap<String, Attribute>();
 			this.attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
-			this.attributes.put("customColor", new Attribute(Attribute.TYPE.C, new ArrayList<Color>()));
+			this.attributes.put("ca", new Attribute(Attribute.TYPE.C, new ArrayList<Color>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
@@ -120,7 +120,7 @@ public class CustomAttributesParticles extends ContentWidget
 
 			List<Vector3> vertices = ((Geometry)sphere.getGeometry()).getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
-			List<Color> values_color = (List<Color>) attributes.get("customColor").getValue();
+			List<Color> values_color = (List<Color>) attributes.get("ca").getValue();
 
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
