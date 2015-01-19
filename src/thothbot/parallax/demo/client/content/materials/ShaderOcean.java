@@ -128,8 +128,7 @@ public final class ShaderOcean extends ContentWidget {
 			waterNormals.setWrapT(TextureWrapMode.REPEAT);
 
 			Mesh mirrorMesh = new Mesh(
-					new PlaneGeometry(this.width * 500, this.height * 500),
-//					new PlaneBufferGeometry( this.width * 500, this.height * 500 ),
+					new PlaneBufferGeometry( this.width * 500, this.height * 500 ),
 					water.material
 			);
 						

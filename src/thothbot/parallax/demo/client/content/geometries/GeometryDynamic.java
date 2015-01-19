@@ -56,11 +56,9 @@ public class GeometryDynamic extends ContentWidget
 		PlaneGeometry geometry;
 		Mesh mesh;
 		
-		int worldWidth = 128;
-		int worldDepth = 128;
-		int worldHalfWidth = worldWidth / 2;
-		int worldHalfDepth = worldDepth / 2;
-		
+		int worldWidth = 32;
+		int worldDepth = 32;
+	
 		private double oldTime;
 		
 		@Override

@@ -23,7 +23,6 @@ import java.util.List;
 
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.materials.PointCloudMaterial;
@@ -92,7 +91,7 @@ public final class ParticlesRandom extends ContentWidget
 			{
 				PointCloudMaterial material = new PointCloudMaterial();
 				material.setSize( 5 - i );
-				material.getColor().setHSL( 1.0 - i * 0.05, 1.0, 1.0 );
+				material.getColor().setHSL( 1.0 - i * 0.05, 1.0, 0.5 );
 				materials.add(material);
 
 				PointCloud particles = new PointCloud( geometry, material );
