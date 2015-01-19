@@ -57,7 +57,7 @@ public final class EffectsSprites extends ContentWidget
 					60, // fov
 					getRenderer().getAbsoluteAspectRation(), // aspect 
 					1, // near
-					5000 // far 
+					2100 // far 
 			);
 			
 			camera.getPosition().setZ(1500);
@@ -85,7 +85,7 @@ public final class EffectsSprites extends ContentWidget
 				} 
 				else 
 				{
-					sprite.getColor().setHSL(0.5 * Math.random(), 0.8, 0.9 );
+					sprite.getColor().setHSL(0.5 * Math.random(), 0.75, 0.5 );
 					sprite.getUvScale().set( 2, 2 );
 					sprite.getUvOffset().set( -0.5, -0.5 );
 				}
