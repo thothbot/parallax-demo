@@ -322,8 +322,8 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 			category.addExample(new InteractiveCubes(),
 					RunAsyncCode.runAsyncCode(InteractiveCubes.class));
-			category.addExample(new InteractiveCubesGpu(),
-					RunAsyncCode.runAsyncCode(InteractiveCubesGpu.class));
+//			category.addExample(new InteractiveCubesGpu(),
+//					RunAsyncCode.runAsyncCode(InteractiveCubesGpu.class));
 			category.addExample(new InteractiveDraggableCubes(),
 					RunAsyncCode.runAsyncCode(InteractiveDraggableCubes.class));
 			category.addExample(new InteractiveVoxelPainter(),

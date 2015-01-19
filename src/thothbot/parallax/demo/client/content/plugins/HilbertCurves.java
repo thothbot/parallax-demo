@@ -29,6 +29,7 @@ import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
+import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.Material.COLORS;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
@@ -87,13 +88,13 @@ public final class HilbertCurves extends ContentWidget
 				geometry.getVertices().add( points.get( i ) );
 
 				colors.add( new Color( 0xffffff ) );
-				colors.get( i ).setHSL( 0.6, ( 200 + points.get( i ).getX() ) / 400.0, 1.0 );
+				colors.get( i ).setHSL( 0.6, 1.0, Math.max( 0, ( 200 - points.get( i ).getX() ) / 400.0 ) * 0.5 + 0.5);
 
 				colors2.add( new Color( 0xffffff ) );
-				colors2.get( i ).setHSL( 0.3, 1.0, ( 200 + points.get( i ).getX() ) / 400.0 );
+				colors2.get( i ).setHSL( 0.3, 1.0, Math.max( 0, ( 200 + points.get( i ).getX() ) / 400.0 ) * 0.5 );
 
 				colors3.add( new Color( 0xffffff ) );
-				colors3.get( i ).setHSL( i / (double)points.size(), 1.0, 1.0 );
+				colors3.get( i ).setHSL( i / (double)points.size(), 1.0, 0.5 );
 			}
 
 			geometry2.setVertices(geometry.getVertices()); 
@@ -108,7 +109,8 @@ public final class HilbertCurves extends ContentWidget
 			LineBasicMaterial material = new LineBasicMaterial();
 			material.setColor(new Color(0xffffff));
 			material.setLinewidth(3);
-			material.setOpacity(1);
+			material.setOpacity(1.0);
+			material.setVertexColors(Material.COLORS.VERTEX);
 
 			double scale = 0.3;
 			double d = 225;
