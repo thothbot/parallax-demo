@@ -128,9 +128,9 @@ public class CustomAttributesParticles extends ContentWidget
 				values_color.add( v, new Color( 0xffaa00 ));
 	
 				if ( vertices.get( v ).getX() < 0 )
-					values_color.get( v ).setHSL( 0.5 + 0.1 * ( v / (double)vertices.size() ), 0.7, 0.9 );
+					values_color.get( v ).setHSL( 0.5 + 0.1 * ( v / (double)vertices.size() ), 0.7, 0.5 );
 				else
-					values_color.get( v ).setHSL( 0.0 + 0.1 * ( v / (double)vertices.size() ), 0.9, 0.9 );
+					values_color.get( v ).setHSL( 0.0 + 0.1 * ( v / (double)vertices.size() ), 0.9, 0.5 );
 			}
 
 			getScene().add( sphere );
