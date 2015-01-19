@@ -87,12 +87,11 @@ public final class TerrainShader extends Shader
 		this.addUniform("uDisplacementBias", new Uniform(Uniform.TYPE.F, 0.0 ));
 		this.addUniform("uDisplacementScale", new Uniform(Uniform.TYPE.F, 1.0 ));
 
-		this.addUniform("uDiffuseColor", new Uniform(Uniform.TYPE.C, new Color(0xeeeeee) ));
-		this.addUniform("uSpecularColor", new Uniform(Uniform.TYPE.C, new Color(0x111111) ));
-		this.addUniform("uAmbientColor", new Uniform(Uniform.TYPE.C, new Color(0x050505) ));
-
-		this.addUniform("uShininess", new Uniform(Uniform.TYPE.F, 30.0 ));
-		this.addUniform("uOpacity", new Uniform(Uniform.TYPE.F, 1.0 ));
+		this.addUniform("diffuse", new Uniform(Uniform.TYPE.C, new Color(0xeeeeee) ));
+		this.addUniform("specular", new Uniform(Uniform.TYPE.C, new Color(0x111111) ));
+		this.addUniform("ambient", new Uniform(Uniform.TYPE.C, new Color(0x050505) ));
+		this.addUniform("shininess", new Uniform(Uniform.TYPE.F, 30.0 ));
+		this.addUniform("opacity", new Uniform(Uniform.TYPE.F, 1.0 ));
 		
 		this.addUniform("uRepeatBase", new Uniform(Uniform.TYPE.V2, new Vector2(1, 1) ));
 		this.addUniform("uRepeatOverlay", new Uniform(Uniform.TYPE.V2, new Vector2(1, 1) ));

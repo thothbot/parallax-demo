@@ -1,8 +1,8 @@
-uniform vec3 uAmbientColor;
-uniform vec3 uDiffuseColor;
-uniform vec3 uSpecularColor;
-uniform float uShininess;
-uniform float uOpacity;
+uniform vec3 ambient;
+uniform vec3 diffuse;
+uniform vec3 specular;
+uniform float shininess;
+uniform float opacity;
 
 uniform bool enableDiffuse1;
 uniform bool enableDiffuse2;
@@ -40,7 +40,7 @@ uniform vec3 ambientLightColor;
 
 	uniform vec3 hemisphereLightSkyColor[ MAX_HEMI_LIGHTS ];
 	uniform vec3 hemisphereLightGroundColor[ MAX_HEMI_LIGHTS ];
-	uniform vec3 hemisphereLightPosition[ MAX_HEMI_LIGHTS ];
+	uniform vec3 hemisphereLightDirection[ MAX_HEMI_LIGHTS ];
 
 #endif
 
@@ -58,7 +58,7 @@ varying vec3 vViewPosition;
 
 void main() {
 
-	gl_FragColor = vec4( vec3( 1.0 ), uOpacity );
+	gl_FragColor = vec4( vec3( 1.0 ), opacity );
 
 	vec3 specularTex = vec3( 1.0 );
 
@@ -102,7 +102,7 @@ void main() {
 	vec3 normal = normalize( finalNormal );
 	vec3 viewPosition = normalize( vViewPosition );
 
-	// point lights
+				// point lights
 
 	#if MAX_POINT_LIGHTS > 0
 
@@ -126,16 +126,16 @@ void main() {
 			float pointDotNormalHalf = max( dot( normal, pointHalfVector ), 0.0 );
 			float pointDiffuseWeight = max( dot( normal, lVector ), 0.0 );
 
-			float pointSpecularWeight = specularTex.r * max( pow( pointDotNormalHalf, uShininess ), 0.0 );
+			float pointSpecularWeight = specularTex.r * max( pow( pointDotNormalHalf, shininess ), 0.0 );
 
-			pointDiffuse += pointDistance * pointLightColor[ i ] * uDiffuseColor * pointDiffuseWeight;
-			pointSpecular += pointDistance * pointLightColor[ i ] * uSpecularColor * pointSpecularWeight * pointDiffuseWeight;
+			pointDiffuse += pointDistance * pointLightColor[ i ] * diffuse * pointDiffuseWeight;
+			pointSpecular += pointDistance * pointLightColor[ i ] * specular * pointSpecularWeight * pointDiffuseWeight;
 
 		}
 
 	#endif
 
-	// directional lights
+				// directional lights
 
 	#if MAX_DIR_LIGHTS > 0
 
@@ -152,16 +152,16 @@ void main() {
 			float dirDotNormalHalf = max( dot( normal, dirHalfVector ), 0.0 );
 			float dirDiffuseWeight = max( dot( normal, dirVector ), 0.0 );
 
-			float dirSpecularWeight = specularTex.r * max( pow( dirDotNormalHalf, uShininess ), 0.0 );
+			float dirSpecularWeight = specularTex.r * max( pow( dirDotNormalHalf, shininess ), 0.0 );
 
-			dirDiffuse += directionalLightColor[ i ] * uDiffuseColor * dirDiffuseWeight;
-			dirSpecular += directionalLightColor[ i ] * uSpecularColor * dirSpecularWeight * dirDiffuseWeight;
+			dirDiffuse += directionalLightColor[ i ] * diffuse * dirDiffuseWeight;
+			dirSpecular += directionalLightColor[ i ] * specular * dirSpecularWeight * dirDiffuseWeight;
 
 		}
 
 	#endif
 
-	// hemisphere lights
+				// hemisphere lights
 
 	#if MAX_HEMI_LIGHTS > 0
 
@@ -170,39 +170,39 @@ void main() {
 
 		for( int i = 0; i < MAX_HEMI_LIGHTS; i ++ ) {
 
-			vec4 lPosition = viewMatrix * vec4( hemisphereLightPosition[ i ], 1.0 );
-			vec3 lVector = normalize( lPosition.xyz + vViewPosition.xyz );
+			vec4 lDirection = viewMatrix * vec4( hemisphereLightDirection[ i ], 0.0 );
+			vec3 lVector = normalize( lDirection.xyz );
 
-			// diffuse
+						// diffuse
 
 			float dotProduct = dot( normal, lVector );
 			float hemiDiffuseWeight = 0.5 * dotProduct + 0.5;
 
-			hemiDiffuse += uDiffuseColor * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight );
+			hemiDiffuse += diffuse * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight );
 
-			// specular (sky light)
+						// specular (sky light)
 
 			float hemiSpecularWeight = 0.0;
 
 			vec3 hemiHalfVectorSky = normalize( lVector + viewPosition );
 			float hemiDotNormalHalfSky = 0.5 * dot( normal, hemiHalfVectorSky ) + 0.5;
-			hemiSpecularWeight += specularTex.r * max( pow( hemiDotNormalHalfSky, uShininess ), 0.0 );
+			hemiSpecularWeight += specularTex.r * max( pow( hemiDotNormalHalfSky, shininess ), 0.0 );
 
-			// specular (ground light)
+						// specular (ground light)
 
-			vec3 lVectorGround = normalize( -lPosition.xyz + vViewPosition.xyz );
+			vec3 lVectorGround = -lVector;
 
 			vec3 hemiHalfVectorGround = normalize( lVectorGround + viewPosition );
 			float hemiDotNormalHalfGround = 0.5 * dot( normal, hemiHalfVectorGround ) + 0.5;
-			hemiSpecularWeight += specularTex.r * max( pow( hemiDotNormalHalfGround, uShininess ), 0.0 );
+			hemiSpecularWeight += specularTex.r * max( pow( hemiDotNormalHalfGround, shininess ), 0.0 );
 
-			hemiSpecular += uSpecularColor * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight ) * hemiSpecularWeight * hemiDiffuseWeight;
+			hemiSpecular += specular * mix( hemisphereLightGroundColor[ i ], hemisphereLightSkyColor[ i ], hemiDiffuseWeight ) * hemiSpecularWeight * hemiDiffuseWeight;
 
 		}
 
 	#endif
 
-	// all lights contribution summation
+				// all lights contribution summation
 
 	vec3 totalDiffuse = vec3( 0.0 );
 	vec3 totalSpecular = vec3( 0.0 );
@@ -228,8 +228,9 @@ void main() {
 
 	#endif
 
-	//"gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor) + totalSpecular;
-	gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * uAmbientColor + totalSpecular );
+	//"gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * ambient) + totalSpecular;
+	gl_FragColor.xyz = gl_FragColor.xyz * ( totalDiffuse + ambientLightColor * ambient + totalSpecular );
 
 [*]
+
 }

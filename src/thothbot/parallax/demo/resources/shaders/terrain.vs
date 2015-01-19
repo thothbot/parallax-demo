@@ -46,12 +46,12 @@ void main() {
 		float df = uDisplacementScale * dv.x + uDisplacementBias;
 		vec3 displacedPosition = normal * df + position;
 
-		vec4 mPosition = modelMatrix * vec4( displacedPosition, 1.0 );
+		vec4 worldPosition = modelMatrix * vec4( displacedPosition, 1.0 );
 		vec4 mvPosition = modelViewMatrix * vec4( displacedPosition, 1.0 );
 
 	#else
 
-		vec4 mPosition = modelMatrix * vec4( position, 1.0 );
+		vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
 		vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 
 	#endif
@@ -63,6 +63,6 @@ void main() {
 	vec3 normalTex = texture2D( tNormal, uvBase ).xyz * 2.0 - 1.0;
 	vNormal = normalMatrix * normalTex;
 
-	[*]
+[*]
 
 }

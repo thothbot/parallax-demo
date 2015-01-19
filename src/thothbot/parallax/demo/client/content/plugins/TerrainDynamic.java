@@ -202,18 +202,17 @@ public final class TerrainDynamic extends ContentWidget
 			// SCENE (FINAL)
 
 			getScene().setFog( new Fog( 0x050505, 2000, 4000 ) );
-			getScene().getFog().getColor().setHSL( 0.102, 0.9, 0.825 );
 
 			// LIGHTS
 
 			getScene().add( new AmbientLight( 0x111111 ) );
 
 			directionalLight = new DirectionalLight( 0xffffff, 1.15 );
-			directionalLight.getPosition().set( 500, 2000, 0 );
+			directionalLight.getPosition().set( 500, 2000, 0.0 );
 			getScene().add( directionalLight );
 
-			pointLight = new PointLight( 0xff4400, 1.5, 0 );
-			pointLight.getPosition().set( 0 );
+			pointLight = new PointLight( 0xff4400, 1.5, 0.0 );
+			pointLight.getPosition().set( 0.0 );
 			getScene().add( pointLight );
 
 			// HEIGHT + NORMAL MAPS
@@ -224,11 +223,13 @@ public final class TerrainDynamic extends ContentWidget
 			heightMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			heightMap.setMagFilter(TextureMagFilter.LINEAR);
 			heightMap.setFormat(PixelFormat.RGB);
+			heightMap.setGenerateMipmaps(false);
 			
 			normalMap = new RenderTargetTexture( rx, ry );
 			normalMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			normalMap.setMagFilter(TextureMagFilter.LINEAR);
 			normalMap.setFormat(PixelFormat.RGB);
+			normalMap.setGenerateMipmaps(false);
 
 			NormalMapShader normalShader = new NormalMapShader();
 
@@ -244,6 +245,7 @@ public final class TerrainDynamic extends ContentWidget
 			specularMap.setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
 			specularMap.setMagFilter(TextureMagFilter.LINEAR);
 			specularMap.setFormat(PixelFormat.RGB);
+			specularMap.setGenerateMipmaps(false);
 			specularMap.setWrapS(TextureWrapMode.REPEAT);
 			specularMap.setWrapT(TextureWrapMode.REPEAT);
 
@@ -288,11 +290,11 @@ public final class TerrainDynamic extends ContentWidget
 			uniformsTerrain.get( "enableDiffuse2" ).setValue( true );
 			uniformsTerrain.get( "enableSpecular" ).setValue( true );
 
-			((Color)uniformsTerrain.get( "uDiffuseColor" ).getValue()).setHex( 0xffffff );
-			((Color)uniformsTerrain.get( "uSpecularColor").getValue()).setHex( 0xffffff );
-			((Color)uniformsTerrain.get( "uAmbientColor" ).getValue()).setHex( 0x111111 );
+			((Color)uniformsTerrain.get( "diffuse" ).getValue()).setHex( 0xffffff );
+			((Color)uniformsTerrain.get( "specular").getValue()).setHex( 0xffffff );
+			((Color)uniformsTerrain.get( "ambient" ).getValue()).setHex( 0x111111 );
 
-			uniformsTerrain.get( "uShininess" ).setValue( 30.0 );
+			uniformsTerrain.get( "shininess" ).setValue( 30.0 );
 			uniformsTerrain.get( "uDisplacementScale" ).setValue( 375.0 );
 
 			((Vector2)uniformsTerrain.get( "uRepeatOverlay" ).getValue()).set( 6.0, 6.0 );
@@ -372,6 +374,7 @@ public final class TerrainDynamic extends ContentWidget
 			specularMap.setMagFilter(TextureMagFilter.LINEAR);
 			specularMap.setFormat(PixelFormat.RGB);
 			specularMap.setStencilBuffer(false);
+			specularMap.setGenerateMipmaps(false);
 			
 			Postprocessing composer = new Postprocessing( getRenderer(), getScene(), renderTarget );
 			composer.addPass( renderModel );
@@ -385,50 +388,50 @@ public final class TerrainDynamic extends ContentWidget
 
 			final double startX = -3000;
 			morphs = new ArrayList<MorphAnimMesh>();
-			try
-			{
-				jsonLoader.load(parrotModel, new JsonLoader.ModelLoadHandler() {
-					
-					@Override
-					public void onModelLoaded() {
-						Geometry geometry = jsonLoader.getGeometry();
-
-						jsonLoader.morphColorsToFaceColors();
-						addMorph( geometry, 500, startX -500, 500, 700 );
-						addMorph( geometry, 500, startX - Math.random() * 500, 500, -200 );
-						addMorph( geometry, 500, startX - Math.random() * 500, 500, 200 );
-						addMorph( geometry, 500, startX - Math.random() * 500, 500, 1000 );
-						
-					}
-				});
-				
-				jsonLoader.load(flamingoModel, new JsonLoader.ModelLoadHandler() {
-					
-					@Override
-					public void onModelLoaded() {
-						Geometry geometry = jsonLoader.getGeometry();
-
-						jsonLoader.morphColorsToFaceColors();
-						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 40 );
-					}
-				});
-				
-				jsonLoader.load(storkModel, new JsonLoader.ModelLoadHandler() {
-
-					@Override
-					public void onModelLoaded() {
-						Geometry geometry = jsonLoader.getGeometry();
-
-						jsonLoader.morphColorsToFaceColors();
-						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 340 );
-					}
-				});
-
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+//			try
+//			{
+//				jsonLoader.load(parrotModel, new JsonLoader.ModelLoadHandler() {
+//					
+//					@Override
+//					public void onModelLoaded() {
+//						Geometry geometry = jsonLoader.getGeometry();
+//
+//						jsonLoader.morphColorsToFaceColors();
+//						addMorph( geometry, 500, startX -500, 500, 700 );
+//						addMorph( geometry, 500, startX - Math.random() * 500, 500, -200 );
+//						addMorph( geometry, 500, startX - Math.random() * 500, 500, 200 );
+//						addMorph( geometry, 500, startX - Math.random() * 500, 500, 1000 );
+//						
+//					}
+//				});
+//				
+//				jsonLoader.load(flamingoModel, new JsonLoader.ModelLoadHandler() {
+//					
+//					@Override
+//					public void onModelLoaded() {
+//						Geometry geometry = jsonLoader.getGeometry();
+//
+//						jsonLoader.morphColorsToFaceColors();
+//						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 40 );
+//					}
+//				});
+//				
+//				jsonLoader.load(storkModel, new JsonLoader.ModelLoadHandler() {
+//
+//					@Override
+//					public void onModelLoaded() {
+//						Geometry geometry = jsonLoader.getGeometry();
+//
+//						jsonLoader.morphColorsToFaceColors();
+//						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 340 );
+//					}
+//				});
+//
+//			}
+//			catch (RequestException exception) 
+//			{
+//				Log.error("Error while loading JSON file.");
+//			}
 			
 			// PRE-INIT
 

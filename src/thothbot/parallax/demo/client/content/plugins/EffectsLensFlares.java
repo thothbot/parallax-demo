@@ -28,6 +28,7 @@ import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -83,7 +84,7 @@ public final class EffectsLensFlares extends ContentWidget
 			controls.setDragToLook( false );
 			
 			Fog fog = new Fog( 0x000000, 3500, 15000 );
-			fog.getColor().setHSL( 0.51, 0.6, 0.025 );
+			fog.getColor().setHSL( 0.51, 0.4, 0.01 );
 			getScene().setFog(fog);
 
 			// world
@@ -92,10 +93,9 @@ public final class EffectsLensFlares extends ContentWidget
 			BoxGeometry cubeGeometry = new BoxGeometry( s, s, s );
 			MeshPhongMaterial material = new MeshPhongMaterial();
 			material.setColor(new Color(0xffffff));
-			material.setAmbient(new Color(0xffffff));
+			material.setAmbient(new Color(0x333333));
 			material.setSpecular(new Color(0xffffff));
 			material.setShininess(50);
-//			material.setPerPixel(true);
 			
 			for ( int i = 0; i < 3000; i ++ ) 
 			{
@@ -118,7 +118,7 @@ public final class EffectsLensFlares extends ContentWidget
 			// lights
 
 			AmbientLight ambient = new AmbientLight( 0xffffff );
-			ambient.getColor().setHSL( 0.1, 0.5, 0.3 );
+			ambient.getColor().setHSL( 0.1, 0.3, 0.2 );
 			getScene().add( ambient );
 
 
@@ -126,13 +126,13 @@ public final class EffectsLensFlares extends ContentWidget
 			dirLight.getPosition().set( 0, -1, 0 ).normalize();
 			getScene().add( dirLight );
 
-			dirLight.getColor().setHSL( 0.1, 0.725, 0.9 );
+			dirLight.getColor().setHSL( 0.1, 0.7, 0.5 );
 
 			// lens flares
 
-			addLight( 0.55, 0.825, 0.99, 5000, 0, -1000 );
-			addLight( 0.08, 0.825, 0.99,    0, 0, -1000 );
-			addLight( 0.995, 0.025, 0.99, 5000, 5000, -1000 );
+			addLight( 0.55, 0.9, 0.5, 5000, 0, -1000 );
+			addLight( 0.08, 0.8, 0.5,    0, 0, -1000 );
+			addLight( 0.995, 0.5, 0.9, 5000, 5000, -1000 );
 
 			// renderer
 			getRenderer().setClearColor( getScene().getFog().getColor(), 1 );
@@ -142,16 +142,15 @@ public final class EffectsLensFlares extends ContentWidget
 			this.oldTime = Duration.currentTimeMillis();
 		}
 		
-		private void addLight( double h, double s, double v, double x, double y, double z ) 
+		private void addLight( double h, double s, double l, double x, double y, double z ) 
 		{
 			PointLight light = new PointLight( 0xffffff, 1.5, 4500 );
+			light.getColor().setHSL( h, s, l );
 			light.getPosition().set( x, y, z );
 			getScene().add( light );
 
-			light.getColor().setHSL( h, s, v );
-
 			Color flareColor = new Color( 0xffffff );
-			flareColor.setHSL( h, s - 0.5, v + 0.5 );
+			flareColor.setHSL( h, s, l + 0.5 );
 			
 			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0, Material.BLENDING.ADDITIVE, flareColor );
 
@@ -183,7 +182,7 @@ public final class EffectsLensFlares extends ContentWidget
 					}
 
 					lensFlare.getLensFlares().get( 2 ).y += 0.025;
-					lensFlare.getLensFlares().get( 3 ).rotation = lensFlare.getPositionScreen().getX() * 0.5 + 45.0 * Math.PI / 180.0;
+					lensFlare.getLensFlares().get( 3 ).rotation = lensFlare.getPositionScreen().getX() * 0.5 + Mathematics.degToRad(45.0);
 				}
 			});
 
