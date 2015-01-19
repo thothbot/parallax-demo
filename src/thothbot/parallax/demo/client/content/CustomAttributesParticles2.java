@@ -89,7 +89,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 
 			this.attributes = new HashMap<String, Attribute>();
 			attributes.put("size", new Attribute(Attribute.TYPE.F, new ArrayList<Integer>()));
-			attributes.put("customColor", new Attribute(Attribute.TYPE.C, new ArrayList<Color>()));
+			attributes.put("ca", new Attribute(Attribute.TYPE.C, new ArrayList<Color>()));
 	
 			Map <String, Uniform> uniforms = new HashMap<String, Uniform>();
 			uniforms.put("amplitude", new Uniform(Uniform.TYPE.F, 1.0));
@@ -104,6 +104,7 @@ public class CustomAttributesParticles2 extends ContentWidget
 			ShaderMaterial shaderMaterial = new ShaderMaterial(	Resources.INSTANCE );
 			shaderMaterial.getShader().setAttributes(attributes);
 			shaderMaterial.getShader().setUniforms(uniforms);
+			shaderMaterial.setTransparent(true);
 			
 			int radius = 100, segments = 68, rings = 38;
 			
@@ -112,17 +113,14 @@ public class CustomAttributesParticles2 extends ContentWidget
 			this.vc1 = geometry.getVertices().size();
 	
 			BoxGeometry geometry2 = new BoxGeometry( 0.8 * radius, 0.8 * radius, 0.8 * radius, 10, 10, 10 );
-	
-//			GeometryUtils.merge( geometry, geometry2 );
-	
+			geometry.merge( geometry2, null );
+		
 			this.sphere = new PointCloud( geometry, shaderMaterial );
-	
-			// TODO: Fix this
-//			sphere.sortParticles = true;
-	
+			this.sphere.setSortParticles(true);
+		
 			List<Vector3> vertices = ((Geometry)sphere.getGeometry()).getVertices();
 			List<Double> values_size = (List<Double>) attributes.get("size").getValue();
-			List<Color> values_color = (List<Color>) attributes.get("customColor").getValue();
+			List<Color> values_color = (List<Color>) attributes.get("ca").getValue();
 		
 			for( int v = 0; v < vertices.size(); v++ ) 
 			{
@@ -131,12 +129,12 @@ public class CustomAttributesParticles2 extends ContentWidget
 				if ( v < vc1 ) 
 				{	
 					values_size.add( v, 10.0);
-					values_color.get( v ).setHSL( 0.01 + 0.1 * ( v / (double)vc1 ), 0.99, ( vertices.get( v ).getY() + radius ) / ( 2.0 *radius ) );
+					values_color.get( v ).setHSL( 0.01 + 0.1 * ( v / (double)vc1 ), 0.99, ( vertices.get( v ).getY() + radius ) / ( 4.0 *radius ) );
 				} 
 				else 
 				{
 					values_size.add( v, 40.0);
-					values_color.get( v ).setHSL( 0.6, 0.75, 0.5 + vertices.get( v ).getY() / ( 0.8 * radius ) );
+					values_color.get( v ).setHSL( 0.6, 0.75, 0.25 + vertices.get( v ).getY() / ( 2.0 * radius ) );
 				}
 	
 			}

@@ -1,12 +1,11 @@
-uniform float amplitude;
 attribute float size;
-attribute vec3 customColor;
+attribute vec3 ca;
 
 varying vec3 vColor;
 
 void main() {
 
-	vColor = customColor;
+	vColor = ca;
 
 	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 
