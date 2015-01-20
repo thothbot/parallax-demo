@@ -178,13 +178,12 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 			parent = new Object3D();
 			parent.getPosition().setY(100);
+			parent.add(splineCamera);
 			
 			getScene().add(parent);
 			
 			cameraHelper = new CameraHelper(splineCamera);
-			cameraHelper.getScale().multiply(0.1);
-			splineCamera.add(cameraHelper);
-			parent.add(splineCamera);
+			getScene().add(cameraHelper);
 						
 			addTube();
 
