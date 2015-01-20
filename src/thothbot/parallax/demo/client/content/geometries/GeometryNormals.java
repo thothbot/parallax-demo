@@ -182,7 +182,7 @@ public class GeometryNormals extends ContentWidget
 		
 	public GeometryNormals() 
 	{
-		super("Normals", "This example based on the three.js example. <br/> Blue Arrows: Face Normals. Red Arrows: Vertex Normals before Geometry.mergeVertices. Black Arrows: Vertex Normals after Geometry.mergeVertices.");
+		super("Normals", "This example based on the three.js example. Blue Arrows: Face Normals. Red Arrows: Vertex Normals before Geometry.mergeVertices. Black Arrows: Vertex Normals after Geometry.mergeVertices.");
 	}
 	
 	@Override
