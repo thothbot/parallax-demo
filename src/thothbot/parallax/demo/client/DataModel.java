@@ -296,8 +296,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(Geometries.class));
 			category.addExample(new GeometriesParametric(),
 					RunAsyncCode.runAsyncCode(GeometriesParametric.class));
-			category.addExample(new GeometryDynamic(),
-					RunAsyncCode.runAsyncCode(GeometryDynamic.class));
+//			category.addExample(new GeometryDynamic(),
+//					RunAsyncCode.runAsyncCode(GeometryDynamic.class));
 			category.addExample(new GeometryHierarchy(),
 					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
 			category.addExample(new Cameras(),
@@ -408,8 +408,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Plugins");
 			categoriesList.add(category);
-			category.addExample(new TerrainDynamic(),
-					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
+//			category.addExample(new TerrainDynamic(),
+//					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
 			category.addExample(new HilbertCurves(),
 					RunAsyncCode.runAsyncCode(HilbertCurves.class));
 //			category.addExample(new PostprocessingGodrays(),

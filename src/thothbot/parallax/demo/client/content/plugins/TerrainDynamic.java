@@ -334,9 +334,6 @@ public final class TerrainDynamic extends ContentWidget
 			// TERRAIN MESH
 
 			PlaneGeometry geometryTerrain = new PlaneGeometry( 6000, 6000, 64, 64 );
-
-			geometryTerrain.computeFaceNormals();
-			geometryTerrain.computeVertexNormals();
 			geometryTerrain.computeTangents();
 
 			terrain = new Mesh( geometryTerrain, materialTerrain );
@@ -462,7 +459,6 @@ public final class TerrainDynamic extends ContentWidget
 
 			morphs.add( meshAnim );
 
-//			getScene().initWebGLObjects(getRenderer());
 		}
 		
 		private void applyShader( Shader shader, Texture texture, RenderTargetTexture target ) 
@@ -537,7 +533,7 @@ public final class TerrainDynamic extends ContentWidget
 				{
 					MorphAnimMesh morph = morphs.get( i );
 
-//					morph.updateAnimation( (int)(1000 * delta) );
+					morph.updateAnimation( (int)(1000 * delta) );
 
 					morph.getPosition().addX( morph.getDuration() * delta );
 
