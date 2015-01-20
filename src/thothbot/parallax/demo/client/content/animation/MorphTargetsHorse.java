@@ -24,6 +24,7 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -49,6 +50,8 @@ public final class MorphTargetsHorse extends ContentWidget
 		private static final String model = "./static/models/animated/horse.js";
 		
 		static final int radius = 600;
+		
+		double theta = 0;
 		
 		PerspectiveCamera camera;
 		Mesh mesh;
@@ -96,6 +99,7 @@ public final class MorphTargetsHorse extends ContentWidget
 						mesh.getScale().set(1.5);
 
 						getScene().add(mesh);
+
 					}
 				});
 			}
@@ -104,14 +108,14 @@ public final class MorphTargetsHorse extends ContentWidget
 				Log.error("Error while loading JSON file.");
 			}
 		}
-		
+			
 		@Override
 		protected void onUpdate(double duration)
 		{
-			double theta = duration * 0.02;
+			theta += 0.1;
 
-			camera.getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
-			camera.getPosition().setZ( radius * Math.cos( theta * Math.PI / 360.0 ) );
+			camera.getPosition().setX( radius * Math.sin( Mathematics.degToRad( theta ) ) );
+			camera.getPosition().setZ( radius * Math.cos( Mathematics.degToRad( theta ) ) );
 
 			camera.lookAt( target );
 
@@ -122,20 +126,20 @@ public final class MorphTargetsHorse extends ContentWidget
 
 				int keyframe = (int)Math.floor( time / interpolation );
 
-//				if ( keyframe != currentKeyframe ) 
-//				{
-//					mesh.getMorphTargetInfluences().set( lastKeyframe, 0.0 );
-//					mesh.getMorphTargetInfluences().set( currentKeyframe, 1.0 );
-//					mesh.getMorphTargetInfluences().set( keyframe, 0.0 );
-//
-//					lastKeyframe = currentKeyframe;
-//					currentKeyframe = keyframe;
-//				}
-//
-//				mesh.getMorphTargetInfluences().set( keyframe, 
-//						(double)( time % interpolation ) / interpolation);
-//				mesh.getMorphTargetInfluences().set( lastKeyframe,
-//						1.0 - mesh.getMorphTargetInfluences().get( keyframe ));
+				if ( keyframe != currentKeyframe ) 
+				{
+					mesh.morphTargetInfluences.set( lastKeyframe, 0.0 );
+					mesh.morphTargetInfluences.set( currentKeyframe, 1.0 );
+					mesh.morphTargetInfluences.set( keyframe, 0.0 );
+
+					lastKeyframe = currentKeyframe;
+					currentKeyframe = keyframe;
+				}
+
+				mesh.morphTargetInfluences.set( keyframe, 
+						(double)( time % interpolation ) / interpolation);
+				mesh.morphTargetInfluences.set( lastKeyframe,
+						1.0 - mesh.morphTargetInfluences.get( keyframe ));
 			}
 			
 			getRenderer().render(getScene(), camera);
