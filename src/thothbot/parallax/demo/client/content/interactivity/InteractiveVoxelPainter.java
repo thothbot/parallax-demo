@@ -173,6 +173,8 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 			getScene().add( directionalLight );
 
 			getRenderer().setClearColor(0xf0f0f0);
+			
+			getRenderer().render(getScene(), camera);
 		}
 		
 		@Override

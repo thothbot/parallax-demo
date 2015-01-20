@@ -87,7 +87,6 @@ public final class MaterialsLightmap extends ContentWidget
 			camera.getPosition().set( 700, 180, -500 );
 
 			getScene().setFog( new Fog( 0xfafafa, 1000, 10000 ) );
-//			getScene().getFog().getColor().setHSV( 0.6, 0.125, 1 );
 
 			// CONTROLS
 
