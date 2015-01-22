@@ -11,10 +11,6 @@
       background-color: #d7dde8;
       border-right: 1px solid #c3c3c3;
     }
-    
-    .contentCommon {
-		margin: 10px;
-	}
   </ui:style>
 
 	<g:DockLayoutPanel unit='PX'>
@@ -27,8 +23,7 @@
 
 		<!-- Main content area. -->
 		<g:center>
-			<g:SimpleLayoutPanel ui:field='contentPanel'
-				styleName="{style.contentCommon}" />
+			<g:SimpleLayoutPanel ui:field='contentPanel'/>
 		</g:center>
 	</g:DockLayoutPanel>
 

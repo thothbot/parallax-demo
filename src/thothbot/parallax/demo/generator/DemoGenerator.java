@@ -160,7 +160,7 @@ public class DemoGenerator extends Generator
 		formattedSource = formattedSource.replace("<", "&lt;");
 		formattedSource = formattedSource.replace(">", "&gt;");
 		formattedSource = formattedSource.replace("* \n   */\n", "*/\n");
-		formattedSource = "<pre>" + formattedSource + "</pre>";
+		formattedSource = "<pre><code class='hljs java'>" + formattedSource + "</code></pre>";
 
 		// Save the source code to a file
 		String dstPath = DemoResources.DST_SOURCE_EXAMPLE + type.getSimpleSourceName()

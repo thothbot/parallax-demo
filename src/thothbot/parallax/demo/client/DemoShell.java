@@ -21,6 +21,7 @@ package thothbot.parallax.demo.client;
 import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -105,8 +106,10 @@ public class DemoShell extends ResizeComposite
 
 		public void onSuccess(String value)
 		{
-			if (id == nextCallbackId)
-				contentSource.setHTML(value);
+			if (id == nextCallbackId) {
+				contentSource.setHTML(value);				
+			}
+			highlightSourcecode(contentSource.getElement().getFirstChildElement().getFirstChildElement());
 		}
 	}
 
@@ -138,10 +141,6 @@ public class DemoShell extends ResizeComposite
 		// Initialize the ui binder.
 		initWidget(uiBinder.createAndBindUi(this));
 
-		contentSource.getElement().getStyle().setBackgroundColor("#eee");
-		contentSource.getElement().getStyle().setProperty("border", "1px solid #c3c3c3");
-		contentSource.getElement().getStyle().setProperty("padding", "10px 10px");
-
 		// Handle events from the tabs.
 		linkExample.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event)
@@ -162,7 +161,7 @@ public class DemoShell extends ResizeComposite
 
 		setContent(null);
 	}
-
+	
 	public Anchor getTabExample()
 	{
 		return this.linkExample;
@@ -260,4 +259,8 @@ public class DemoShell extends ResizeComposite
 
 		content.getSource(new CustomCallback());
 	}
+	
+	private static native void highlightSourcecode(Element element) /*-{
+		$wnd.hljs.highlightBlock(element);
+	}-*/;
 }

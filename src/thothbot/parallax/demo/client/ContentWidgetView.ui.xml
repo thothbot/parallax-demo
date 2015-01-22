@@ -15,13 +15,17 @@
       color: #4B4A4A;
       padding: 3px 0px;
     }
+    
+    .header {
+    	margin: 10px;
+    }
   </ui:style>
 
 	<g:DockLayoutPanel unit='PX'>
 	<g:north size="70">
 
 		<!-- Header. -->
-		<g:DockLayoutPanel unit='PX'>
+		<g:DockLayoutPanel unit='PX' stylePrimaryName='{style.header}' >
 			<g:west size="73.0">
 				<g:ToggleButton ui:field='animationSwitch' width="60px" enabled="false">Animation</g:ToggleButton>
 			</g:west>
