@@ -199,7 +199,7 @@ public class Demo implements EntryPoint
 				displayContentWidget(contentWidget);
 				
 				//Add GA statistics
-				trackPageview(event.getValue());
+				trackPageview(Window.Location.getHref());
 
 				// Select the node in the tree.
 				selectionModel.setSelected(contentWidget, true);
@@ -219,10 +219,6 @@ public class Demo implements EntryPoint
 		// Generate a site map.
 		createSiteMap(contentWidgets);
 	}
-
-	public static native void trackPageview(String url) /*-{
-    	$wnd._gaq.push(['_trackPageview', "#" + url]);
-	}-*/;
 
 	/**
 	 * Create a hidden site map for crawlability.
@@ -265,4 +261,10 @@ public class Demo implements EntryPoint
 		index.setContentWidget(indexWidget);
 		Window.setTitle("Parallax: All Examples");
 	}
+	
+	private static native void trackPageview(String url) /*-{
+		console.log(url);
+		$wnd._gaq.push(['_trackPageview', url]);
+	}-*/;
+
 }
