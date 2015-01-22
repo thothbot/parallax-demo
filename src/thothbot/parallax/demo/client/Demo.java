@@ -263,8 +263,7 @@ public class Demo implements EntryPoint
 	}
 	
 	private static native void trackPageview(String url) /*-{
-		console.log(url);
-		$wnd._gaq.push(['_trackPageview', url]);
+		$wnd._gaq.push(['_trackPageview', url.replace(/^.*\/\/[^\/]+/, '')]);
 	}-*/;
 
 }
