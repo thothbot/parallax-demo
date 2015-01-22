@@ -197,6 +197,9 @@ public class Demo implements EntryPoint
 				
 				// Display the content widget.
 				displayContentWidget(contentWidget);
+				
+				//Add GA statistics
+				trackPageview(event.getValue());
 
 				// Select the node in the tree.
 				selectionModel.setSelected(contentWidget, true);
@@ -217,6 +220,9 @@ public class Demo implements EntryPoint
 		createSiteMap(contentWidgets);
 	}
 
+	public static native void trackPageview(String url) /*-{
+    	$wnd._gaq.push(['_trackPageview', "#" + url]);
+	}-*/;
 
 	/**
 	 * Create a hidden site map for crawlability.
