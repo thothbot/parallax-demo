@@ -32,6 +32,7 @@ import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
 import thothbot.parallax.core.shared.geometries.LatheGeometry;
 import thothbot.parallax.core.shared.geometries.OctahedronGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
+import thothbot.parallax.core.shared.geometries.RingGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.geometries.TetrahedronGeometry;
 import thothbot.parallax.core.shared.geometries.TorusGeometry;
@@ -45,6 +46,7 @@ import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
+import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.utils.SceneUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -63,7 +65,7 @@ public class Geometries extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-		private static final String image = "./static/textures/ash_uvgrid01.jpg";
+		private static final String image = "./static/textures/UV_Grid_Sm.jpg";
 
 		PerspectiveCamera camera;
 		
@@ -88,77 +90,75 @@ public class Geometries extends ContentWidget
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.setAnisotropy(16);
 
-			List<Material> materials = new ArrayList<Material>();
-			MeshLambertMaterial lmaterial = new MeshLambertMaterial();
-			lmaterial.setMap( texture );
-			lmaterial.setAmbient( new Color(0xbbbbbb) );
-			lmaterial.setSide(Material.SIDE.DOUBLE);
-			materials.add(lmaterial);	
-			
-			MeshBasicMaterial bmaterial = new MeshBasicMaterial();
-			bmaterial.setColor( new Color(0xffffff) );
-			bmaterial.setWireframe(true);
-			bmaterial.setTransparent(true);
-			bmaterial.setOpacity( 0.1 );
-			materials.add(bmaterial);
-	
-			Object3D object1 = SceneUtils.createMultiMaterialObject( new BoxGeometry( 100, 100, 100, 4, 4, 4 ), materials );
-			object1.getPosition().set( -200, 0, 400 );
+			MeshLambertMaterial material = new MeshLambertMaterial();
+			material.setMap( texture );
+			material.setAmbient( new Color(0xbbbbbb) );
+			material.setSide(Material.SIDE.DOUBLE);	
+				
+			Object3D object1 = new Mesh( new SphereGeometry( 75, 20, 10 ), material );
+			object1.getPosition().set( -400, 0, 200 );
 			getScene().add( object1 );
 			
-			Object3D object2 = SceneUtils.createMultiMaterialObject( new CylinderGeometry( 25, 75, 100, 40, 5 ), materials );
-			object2.getPosition().set( 0, 0, 400 );
+			Object3D object2 = new Mesh(  new IcosahedronGeometry( 75, 1 ), material );
+			object2.getPosition().set( -200, 0, 200 );
 			getScene().add( object2 );
 			
-			Object3D object3 = SceneUtils.createMultiMaterialObject( new IcosahedronGeometry( 75, 1 ), materials );
-			object3.getPosition().set( -200, 0, 200 );
+			Object3D object3 = new Mesh( new OctahedronGeometry( 75, 2 ), material );
+			object3.getPosition().set( 0, 0, 200 );
 			getScene().add( object3 );
 			
-			Object3D object4 = SceneUtils.createMultiMaterialObject( new OctahedronGeometry( 75, 2 ), materials );
-			object4.getPosition().set( 0, 0, 200 );
+			Object3D object4 = new Mesh( new TetrahedronGeometry( 75, 0 ), material );
+			object4.getPosition().set( 200, 0, 200 );
 			getScene().add( object4 );
 			
-			Object3D object5 = SceneUtils.createMultiMaterialObject( new TetrahedronGeometry( 75, 0 ), materials );
-			object5.getPosition().set( 200, 0, 200 );
+			//
+			
+			Object3D object5 = new Mesh( new PlaneGeometry( 100, 100, 4, 4 ), material );
+			object5.getPosition().set( -400, 0, 0 );
 			getScene().add( object5 );
 			
-			Object3D object6 = SceneUtils.createMultiMaterialObject( new PlaneGeometry( 100, 100, 4, 4 ), materials );
+			Object3D object6 = new Mesh( new BoxGeometry( 100, 100, 100, 4, 4, 4 ), material );
 			object6.getPosition().set( -200, 0, 0 );
 			getScene().add( object6 );
 			
-			Object3D object6a = SceneUtils.createMultiMaterialObject( new CircleGeometry( 50, 10, 0, Math.PI ), materials );
-			object6a.getRotation().setX( Math.PI / 2.0 );
-			object6.add( object6a );
-			
-			Object3D object7 = SceneUtils.createMultiMaterialObject( new SphereGeometry( 75, 20, 10 ), materials );
+			Object3D object7 = new Mesh( new CircleGeometry( 50, 20, 0, Math.PI * 2 ), material );
 			object7.getPosition().set( 0, 0, 0 );
 			getScene().add( object7 );
+			
+			Object3D object8 = new Mesh( new RingGeometry( 10, 50, 20, 5, 0, Math.PI * 2 ), material );
+			object8.getPosition().set( 200, 0, 0 );
+			getScene().add( object8 );
+			
+			Object3D object9 = new Mesh( new CylinderGeometry( 25, 75, 100, 40, 5 ), material );
+			object9.getPosition().set( 400, 0, 0 );
+			getScene().add( object9 );
 		
 			List<Vector3> points = new ArrayList<Vector3>();
 	
 			for ( int i = 0; i < 50; i ++ )
-				points.add( new Vector3( Math.sin( i * 0.2 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 ) );
+			{
+				points.add( new Vector3( Math.sin( i * 0.2 ) * Math.sin( i * 0.1 ) * 15.0 + 50.0, 0.0, ( i - 5.0 ) * 2.0 )  );
+			}
 	
-			Object3D object8 = SceneUtils.createMultiMaterialObject( new LatheGeometry( points, 20 ), materials );
-			object8.getPosition().set( 200, 0, 0 );
-			getScene().add( object8 );
-			
-			Object3D object9 = SceneUtils.createMultiMaterialObject( new TorusGeometry( 50, 20, 20, 20 ), materials );
-			object9.getPosition().set( -200, 0, -200 );
-			getScene().add( object9 );
-
-			Object3D object10 = SceneUtils.createMultiMaterialObject( new TorusKnotGeometry( 50, 10, 50, 20 ), materials );
-			object10.getPosition().set( 0, 0, -200 );
+			Object3D object10 = new Mesh( new LatheGeometry( points, 20 ), material );
+			object10.getPosition().set( -400, 0, -200 );
 			getScene().add( object10 );
-	
-			AxisHelper object11 = new AxisHelper();
-			object11.getPosition().set( 200, 0, -200 );
-			object11.getScale().set(0.5);
-			getScene().add( object11 );
 			
-			ArrowHelper object12 = new ArrowHelper( new Vector3( 0, 1, 0 ), new Vector3( 0, 0, 0 ), 50 );
-			object12.getPosition().set( 300, 0, 300 );
+			Object3D object11 = new Mesh( new TorusGeometry( 50, 20, 20, 20 ), material );
+			object11.getPosition().set( -200, 0, -200 );
+			getScene().add( object11 );
+
+			Object3D object12 = new Mesh( new TorusKnotGeometry( 50, 10, 50, 20 ), material );
+			object12.getPosition().set( 0, 0, -200 );
 			getScene().add( object12 );
+	
+			AxisHelper object13 = new AxisHelper();
+			object13.getPosition().set( 200, 0, -200 );
+			getScene().add( object13 );
+			
+			ArrowHelper object14 = new ArrowHelper( new Vector3( 0, 1, 0 ), new Vector3( 0, 0, 0 ), 50 );
+			object14.getPosition().set( 400, 0, -200 );
+			getScene().add( object14 );
 		}
 				
 		@Override
