@@ -23,16 +23,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.ExtrudeGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.curves.SplineCurve3;
 import thothbot.parallax.core.shared.curves.Path;
 import thothbot.parallax.core.shared.curves.Shape;
+import thothbot.parallax.core.shared.curves.SplineCurve3;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;

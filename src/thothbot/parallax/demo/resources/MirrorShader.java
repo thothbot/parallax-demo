@@ -20,8 +20,6 @@ package thothbot.parallax.demo.resources;
 
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.client.shaders.Shader.DefaultResources;
-import thothbot.parallax.core.client.shaders.Uniform.TYPE;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Matrix4;
 

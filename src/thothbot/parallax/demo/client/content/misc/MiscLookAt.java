@@ -18,7 +18,6 @@
 
 package thothbot.parallax.demo.client.content.misc;
 
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.CylinderGeometry;
@@ -27,7 +26,6 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshNormalMaterial;
 import thothbot.parallax.core.shared.math.Euler;
 import thothbot.parallax.core.shared.math.Matrix4;
-import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;

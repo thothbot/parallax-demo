@@ -20,8 +20,6 @@ package thothbot.parallax.demo.resources;
 
 import java.util.Map;
 
-import com.google.gwt.core.shared.GWT;
-
 import thothbot.parallax.core.client.renderers.WebGLRenderer;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;

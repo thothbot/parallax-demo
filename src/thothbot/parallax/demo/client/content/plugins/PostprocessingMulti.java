@@ -20,9 +20,6 @@ package thothbot.parallax.demo.client.content.plugins;
 
 import java.util.Map;
 
-import net.sourceforge.htmlunit.corejs.javascript.Evaluator;
-import sun.misc.Perf.GetPerfAction;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
@@ -45,7 +42,6 @@ import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector2;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.UniformsUtils;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;

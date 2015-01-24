@@ -31,7 +31,6 @@ import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
-import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.HemisphereLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.Material.COLORS;

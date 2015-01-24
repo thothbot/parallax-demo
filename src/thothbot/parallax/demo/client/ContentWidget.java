@@ -18,8 +18,8 @@
 
 package thothbot.parallax.demo.client;
 
-import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.AnimatedScene;
+import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.events.AnimationReadyHandler;
 import thothbot.parallax.core.client.events.Context3dErrorEvent;

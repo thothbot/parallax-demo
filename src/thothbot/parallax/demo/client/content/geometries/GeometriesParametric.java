@@ -24,7 +24,6 @@ import java.util.List;
 import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.DimensionalObject;
 import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.geometries.parametric.KleinParametricGeometry;
 import thothbot.parallax.core.shared.geometries.parametric.MobiusParametricGeometry;
@@ -53,7 +52,7 @@ public class GeometriesParametric extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-		private static final String image = "./static/textures/ash_uvgrid01.jpg";
+		private static final String image = "./static/textures/UV_Grid_Sm.jpg";
 
 		PerspectiveCamera camera;
 		
@@ -92,6 +91,7 @@ public class GeometriesParametric extends ContentWidget
 			bmaterial.setWireframe( true );
 			bmaterial.setTransparent(true);
 			bmaterial.setOpacity( 0.1 );
+			bmaterial.setSide(Material.SIDE.DOUBLE);
 			materials.add(bmaterial);
 			
 			// KleinParametricGeometry Bottle

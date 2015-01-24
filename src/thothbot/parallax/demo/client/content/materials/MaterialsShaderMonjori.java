@@ -20,7 +20,6 @@ package thothbot.parallax.demo.client.content.materials;
 
 import java.util.Map;
 
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;

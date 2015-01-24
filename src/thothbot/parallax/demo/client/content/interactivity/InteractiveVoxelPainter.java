@@ -30,7 +30,6 @@ import thothbot.parallax.core.shared.core.Raycaster;
 import thothbot.parallax.core.shared.core.Raycaster.Intersect;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
-import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.LineBasicMaterial;
