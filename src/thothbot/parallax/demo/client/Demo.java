@@ -54,9 +54,16 @@ public class Demo implements EntryPoint
 {
 	/**
 	 * The type passed into the
+	 * {@link thothbot.parallax.demo.generator.SourceGenerator}.
+	 */
+	private static final class GenerateSourceSignal 
+	{}
+	
+	/**
+	 * The type passed into the
 	 * {@link thothbot.parallax.demo.generator.DemoGenerator}.
 	 */
-	private static final class GeneratorInfo 
+	private static final class GenerateDemoSignal 
 	{}
 
 	/**
@@ -111,7 +118,10 @@ public class Demo implements EntryPoint
 		});
 
 		// Generate the source code for examples
-		GWT.create(GeneratorInfo.class);
+		GWT.create(GenerateSourceSignal.class);
+
+		// Generate the demo file
+		GWT.create(GenerateDemoSignal.class);
 
 		resources.css().ensureInjected();
 

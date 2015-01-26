@@ -23,8 +23,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.client.ContentWidget;
+import thothbot.parallax.demo.client.DataModel;
+import thothbot.parallax.demo.client.DataModel.Category;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.DemoResources;
 
@@ -33,148 +38,69 @@ import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
+import com.google.gwt.core.ext.typeinfo.JMethod;
 import com.google.gwt.core.ext.typeinfo.NotFoundException;
+import com.google.gwt.thirdparty.guava.common.base.Joiner;
+import com.google.gwt.view.client.SingleSelectionModel;
 
-/**
- * Generate the source code used in Demo examples.
- */
-public class DemoGenerator extends Generator
+public class DemoGenerator extends Generator 
 {
 	/**
 	 * The class loader used to get resources.
 	 */
 	private ClassLoader classLoader = null;
-
+	
 	/**
 	 * The generator context.
 	 */
 	private GeneratorContext context = null;
-
+	
 	/**
 	 * The {@link TreeLogger} used to log messages.
 	 */
 	private TreeLogger logger = null;
-
+	
 	@Override
-	public String generate(TreeLogger logger, GeneratorContext context, String typeName)
-			throws UnableToCompleteException
+	public String generate(TreeLogger logger, GeneratorContext context, String typeName) throws UnableToCompleteException 
 	{
+
 		this.logger = logger;
 		this.context = context;
 		this.classLoader = Thread.currentThread().getContextClassLoader();
-
+		
 		// Only generate files on the first permutation
 		if (!isFirstPass())
 			return null;
 
-		// Get the Showcase ContentWidget subtypes to examine
-		JClassType cwType = null;
-		try 
-		{
-			cwType = context.getTypeOracle().getType(ContentWidget.class.getName());
-		} 
-		catch (NotFoundException e) 
-		{
-			logger.log(TreeLogger.ERROR, "Cannot find ContentWidget class", e);
-			throw new UnableToCompleteException();
-		}
-		JClassType[] types = cwType.getSubtypes();
+//		final SingleSelectionModel<ContentWidget> selectionModel = new SingleSelectionModel<ContentWidget>();
+//		final DataModel treeModel = new DataModel(selectionModel);
 
-		// Generate the source and raw source files
-		for (JClassType type : types) 
-			generateSourceFiles(type);
-
+//		generateSourceFiles(treeModel);
+		
 		return null;
 	}
-
-	/**
-	 * Set the full contents of a resource in the public directory.
-	 * 
-	 * @param partialPath
-	 *            the path to the file relative to the public directory
-	 * @param contents
-	 *            the file contents
-	 */
-	private void createPublicResource(String partialPath, String contents)
-			throws UnableToCompleteException
+	
+	private void generateSourceFiles(DataModel treeModel) throws UnableToCompleteException
 	{
-		try 
-		{
-			OutputStream outStream = context.tryCreateResource(logger, partialPath);
-			if (outStream == null) 
-			{
-				String message = "Attempting to generate duplicate public resource: " + partialPath
-						+ ".\nAll generated source files must have unique names.";
-				logger.log(TreeLogger.ERROR, message);
-				throw new UnableToCompleteException();
-			}
-
-			outStream.write(contents.getBytes());
-			context.commitResource(logger, outStream);
-		} 
-		catch (IOException e) 
-		{
-			logger.log(TreeLogger.ERROR, "Error writing file: " + partialPath, e);
-			throw new UnableToCompleteException();
-		}
-	}
-
-	/**
-	 * Generate the formatted source code for a {@link ContentWidget}.
-	 * 
-	 * @param type
-	 *            the {@link ContentWidget} subclass
-	 */
-	private void generateSourceFiles(JClassType type) throws UnableToCompleteException
-	{
-		// Get the file contents
-		String filename = type.getQualifiedSourceName().replace('.', '/') + ".java";
-		String fileContents = getResourceContents(filename);
-
 		// Get each data code block
-		String formattedSource = "";
-		String sourceTag = "@" + DemoSource.class.getSimpleName();
-		int srcTagIndex = fileContents.indexOf(sourceTag);
+		List<String> jsons = new ArrayList<String>(); 
 
-		while (srcTagIndex >= 0) 
+		// Get the file contents
+		// Generate the source and raw source files
+		for (ContentWidget widget : treeModel. getAllContentWidgets()) 
 		{
-			// Get the boundaries of a SRC tag
-			int beginIndex = fileContents.lastIndexOf("/*", srcTagIndex) - 2;
-			int beginTagIndex = fileContents.lastIndexOf("\n", srcTagIndex) + 1;
-			int endTagIndex = fileContents.indexOf("\n", srcTagIndex) + 1;
-			// TDO: Fix this (\n\t):
-			int endIndex = fileContents.indexOf("\n\t}", beginIndex) + 4;
-
-			// Add to the formatted source
-			String srcCode = fileContents.substring(beginIndex, beginTagIndex)
-					+ fileContents.substring(endTagIndex, endIndex);
-			formattedSource += srcCode + "\n\n";
-
-			// Get the next tag
-			srcTagIndex = fileContents.indexOf(sourceTag, endIndex + 1);
+			String json = "{\n";
+			json += "\t\"description\": \"" + widget.getName() + "\"\n";
+			json += "\t\"icon\": \""  + widget.getIcon() + "\"\n";
+			json += "\t\"url\":  \"#" + widget.getClass().getSimpleName() + "\"\n";
+			json += "}";
+			jsons.add(json);
 		}
-
-		// Make the source pretty
-		formattedSource = formattedSource.replace("\n\t", "\n");
-		formattedSource = formattedSource.replace("\t", "   ");
-		formattedSource = formattedSource.replace("<", "&lt;");
-		formattedSource = formattedSource.replace(">", "&gt;");
-		formattedSource = formattedSource.replace("* \n   */\n", "*/\n");
-		formattedSource = "<pre><code class='hljs java'>" + formattedSource + "</code></pre>";
-
-		// Save the source code to a file
-		String dstPath = DemoResources.DST_SOURCE_EXAMPLE + type.getSimpleSourceName()
-				+ ".html";
-		createPublicResource(dstPath, formattedSource);
+		
+		String retval = "[" + Joiner.on(",\n").join(jsons) + "]";	
+		createPublicResource(retval);
 	}
-
-	/**
-	 * Get the full contents of a resource.
-	 * 
-	 * @param path
-	 *            the path to the resource
-	 * @return the contents of the resource
-	 */
+	
 	private String getResourceContents(String path) throws UnableToCompleteException
 	{
 		InputStream in = classLoader.getResourceAsStream(path);
@@ -215,6 +141,40 @@ public class DemoGenerator extends Generator
 	}
 
 	/**
+	 * Set the full contents of a resource in the public directory.
+	 * 
+	 * @param partialPath
+	 *            the path to the file relative to the public directory
+	 * @param contents
+	 *            the file contents
+	 */
+	private void createPublicResource(String contents)
+			throws UnableToCompleteException
+	{
+		String partialPath = DemoResources.DST_DEMO_JSON;
+
+		try 
+		{
+			OutputStream outStream = context.tryCreateResource(logger, partialPath);
+
+			if (outStream == null) 
+			{
+				String message = "Attempting to generate duplicate public resource: " + partialPath;
+				logger.log(TreeLogger.ERROR, message);
+				throw new UnableToCompleteException();
+			}
+
+			outStream.write(contents.getBytes());
+			context.commitResource(logger, outStream);
+		} 
+		catch (IOException e) 
+		{
+			logger.log(TreeLogger.ERROR, "Error writing file: " + partialPath, e);
+			throw new UnableToCompleteException();
+		}
+	}
+	
+	/**
 	 * Ensure that we only generate files once by creating a placeholder file,
 	 * then looking for it on subsequent generates.
 	 * 
@@ -222,8 +182,8 @@ public class DemoGenerator extends Generator
 	 */
 	private boolean isFirstPass()
 	{
-		String placeholder = DemoResources.DST_SOURCE + "generated";
-		try 
+		String placeholder = DemoResources.DST_DEMO_JSON + ".generated";
+		try
 		{
 			OutputStream outStream = context.tryCreateResource(logger, placeholder);
 			if (outStream == null)
@@ -239,4 +199,5 @@ public class DemoGenerator extends Generator
 		}
 		return true;
 	}
+
 }

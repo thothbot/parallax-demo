@@ -36,8 +36,12 @@
   <!-- Specify the app entry point class. -->
   <entry-point class='thothbot.parallax.demo.client.Demo'/>
 
+  <generate-with class="thothbot.parallax.demo.generator.SourceGenerator">
+    <when-type-assignable class="thothbot.parallax.demo.client.Demo.GenerateSourceSignal" />
+  </generate-with>
+  
   <generate-with class="thothbot.parallax.demo.generator.DemoGenerator">
-    <when-type-assignable class="thothbot.parallax.demo.client.Demo.GeneratorInfo" />
+    <when-type-assignable class="thothbot.parallax.demo.client.Demo.GenerateDemoSignal" />
   </generate-with>
   
   <source path='client'/>

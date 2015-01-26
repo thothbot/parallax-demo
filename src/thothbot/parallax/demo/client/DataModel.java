@@ -258,7 +258,7 @@ public class DataModel implements TreeViewModel
 	 * 
 	 * @return the {@link ContentWidget}s
 	 */
-	Set<ContentWidget> getAllContentWidgets() 
+	public Set<ContentWidget> getAllContentWidgets() 
 	{
 		Set<ContentWidget> widgets = new HashSet<ContentWidget>();
 		for (Category category : getCategories()) 
