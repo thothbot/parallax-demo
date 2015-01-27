@@ -138,6 +138,7 @@ public final class MaterialsLightmap extends ContentWidget
 
 					@Override
 					public void onModelLoaded() {		
+						Log.error(jsonLoader.getMaterials());
 						Mesh mesh = new Mesh( jsonLoader.getGeometry(), new MeshFaceMaterial(jsonLoader.getMaterials()) );
 						mesh.getPosition().set( 0 );
 						mesh.getScale().set( 100 );

@@ -24,7 +24,9 @@ import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.shaders.Uniform;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.Camera;
+import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Vector2;
@@ -71,8 +73,11 @@ public final class MaterialsShaderMonjori extends ContentWidget
 			ShaderMaterial material = new ShaderMaterial(new MonjoriShader());
 			uniforms = material.getShader().getUniforms();
 			
-			Mesh mesh = new Mesh( new PlaneGeometry( 2, 2 ), material );
+			Mesh mesh = new Mesh( new PlaneBufferGeometry( 2, 2 ), material );
 			getScene().add( mesh );
+			
+			((Vector2)uniforms.get("resolution").getValue()).setX( getRenderer().getAbsoluteWidth() );
+			((Vector2)uniforms.get("resolution").getValue()).setY( getRenderer().getAbsoluteHeight() );
 		}
 		
 		@Override
