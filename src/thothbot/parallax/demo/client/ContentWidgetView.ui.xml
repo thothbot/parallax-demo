@@ -35,6 +35,9 @@
 					<div class='{style.description}' ui:field='descriptionField'>Description</div>
 				</g:HTMLPanel>
 			</g:center>
+			<g:east size="200.0">
+				<g:SimpleLayoutPanel ui:field='debuggerPanel'/>
+			</g:east>
 		</g:DockLayoutPanel>
 
 	</g:north>

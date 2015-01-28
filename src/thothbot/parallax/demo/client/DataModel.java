@@ -51,7 +51,6 @@ import thothbot.parallax.demo.client.content.materials.MaterialsCubemapBallsRefl
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapBallsRefraction;
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapDynamicReflection;
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapFresnel;
-import thothbot.parallax.demo.client.content.materials.MaterialsLightmap;
 import thothbot.parallax.demo.client.content.materials.MaterialsShaderLava;
 import thothbot.parallax.demo.client.content.materials.MaterialsShaderMonjori;
 import thothbot.parallax.demo.client.content.materials.MaterialsTextureAnisotropy;

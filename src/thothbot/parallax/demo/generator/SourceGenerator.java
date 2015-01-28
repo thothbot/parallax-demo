@@ -24,7 +24,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.DemoResources;

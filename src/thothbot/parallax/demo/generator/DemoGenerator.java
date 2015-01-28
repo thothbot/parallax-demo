@@ -26,22 +26,15 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.DataModel;
-import thothbot.parallax.demo.client.DataModel.Category;
-import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.ext.Generator;
 import com.google.gwt.core.ext.GeneratorContext;
 import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
-import com.google.gwt.core.ext.typeinfo.JClassType;
-import com.google.gwt.core.ext.typeinfo.JMethod;
-import com.google.gwt.core.ext.typeinfo.NotFoundException;
 import com.google.gwt.thirdparty.guava.common.base.Joiner;
-import com.google.gwt.view.client.SingleSelectionModel;
 
 public class DemoGenerator extends Generator 
 {

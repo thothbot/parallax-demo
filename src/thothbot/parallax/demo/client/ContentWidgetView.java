@@ -19,6 +19,8 @@
 package thothbot.parallax.demo.client;
 
 import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.debugger.Debugger;
+import thothbot.parallax.core.client.renderers.WebGLRenderer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -53,6 +55,9 @@ public class ContentWidgetView extends ResizeComposite
 	@UiField(provided = true)
 	SimpleLayoutPanel examplePanel;
 
+	@UiField(provided = true)
+	SimpleLayoutPanel debuggerPanel;
+
 	/**
 	 * Used to show a name of an example
 	 */
@@ -64,10 +69,13 @@ public class ContentWidgetView extends ResizeComposite
 	 */
 	@UiField
 	ToggleButton animationSwitch;
-	 
+	
+	private Debugger debugger;
+		 
 	public ContentWidgetView()
 	{
 		this.examplePanel = new SimpleLayoutPanel();
+		this.debuggerPanel = new SimpleLayoutPanel();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -89,5 +97,15 @@ public class ContentWidgetView extends ResizeComposite
 	public void setRenderingPanel(RenderingPanel renderingPanel) 
 	{
 		this.examplePanel.setWidget(renderingPanel);
+	}
+	
+	public void setDebugger(WebGLRenderer renderer) 
+	{
+		this.debugger = new Debugger(renderer.getInfo());
+		this.debuggerPanel.setWidget(this.debugger);		
+	}
+	
+	public Debugger getDebugger() {
+		return this.debugger;
 	}
 }

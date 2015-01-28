@@ -66,7 +66,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 * {@link RenderingPanel} where example will be shown
 	 */
 	protected RenderingPanel renderingPanel;
-
+	
 	private LoadingPanel loadingPanel;
 	
 	/**
@@ -217,6 +217,16 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 */
 	public void onAnimationReady(AnimationReadyEvent event)
 	{
+		view.setDebugger(this.renderingPanel.getRenderer());
+		
+		this.renderingPanel.setAnimationUpdateHandler(new RenderingPanel.AnimationUpdateHandler() {
+			
+			@Override
+			public void onUpdate(double duration) {
+				view.getDebugger().update();
+			}
+		});
+
     	view.getAnimationSwitch().setEnabled(true);
     	view.getAnimationSwitch().setDown(true);
     	view.getAnimationSwitch().addClickHandler(new ClickHandler() {
@@ -315,7 +325,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 		    		renderingPanel.addCanvas3dErrorHandler(ContentWidget.this);
 		    		renderingPanel.addAnimationReadyHandler(ContentWidget.this);
 
-		    		loadRenderingPanelAttributes(renderingPanel);
+		    		ContentWidget.this.loadRenderingPanelAttributes(renderingPanel);
+		    		
 		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
 		    		
 		        	view.setRenderingPanel(renderingPanel);
@@ -324,9 +335,9 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 		});
 	}
 	
-	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel)
+	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
 	{
-		renderingPanel.enableDebug(true);
+		/* Empty */
 	}
 
 	/**
