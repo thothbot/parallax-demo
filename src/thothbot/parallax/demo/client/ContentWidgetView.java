@@ -78,13 +78,13 @@ public class ContentWidgetView extends ResizeComposite
 	ToggleButton animationSwitch;
 	
 	@UiField
-	public ToggleButton effectN3d;
+	public ToggleButton effectNoneSwitch;
 	
 	@UiField
-	public ToggleButton effectA3d;
+	public ToggleButton effectAnaglyphSwitch;
 	
 	@UiField
-	public ToggleButton effectB3d;
+	public ToggleButton effectStereoSwitch;
 	
 	@UiField
 	public ToggleButton effectC3d;
@@ -119,7 +119,7 @@ public class ContentWidgetView extends ResizeComposite
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		this.effectButtons = new ArrayList<ToggleButton>();
-		for(ToggleButton button: Arrays.asList(effectN3d, effectA3d, effectB3d, effectC3d)) {
+		for(ToggleButton button: Arrays.asList(effectNoneSwitch, effectAnaglyphSwitch, effectStereoSwitch, effectC3d)) {
 			button.addClickHandler(handler);
 			this.effectButtons.add(button);
 		}

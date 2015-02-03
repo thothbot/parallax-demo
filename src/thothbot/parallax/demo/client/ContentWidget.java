@@ -31,6 +31,8 @@ import thothbot.parallax.core.client.renderers.Plugin;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
 import thothbot.parallax.plugins.effects.Anaglyph;
+import thothbot.parallax.plugins.effects.ParallaxBarrier;
+import thothbot.parallax.plugins.effects.Stereo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -249,18 +251,36 @@ public abstract class ContentWidget extends SimpleLayoutPanel
     		}
     	});
     	
-    	view.effectA3d.addClickHandler(new ClickHandler() {
+    	view.effectAnaglyphSwitch.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.effectA3d.isDown())
+    			if (view.effectAnaglyphSwitch.isDown())
     				ContentWidget.this.effectPlugin = new Anaglyph(
     						ContentWidget.this.renderingPanel.getRenderer(), 
     						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
     		}
     	});
     	
-    	view.effectN3d.addClickHandler(new ClickHandler() {
+    	view.effectStereoSwitch.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.effectN3d.isDown())
+    			if (view.effectStereoSwitch.isDown())
+    				ContentWidget.this.effectPlugin = new Stereo(
+    						ContentWidget.this.renderingPanel.getRenderer(), 
+    						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+    		}
+    	});
+    	
+    	view.effectC3d.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			if (view.effectC3d.isDown())
+    				ContentWidget.this.effectPlugin = new ParallaxBarrier(
+    						ContentWidget.this.renderingPanel.getRenderer(), 
+    						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+    		}
+    	});
+
+    	view.effectNoneSwitch.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			if (view.effectNoneSwitch.isDown())
     				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
     		}
     	});

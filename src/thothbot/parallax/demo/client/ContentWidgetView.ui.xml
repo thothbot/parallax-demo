@@ -38,9 +38,9 @@
 						<g:ToggleButton ui:field='animationSwitch' width="20px" enabled="false" title="Enable/disable animation">A</g:ToggleButton>
 						<g:Button ui:field='fullscreenSwitch' width="25px" enabled="false" title="Fullscreen">FS</g:Button>
 						<g:Label>3D</g:Label>
-						<g:ToggleButton ui:field='effectN3d' width="20px" title="No 3D effects" down="true">N</g:ToggleButton>
-						<g:ToggleButton ui:field='effectA3d' width="20px" title="Anaglyph effect">A</g:ToggleButton>
-						<g:ToggleButton ui:field='effectB3d' width="20px" title="Oculus Rift effect">B</g:ToggleButton>
+						<g:ToggleButton ui:field='effectNoneSwitch' width="20px" title="No 3D effects" down="true">N</g:ToggleButton>
+						<g:ToggleButton ui:field='effectAnaglyphSwitch' width="20px" title="Anaglyph effect">A</g:ToggleButton>
+						<g:ToggleButton ui:field='effectStereoSwitch' width="20px" title="Oculus Rift effect">B</g:ToggleButton>
 						<g:ToggleButton ui:field='effectC3d' width="20px" title="Stereo effect">C</g:ToggleButton>
 					</g:HorizontalPanel>
 				</g:VerticalPanel>
