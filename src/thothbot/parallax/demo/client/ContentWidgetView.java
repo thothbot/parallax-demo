@@ -18,15 +18,22 @@
 
 package thothbot.parallax.demo.client;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.debugger.Debugger;
 import thothbot.parallax.core.client.renderers.WebGLRenderer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.ToggleButton;
@@ -61,8 +68,8 @@ public class ContentWidgetView extends ResizeComposite
 	/**
 	 * Used to show a name of an example
 	 */
-	@UiField
-	Element nameField;
+	@UiField(provided = true)
+	SimpleLayoutPanel nameField;
 	
 	/**
 	 * Toggle button to on/off animation. Just for fun
@@ -70,18 +77,62 @@ public class ContentWidgetView extends ResizeComposite
 	@UiField
 	ToggleButton animationSwitch;
 	
+	@UiField
+	public ToggleButton effectN3d;
+	
+	@UiField
+	public ToggleButton effectA3d;
+	
+	@UiField
+	public ToggleButton effectB3d;
+	
+	@UiField
+	public ToggleButton effectC3d;
+	
+	List<ToggleButton> effectButtons;
+	
+	@UiField
+	Button fullscreenSwitch;
+	
 	private Debugger debugger;
-		 
+	
+	private ClickHandler handler = new ClickHandler(){
+        @Override
+        public void onClick(ClickEvent event) {
+
+        	for(ToggleButton button: effectButtons) {
+        		if(event.getSource().equals(button)) {
+                    button.setDown(true);
+                } else {
+                	button.setDown(false);
+                }
+        	}
+        }
+    };
+
 	public ContentWidgetView()
 	{
 		this.examplePanel = new SimpleLayoutPanel();
 		this.debuggerPanel = new SimpleLayoutPanel();
+		this.nameField = new SimpleLayoutPanel();
+		
 		initWidget(uiBinder.createAndBindUi(this));
+		
+		this.effectButtons = new ArrayList<ToggleButton>();
+		for(ToggleButton button: Arrays.asList(effectN3d, effectA3d, effectB3d, effectC3d)) {
+			button.addClickHandler(handler);
+			this.effectButtons.add(button);
+		}
 	}
 
 	public ToggleButton getAnimationSwitch()
 	{
 		return this.animationSwitch;
+	}
+	
+	public Button getFullscreenSwitch()
+	{
+		return this.fullscreenSwitch;
 	}
 
 	public void setDescription(SafeHtml html)
@@ -91,7 +142,7 @@ public class ContentWidgetView extends ResizeComposite
 
 	public void setName(String text)
 	{
-		this.nameField.setInnerText(text);
+		this.nameField.getElement().setInnerText(text);
 	}
 	
 	public void setRenderingPanel(RenderingPanel renderingPanel) 

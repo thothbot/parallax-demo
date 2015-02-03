@@ -7,36 +7,51 @@
   <ui:style>
     .name {
       color: #4B4A4A;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: bold;
     }
     
     .description {
       color: #4B4A4A;
-      padding: 3px 0px;
+      padding: 0px 3px;
     }
     
     .header {
     	margin: 10px;
     }
+
+    .buttons {
+		width: 100%;
+		padding: 3px 1px;
+	}
   </ui:style>
 
 	<g:DockLayoutPanel unit='PX'>
 	<g:north size="70">
 
 		<!-- Header. -->
-		<g:DockLayoutPanel unit='PX' stylePrimaryName='{style.header}' >
-			<g:west size="73.0">
-				<g:ToggleButton ui:field='animationSwitch' width="60px" enabled="false">Animation</g:ToggleButton>
+		<g:DockLayoutPanel unit='PX' stylePrimaryName='{style.header}'>
+			<g:west size="210.0">
+				<g:VerticalPanel>
+					<g:SimpleLayoutPanel stylePrimaryName='{style.name}' ui:field='nameField'/>
+   			    	<g:HorizontalPanel stylePrimaryName='{style.buttons}'>
+						<g:ToggleButton ui:field='animationSwitch' width="20px" enabled="false" title="Enable/disable animation">A</g:ToggleButton>
+						<g:Button ui:field='fullscreenSwitch' width="25px" enabled="false" title="Fullscreen">FS</g:Button>
+						<g:Label>3D</g:Label>
+						<g:ToggleButton ui:field='effectN3d' width="20px" title="No 3D effects" down="true">N</g:ToggleButton>
+						<g:ToggleButton ui:field='effectA3d' width="20px" title="Anaglyph effect">A</g:ToggleButton>
+						<g:ToggleButton ui:field='effectB3d' width="20px" title="Oculus Rift effect">B</g:ToggleButton>
+						<g:ToggleButton ui:field='effectC3d' width="20px" title="Stereo effect">C</g:ToggleButton>
+					</g:HorizontalPanel>
+				</g:VerticalPanel>
 			</g:west>
 			<g:center>
 				<g:HTMLPanel height="41px">
-					<div class='{style.name}' ui:field='nameField'>Name</div>
 					<div class='{style.description}' ui:field='descriptionField'>Description</div>
 				</g:HTMLPanel>
 			</g:center>
 			<g:east size="200.0">
-				<g:SimpleLayoutPanel ui:field='debuggerPanel'/>
+				<g:SimpleLayoutPanel ui:field='debuggerPanel' height="50px"/>
 			</g:east>
 		</g:DockLayoutPanel>
 

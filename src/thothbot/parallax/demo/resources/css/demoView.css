@@ -33,10 +33,10 @@ pre {
 .gwt-ToggleButton-down,
 .gwt-ToggleButton-down-hovering,
 .gwt-ToggleButton-down-disabled {
-  padding: 15px 2px;
-  text-decoration: none;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+/*   padding: 15px 2px; */
+/*   text-decoration: none; */
+/*   -moz-border-radius: 2px; */
+/*   border-radius: 2px; */
 }
 
 .indexGroupName {

@@ -62,7 +62,7 @@ public class GeometryCube extends ContentWidget
 			material.setMap( new Texture(texture) );
 
 			this.mesh = new Mesh(geometry, material);
-			getScene().add(mesh);
+			getScene().add(mesh);			
 		}
 		
 		@Override

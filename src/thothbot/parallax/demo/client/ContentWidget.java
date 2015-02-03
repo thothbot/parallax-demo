@@ -20,14 +20,17 @@ package thothbot.parallax.demo.client;
 
 import thothbot.parallax.core.client.AnimatedScene;
 import thothbot.parallax.core.client.RenderingPanel;
+import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.events.AnimationReadyHandler;
 import thothbot.parallax.core.client.events.Context3dErrorEvent;
 import thothbot.parallax.core.client.events.Context3dErrorHandler;
 import thothbot.parallax.core.client.events.SceneLoadingEvent;
 import thothbot.parallax.core.client.events.SceneLoadingHandler;
+import thothbot.parallax.core.client.renderers.Plugin;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
+import thothbot.parallax.plugins.effects.Anaglyph;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -99,7 +102,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 */
 	private boolean widgetInitializing;
 	
-
+	private Plugin effectPlugin;
+	
 	/**
 	 * Default constructor should be called in an example (daughter) class
 	 * 
@@ -237,6 +241,30 @@ public abstract class ContentWidget extends SimpleLayoutPanel
     				ContentWidget.this.renderingPanel.getAnimatedScene().stop();
     		}
     	});
+    	
+    	view.getFullscreenSwitch().setEnabled(this.renderingPanel.isSupportFullScreen());
+    	view.getFullscreenSwitch().addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			ContentWidget.this.renderingPanel.toFullScreen();
+    		}
+    	});
+    	
+    	view.effectA3d.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			if (view.effectA3d.isDown())
+    				ContentWidget.this.effectPlugin = new Anaglyph(
+    						ContentWidget.this.renderingPanel.getRenderer(), 
+    						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+    		}
+    	});
+    	
+    	view.effectN3d.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+    			if (view.effectN3d.isDown())
+    				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+    		}
+    	});
+
 	}
 	
 	@Override
