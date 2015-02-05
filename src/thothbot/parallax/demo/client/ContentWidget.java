@@ -31,6 +31,7 @@ import thothbot.parallax.core.client.renderers.Plugin;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
 import thothbot.parallax.plugins.effects.Anaglyph;
+import thothbot.parallax.plugins.effects.OculusRift;
 import thothbot.parallax.plugins.effects.ParallaxBarrier;
 import thothbot.parallax.plugins.effects.Stereo;
 
@@ -233,55 +234,67 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 			}
 		});
 
-    	view.getAnimationSwitch().setEnabled(true);
-    	view.getAnimationSwitch().setDown(true);
-    	view.getAnimationSwitch().addClickHandler(new ClickHandler() {
+    	view.switchAnimation.setEnabled(true);
+    	view.switchAnimation.setDown(true);
+    	view.switchAnimation.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.getAnimationSwitch().isDown())
+    			if (view.switchAnimation.isDown())
     				ContentWidget.this.renderingPanel.getAnimatedScene().run();
     			else
     				ContentWidget.this.renderingPanel.getAnimatedScene().stop();
     		}
     	});
     	
-    	view.getFullscreenSwitch().setEnabled(this.renderingPanel.isSupportFullScreen());
-    	view.getFullscreenSwitch().addClickHandler(new ClickHandler() {
+    	view.buttonFullScreen.setEnabled(this.renderingPanel.isSupportFullScreen());
+    	view.buttonFullScreen.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
     			ContentWidget.this.renderingPanel.toFullScreen();
     		}
     	});
     	
-    	view.effectAnaglyphSwitch.addClickHandler(new ClickHandler() {
+    	view.switchEffectAnaglyph.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.effectAnaglyphSwitch.isDown())
-    				ContentWidget.this.effectPlugin = new Anaglyph(
-    						ContentWidget.this.renderingPanel.getRenderer(), 
-    						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+    			if (view.switchEffectAnaglyph.isDown())
+					ContentWidget.this.effectPlugin = new Anaglyph(
+							ContentWidget.this.renderingPanel.getRenderer(), 
+							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
     		}
     	});
     	
-    	view.effectStereoSwitch.addClickHandler(new ClickHandler() {
+    	view.switchEffectStereo.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.effectStereoSwitch.isDown())
-    				ContentWidget.this.effectPlugin = new Stereo(
-    						ContentWidget.this.renderingPanel.getRenderer(), 
-    						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+				if (view.switchEffectStereo.isDown())
+					ContentWidget.this.effectPlugin = new Stereo(
+							ContentWidget.this.renderingPanel.getRenderer(), 
+							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
     		}
     	});
     	
-    	view.effectC3d.addClickHandler(new ClickHandler() {
+    	view.switchEffectParallaxBarrier.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.effectC3d.isDown())
-    				ContentWidget.this.effectPlugin = new ParallaxBarrier(
-    						ContentWidget.this.renderingPanel.getRenderer(), 
-    						ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+				if (view.switchEffectParallaxBarrier.isDown())
+					ContentWidget.this.effectPlugin = new ParallaxBarrier(
+							ContentWidget.this.renderingPanel.getRenderer(), 
+							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+    		}
+    	});
+    	
+    	view.switchEffectOculusRift.addClickHandler(new ClickHandler() {
+    		public void onClick(ClickEvent event) {
+				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+				if (view.switchEffectOculusRift.isDown())
+					ContentWidget.this.effectPlugin = new OculusRift(
+							ContentWidget.this.renderingPanel.getRenderer(), 
+							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
     		}
     	});
 
-    	view.effectNoneSwitch.addClickHandler(new ClickHandler() {
+    	view.switchEffectNone.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			if (view.effectNoneSwitch.isDown())
-    				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
     		}
     	});
 

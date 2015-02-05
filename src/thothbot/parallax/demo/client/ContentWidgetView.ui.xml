@@ -31,17 +31,18 @@
 
 		<!-- Header. -->
 		<g:DockLayoutPanel unit='PX' stylePrimaryName='{style.header}'>
-			<g:west size="210.0">
+			<g:west size="240.0">
 				<g:VerticalPanel>
 					<g:SimpleLayoutPanel stylePrimaryName='{style.name}' ui:field='nameField'/>
    			    	<g:HorizontalPanel stylePrimaryName='{style.buttons}'>
-						<g:ToggleButton ui:field='animationSwitch' width="20px" enabled="false" title="Enable/disable animation">A</g:ToggleButton>
-						<g:Button ui:field='fullscreenSwitch' width="25px" enabled="false" title="Fullscreen">FS</g:Button>
+						<g:ToggleButton ui:field='switchAnimation' width="20px" enabled="false" title="Enable/disable animation">A</g:ToggleButton>
+						<g:Button ui:field='buttonFullScreen' width="25px" enabled="false" title="Fullscreen">FS</g:Button>
 						<g:Label>3D</g:Label>
-						<g:ToggleButton ui:field='effectNoneSwitch' width="20px" title="No 3D effects" down="true">N</g:ToggleButton>
-						<g:ToggleButton ui:field='effectAnaglyphSwitch' width="20px" title="Anaglyph effect">A</g:ToggleButton>
-						<g:ToggleButton ui:field='effectStereoSwitch' width="20px" title="Oculus Rift effect">B</g:ToggleButton>
-						<g:ToggleButton ui:field='effectC3d' width="20px" title="Stereo effect">C</g:ToggleButton>
+						<g:ToggleButton ui:field='switchEffectNone' width="20px" title="No 3D effects" down="true">N</g:ToggleButton>
+						<g:ToggleButton ui:field='switchEffectAnaglyph' width="20px" title="Anaglyph effect">A</g:ToggleButton>
+						<g:ToggleButton ui:field='switchEffectStereo' width="20px" title="Oculus Rift effect">B</g:ToggleButton>
+						<g:ToggleButton ui:field='switchEffectParallaxBarrier' width="20px" title="Stereo effect">C</g:ToggleButton>
+						<g:ToggleButton ui:field='switchEffectOculusRift' width="20px" title="Stereo effect">C</g:ToggleButton>
 					</g:HorizontalPanel>
 				</g:VerticalPanel>
 			</g:west>

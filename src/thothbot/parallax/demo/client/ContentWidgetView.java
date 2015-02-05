@@ -75,25 +75,29 @@ public class ContentWidgetView extends ResizeComposite
 	 * Toggle button to on/off animation. Just for fun
 	 */
 	@UiField
-	ToggleButton animationSwitch;
+	public ToggleButton switchAnimation;
 	
 	@UiField
-	public ToggleButton effectNoneSwitch;
+	public Button buttonFullScreen;
+
 	
 	@UiField
-	public ToggleButton effectAnaglyphSwitch;
+	public ToggleButton switchEffectNone;
 	
 	@UiField
-	public ToggleButton effectStereoSwitch;
+	public ToggleButton switchEffectAnaglyph;
 	
 	@UiField
-	public ToggleButton effectC3d;
+	public ToggleButton switchEffectStereo;
+	
+	@UiField
+	public ToggleButton switchEffectParallaxBarrier;
+	
+	@UiField
+	public ToggleButton switchEffectOculusRift;
 	
 	List<ToggleButton> effectButtons;
-	
-	@UiField
-	Button fullscreenSwitch;
-	
+		
 	private Debugger debugger;
 	
 	private ClickHandler handler = new ClickHandler(){
@@ -119,20 +123,10 @@ public class ContentWidgetView extends ResizeComposite
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		this.effectButtons = new ArrayList<ToggleButton>();
-		for(ToggleButton button: Arrays.asList(effectNoneSwitch, effectAnaglyphSwitch, effectStereoSwitch, effectC3d)) {
+		for(ToggleButton button: Arrays.asList(switchEffectNone, switchEffectAnaglyph, switchEffectStereo, switchEffectParallaxBarrier, switchEffectOculusRift)) {
 			button.addClickHandler(handler);
 			this.effectButtons.add(button);
 		}
-	}
-
-	public ToggleButton getAnimationSwitch()
-	{
-		return this.animationSwitch;
-	}
-	
-	public Button getFullscreenSwitch()
-	{
-		return this.fullscreenSwitch;
 	}
 
 	public void setDescription(SafeHtml html)
