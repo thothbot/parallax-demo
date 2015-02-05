@@ -27,18 +27,6 @@ pre {
   	height: 100%;
 }
 
-.gwt-ToggleButton-up,
-.gwt-ToggleButton-up-hovering,
-.gwt-ToggleButton-up-disabled,
-.gwt-ToggleButton-down,
-.gwt-ToggleButton-down-hovering,
-.gwt-ToggleButton-down-disabled {
-/*   padding: 15px 2px; */
-/*   text-decoration: none; */
-/*   -moz-border-radius: 2px; */
-/*   border-radius: 2px; */
-}
-
 .indexGroupName {
 	padding-top: 20px;
 	padding-bottom: 2px;

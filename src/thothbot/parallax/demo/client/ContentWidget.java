@@ -245,10 +245,13 @@ public abstract class ContentWidget extends SimpleLayoutPanel
     		}
     	});
     	
-    	view.buttonFullScreen.setEnabled(this.renderingPanel.isSupportFullScreen());
-    	view.buttonFullScreen.addClickHandler(new ClickHandler() {
+    	view.switchFullScreen.setEnabled(this.renderingPanel.isSupportFullScreen());
+    	view.switchFullScreen.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
-    			ContentWidget.this.renderingPanel.toFullScreen();
+    			if (view.switchFullScreen.isDown()) {
+    				ContentWidget.this.renderingPanel.toFullScreen();
+    				view.switchFullScreen.setDown(false);
+    			}
     		}
     	});
     	

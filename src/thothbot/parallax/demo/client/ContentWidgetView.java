@@ -25,6 +25,7 @@ import java.util.List;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.debugger.Debugger;
 import thothbot.parallax.core.client.renderers.WebGLRenderer;
+import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -34,6 +35,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.ToggleButton;
@@ -74,26 +76,25 @@ public class ContentWidgetView extends ResizeComposite
 	/**
 	 * Toggle button to on/off animation. Just for fun
 	 */
-	@UiField
+	@UiField(provided = true)
 	public ToggleButton switchAnimation;
 	
-	@UiField
-	public Button buttonFullScreen;
+	@UiField(provided = true)
+	public ToggleButton switchFullScreen;
 
-	
-	@UiField
+	@UiField(provided = true)
 	public ToggleButton switchEffectNone;
 	
-	@UiField
+	@UiField(provided = true)
 	public ToggleButton switchEffectAnaglyph;
 	
-	@UiField
+	@UiField(provided = true)
 	public ToggleButton switchEffectStereo;
 	
-	@UiField
+	@UiField(provided = true)
 	public ToggleButton switchEffectParallaxBarrier;
 	
-	@UiField
+	@UiField(provided = true)
 	public ToggleButton switchEffectOculusRift;
 	
 	List<ToggleButton> effectButtons;
@@ -119,6 +120,15 @@ public class ContentWidgetView extends ResizeComposite
 		this.examplePanel = new SimpleLayoutPanel();
 		this.debuggerPanel = new SimpleLayoutPanel();
 		this.nameField = new SimpleLayoutPanel();
+		
+		switchAnimation = new ToggleButton(new Image(Demo.resources.switchAnimation()));
+		switchFullScreen = new ToggleButton(new Image(Demo.resources.switchFullscreen()));
+		
+		switchEffectNone = new ToggleButton(new Image(Demo.resources.switchEffectNone()));
+		switchEffectAnaglyph = new ToggleButton(new Image(Demo.resources.switchEAnaglyph()));
+		switchEffectStereo = new ToggleButton(new Image(Demo.resources.switchEStereo()));
+		switchEffectParallaxBarrier = new ToggleButton(new Image(Demo.resources.switchEParallaxBarrier()));
+		switchEffectOculusRift = new ToggleButton(new Image(Demo.resources.switchEOculusRift()));
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		

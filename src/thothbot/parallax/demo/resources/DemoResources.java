@@ -50,6 +50,27 @@ public interface DemoResources extends ClientBundle
 	@Source("images/loading.gif")
 	ImageResource loading();
 	
+	@Source("images/s_fullscreen.png")
+	ImageResource switchFullscreen();
+	
+	@Source("images/s_animation.png")
+	ImageResource switchAnimation();
+	
+	@Source("images/s_oculusrift.png")
+	ImageResource switchEOculusRift();
+	
+	@Source("images/s_anaglyph.png")
+	ImageResource switchEAnaglyph();
+	
+	@Source("images/s_parallaxbarrier.png")
+	ImageResource switchEParallaxBarrier();
+	
+	@Source("images/s_stereo.png")
+	ImageResource switchEStereo();
+	
+	@Source("images/s_noeffects.png")
+	ImageResource switchEffectNone();
+	
 	@Source("css/demoView.css")
 	@CssResource.NotStrict
 	CssResource css();

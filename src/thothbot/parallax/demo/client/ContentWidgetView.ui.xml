@@ -9,15 +9,16 @@
       color: #4B4A4A;
       font-size: 15px;
       font-weight: bold;
+      padding: 0;
     }
     
     .description {
       color: #4B4A4A;
-      padding: 0px 3px;
+      padding: -1px 3px;
     }
     
     .header {
-    	margin: 10px;
+    	margin: 5px;
     }
 
     .buttons {
@@ -27,7 +28,7 @@
   </ui:style>
 
 	<g:DockLayoutPanel unit='PX'>
-	<g:north size="70">
+	<g:north size="65">
 
 		<!-- Header. -->
 		<g:DockLayoutPanel unit='PX' stylePrimaryName='{style.header}'>
@@ -35,14 +36,14 @@
 				<g:VerticalPanel>
 					<g:SimpleLayoutPanel stylePrimaryName='{style.name}' ui:field='nameField'/>
    			    	<g:HorizontalPanel stylePrimaryName='{style.buttons}'>
-						<g:ToggleButton ui:field='switchAnimation' width="20px" enabled="false" title="Enable/disable animation">A</g:ToggleButton>
-						<g:Button ui:field='buttonFullScreen' width="25px" enabled="false" title="Fullscreen">FS</g:Button>
-						<g:Label>3D</g:Label>
-						<g:ToggleButton ui:field='switchEffectNone' width="20px" title="No 3D effects" down="true">N</g:ToggleButton>
-						<g:ToggleButton ui:field='switchEffectAnaglyph' width="20px" title="Anaglyph effect">A</g:ToggleButton>
-						<g:ToggleButton ui:field='switchEffectStereo' width="20px" title="Oculus Rift effect">B</g:ToggleButton>
-						<g:ToggleButton ui:field='switchEffectParallaxBarrier' width="20px" title="Stereo effect">C</g:ToggleButton>
-						<g:ToggleButton ui:field='switchEffectOculusRift' width="20px" title="Stereo effect">C</g:ToggleButton>
+						<g:ToggleButton ui:field='switchAnimation' enabled="false" title="Enable/disable animation"/>
+						<g:ToggleButton ui:field='switchFullScreen' enabled="false" title="Fullscreen"/>
+						<g:SimpleLayoutPanel width="5px"/>
+						<g:ToggleButton ui:field='switchEffectNone' title="No 3D effects" down="true"/>
+						<g:ToggleButton ui:field='switchEffectAnaglyph' title="Anaglyph effect"/>
+						<g:ToggleButton ui:field='switchEffectStereo' title="Stereo effect"/>
+						<g:ToggleButton ui:field='switchEffectParallaxBarrier' title="Parallax barrier effect"/>
+						<g:ToggleButton ui:field='switchEffectOculusRift' title="Oculus Rift effect"/>
 					</g:HorizontalPanel>
 				</g:VerticalPanel>
 			</g:west>
