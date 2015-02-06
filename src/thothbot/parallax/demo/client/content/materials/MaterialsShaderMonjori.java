@@ -104,6 +104,11 @@ public final class MaterialsShaderMonjori extends ContentWidget
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+	
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsShaderMonjori.class, new RunAsyncCallback() 

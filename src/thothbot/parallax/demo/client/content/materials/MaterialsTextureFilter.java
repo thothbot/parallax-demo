@@ -246,6 +246,11 @@ public final class MaterialsTextureFilter extends ContentWidget
 	{
 		return new DemoScene();
 	}
+	
+	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
 
 	@Override
 	public void onAnimationReady(AnimationReadyEvent event)

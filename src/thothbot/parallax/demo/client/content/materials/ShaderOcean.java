@@ -197,6 +197,16 @@ public final class ShaderOcean extends ContentWidget {
 	protected DemoScene onInitialize() {
 		return new DemoScene();
 	}
+	
+	@Override
+	public ImageResource getIcon() {
+		return Demo.resources.exampleMaterialsShaderOcean();
+	}
+	
+	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
 
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
@@ -215,10 +225,4 @@ public final class ShaderOcean extends ContentWidget {
 		});
 		
 	}
-
-	@Override
-	public ImageResource getIcon() {
-		return Demo.resources.exampleMaterialsShaderOcean();
-	}
-
 }

@@ -222,6 +222,11 @@ public final class MorphNormalsFlamingo extends ContentWidget
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+	
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MorphNormalsFlamingo.class, new RunAsyncCallback() 

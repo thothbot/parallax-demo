@@ -252,6 +252,11 @@ public final class HilbertCurves extends ContentWidget
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+	
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(HilbertCurves.class, new RunAsyncCallback() 

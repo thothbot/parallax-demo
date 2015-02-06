@@ -138,7 +138,7 @@ public class ContentWidgetView extends ResizeComposite
 			this.effectButtons.add(button);
 		}
 	}
-
+	
 	public void setDescription(SafeHtml html)
 	{
 		this.descriptionField.setInnerHTML(html.asString());
@@ -147,6 +147,11 @@ public class ContentWidgetView extends ResizeComposite
 	public void setName(String text)
 	{
 		this.nameField.getElement().setInnerText(text);
+	}
+	
+	public void setEnableEffectSwitch(boolean enabled) {
+		for(ToggleButton button: this.effectButtons)
+			button.setEnabled(enabled);
 	}
 	
 	public void setRenderingPanel(RenderingPanel renderingPanel) 

@@ -147,6 +147,11 @@ public final class ParticlesTrails extends ContentWidget
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+	
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(ParticlesTrails.class, new RunAsyncCallback() 

@@ -255,6 +255,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel
     		}
     	});
     	
+    	view.setEnableEffectSwitch(this.isEnabledEffectSwitch());
+
     	view.switchEffectAnaglyph.addClickHandler(new ClickHandler() {
     		public void onClick(ClickEvent event) {
 				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
@@ -399,6 +401,10 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 		});
 	}
 	
+	protected boolean isEnabledEffectSwitch() {
+		return true;
+	}
+
 	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
 	{
 		/* Empty */

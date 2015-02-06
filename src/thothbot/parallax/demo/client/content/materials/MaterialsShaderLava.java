@@ -159,6 +159,11 @@ public final class MaterialsShaderLava extends ContentWidget
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+	
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsShaderLava.class, new RunAsyncCallback() 

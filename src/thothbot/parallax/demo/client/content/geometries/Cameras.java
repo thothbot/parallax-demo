@@ -281,6 +281,11 @@ public class Cameras extends ContentWidget implements RequiresResize
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(Cameras.class, new RunAsyncCallback() 

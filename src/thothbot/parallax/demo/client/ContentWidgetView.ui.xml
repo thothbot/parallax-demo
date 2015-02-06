@@ -39,11 +39,11 @@
 						<g:ToggleButton ui:field='switchAnimation' enabled="false" title="Enable/disable animation"/>
 						<g:ToggleButton ui:field='switchFullScreen' enabled="false" title="Fullscreen"/>
 						<g:SimpleLayoutPanel width="5px"/>
-						<g:ToggleButton ui:field='switchEffectNone' title="No 3D effects" down="true"/>
-						<g:ToggleButton ui:field='switchEffectAnaglyph' title="Anaglyph effect"/>
-						<g:ToggleButton ui:field='switchEffectStereo' title="Stereo effect"/>
-						<g:ToggleButton ui:field='switchEffectParallaxBarrier' title="Parallax barrier effect"/>
-						<g:ToggleButton ui:field='switchEffectOculusRift' title="Oculus Rift effect"/>
+						<g:ToggleButton ui:field='switchEffectNone' enabled="false" title="No 3D effects" down="true"/>
+						<g:ToggleButton ui:field='switchEffectAnaglyph' enabled="false" title="Anaglyph effect"/>
+						<g:ToggleButton ui:field='switchEffectStereo' enabled="false" title="Stereo effect"/>
+						<g:ToggleButton ui:field='switchEffectParallaxBarrier' enabled="false" title="Parallax barrier effect"/>
+						<g:ToggleButton ui:field='switchEffectOculusRift' enabled="false" title="Oculus Rift effect"/>
 					</g:HorizontalPanel>
 				</g:VerticalPanel>
 			</g:west>

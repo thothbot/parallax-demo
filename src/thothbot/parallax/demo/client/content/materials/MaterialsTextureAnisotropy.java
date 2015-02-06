@@ -213,6 +213,11 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 	}
 	
 	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+	
+	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsTextureAnisotropy.class, new RunAsyncCallback() 
