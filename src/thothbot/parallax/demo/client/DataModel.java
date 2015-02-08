@@ -309,8 +309,6 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(BufferGeometryParticles.class));
 			category.addExample(new GeometryNormals(),
 					RunAsyncCode.runAsyncCode(GeometryNormals.class));
-			category.addExample(new LoaderSTL(), 
-					RunAsyncCode.runAsyncCode(LoaderSTL.class));
 		}
 		
 		// Interactivity 
@@ -434,6 +432,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MiscMemoryTestGeometries.class));
 			category.addExample(new MiscMemoryTestShaders(),
 					RunAsyncCode.runAsyncCode(MiscMemoryTestShaders.class));
+			category.addExample(new LoaderSTL(), 
+					RunAsyncCode.runAsyncCode(LoaderSTL.class));
 		}
 	}
 }

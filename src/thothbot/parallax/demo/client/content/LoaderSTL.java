@@ -169,10 +169,6 @@ public class LoaderSTL extends ContentWidget
 
 					@Override
 					public void onModelLoaded(AbstractGeometry geometry) {																					
-
-						final MeshPhongMaterial material = new MeshPhongMaterial();
-						material.setOpacity(loader3.getAlpha());
-						material.setVertexColors( Material.COLORS.VERTEX );
 						
 						Mesh mesh = new Mesh( geometry, material );
 
@@ -199,7 +195,11 @@ public class LoaderSTL extends ContentWidget
 				loader4.load(colored, new Loader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {																					
+					public void onModelLoaded(AbstractGeometry geometry) {
+						
+						final MeshPhongMaterial material = new MeshPhongMaterial();
+						material.setOpacity(loader3.getAlpha());
+						material.setVertexColors( Material.COLORS.VERTEX );
 
 						Mesh mesh = new Mesh( geometry, material );
 
@@ -285,7 +285,12 @@ public class LoaderSTL extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleSTLLoader();
+	}
+	
+	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
 	}
 	
 	@Override

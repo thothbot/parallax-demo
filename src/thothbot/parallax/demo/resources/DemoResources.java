@@ -236,4 +236,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_misc_memory_test_shaders.jpg")
 	ImageResource exampleMiscMemoryTestShaders();
+	
+	@Source("images/example_stl_loader.jpg")
+	ImageResource exampleSTLLoader();
 }
