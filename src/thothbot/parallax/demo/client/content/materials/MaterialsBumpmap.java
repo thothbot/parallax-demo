@@ -25,6 +25,7 @@ import thothbot.parallax.core.client.renderers.ShadowMap;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -170,8 +171,8 @@ public final class MaterialsBumpmap extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {		
-						createScene( jsonLoader.getGeometry(), 100, material );
+					public void onModelLoaded(AbstractGeometry geometry) {		
+						createScene( (Geometry) geometry, 100, material );
 					}
 				});
 			}

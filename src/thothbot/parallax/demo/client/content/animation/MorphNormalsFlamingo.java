@@ -26,6 +26,8 @@ import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
+import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
@@ -115,9 +117,9 @@ public final class MorphNormalsFlamingo extends ContentWidget
 				this.jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {	
+					public void onModelLoaded(AbstractGeometry geometry) {	
 						
-						jsonLoader.morphColorsToFaceColors();
+						jsonLoader.morphColorsToFaceColors((Geometry) geometry);
 
 						MeshLambertMaterial material = new MeshLambertMaterial();
 						material.setColor(new Color(0xffffff));
@@ -126,7 +128,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 						material.setVertexColors(Material.COLORS.FACE);
 						material.setShading(Material.SHADING.FLAT);
  
-						MorphAnimMesh meshAnim = new MorphAnimMesh( jsonLoader.getGeometry(), material );
+						MorphAnimMesh meshAnim = new MorphAnimMesh( (Geometry) geometry, material );
 
 						meshAnim.setDuration(5000);
 
@@ -147,7 +149,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 						material2.setVertexColors(Material.COLORS.FACE);
 						material2.setShading(Material.SHADING.SMOOTH); 
  
-						MorphAnimMesh meshAnim2 = new MorphAnimMesh( jsonLoader.getGeometry(), material2 );
+						MorphAnimMesh meshAnim2 = new MorphAnimMesh( (Geometry) geometry, material2 );
 
 						meshAnim2.setDuration(5000);
 

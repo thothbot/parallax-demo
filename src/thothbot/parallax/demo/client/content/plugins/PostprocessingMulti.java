@@ -33,6 +33,7 @@ import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -155,8 +156,8 @@ public final class PostprocessingMulti extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {		
-						createMesh( jsonLoader.getGeometry(), 100 );
+					public void onModelLoaded(AbstractGeometry geometry) {		
+						createMesh( (Geometry) geometry, 100 );
 					}
 				});
 			}

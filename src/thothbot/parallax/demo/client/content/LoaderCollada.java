@@ -20,6 +20,7 @@ package thothbot.parallax.demo.client.content;
 
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
@@ -71,7 +72,7 @@ public final class LoaderCollada extends ContentWidget
 				colladaLoader.load(model, new ColladaLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {
+					public void onModelLoaded(AbstractGeometry geometry) {
 //						assert(false);
 						// Add the COLLADA
 //						getScene().addChild( dae );

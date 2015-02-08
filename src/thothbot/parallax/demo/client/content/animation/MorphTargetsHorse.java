@@ -21,6 +21,7 @@ package thothbot.parallax.demo.client.content.animation;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.math.Color;
@@ -90,12 +91,12 @@ public final class MorphTargetsHorse extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {																					
+					public void onModelLoaded(AbstractGeometry geometry) {																					
 
 						MeshLambertMaterial material = new MeshLambertMaterial();
 						material.setColor(new Color(0x606060));
 						material.setMorphTargets(true);
-						mesh = new Mesh(jsonLoader.getGeometry(), material);
+						mesh = new Mesh(geometry, material);
 						mesh.getScale().set(1.5);
 
 						getScene().add(mesh);

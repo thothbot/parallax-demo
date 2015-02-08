@@ -27,6 +27,7 @@ import java.util.Set;
 
 import thothbot.parallax.demo.client.content.CustomAttributesParticles;
 import thothbot.parallax.demo.client.content.CustomAttributesParticles2;
+import thothbot.parallax.demo.client.content.LoaderSTL;
 import thothbot.parallax.demo.client.content.animation.MorphNormalsFlamingo;
 import thothbot.parallax.demo.client.content.animation.MorphTargetsHorse;
 import thothbot.parallax.demo.client.content.geometries.BufferGeometryDemo;
@@ -308,6 +309,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(BufferGeometryParticles.class));
 			category.addExample(new GeometryNormals(),
 					RunAsyncCode.runAsyncCode(GeometryNormals.class));
+			category.addExample(new LoaderSTL(), 
+					RunAsyncCode.runAsyncCode(LoaderSTL.class));
 		}
 		
 		// Interactivity 

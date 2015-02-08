@@ -22,6 +22,7 @@ import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -96,8 +97,8 @@ public final class PostprocessingGodrays extends ContentWidget
 				loader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {																					
-						Mesh treeMesh = new Mesh( loader.getGeometry(), materialScene );
+					public void onModelLoaded(AbstractGeometry geometry) {																					
+						Mesh treeMesh = new Mesh( geometry, materialScene );
 						treeMesh.getPosition().set( 0, -150, -150 );
 
 						treeMesh.getScale().set( 400 );

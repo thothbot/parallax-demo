@@ -23,6 +23,7 @@ import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.HemisphereLight;
@@ -137,9 +138,9 @@ public final class MaterialsLightmap extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {		
+					public void onModelLoaded(AbstractGeometry geometry) {		
 						Log.error(jsonLoader.getMaterials());
-						Mesh mesh = new Mesh( jsonLoader.getGeometry(), new MeshFaceMaterial(jsonLoader.getMaterials()) );
+						Mesh mesh = new Mesh( geometry, new MeshFaceMaterial(jsonLoader.getMaterials()) );
 						mesh.getPosition().set( 0 );
 						mesh.getScale().set( 100 );
 						getScene().add( mesh );

@@ -31,6 +31,7 @@ import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -183,8 +184,8 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded() {		
-						createScene( jsonLoader.getGeometry(), 100 );
+					public void onModelLoaded(AbstractGeometry geometry) {		
+						createScene( (Geometry) geometry, 100 );
 					}
 				});
 			}
