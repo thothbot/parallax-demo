@@ -31,7 +31,7 @@ import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
-import thothbot.parallax.core.shared.math.Vector4;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
@@ -70,7 +70,6 @@ public final class MaterialsWireframe extends ContentWidget
 		PerspectiveCamera camera;
 		
 		Mesh meshLines;
-		Mesh meshQuads;
 		Mesh meshTris;
 		Mesh meshMixed;
 
@@ -89,10 +88,7 @@ public final class MaterialsWireframe extends ContentWidget
 			double size = 150;
 
 			BoxGeometry geometryLines = new BoxGeometry( size, size, size );
-			BoxGeometry geometryQuads = new BoxGeometry( size, size, size );
 			BoxGeometry geometryTris = new BoxGeometry( size, size, size );
-
-//			GeometryUtils.triangulateQuads( geometryTris );
 
 			// wireframe using gl.LINES
 
@@ -100,72 +96,48 @@ public final class MaterialsWireframe extends ContentWidget
 			materialLines.setWireframe(true);
 
 			meshLines = new Mesh( geometryLines, materialLines );
-			meshLines.getPosition().setX(0);
+			meshLines.getPosition().setX(-150);
 			getScene().add( meshLines );
-
-			// wireframe using gl.TRIANGLES (interpreted as quads)
-
-			Attribute attributesQuads = new Attribute(Attribute.TYPE.V4, setupAttributes( geometryQuads ));
-			attributesQuads.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
-
-			ShaderMaterial materialQuads = new ShaderMaterial( Resources.INSTANCE );
-			materialQuads.getShader().addAttributes("center", attributesQuads);
-
-			meshQuads = new Mesh( geometryQuads, materialQuads );
-			meshQuads.getPosition().setX(300);
-			getScene().add( meshQuads );
 
 			// wireframe using gl.TRIANGLES (interpreted as triangles)
 
-			Attribute attributesTris = new Attribute(Attribute.TYPE.V4, setupAttributes( geometryTris ));
+			Attribute attributesTris = new Attribute(Attribute.TYPE.V3, setupAttributes( geometryTris ));
 			attributesTris.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 			
 			ShaderMaterial materialTris = new ShaderMaterial( Resources.INSTANCE );
 			materialTris.getShader().addAttributes("center", attributesTris);
 
 			meshTris = new Mesh( geometryTris, materialTris );
-			meshTris.getPosition().setX(-300);
+			meshTris.getPosition().setX(150);
 			getScene().add( meshTris );
 
 			// wireframe using gl.TRIANGLES (mixed triangles and quads)
 
 			SphereGeometry mixedGeometry = new SphereGeometry( size / 2.0, 32, 16 );
 
-			Attribute attributesMixed = new Attribute(Attribute.TYPE.V4, setupAttributes( mixedGeometry ));
+			Attribute attributesMixed = new Attribute(Attribute.TYPE.V3, setupAttributes( mixedGeometry ));
 			attributesMixed.setBoundTo( Attribute.BOUND_TO.FACE_VERTICES );
 
 			ShaderMaterial materialMixed = new ShaderMaterial( Resources.INSTANCE );
 			materialMixed.getShader().addAttributes("center", attributesMixed);
 
 			meshMixed = new Mesh( mixedGeometry, materialMixed );
-			meshMixed.getPosition().setX(0);
+			meshMixed.getPosition().setX(-150);
 			getScene().add( meshMixed );
 
 		}
 		
-		private List<List<Vector4>> setupAttributes( Geometry geometry) 
+		private List<List<Vector3>> setupAttributes( Geometry geometry) 
 		{
-			List<List<Vector4>> values = new ArrayList<List<Vector4>>();
+			List<List<Vector3>> values = new ArrayList<List<Vector3>>();
 			
 			for( int f = 0; f < geometry.getFaces().size(); f ++ ) 
 			{
 				Face3 face = geometry.getFaces().get( f );
-
-				if ( face.getClass() == Face3.class ) 
-				{
-					values.add(f, Arrays.asList(
-							new Vector4( 1, 0, 0, 0 ), 
-							new Vector4( 0, 1, 0, 0 ), 
-							new Vector4( 0, 0, 1, 0 ) ));
-				} 
-				else 
-				{
-					values.add(f, Arrays.asList( 
-							new Vector4( 1, 0, 0, 1 ), 
-							new Vector4( 1, 1, 0, 1 ), 
-							new Vector4( 0, 1, 0, 1 ), 
-							new Vector4( 0, 0, 0, 1 ) ));
-				}
+				values.add(f, Arrays.asList(
+						new Vector3( 1, 0, 0 ), 
+						new Vector3( 0, 1, 0 ), 
+						new Vector3( 0, 0, 1 ) ));
 			}
 
 			return values;
@@ -176,9 +148,6 @@ public final class MaterialsWireframe extends ContentWidget
 		{
 			meshLines.getRotation().addX(0.005);
 			meshLines.getRotation().addY(0.01);
-
-			meshQuads.getRotation().addX(0.005);
-			meshQuads.getRotation().addY(0.01);
 
 			meshTris.getRotation().addX(0.005);
 			meshTris.getRotation().addY(0.01);

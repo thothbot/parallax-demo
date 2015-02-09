@@ -1,5 +1,5 @@
-attribute vec4 center;
-varying vec4 vCenter;
+attribute vec3 center;
+varying vec3 vCenter;
 
 void main() {
 

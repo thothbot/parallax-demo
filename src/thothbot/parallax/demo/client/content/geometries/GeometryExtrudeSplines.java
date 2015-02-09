@@ -330,8 +330,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		panel.setStyleName("common-panel", true);
 		panel.setStyleName("corner-panel", true);
 		this.renderingPanel.add(panel);
-		this.renderingPanel.setWidgetLeftWidth(panel, 1, Unit.PX, 25, Unit.EM);
-		this.renderingPanel.setWidgetTopHeight(panel, 1, Unit.PX, 10, Unit.EM);
+		this.renderingPanel.setWidgetLeftWidth(panel, 1, Unit.PX, 26, Unit.EM);
+		this.renderingPanel.setWidgetTopHeight(panel, 1, Unit.PX, 11, Unit.EM);
 		
 		Element br = DOM.createElement("br");
 

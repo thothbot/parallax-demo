@@ -1,6 +1,6 @@
 #extension GL_OES_standard_derivatives : enable
 
-varying vec4 vCenter;
+varying vec3 vCenter;
 
 float edgeFactorTri() {
 
@@ -10,35 +10,8 @@ float edgeFactorTri() {
 
 }
 
-float edgeFactorQuad1() {
-
-	vec2 d = fwidth( vCenter.xy );
-	vec2 a2 = smoothstep( vec2( 0.0 ), d * 1.5, vCenter.xy );
-
-	return min( a2.x, a2.y );
-
-}
-
-float edgeFactorQuad2() {
-
-	vec2 d = fwidth( 1.0 - vCenter.xy );
-	vec2 a2 = smoothstep( vec2( 0.0 ), d * 1.5, 1.0 - vCenter.xy );
-
-	return min( a2.x, a2.y );
-}
-
 void main() {
 
-	if ( vCenter.w == 0.0 ) {
-
-		gl_FragColor.rgb = mix( vec3( 1.0 ), vec3( 0.2 ), edgeFactorTri() );
-
-	} else {
-
-		gl_FragColor.rgb = mix( vec3( 1.0 ), vec3( 0.2 ), min( edgeFactorQuad1(), edgeFactorQuad2() ) );
-
-	}
-
+	gl_FragColor.rgb = mix( vec3( 1.0 ), vec3( 0.2 ), edgeFactorTri() );
 	gl_FragColor.a = 1.0;
-
 }
