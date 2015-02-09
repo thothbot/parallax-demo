@@ -322,10 +322,11 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 				
 				@Override
 				public void onProgressUpdate(int left) {
-					if(left > 0)
+					if(left > 0) {
 						isSceneHasObjects = true;
-					else if(isSceneHasObjects)
+					} else if(isSceneHasObjects) {
 						loadingPanel.hide();
+					}
 				}
 			});
 		}

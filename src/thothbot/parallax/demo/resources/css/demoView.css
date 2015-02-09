@@ -10,8 +10,15 @@ pre {
 }
 
 .common-panel {
-	width: 10%;
-	height: 20px;
+	position:absolute;
+	top:50%;
+    left:50%;
+
+	max-width:50%;
+	text-align:center;
+	overflow:hidden;
+	height: 30px;
+  	line-height: 30px;
 	color: white;
 	background-color:#555555;
 	border: 1px solid #999999;
