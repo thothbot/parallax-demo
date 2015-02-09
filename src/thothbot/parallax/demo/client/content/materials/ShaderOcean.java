@@ -166,7 +166,7 @@ public final class ShaderOcean extends ContentWidget {
 			sphereMaterial.setShininess(100.0);
 			
 			sphere = new Mesh( geometry, sphereMaterial );
-			getScene().add( sphere );			
+//			getScene().add( sphere );			
 		}
 		
 		@Override
