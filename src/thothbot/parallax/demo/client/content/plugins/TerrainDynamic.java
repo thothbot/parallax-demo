@@ -379,7 +379,7 @@ public final class TerrainDynamic extends ContentWidget
 			composer.addPass( hblur );
 			composer.addPass( vblur );
 			
-			final JsonLoader jsonLoader = new JsonLoader();
+//			final JsonLoader jsonLoader = new JsonLoader();
 
 			final double startX = -3000;
 			morphs = new ArrayList<MorphAnimMesh>();

@@ -36,6 +36,7 @@ import thothbot.parallax.demo.resources.GodRaysCombineShader;
 import thothbot.parallax.demo.resources.GodRaysGenerateShader;
 import thothbot.parallax.demo.resources.GodraysFakeSunShader;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.plugins.postprocessing.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.RenderPass;
 import thothbot.parallax.plugins.postprocessing.ShaderPass;
@@ -90,30 +91,21 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			// tree
 
-			final JsonLoader loader = new JsonLoader();
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
-			try
-			{
-				loader.load(model, new JsonLoader.ModelLoadHandler() {
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {																					
+					Mesh treeMesh = new Mesh( geometry, materialScene );
+					treeMesh.getPosition().set( 0, -150, -150 );
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {																					
-						Mesh treeMesh = new Mesh( geometry, materialScene );
-						treeMesh.getPosition().set( 0, -150, -150 );
+					treeMesh.getScale().set( 400 );
 
-						treeMesh.getScale().set( 400 );
+					treeMesh.setMatrixAutoUpdate(false);
+					treeMesh.updateMatrix();
 
-						treeMesh.setMatrixAutoUpdate(false);
-						treeMesh.updateMatrix();
-
-						getScene().add( treeMesh );
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+					getScene().add( treeMesh );
+				}
+			});
 
 			// sphere
 

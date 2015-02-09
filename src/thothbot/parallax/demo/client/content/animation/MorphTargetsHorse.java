@@ -32,6 +32,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -85,29 +86,21 @@ public final class MorphTargetsHorse extends ContentWidget
 			light1.getPosition().set( -1, -1, -1 ).normalize();
 			getScene().add( light1 );
 
-			final JsonLoader jsonLoader = new JsonLoader();
-			try
-			{
-				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {																					
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {																					
 
-						MeshLambertMaterial material = new MeshLambertMaterial();
-						material.setColor(new Color(0x606060));
-						material.setMorphTargets(true);
-						mesh = new Mesh(geometry, material);
-						mesh.getScale().set(1.5);
+					MeshLambertMaterial material = new MeshLambertMaterial();
+					material.setColor(new Color(0x606060));
+					material.setMorphTargets(true);
+					mesh = new Mesh(geometry, material);
+					mesh.getScale().set(1.5);
 
-						getScene().add(mesh);
+					getScene().add(mesh);
 
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+				}
+			});
 		}
 			
 		@Override

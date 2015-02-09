@@ -36,6 +36,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.ColladaLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -66,27 +67,15 @@ public final class LoaderCollada extends ContentWidget
 			);
 			camera.getPosition().set(2, 2, 3);
 
-			ColladaLoader colladaLoader = new ColladaLoader();
-			try
-			{
-				colladaLoader.load(model, new ColladaLoader.ModelLoadHandler() {
+			new ColladaLoader(model, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
 //						assert(false);
-						// Add the COLLADA
+					// Add the COLLADA
 //						getScene().addChild( dae );
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading COLLADA file.");
-			}
-			finally
-			{
-//				assert(false);
-			}
+				}
+			});
 			
 			// Grid
 

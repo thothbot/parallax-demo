@@ -47,6 +47,7 @@ import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.BeckmannShader;
 import thothbot.parallax.demo.resources.SkinSimpleShader;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.plugins.postprocessing.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.ShaderPass;
 import thothbot.parallax.plugins.postprocessing.shaders.CopyShader;
@@ -178,21 +179,13 @@ public final class MaterialsBumpmapSkin extends ContentWidget
 
 			//
 			
-			final JsonLoader jsonLoader = new JsonLoader();
-			try
-			{
-				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {		
-						createScene( (Geometry) geometry, 100 );
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {		
+					createScene( (Geometry) geometry, 100 );
+				}
+			});
 
 			//
 

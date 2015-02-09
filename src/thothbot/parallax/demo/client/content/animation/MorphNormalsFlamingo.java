@@ -40,6 +40,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -62,8 +63,6 @@ public final class MorphNormalsFlamingo extends ContentWidget
 		
 		PerspectiveCamera camera;
 		Scene scene2;
-		
-		JsonLoader jsonLoader;
 		
 		List<MorphAnimMesh> morphs;
 		
@@ -111,15 +110,12 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			scene2.add( light22 );
 
 			morphs = new ArrayList<MorphAnimMesh>();
-			this.jsonLoader = new JsonLoader();
-			try
-			{
-				this.jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
 					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {	
+					public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {	
 						
-						jsonLoader.morphColorsToFaceColors((Geometry) geometry);
+						((JsonLoader)loader).morphColorsToFaceColors((Geometry) geometry);
 
 						MeshLambertMaterial material = new MeshLambertMaterial();
 						material.setColor(new Color(0xffffff));
@@ -159,12 +155,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 						scene2.add( meshAnim2 );
 						morphs.add( meshAnim2 );
 					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+			});
 			
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);

@@ -95,39 +95,31 @@ public class LoaderSTL extends ContentWidget
 			plane.setReceiveShadow(true);
 			
 			// Binary files
-			
-			final STLLoader loader = new STLLoader();
-			try
-			{
-				loader.load(slotted_disk, new XHRLoader.ModelLoadHandler() {
+			new STLLoader(slotted_disk, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {																					
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {																					
 
-						MeshPhongMaterial material = new MeshPhongMaterial();
-						material.setAmbient( new Color(0xff5533) );
-						material.setColor( new Color(0xff5533) );
-						material.setSpecular( new Color(0x111111) );
-						material.setShininess(200.0);
-						
-						Mesh mesh = new Mesh( geometry, material );
+					MeshPhongMaterial material = new MeshPhongMaterial();
+					material.setAmbient( new Color(0xff5533) );
+					material.setColor( new Color(0xff5533) );
+					material.setSpecular( new Color(0x111111) );
+					material.setShininess(200.0);
+					
+					Mesh mesh = new Mesh( geometry, material );
 
-						mesh.getPosition().set( 0, - 0.25, 0.6 );
-						mesh.getRotation().set( 0, - Math.PI / 2, 0 );
-						mesh.getScale().set( 0.5, 0.5, 0.5 );
+					mesh.getPosition().set( 0, - 0.25, 0.6 );
+					mesh.getRotation().set( 0, - Math.PI / 2, 0 );
+					mesh.getScale().set( 0.5, 0.5, 0.5 );
 
-						mesh.setCastShadow(true);
-						mesh.setReceiveShadow(true);
+					mesh.setCastShadow(true);
+					mesh.setReceiveShadow(true);
 
-						getScene().add( mesh );
+					getScene().add( mesh );
 
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading STL file.");
-			}
+				}
+			});
+
 			
 			final MeshPhongMaterial material = new MeshPhongMaterial();
 			material.setAmbient( new Color(0x555555) );
@@ -135,90 +127,68 @@ public class LoaderSTL extends ContentWidget
 			material.setSpecular( new Color(0x111111) );
 			material.setShininess(200.0);
 
-			final STLLoader loader2 = new STLLoader();
-			try
-			{
-				loader2.load(pr2_head_pan, new XHRLoader.ModelLoadHandler() {
+			new STLLoader(pr2_head_pan, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {																					
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {																					
 
-						Mesh mesh = new Mesh( geometry, material );
+					Mesh mesh = new Mesh( geometry, material );
 
-						mesh.getPosition().set( 0, - 0.37, - 0.6 );
-						mesh.getRotation().set( - Math.PI / 2, 0, 0 );
-						mesh.getScale().set( 2, 2, 2 );
+					mesh.getPosition().set( 0, - 0.37, - 0.6 );
+					mesh.getRotation().set( - Math.PI / 2, 0, 0 );
+					mesh.getScale().set( 2, 2, 2 );
 
-						mesh.setCastShadow(true);
-						mesh.setReceiveShadow(true);
+					mesh.setCastShadow(true);
+					mesh.setReceiveShadow(true);
 
-						getScene().add( mesh );
+					getScene().add( mesh );
 
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading STL file.");
-			}
+				}
+			});
 			
-			final STLLoader loader3 = new STLLoader();
-			try
-			{
-				loader3.load(pr2_head_tilt, new XHRLoader.ModelLoadHandler() {
-
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {																					
-						
-						Mesh mesh = new Mesh( geometry, material );
-
-						mesh.getPosition().set( 0.136, - 0.37, - 0.6 );
-						mesh.getRotation().set( - Math.PI / 2, 0.3, 0 );
-						mesh.getScale().set( 2, 2, 2 );
-
-						mesh.setCastShadow(true);
-						mesh.setReceiveShadow(true);
-
-						getScene().add( mesh );
-
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading STL file.");
-			}
 			
-			final STLLoader loader4 = new STLLoader();
-			try
-			{
-				loader4.load(colored, new XHRLoader.ModelLoadHandler() {
+			new STLLoader(pr2_head_tilt, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {
-						
-						final MeshPhongMaterial material = new MeshPhongMaterial();
-						material.setOpacity(loader3.getAlpha());
-						material.setVertexColors( Material.COLORS.VERTEX );
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {																					
+					
+					Mesh mesh = new Mesh( geometry, material );
 
-						Mesh mesh = new Mesh( geometry, material );
+					mesh.getPosition().set( 0.136, - 0.37, - 0.6 );
+					mesh.getRotation().set( - Math.PI / 2, 0.3, 0 );
+					mesh.getScale().set( 2, 2, 2 );
 
-						mesh.getPosition().set( 0.5, 0.2, 0 );
-						mesh.getRotation().set( - Math.PI / 2, Math.PI / 2, 0 );
-						mesh.getScale().set( 0.3, 0.3, 0.3 );
+					mesh.setCastShadow(true);
+					mesh.setReceiveShadow(true);
 
-						mesh.setCastShadow(true);
-						mesh.setReceiveShadow(true);
+					getScene().add( mesh );
 
-						getScene().add( mesh );
+				}
+			});
+			
+			new STLLoader(colored, new XHRLoader.ModelLoadHandler() {
 
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading STL file.");
-			}
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
+					
+					final MeshPhongMaterial material = new MeshPhongMaterial();
+					material.setOpacity(((STLLoader)loader).getAlpha());
+					material.setVertexColors( Material.COLORS.VERTEX );
+
+					Mesh mesh = new Mesh( geometry, material );
+
+					mesh.getPosition().set( 0.5, 0.2, 0 );
+					mesh.getRotation().set( - Math.PI / 2, Math.PI / 2, 0 );
+					mesh.getScale().set( 0.3, 0.3, 0.3 );
+
+					mesh.setCastShadow(true);
+					mesh.setReceiveShadow(true);
+
+					getScene().add( mesh );
+
+				}
+			});
+			
 			
 			getScene().add( new AmbientLight( 0x777777 ) );
 			

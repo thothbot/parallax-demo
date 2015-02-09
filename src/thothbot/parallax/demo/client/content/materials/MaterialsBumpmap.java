@@ -39,6 +39,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -165,21 +166,13 @@ public final class MaterialsBumpmap extends ContentWidget
 			material.setBumpScale(19);
 			material.setMetal(false);
 			
-			final JsonLoader jsonLoader = new JsonLoader();
-			try
-			{
-				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {		
-						createScene( (Geometry) geometry, 100, material );
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {		
+					createScene( (Geometry) geometry, 100, material );
+				}
+			});
 			
 			ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
 			shadowMap.setCullFrontFaces(false);

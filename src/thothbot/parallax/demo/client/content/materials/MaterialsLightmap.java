@@ -37,6 +37,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
@@ -132,25 +133,17 @@ public final class MaterialsLightmap extends ContentWidget
 
 			// MODEL
 
-			final JsonLoader jsonLoader = new JsonLoader();
-			try
-			{
-				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {		
-						Log.error(jsonLoader.getMaterials());
-						Mesh mesh = new Mesh( geometry, new MeshFaceMaterial(jsonLoader.getMaterials()) );
-						mesh.getPosition().set( 0 );
-						mesh.getScale().set( 100 );
-						getScene().add( mesh );
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}			
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {		
+					Mesh mesh = new Mesh( geometry, new MeshFaceMaterial(((JsonLoader)loader).getMaterials()) );
+					mesh.getPosition().set( 0 );
+					mesh.getScale().set( 100 );
+					getScene().add( mesh );
+				}
+			});
+	
 		}
 		
 		@Override

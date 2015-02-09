@@ -47,6 +47,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.plugins.postprocessing.BloomPass;
 import thothbot.parallax.plugins.postprocessing.ClearMaskPass;
 import thothbot.parallax.plugins.postprocessing.DotScreenPass;
@@ -150,21 +151,13 @@ public final class PostprocessingMulti extends ContentWidget
 			directionalLight.getPosition().set( 0, -0.1, 1 ).normalize();
 			sceneModel.add( directionalLight );
 
-			final JsonLoader jsonLoader = new JsonLoader();
-			try
-			{
-				jsonLoader.load(model, new JsonLoader.ModelLoadHandler() {
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
-					@Override
-					public void onModelLoaded(AbstractGeometry geometry) {		
-						createMesh( (Geometry) geometry, 100 );
-					}
-				});
-			}
-			catch (RequestException exception) 
-			{
-				Log.error("Error while loading JSON file.");
-			}
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {		
+					createMesh( (Geometry) geometry, 100 );
+				}
+			});
 			
 			//
 
