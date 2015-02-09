@@ -20,7 +20,6 @@ package thothbot.parallax.demo.client;
 
 import thothbot.parallax.core.client.AnimatedScene;
 import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.context.Canvas3d;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.events.AnimationReadyHandler;
 import thothbot.parallax.core.client.events.Context3dErrorEvent;
@@ -28,7 +27,6 @@ import thothbot.parallax.core.client.events.Context3dErrorHandler;
 import thothbot.parallax.core.client.events.SceneLoadingEvent;
 import thothbot.parallax.core.client.events.SceneLoadingHandler;
 import thothbot.parallax.core.client.renderers.Plugin;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
 import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.loader.shared.XHRLoader.LoaderProgressHandler;
@@ -50,8 +48,6 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 
 /**

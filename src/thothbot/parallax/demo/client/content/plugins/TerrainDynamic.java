@@ -58,7 +58,6 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.TerrainShader;
-import thothbot.parallax.loader.shared.JsonLoader;
 import thothbot.parallax.plugins.postprocessing.BloomPass;
 import thothbot.parallax.plugins.postprocessing.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.RenderPass;

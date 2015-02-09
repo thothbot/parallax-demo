@@ -21,7 +21,6 @@ package thothbot.parallax.demo.client.content.materials;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.shaders.Shader;
 import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
@@ -41,7 +40,6 @@ import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.TextResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;

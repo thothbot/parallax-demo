@@ -254,7 +254,7 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 		event.preventDefault();
 		
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
-		
+
 		rs.vector.set( ( event.getX() /(double) renderingPanel.getRenderer().getAbsoluteWidth() ) * 2.0 - 1.0, 
 				- ( event.getY() /(double) renderingPanel.getRenderer().getAbsoluteHeight() ) * 2.0 + 1.0, 0.5 );
 		rs.vector.unproject( rs.camera );

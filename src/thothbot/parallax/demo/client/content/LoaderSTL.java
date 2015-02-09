@@ -18,18 +18,12 @@
 
 package thothbot.parallax.demo.client.content;
 
-import thothbot.parallax.core.client.renderers.ShadowMap;
-import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
-import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector3;
@@ -38,13 +32,11 @@ import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.loader.shared.STLLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

@@ -20,7 +20,6 @@ package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
@@ -45,7 +44,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.http.client.RequestException;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

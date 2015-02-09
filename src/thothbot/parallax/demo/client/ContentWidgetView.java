@@ -25,7 +25,6 @@ import java.util.List;
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.debugger.Debugger;
 import thothbot.parallax.core.client.renderers.WebGLRenderer;
-import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -34,7 +33,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
