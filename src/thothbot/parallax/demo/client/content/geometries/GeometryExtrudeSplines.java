@@ -76,6 +76,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.ListBox;
 
@@ -330,10 +331,9 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		panel.setStyleName("common-panel", true);
 		panel.setStyleName("corner-panel", true);
 		this.renderingPanel.add(panel);
-		this.renderingPanel.setWidgetLeftWidth(panel, 1, Unit.PX, 26, Unit.EM);
-		this.renderingPanel.setWidgetTopHeight(panel, 1, Unit.PX, 11, Unit.EM);
+		this.renderingPanel.setWidgetLeftWidth(panel, 1, Unit.PX, 40, Unit.EM);
+		this.renderingPanel.setWidgetTopHeight(panel, 1, Unit.PX, 19, Unit.EM);
 		
-		Element br = DOM.createElement("br");
 
 		// Splines
 		panel.add(new InlineLabel("Spline:"));
@@ -352,6 +352,8 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			splines.addItem(key);
 		
 		panel.add(splines);
+		
+		panel.add(new InlineHTML("<br/>"));
 			
 		// Scale
 		panel.add(new InlineLabel("Scale:"));
@@ -372,7 +374,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		panel.add(scale);
 		
-		panel.getElement().appendChild(br);
+		panel.add(new InlineHTML("<br/>"));
 		
 		// Extrusion Segments
 		panel.add(new InlineLabel("Extrusion Segments:"));
@@ -393,7 +395,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		panel.add(extrusionSegments);
 		
-		panel.getElement().appendChild(br);
+		panel.add(new InlineHTML("<br/>"));
 		
 		// Radius Segments
 		panel.add(new InlineLabel("Radius Segments:"));
@@ -414,7 +416,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		
 		panel.add(radiusSegments);
 		
-		panel.getElement().appendChild(br);
+		panel.add(new InlineHTML("<br/>"));
 		
 		// Debug normals
 		panel.add(new InlineLabel("Debug normals:"));
@@ -445,7 +447,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 
 		panel.add(isClosed);
 		
-		panel.getElement().appendChild(br);
+		panel.add(new InlineHTML("<br/>"));
 		
 		final Button animation = new Button("Camera Spline Animation View: OFF");
 		animation.addClickHandler(new ClickHandler() {
@@ -460,7 +462,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		// Camera Spline Animation View
 		panel.add(animation);
 		
-		panel.getElement().appendChild(br);
+		panel.add(new InlineHTML("<br/>"));
 		
 		// Look Ahead
 		panel.add(new InlineLabel("Look Ahead:"));
