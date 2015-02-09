@@ -30,6 +30,8 @@ import thothbot.parallax.core.client.events.SceneLoadingHandler;
 import thothbot.parallax.core.client.renderers.Plugin;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.demo.resources.DemoResources;
+import thothbot.parallax.loader.shared.XHRLoader;
+import thothbot.parallax.loader.shared.XHRLoader.LoaderProgressHandler;
 import thothbot.parallax.plugins.effects.Anaglyph;
 import thothbot.parallax.plugins.effects.OculusRift;
 import thothbot.parallax.plugins.effects.ParallaxBarrier;
@@ -48,6 +50,8 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 
 /**
@@ -74,7 +78,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	protected RenderingPanel renderingPanel;
 	
 	private LoadingPanel loadingPanel;
-	
+	private boolean isSceneHasObjects = false;
 	/**
 	 * A description of an example.
 	 */
@@ -307,9 +311,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	
 	@Override
 	public void onSceneLoading(SceneLoadingEvent event) 
-	{
-		Log.error(event.isLoaded());
-		if(event.isLoaded() && loadingPanel != null) 
+	{		
+		if(event.isLoaded() && loadingPanel != null && !isSceneHasObjects ) 
 		{
 			loadingPanel.hide();
 		}
@@ -318,6 +321,17 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 			this.loadingPanel = new LoadingPanel();
 			this.loadingPanel.show();
 			this.renderingPanel.add(this.loadingPanel);
+			
+			XHRLoader.addLoaderProgress(new LoaderProgressHandler() {
+				
+				@Override
+				public void onProgressUpdate(int left) {
+					if(left > 0)
+						isSceneHasObjects = true;
+					else if(isSceneHasObjects)
+						loadingPanel.hide();
+				}
+			});
 		}
 	}
 	

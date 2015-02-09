@@ -39,7 +39,7 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.loader.shared.Loader;
+import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.loader.shared.STLLoader;
 
 import com.google.gwt.core.client.GWT;
@@ -99,7 +99,7 @@ public class LoaderSTL extends ContentWidget
 			final STLLoader loader = new STLLoader();
 			try
 			{
-				loader.load(slotted_disk, new Loader.ModelLoadHandler() {
+				loader.load(slotted_disk, new XHRLoader.ModelLoadHandler() {
 
 					@Override
 					public void onModelLoaded(AbstractGeometry geometry) {																					
@@ -138,7 +138,7 @@ public class LoaderSTL extends ContentWidget
 			final STLLoader loader2 = new STLLoader();
 			try
 			{
-				loader2.load(pr2_head_pan, new Loader.ModelLoadHandler() {
+				loader2.load(pr2_head_pan, new XHRLoader.ModelLoadHandler() {
 
 					@Override
 					public void onModelLoaded(AbstractGeometry geometry) {																					
@@ -165,7 +165,7 @@ public class LoaderSTL extends ContentWidget
 			final STLLoader loader3 = new STLLoader();
 			try
 			{
-				loader3.load(pr2_head_tilt, new Loader.ModelLoadHandler() {
+				loader3.load(pr2_head_tilt, new XHRLoader.ModelLoadHandler() {
 
 					@Override
 					public void onModelLoaded(AbstractGeometry geometry) {																					
@@ -192,7 +192,7 @@ public class LoaderSTL extends ContentWidget
 			final STLLoader loader4 = new STLLoader();
 			try
 			{
-				loader4.load(colored, new Loader.ModelLoadHandler() {
+				loader4.load(colored, new XHRLoader.ModelLoadHandler() {
 
 					@Override
 					public void onModelLoaded(AbstractGeometry geometry) {
