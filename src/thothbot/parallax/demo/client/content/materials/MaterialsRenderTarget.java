@@ -19,12 +19,16 @@
 package thothbot.parallax.demo.client.content.materials;
 
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
+import thothbot.parallax.core.client.events.HasEventBus;
+import thothbot.parallax.core.client.events.ViewportResizeEvent;
+import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.shaders.Shader.DefaultResources;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
@@ -77,10 +81,8 @@ public class MaterialsRenderTarget extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene 
+	class DemoScene extends DemoAnimatedScene
 	{
-		private static final String image = "./static/textures/UV_Grid_Sm.jpg";
-
 		PerspectiveCamera camera;
 		OrthographicCamera cameraRTT;
 		Scene sceneRTT, sceneScreen;
@@ -98,6 +100,8 @@ public class MaterialsRenderTarget extends ContentWidget
 		
 		ShaderMaterial materialScreen;
 		
+		Mesh quad1;
+
 		@Override
 		protected void onStart()
 		{
@@ -133,9 +137,9 @@ public class MaterialsRenderTarget extends ContentWidget
 			materialScreen = new ShaderMaterial(ResourcesScreen.INSTANCE);
 			materialScreen.getShader().addUniform("tDiffuse", new Uniform(Uniform.TYPE.T, rtTexture ));
 			materialScreen.setDepthWrite(false);
-						
-			PlaneBufferGeometry plane = new PlaneBufferGeometry(getRenderer().getAbsoluteWidth()+1000, getRenderer().getAbsoluteHeight() );
-			Mesh quad1 = new Mesh( plane, material );
+
+			PlaneBufferGeometry plane = new PlaneBufferGeometry(getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight() );
+			quad1 = new Mesh( plane, material );
 			quad1.getPosition().setZ( -100 );
 			sceneRTT.add( quad1 );
 
