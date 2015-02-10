@@ -18,6 +18,9 @@
 
 package thothbot.parallax.demo.client.content.plugins;
 
+import thothbot.parallax.core.client.events.HasEventBus;
+import thothbot.parallax.core.client.events.ViewportResizeEvent;
+import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
@@ -45,7 +48,7 @@ public final class EffectsSprites extends ContentWidget
 	 * Prepare Rendering Scene
 	 */
 	@DemoSource
-	class DemoScene extends DemoAnimatedScene 
+	class DemoScene extends DemoAnimatedScene implements HasEventBus, ViewportResizeHandler
 	{
 		PerspectiveCamera camera;
 		OrthographicCamera cameraOrtho;
@@ -60,8 +63,16 @@ public final class EffectsSprites extends ContentWidget
 		Texture mapC = new Texture( "./static/textures/sprite2.png" );
 		
 		@Override
+		public void onResize(ViewportResizeEvent event) 
+		{
+			updateHUDSprites();
+		}
+		
+		@Override
 		protected void onStart()
 		{
+			EVENT_BUS.addHandler(ViewportResizeEvent.TYPE, this);
+			
 			camera = new PerspectiveCamera(
 					60, // fov
 					getRenderer().getAbsoluteAspectRation(), // aspect 
