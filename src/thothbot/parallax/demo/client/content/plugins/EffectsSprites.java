@@ -19,14 +19,18 @@
 package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
+import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Object3D;
 import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.scenes.Fog;
+import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugins.sprite.Sprite;
-import thothbot.parallax.plugins.sprite.Sprite.ALIGNMENT;
+import thothbot.parallax.plugins.sprite.SpriteMaterial;
 import thothbot.parallax.plugins.sprite.SpritePlugin;
 
 import com.google.gwt.core.client.GWT;
@@ -44,12 +48,17 @@ public final class EffectsSprites extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		PerspectiveCamera camera;
+		OrthographicCamera cameraOrtho;
+		
 		Object3D group;
 		
-		Texture mapA = new Texture( "./static/textures/sprite0.png" );
+		Scene sceneOrtho;
+		
+		Sprite spriteTL, spriteTR, spriteBL, spriteBR, spriteC;
+		
 		Texture mapB = new Texture( "./static/textures/sprite1.png" );
 		Texture mapC = new Texture( "./static/textures/sprite2.png" );
-
+		
 		@Override
 		protected void onStart()
 		{
@@ -62,87 +71,158 @@ public final class EffectsSprites extends ContentWidget
 			
 			camera.getPosition().setZ(1500);
 			
+			cameraOrtho = new OrthographicCamera( getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), 1, 10 );
+			cameraOrtho.getPosition().setZ( 10 );
+
+			getScene().setFog( new Fog( 0x000000, 1500, 2100 ) );
+			
+			sceneOrtho = new Scene();
+			
 			int amount = 200;
 			int radius = 500;
 			
 			new SpritePlugin(getRenderer(), getScene());
+			new SpritePlugin(getRenderer(), sceneOrtho);
+			
+			new Texture( "./static/textures/sprite0.png", new Texture.ImageLoadHandler() {
+				
+				@Override
+				public void onImageLoad(Texture texture) {
+					SpriteMaterial material = new SpriteMaterial();
+					material.setMap(texture);
+
+					int width = material.getMap().getImage().getOffsetWidth();
+					int height = material.getMap().getImage().getOffsetHeight();
+
+					spriteTL = new Sprite( material );
+					spriteTL.getScale().set( width, height, 1 );
+					sceneOrtho.add( spriteTL );
+
+					spriteTR = new Sprite( material );
+					spriteTR.getScale().set( width, height, 1 );
+					sceneOrtho.add( spriteTR );
+
+					spriteBL = new Sprite( material );
+					spriteBL.getScale().set( width, height, 1 );
+					sceneOrtho.add( spriteBL );
+
+					spriteBR = new Sprite( material );
+					spriteBR.getScale().set( width, height, 1 );
+					sceneOrtho.add( spriteBR );
+					
+					spriteC = new Sprite( material );
+					spriteC.getScale().set( width, height, 1 );
+					sceneOrtho.add( spriteC );
+					
+					updateHUDSprites();
+				}
+			} );
+
+			SpriteMaterial materialC = new SpriteMaterial();
+			materialC.setMap(mapC);
+			materialC.setColor(new Color(0xffffff));
+			materialC.setFog(true);
+
+			SpriteMaterial materialB = new SpriteMaterial();
+			materialB.setMap(mapB);
+			materialB.setColor(new Color(0xffffff));
+			materialB.setFog(true);
+
 			group = new Object3D();
+			
+			for ( int a = 0; a < amount; a ++ ) {
 
-			for( int a = 0; a < amount; a ++ ) 
-			{ 
-				Sprite sprite = new Sprite();
-				sprite.setMap(mapC);
-				sprite.setUseScreenCoordinates(false);
-				sprite.setColor(new Color(0xffffff));
+				double x = Math.random() - 0.5;
+				double y = Math.random() - 0.5;
+				double z = Math.random() - 0.5;
 
-				sprite.getPosition().set( Math.random() - 0.5,
-						Math.random() - 0.5,
-						Math.random() - 0.5 );
+				SpriteMaterial material;
+				
+				if ( z < 0 ) {
 
-				if( sprite.getPosition().getZ() < 0 ) 
-				{
-					sprite.setMap(mapB);
-				} 
-				else 
-				{
-					sprite.getColor().setHSL(0.5 * Math.random(), 0.75, 0.5 );
-					sprite.getUvScale().set( 2, 2 );
-					sprite.getUvOffset().set( -0.5, -0.5 );
+					material = materialB.clone();
+
+				} else {
+
+					material = materialC.clone();
+					material.getColor().setHSL( 0.5 * Math.random(), 0.75, 0.5 );
+					material.getMap().getOffset().set( -0.5, -0.5 );
+					material.getMap().getRepeat().set( 2, 2 );
 				}
 
+				Sprite sprite = new Sprite( material );
+
+				sprite.getPosition().set( x, y, z );
 				sprite.getPosition().normalize();
 				sprite.getPosition().multiply( radius );
 
 				group.add( sprite );
+
 			}
 
 			getScene().add( group );
 
-			// add 2d-sprites 
-			Sprite sprite1 = new Sprite();
-			sprite1.setMap(mapA);
-			sprite1.setAlignment(ALIGNMENT.TOP_LEFT);
-			sprite1.getPosition().set( 100, 100, 0 );
-			sprite1.setOpacity( 0.25 );
-			getScene().add( sprite1 );
-
-			Sprite sprite2 = new Sprite();
-			sprite2.setMap(mapA);
-			sprite2.setAlignment(ALIGNMENT.TOP_LEFT);
-			sprite2.getPosition().set( 150, 150, 2 );
-			sprite2.setOpacity( 0.5 );
-			getScene().add( sprite2 );
-
-			Sprite sprite3 = new Sprite();
-			sprite3.setMap(mapA);
-			sprite3.setAlignment(ALIGNMENT.TOP_LEFT);
-			sprite3.getPosition().set( 200, 200, 3 );
-			sprite3.setOpacity(1);
-			getScene().add( sprite3 );
+			// To allow render overlay on top of sprited sphere
+			getRenderer().setAutoClear(false); 
 		}
+		
+		private void updateHUDSprites () {
+
+			int width = getRenderer().getAbsoluteWidth() / 2;
+			int height = getRenderer().getAbsoluteHeight() / 2;
+
+			SpriteMaterial material = (SpriteMaterial) spriteTL.getMaterial();
+
+			int imageWidth =  material.getMap().getImage().getOffsetWidth() / 2;
+			int imageHeight =  material.getMap().getImage().getOffsetHeight() / 2;
+
+			spriteTL.getPosition().set( - width + imageWidth,   height - imageHeight, 1 ); // top left
+			spriteTR.getPosition().set(   width - imageWidth,   height - imageHeight, 1 ); // top right
+			spriteBL.getPosition().set( - width + imageWidth, - height + imageHeight, 1 ); // bottom left
+			spriteBR.getPosition().set(   width - imageWidth, - height + imageHeight, 1 ); // bottom right
+			spriteC.getPosition().set( 0, 0, 1 ); // center
+
+		};
 		
 		@Override
 		protected void onUpdate(double duration)
 		{
 			double time = duration * .001;
 			
-			for ( int c = 0; c < group.getChildren().size(); c ++ ) 
+			for ( int i = 0, l = group.getChildren().size(); i < l; i ++ ) 
 			{
-				Sprite sprite = (Sprite) group.getChildren().get(c);
-				double scale = Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.3 + 0.5;
+				Sprite sprite = (Sprite) group.getChildren().get(i);
+				SpriteMaterial material = (SpriteMaterial) sprite.getMaterial();
+				double scale = Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.3 + 1.0;
 
-				sprite.setRotationFactor(sprite.getRotationFactor() +  0.1 * ( c / (double)group.getChildren().size() ) );
-				sprite.getScale().set( scale, scale, 1.0 );
+				int imageWidth = 1;
+				int imageHeight = 1;
 
-				if ( !sprite.getMap().equals( mapC ) )
-					sprite.setOpacity( Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.4 + 0.6 );
+				if ( material.getMap() != null 
+						&& material.getMap().getImage() != null 
+						&& material.getMap().getImage().getOffsetWidth() > 0 ) {
+
+					imageWidth = material.getMap().getImage().getOffsetWidth();
+					imageHeight = material.getMap().getImage().getOffsetHeight();
+
+				}
+
+				material.setRotation(material.getRotation() + 0.1 * ( (double)i / l ) );
+				sprite.getScale().set( scale * imageWidth, scale * imageHeight, 1.0 );
+
+				if ( !material.getMap().equals( mapC ) )
+					material.setOpacity( Math.sin( time + sprite.getPosition().getX() * 0.01 ) * 0.4 + 0.6 );
 			}
-
+			
 			group.getRotation().setX( time * 0.5 );
 			group.getRotation().setY( time * 0.75);
 			group.getRotation().setZ( time * 1.0 );
 			
-			getRenderer().render(getScene(), camera);
+			getRenderer().clear();
+			getRenderer().render( getScene(), camera );
+			getRenderer().clearDepth();
+			getRenderer().render( sceneOrtho, cameraOrtho );
+
 		}
 	}
 		
