@@ -113,7 +113,8 @@ public final class MorphNormalsFlamingo extends ContentWidget
 					@Override
 					public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {	
 						
-						((JsonLoader)loader).morphColorsToFaceColors((Geometry) geometry);
+						((JsonLoader)loader).morphColorsToFaceColors( (Geometry) geometry );
+						((Geometry)geometry).computeMorphNormals();
 
 						MeshLambertMaterial material = new MeshLambertMaterial();
 						material.setColor(new Color(0xffffff));
@@ -131,27 +132,36 @@ public final class MorphNormalsFlamingo extends ContentWidget
 
 						getScene().add( meshAnim );
 						morphs.add( meshAnim );
+					}
 						
-						// 
+			});
+						
+			new JsonLoader(model, new XHRLoader.ModelLoadHandler() { 
+				
+					@Override
+					public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {	
 
-						MeshPhongMaterial material2 = new MeshPhongMaterial();
-						material2.setColor(new Color(0xffffff));
-						material2.setSpecular(new Color(0xffffff));
-						material2.setShininess(20);
-						material2.setMorphTargets(true);
-						material2.setMorphNormals(true);
-						material2.setVertexColors(Material.COLORS.FACE);
-						material2.setShading(Material.SHADING.SMOOTH); 
- 
-						MorphAnimMesh meshAnim2 = new MorphAnimMesh( (Geometry) geometry, material2 );
+						((JsonLoader)loader).morphColorsToFaceColors( (Geometry) geometry );
+						((Geometry)geometry).computeMorphNormals();
 
-						meshAnim2.setDuration(5000);
+						MeshPhongMaterial material = new MeshPhongMaterial();
+						material.setColor(new Color(0xffffff));
+						material.setSpecular(new Color(0xffffff));
+						material.setShininess(20);
+						material.setMorphTargets(true);
+						material.setMorphNormals(true);
+						material.setVertexColors(Material.COLORS.FACE);
+						material.setShading(Material.SHADING.SMOOTH); 
+ 		
+						MorphAnimMesh meshAnim = new MorphAnimMesh( (Geometry) geometry, material );
 
-						meshAnim2.getScale().set( 1.5 );
-						meshAnim2.getPosition().setY( 150 );
+						meshAnim.setDuration(5000);
 
-						scene2.add( meshAnim2 );
-						morphs.add( meshAnim2 );
+						meshAnim.getScale().set( 1.5 );
+						meshAnim.getPosition().setY( 150 );
+
+						scene2.add( meshAnim );
+						morphs.add( meshAnim );
 					}
 			});
 			
@@ -159,12 +169,13 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			getRenderer().setGammaOutput(true);
 			getRenderer().setSortObjects(false);
 			getRenderer().setAutoClear(false);
+			
+			this.oldTime = Duration.currentTimeMillis();
 		}
 		
 		@Override
 		protected void onUpdate(double duration)
 		{
-			this.oldTime = Duration.currentTimeMillis();
 			double theta = duration * 0.01;
 
 			camera.getPosition().setX( radius * Math.sin( theta * Math.PI / 360.0 ) );
@@ -175,7 +186,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			for ( int i = 0; i < morphs.size(); i ++ ) 
 			{
 				MorphAnimMesh morph = morphs.get( i );
-				morph.updateAnimation( (int) (Duration.currentTimeMillis() - this.oldTime) );
+				morph.updateAnimation( Duration.currentTimeMillis() - this.oldTime );
 			}
 
 			getRenderer().clear();
@@ -185,6 +196,8 @@ public final class MorphNormalsFlamingo extends ContentWidget
 
 			getRenderer().setViewport( getRenderer().getAbsoluteWidth()/2, 0, getRenderer().getAbsoluteWidth()/2, getRenderer().getAbsoluteHeight() );
 			getRenderer().render( scene2, camera );
+
+			this.oldTime = Duration.currentTimeMillis();
 		}
 	}
 		
