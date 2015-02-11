@@ -18,6 +18,7 @@
 
 package thothbot.parallax.demo.client.content;
 
+import thothbot.parallax.core.client.renderers.ShadowMap;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;

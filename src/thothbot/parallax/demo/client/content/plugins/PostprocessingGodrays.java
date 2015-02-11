@@ -20,14 +20,23 @@ package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.RenderingPanel;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
+import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.gl2.enums.TextureMagFilter;
+import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
+import thothbot.parallax.core.client.textures.RenderTargetTexture;
+import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshDepthMaterial;
+import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
+import thothbot.parallax.core.shared.math.Vector2;
+import thothbot.parallax.core.shared.math.Vector3;
 import thothbot.parallax.core.shared.objects.Mesh;
+import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
@@ -69,8 +78,19 @@ public final class PostprocessingGodrays extends ContentWidget
 		
 		Mesh sphereMesh;
 		
-		private Postprocessing composer;
-
+		Vector3 sunPosition = new Vector3( 0, 1000, -1000 );
+		Vector3 screenSpacePosition = new Vector3();
+		
+		ShaderPass godraysGenerate, godraysCombine, godraysFakeSun;
+		
+		Scene postprocessingScene;
+		OrthographicCamera postprocessingCamera;
+		RenderTargetTexture rtTextureColors, rtTextureDepth;
+		
+		ShaderMaterial materialGodraysFakeSun;
+		
+		MeshDepthMaterial materialDepth;
+		
 		@Override
 		protected void onStart()
 		{
@@ -81,7 +101,7 @@ public final class PostprocessingGodrays extends ContentWidget
 				);
 			camera.getPosition().setZ(200);
 			
-			MeshDepthMaterial materialDepth = new MeshDepthMaterial();
+			materialDepth = new MeshDepthMaterial();
 
 			final MeshBasicMaterial materialScene = new MeshBasicMaterial();
 			materialScene.setColor(new Color(0x000000));
@@ -119,21 +139,48 @@ public final class PostprocessingGodrays extends ContentWidget
 			getRenderer().setAutoClear(false);
 			getRenderer().setClearColor( bgColor, 1 );
 			
+			//  Postprocessing
+			
+			postprocessingScene = new Scene();
+
+			postprocessingCamera = new OrthographicCamera(getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight(), -10000, 10000 );
+			postprocessingCamera.getPosition().setZ( 100 );
+
+			postprocessingScene.add( postprocessingCamera );
+
+			rtTextureColors = new RenderTargetTexture( getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight() );
+			rtTextureColors.setMinFilter(TextureMinFilter.LINEAR);
+			rtTextureColors.setMagFilter(TextureMagFilter.LINEAR);
+			rtTextureColors.setFormat(PixelFormat.RGBA);
+
+			// Switching the depth formats to luminance from rgb doesn't seem to work. I didn't
+			// investigate further for now.
+			// pars.format = THREE.LuminanceFormat;
+
+			// I would have this quarter size and use it as one of the ping-pong render
+			// targets but the aliasing causes some temporal flickering
+
+			rtTextureDepth = new RenderTargetTexture(  getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight()  );
+			rtTextureDepth.setMinFilter(TextureMinFilter.LINEAR);
+			rtTextureDepth.setMagFilter(TextureMagFilter.LINEAR);
+			rtTextureDepth.setFormat(PixelFormat.RGBA);
+
 			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
 			RenderPass renderModel = new RenderPass( getScene(), camera );
 			composer.addPass( renderModel );
 			
-			ShaderPass materialGodraysGenerate = new ShaderPass( new GodRaysGenerateShader() );
-			composer.addPass( materialGodraysGenerate );
+			godraysGenerate = new ShaderPass( new GodRaysGenerateShader() );
+			composer.addPass( godraysGenerate );
 			
-			ShaderPass materialGodraysCombine = new ShaderPass( new GodRaysCombineShader() );
-			materialGodraysCombine.getUniforms().get("fGodRayIntensity").setValue( 0.75 );
-			composer.addPass( materialGodraysCombine );
+			godraysCombine = new ShaderPass( new GodRaysCombineShader() );
+			godraysCombine.getUniforms().get("fGodRayIntensity").setValue( 0.75 );
+			composer.addPass( godraysCombine );
 			
-			ShaderPass godraysFakeSunShader = new ShaderPass( new GodraysFakeSunShader() );
-			((Color)godraysFakeSunShader.getUniforms().get("bgColor").getValue()).setHex( bgColor );
-			((Color)godraysFakeSunShader.getUniforms().get("sunColor").getValue()).setHex( sunColor );
-			composer.addPass( godraysFakeSunShader );
+			materialGodraysFakeSun = new ShaderMaterial ( new GodraysFakeSunShader() );
+			godraysFakeSun = new ShaderPass( materialGodraysFakeSun.getShader() );
+			((Color)godraysFakeSun.getUniforms().get("bgColor").getValue()).setHex( bgColor );
+			((Color)godraysFakeSun.getUniforms().get("sunColor").getValue()).setHex( sunColor );
+			composer.addPass( godraysFakeSun );
 		}
 				
 		@Override
@@ -149,8 +196,80 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			camera.lookAt( getScene().getPosition() );
 			
-			getRenderer().clear();
-			getRenderer().render(getScene(), camera);
+			// Find the screenspace position of the sun
+			screenSpacePosition.copy( sunPosition ).project( camera );
+
+			screenSpacePosition.setX( ( screenSpacePosition.getX() + 1.0 ) / 2.0 );
+			screenSpacePosition.setY( ( screenSpacePosition.getY() + 1.0 ) / 2.0 );
+			
+			// Give it to the god-ray and sun shaders
+
+			((Vector2)godraysGenerate.getUniforms().get("vSunPositionScreenSpace").getValue()).set( screenSpacePosition.getX(), screenSpacePosition.getY() );
+			((Vector2)godraysFakeSun.getUniforms().get("vSunPositionScreenSpace").getValue()).set( screenSpacePosition.getX(), screenSpacePosition.getY() );
+
+			// -- Draw sky and sun --
+
+			// Clear colors and depths, will clear to sky color
+
+			getRenderer().clearTarget( rtTextureColors, true, true, false );
+
+			// Sun render. Runs a shader that gives a brightness based on the screen
+			// space distance to the sun. Not very efficient, so i make a scissor
+			// rectangle around the suns position to avoid rendering surrounding pixels.
+			
+			int width = getRenderer().getAbsoluteWidth(); 
+			int height = getRenderer().getAbsoluteHeight();
+
+			int sunsqH = (int) (0.74 * height); // 0.74 depends on extent of sun from shader
+			int sunsqW = (int) (0.74 * height); // both depend on height because sun is aspect-corrected
+
+			screenSpacePosition.setX( screenSpacePosition.getX() * width );
+			screenSpacePosition.setY( screenSpacePosition.getY() * height );
+
+			getRenderer().setScissor( (int)(screenSpacePosition.getX() - sunsqW / 2), (int)(screenSpacePosition.getY() - sunsqH / 2), sunsqW, sunsqH );
+			getRenderer().enableScissorTest( true );
+
+			godraysFakeSun.getUniforms().get("fAspect").setValue( (double)width / height );
+
+			postprocessingScene.overrideMaterial = materialGodraysFakeSun;
+			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureColors );
+
+			getRenderer().enableScissorTest( false );
+			
+			// Colors
+
+			getScene().overrideMaterial = null;
+			getRenderer().render( getScene(), camera, rtTextureColors );
+
+			// Depth
+
+			getScene().overrideMaterial = materialDepth;
+			getRenderer().render( getScene(), camera, rtTextureDepth, true );
+			
+			// -- Render god-rays --
+
+			// Maximum length of god-rays (in texture space [0,1]X[0,1])
+
+			double filterLen = 1.0;
+
+			// Samples taken by filter
+
+			double TAPS_PER_PASS = 6.0;
+
+			// Pass order could equivalently be 3,2,1 (instead of 1,2,3), which
+			// would start with a small filter support and grow to large. however
+			// the large-to-small order produces less objectionable aliasing artifacts that
+			// appear as a glimmer along the length of the beams
+
+			// pass 1 - render into first ping-pong target
+
+			double pass = 1.0;
+			double stepLen = filterLen * Math.pow( TAPS_PER_PASS, -pass );
+
+			godraysGenerate.getUniforms().get("fStepSize" ).setValue( stepLen );
+			godraysGenerate.getUniforms().get("tInput" ).setValue( rtTextureDepth );
+
+			getRenderer().render( getScene(), camera);
 		}
 	}
 		

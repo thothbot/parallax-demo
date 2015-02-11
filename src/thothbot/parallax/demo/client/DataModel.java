@@ -70,6 +70,7 @@ import thothbot.parallax.demo.client.content.misc.PerformanceDoubleSided;
 import thothbot.parallax.demo.client.content.plugins.EffectsLensFlares;
 import thothbot.parallax.demo.client.content.plugins.EffectsSprites;
 import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
+import thothbot.parallax.demo.client.content.plugins.PostprocessingGodrays;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
