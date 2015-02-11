@@ -72,6 +72,7 @@ import thothbot.parallax.demo.client.content.plugins.EffectsLensFlares;
 import thothbot.parallax.demo.client.content.plugins.EffectsSprites;
 import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
 import thothbot.parallax.demo.client.content.plugins.PostprocessingGodrays;
+import thothbot.parallax.demo.client.content.plugins.Saturn;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
@@ -419,6 +420,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
 			category.addExample(new EffectsSprites(),
 					RunAsyncCode.runAsyncCode(EffectsSprites.class));
+			category.addExample(new Saturn(),
+					RunAsyncCode.runAsyncCode(Saturn.class));
 
 		}
 

@@ -27,6 +27,16 @@ pre {
 	padding: 10px;    
 }
 
+.common-panel a {
+	color: #ddd;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.common-panel a:hover {
+	color: white;
+}
+
 .corner-panel {
 	margin: 5px;
 	padding: 10px;
