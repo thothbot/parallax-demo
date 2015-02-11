@@ -29,16 +29,21 @@ import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.RingGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
+import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
+import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
+import thothbot.parallax.plugins.lensflare.LensFlare;
+import thothbot.parallax.plugins.lensflare.LensFlarePlugin;
+import thothbot.parallax.plugins.lensflare.LensFlare.LensSprite;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
@@ -63,9 +68,14 @@ public class Saturn extends ContentWidget
 	class DemoScene extends DemoAnimatedScene 
 	{
 		private static final String skyboxTextures = "./static/textures/cube/milkyway/*.jpg";
+		
 		private static final String saturnTextures = "./static/textures/planets/saturn.jpg";
 		private static final String saturnRingsTextures = "./static/textures/planets/saturnRings.png";
 		private static final String saturnCloudsTextures = "./static/textures/planets/saturnClouds.png";
+		
+		private Texture textureFlare0 = new Texture( "./static/textures/lensflare/lensflare0.png" );
+		private Texture textureFlare2 = new Texture( "./static/textures/lensflare/lensflare2.png" );
+		private Texture textureFlare3 = new Texture( "./static/textures/lensflare/lensflare3.png" );
 		
 		private static final double saturnRadius = 120.536;
 		private static final double saturnRotationSpeed = 0.02;
@@ -154,9 +164,22 @@ public class Saturn extends ContentWidget
 			saturnRings.setReceiveShadow(true);	
 			getScene().add(saturnRings);
 
-			// Sun
+		    // Sun
+		    new LensFlarePlugin(getRenderer(), getScene());
+		    addSun( 0.985, 0.5, 0.850,10000 ,-20000, 60000 );
+		    
+			getRenderer().setAutoClear(false);
+			getRenderer().setGammaInput(true);
+			getRenderer().setGammaOutput(true);
+
+		    this.oldTime = Duration.currentTimeMillis();
+
+		}
+		
+		private void addSun( double h, double s, double l, double x, double y, double z ) 
+		{
 			DirectionalLight dirLight = new DirectionalLight( 0xffffff );
-			dirLight.getPosition().set(100 ,-200, 600 );
+			dirLight.getPosition().set(x, y, z );
 			dirLight.setCastShadow(true);
 			dirLight.setShadowMapWidth( 2048 );
 			dirLight.setShadowMapHeight( 2048 );
@@ -165,13 +188,49 @@ public class Saturn extends ContentWidget
 			dirLight.setShadowBias( -0.005 ); 
 			dirLight.setShadowDarkness( 0.35 );		
 		//	dirLight.shadowCameraVisible = true;
-			
+
 		    getScene().add( dirLight );
 		    
-			getRenderer().setAutoClear(false);
+			Color flareColor = new Color( 0xffffff );
+			flareColor.setHSL( h, s, l + 0.5 );
+			
+			final LensFlare lensFlare = new LensFlare( textureFlare0, 700, 0.0, Material.BLENDING.ADDITIVE, flareColor );
 
-		    this.oldTime = Duration.currentTimeMillis();
+			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare2, 512, 0.0, Material.BLENDING.ADDITIVE );
 
+			lensFlare.add( textureFlare3, 60,  0.6, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 70,  0.7, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 120, 0.9, Material.BLENDING.ADDITIVE );
+			lensFlare.add( textureFlare3, 70,  1.0, Material.BLENDING.ADDITIVE );
+
+			lensFlare.setUpdateCallback(new LensFlare.Callback() {
+
+				@Override
+				public void update() {
+
+					double vecX = -lensFlare.getPositionScreen().getX() * 2.0;
+					double vecY = -lensFlare.getPositionScreen().getY() * 2.0;
+
+					for( int f = 0; f < lensFlare.getLensFlares().size(); f++ ) 
+					{
+						LensSprite flare = lensFlare.getLensFlares().get( f );
+
+						flare.x = lensFlare.getPositionScreen().getX() + vecX * flare.distance;
+						flare.y = lensFlare.getPositionScreen().getY() + vecY * flare.distance;
+
+						flare.rotation = 0;
+					}
+
+					lensFlare.getLensFlares().get( 2 ).y += 0.025;
+					lensFlare.getLensFlares().get( 3 ).rotation = lensFlare.getPositionScreen().getX() * 0.5 + Mathematics.degToRad(45.0);
+				}
+			});
+
+			lensFlare.getPosition().copy(dirLight.getPosition());
+
+			getScene().add( lensFlare );
 		}
 		
 		@Override
