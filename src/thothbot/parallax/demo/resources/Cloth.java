@@ -321,8 +321,8 @@ public class Cloth
 			clothGeometry.getVertices().get( i ).copy( particles.get( i ).position );
 		}
 		
-		clothGeometry.normalsNeedUpdate  = true;
-		clothGeometry.verticesNeedUpdate = true;
+		clothGeometry.setNormalsNeedUpdate( true );
+		clothGeometry.setVerticesNeedUpdate( true );
 
 		ball.getPosition().copy( ballPosition );
 	}

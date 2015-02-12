@@ -109,7 +109,7 @@ public class GeometryDynamic extends ContentWidget
 			for ( int i = 0, l = this.geometry.getVertices().size(); i < l; i ++ )
 				this.geometry.getVertices().get( i ).setY(35.0 * Math.sin( i / 5.0 + ( duration * 0.01 + i ) / 7.0 ));
 		
-			((Geometry)this.mesh.getGeometry()).verticesNeedUpdate = true;
+			((Geometry)this.mesh.getGeometry()).setVerticesNeedUpdate( true );
 			
 			this.controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001);
 
