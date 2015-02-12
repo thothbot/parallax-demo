@@ -33,6 +33,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
@@ -137,9 +138,9 @@ public class ContentWidgetView extends ResizeComposite
 		}
 	}
 	
-	public void setDescription(SafeHtml html)
+	public void setDescription(HTML html)
 	{
-		this.descriptionField.setInnerHTML(html.asString());
+		this.descriptionField.setInnerHTML(html.getHTML());
 	}
 
 	public void setName(String text)

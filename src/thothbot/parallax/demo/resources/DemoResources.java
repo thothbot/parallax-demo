@@ -239,4 +239,7 @@ public interface DemoResources extends ClientBundle
 	
 	@Source("images/example_stl_loader.jpg")
 	ImageResource exampleSTLLoader();
+	
+	@Source("images/example_saturn.jpg")
+	ImageResource exampleSaturn();
 }

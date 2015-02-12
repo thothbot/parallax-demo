@@ -44,10 +44,9 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 
 /**
@@ -78,7 +77,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	/**
 	 * A description of an example.
 	 */
-	private final SafeHtml description;
+	private final HTML description;
 
 	/**
 	 * The name of the example.
@@ -118,7 +117,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	public ContentWidget(String name, String description) 
 	{
 		this.name = name;
-		this.description = SafeHtmlUtils.fromString(description);
+		this.description = new HTML(description);
 	}
 
 	/**
@@ -172,7 +171,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 * 
 	 * @return a description for an example
 	 */
-	public final SafeHtml getDescription()
+	public final HTML getDescription()
 	{
 		return description;
 	}

@@ -18,7 +18,6 @@
 
 package thothbot.parallax.demo.client.content.plugins;
 
-import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.renderers.ShadowMap;
@@ -49,15 +48,9 @@ import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.AudioElement;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
 import com.google.gwt.media.client.Audio;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
 
 public class Saturn extends ContentWidget
 {
@@ -295,7 +288,7 @@ public class Saturn extends ContentWidget
 		
 	public Saturn() 
 	{
-		super("Saturn", "By Dejan Ristic (dejanristic@gmail.com)");
+		super("Saturn", "Design and development by <b>Dejan Ristic</b> (<a href=\"mailto:dejanristic@gmail.com\">dejanristic@gmail.com</a>)<br/>Music by <b>Silver Screen</b> - Solar Winds (<a href=\"https://www.youtube.com/watch?v=sSAk4T6IaDs\">https://www.youtube.com/watch?v=sSAk4T6IaDs</a>)");
 	}
 	
 	@Override
@@ -320,7 +313,7 @@ public class Saturn extends ContentWidget
 	@Override
 	public ImageResource getIcon()
 	{
-		return Demo.resources.exampleCube();
+		return Demo.resources.exampleSaturn();
 	}
 	
 	@Override
