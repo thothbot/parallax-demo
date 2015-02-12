@@ -21,6 +21,7 @@ package thothbot.parallax.demo.client.content.plugins;
 import thothbot.parallax.core.client.controls.TrackballControls;
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.renderers.ShadowMap;
 import thothbot.parallax.core.client.shaders.CubeShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
@@ -29,7 +30,6 @@ import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.RingGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
@@ -42,22 +42,22 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugins.lensflare.LensFlare;
-import thothbot.parallax.plugins.lensflare.LensFlarePlugin;
 import thothbot.parallax.plugins.lensflare.LensFlare.LensSprite;
+import thothbot.parallax.plugins.lensflare.LensFlarePlugin;
 
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.AudioElement;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.media.client.Audio;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.InlineLabel;
 
 public class Saturn extends ContentWidget
 {
@@ -73,11 +73,15 @@ public class Saturn extends ContentWidget
 		private static final String saturnRingsTextures = "./static/textures/planets/saturnRings.png";
 		private static final String saturnCloudsTextures = "./static/textures/planets/saturnClouds.png";
 		
+		private Texture titanTexture = new Texture( "./static/textures/planets/titan.jpg" );
+		private Texture moonTexture = new Texture( "./static/textures/planets/moon_1024.jpg" );
+		
 		private Texture textureFlare0 = new Texture( "./static/textures/lensflare/lensflare0.png" );
 		private Texture textureFlare2 = new Texture( "./static/textures/lensflare/lensflare2.png" );
 		private Texture textureFlare3 = new Texture( "./static/textures/lensflare/lensflare3.png" );
 		
 		private static final double saturnRadius = 120.536;
+		private static final double saturnTitle = 5.51 * -5;
 		private static final double saturnRotationSpeed = 0.02;
 		private static final double cloudsScale = 1.005;
 		private static final double titanScale = 0.23;
@@ -89,9 +93,8 @@ public class Saturn extends ContentWidget
 
 		Scene sceneCube;
 		
-		Mesh meshSaturn, meshClouds;
+		Mesh meshSaturn, meshClouds, meshTitan, meshDione, meshRhea;
 		
-		private TrackballControls control;
 		private double oldTime;
 		
 		@Override
@@ -103,12 +106,8 @@ public class Saturn extends ContentWidget
 					50, // near
 					1e7 // far 
 			);
-			camera.getPosition().setZ(1000);
-			
-			this.control = new TrackballControls( camera, getCanvas() );
-			this.control.setPanSpeed(0.2);
-			this.control.setDynamicDampingFactor(0.3);
-			
+			camera.getPosition().setY(300);
+					
 			// Sky box
 			cameraCube = new PerspectiveCamera( 60, getRenderer().getAbsoluteWidth() / getRenderer().getAbsoluteHeight(), 1, 100000 );
 			sceneCube = new Scene();
@@ -129,13 +128,12 @@ public class Saturn extends ContentWidget
 			MeshPhongMaterial materialSaturn = new MeshPhongMaterial();
 			materialSaturn.setMap(new Texture(saturnTextures));
 			materialSaturn.setShininess(15.0);
-//		    ambient: 0x000000,
-//		    specular: 0x333333,
-
+			materialSaturn.setAmbient(new Color(0x000000));
+			materialSaturn.setSpecular(new Color(0x333333));
+			
 			SphereGeometry saturnGeometry = new SphereGeometry( saturnRadius, 100, 50 );
 			meshSaturn = new Mesh( saturnGeometry, materialSaturn );
-			meshSaturn.getRotation().setY( 0 );
-			meshSaturn.getRotation().setZ( Mathematics.degToRad(-50.51) ) ;
+			meshSaturn.getRotation().setZ( Mathematics.degToRad(saturnTitle) ) ;
 			meshSaturn.setCastShadow(true);	
 			meshSaturn.setReceiveShadow(true);	
 			getScene().add( meshSaturn );
@@ -147,8 +145,7 @@ public class Saturn extends ContentWidget
 	        
 			meshClouds = new Mesh( saturnGeometry, materialClouds );
 			meshClouds.getScale().set( cloudsScale );
-			meshClouds.getRotation().setY( 0 );
-			meshClouds.getRotation().setZ( Mathematics.degToRad(-50.51) ) ;
+			meshClouds.getRotation().setZ( Mathematics.degToRad(saturnTitle) ) ;
 			getScene().add( meshClouds );
 			
 			// Saturn Rings
@@ -158,16 +155,47 @@ public class Saturn extends ContentWidget
 			materialRings.setSide(Material.SIDE.DOUBLE);
 
 			Mesh saturnRings = new Mesh( new RingGeometry( saturnRadius, 265.882 , 20, 5, 0, Math.PI * 2 ), materialRings );
-			saturnRings.getRotation().setX( Mathematics.degToRad(-70) );
-			saturnRings.getRotation().setY( Mathematics.degToRad( 50.51 ));
+			saturnRings.getRotation().setX( Mathematics.degToRad(90));
+			saturnRings.getRotation().setY( Mathematics.degToRad(saturnTitle));
 			saturnRings.setCastShadow(true);	
 			saturnRings.setReceiveShadow(true);	
 			getScene().add(saturnRings);
+			
+			// Moons
+			
+			MeshPhongMaterial materialTitan = new MeshPhongMaterial();
+			materialTitan.setMap(titanTexture);
+			
+			
+			meshTitan = new Mesh( saturnGeometry, materialTitan );
+			meshTitan.getPosition().set( saturnRadius * 10, 0, 0 );
+			meshTitan.getScale().set( titanScale );
+			getScene().add( meshTitan );
+			
+
+			MeshPhongMaterial materialDione = new MeshPhongMaterial();
+			materialDione.setMap(moonTexture);
+			
+			meshDione = new Mesh( saturnGeometry, materialDione );
+			meshDione.getPosition().set( saturnRadius * 2.5, 0, 0 );
+			meshDione.getScale().set( dioneScale );
+			meshDione.setCastShadow(true);
+			getScene().add( meshDione );
+			
+			MeshPhongMaterial materialRhea = new MeshPhongMaterial();
+			materialRhea.setMap(moonTexture);
+
+			meshRhea = new Mesh( saturnGeometry, materialRhea );
+			meshRhea.getPosition().set( saturnRadius * 5, 0, 0 );
+			meshRhea.getScale().set( rheaScale );
+			getScene().add( meshRhea );
 
 		    // Sun
 		    new LensFlarePlugin(getRenderer(), getScene());
-		    addSun( 0.985, 0.5, 0.850,10000 ,-20000, 60000 );
-		    
+		    addSun( 0.985, 0.5, 0.850, 800, 400, 0 );
+		    	    
+		    ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
+						
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
@@ -187,7 +215,7 @@ public class Saturn extends ContentWidget
 			dirLight.setShadowCameraFar( 1500 );
 			dirLight.setShadowBias( -0.005 ); 
 			dirLight.setShadowDarkness( 0.35 );		
-		//	dirLight.shadowCameraVisible = true;
+//			dirLight.shadowCameraVisible = true;
 
 		    getScene().add( dirLight );
 		    
@@ -238,11 +266,22 @@ public class Saturn extends ContentWidget
 		{
 			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
 			
+			camera.getPosition().setX( saturnRadius * 10 * Math.cos( 0.00005 * duration ) );         
+			camera.getPosition().setZ( saturnRadius * 10 * Math.sin( 0.00005 * duration ) );
+			camera.lookAt( meshSaturn.getPosition() );
+
 			meshSaturn.getRotation().addY( saturnRotationSpeed * delta );
 			meshClouds.getRotation().addY( 1.25 * saturnRotationSpeed * delta );
 			
-			this.control.update();
+			meshDione.getPosition().setX( saturnRadius * 2.5 * Math.cos( 0.0005 * duration ) );         
+			meshDione.getPosition().setZ( saturnRadius * 2.5 * Math.sin( 0.0005 * duration ) );
 			
+			meshRhea.getPosition().setX( saturnRadius * 5 * Math.cos( 0.0001 * duration ) );         
+			meshRhea.getPosition().setZ( saturnRadius * 5 * Math.sin( 0.0001 * duration ) );
+			
+			meshTitan.getPosition().setX( saturnRadius * 10 * Math.cos( 0.0001 * duration ) );         
+			meshTitan.getPosition().setZ( saturnRadius * 10 * Math.sin( 0.0001 * duration ) );
+					
 			cameraCube.getRotation().copy( camera.getRotation() );
 
 			getRenderer().clear();
@@ -257,6 +296,19 @@ public class Saturn extends ContentWidget
 	public Saturn() 
 	{
 		super("Saturn", "By Dejan Ristic (dejanristic@gmail.com)");
+	}
+	
+	@Override
+	public void onAnimationReady(AnimationReadyEvent event)
+	{
+		super.onAnimationReady(event);
+		
+		Audio audio = Audio.createIfSupported();
+		audio.setAutoplay(true);
+		AudioElement element = audio.getAudioElement();
+		element.setSrc("./static/audio/Silver Screen - Solar Winds (Epic Beautiful Uplifting).mp3");
+		
+		this.renderingPanel.add(audio);
 	}
 	
 	@Override
