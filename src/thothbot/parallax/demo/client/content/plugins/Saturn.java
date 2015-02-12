@@ -90,6 +90,8 @@ public class Saturn extends ContentWidget
 		
 		private double oldTime;
 		
+		Audio audio = Audio.createIfSupported();
+		
 		@Override
 		protected void onStart()
 		{
@@ -257,6 +259,9 @@ public class Saturn extends ContentWidget
 		@Override
 		protected void onUpdate(double duration)
 		{
+			if(audio.isPaused())
+				audio.play();
+
 			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
 			
 			camera.getPosition().setX( saturnRadius * 10 * Math.cos( 0.00005 * duration ) );         
@@ -284,6 +289,13 @@ public class Saturn extends ContentWidget
 			this.oldTime = Duration.currentTimeMillis();
 
 		}
+		
+		@Override
+		protected void onStop() 
+		{
+			super.onStop();
+			audio.pause();
+		}
 	}
 		
 	public Saturn() 
@@ -296,12 +308,13 @@ public class Saturn extends ContentWidget
 	{
 		super.onAnimationReady(event);
 		
-		Audio audio = Audio.createIfSupported();
-		audio.setAutoplay(true);
-		AudioElement element = audio.getAudioElement();
+		final DemoScene rs = (DemoScene) this.renderingPanel.getAnimatedScene();
+		
+		rs.audio.setAutoplay(true);
+		AudioElement element = rs.audio.getAudioElement();
 		element.setSrc("./static/audio/Silver Screen - Solar Winds (Epic Beautiful Uplifting).mp3");
 		
-		this.renderingPanel.add(audio);
+		this.renderingPanel.add(rs.audio);
 	}
 	
 	@Override
