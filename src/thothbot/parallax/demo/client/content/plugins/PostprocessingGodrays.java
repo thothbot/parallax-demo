@@ -247,19 +247,19 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			materialGodraysFakeSun.getShader().getUniforms().get("fAspect").setValue( (double)width / (double)height );
 
-			postprocessingScene.overrideMaterial = materialGodraysFakeSun;
+			postprocessingScene.setOverrideMaterial( materialGodraysFakeSun );
 			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureColors );
 
 			getRenderer().enableScissorTest( false );
 			
 			// Colors
 
-			getScene().overrideMaterial = null;
+			getScene().setOverrideMaterial( null );
 			getRenderer().render( getScene(), camera, rtTextureColors );
 
 			// Depth
 
-			getScene().overrideMaterial = materialDepth;
+			getScene().setOverrideMaterial( materialDepth );
 			getRenderer().render( getScene(), camera, rtTextureDepth, true );
 			
 			// -- Render god-rays --
@@ -284,7 +284,7 @@ public final class PostprocessingGodrays extends ContentWidget
 
 			materialGodraysGenerate.getShader().getUniforms().get("fStepSize" ).setValue( stepLen );
 			materialGodraysGenerate.getShader().getUniforms().get("tInput" ).setValue( rtTextureDepth );
-			postprocessingScene.overrideMaterial = materialGodraysGenerate;
+			postprocessingScene.setOverrideMaterial( materialGodraysGenerate );
 			
 			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureGodRays2 );
 			
@@ -313,10 +313,10 @@ public final class PostprocessingGodrays extends ContentWidget
 			materialGodraysCombine.getShader().getUniforms().get("tColors" ).setValue( rtTextureColors );
 			materialGodraysCombine.getShader().getUniforms().get("tGodRays" ).setValue( rtTextureGodRays2 );
 
-			postprocessingScene.overrideMaterial = materialGodraysCombine;
+			postprocessingScene.setOverrideMaterial( materialGodraysCombine );
 
 			getRenderer().render( postprocessingScene, postprocessingCamera );
-			postprocessingScene.overrideMaterial = null;
+			postprocessingScene.setOverrideMaterial( null );
 
 
 		}
