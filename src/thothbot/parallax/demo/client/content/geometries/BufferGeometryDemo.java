@@ -207,13 +207,13 @@ public final class BufferGeometryDemo extends ContentWidget
 
 			for ( int i = 0; i < offsets; i ++ ) {
 
-				BufferGeometry.DrawCall offset = new BufferGeometry.DrawCall(
+				BufferGeometry.DrawCall drawcall = new BufferGeometry.DrawCall(
 						i * chunkSize * 3, // start
 						Math.min( triangles - ( i * chunkSize ), chunkSize ) * 3, // count
 						i * chunkSize * 3 //index
 				);
 				
-				geometry.offsets.add( offset );
+				geometry.getDrawcalls().add( drawcall );
 
 			}
 			

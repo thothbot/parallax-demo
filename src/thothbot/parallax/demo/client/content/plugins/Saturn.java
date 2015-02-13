@@ -161,12 +161,10 @@ public class Saturn extends ContentWidget
 			MeshPhongMaterial materialTitan = new MeshPhongMaterial();
 			materialTitan.setMap(titanTexture);
 			
-			
 			meshTitan = new Mesh( saturnGeometry, materialTitan );
 			meshTitan.getPosition().set( saturnRadius * 10, 0, 0 );
 			meshTitan.getScale().set( titanScale );
 			getScene().add( meshTitan );
-			
 
 			MeshPhongMaterial materialDione = new MeshPhongMaterial();
 			materialDione.setMap(moonTexture);
@@ -189,11 +187,12 @@ public class Saturn extends ContentWidget
 		    new LensFlarePlugin(getRenderer(), getScene());
 		    addSun( 0.985, 0.5, 0.850, 800, 400, 0 );
 		    	    
-		    ShadowMap shadowMap = new ShadowMap(getRenderer(), getScene());
+		    new ShadowMap(getRenderer(), getScene());
 						
 			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
+			getRenderer().setClearColor(0xffffff);
 
 		    this.oldTime = Duration.currentTimeMillis();
 
