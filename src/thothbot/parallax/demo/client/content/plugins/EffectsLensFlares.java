@@ -21,14 +21,18 @@ package thothbot.parallax.demo.client.content.plugins;
 import thothbot.parallax.core.client.controls.FlyControls;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
+import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.lights.PointLight;
 import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Mathematics;
+import thothbot.parallax.core.shared.math.Sphere;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -148,7 +152,7 @@ public final class EffectsLensFlares extends ContentWidget
 			light.getColor().setHSL( h, s, l );
 			light.getPosition().set( x, y, z );
 			getScene().add( light );
-
+			
 			Color flareColor = new Color( 0xffffff );
 			flareColor.setHSL( h, s, l + 0.5 );
 			
@@ -196,6 +200,7 @@ public final class EffectsLensFlares extends ContentWidget
 		{
 			controls.update( (Duration.currentTimeMillis() - this.oldTime) * 0.001 );
 			this.oldTime = Duration.currentTimeMillis();
+			
 			getRenderer().render(getScene(), camera);
 		}
 	}

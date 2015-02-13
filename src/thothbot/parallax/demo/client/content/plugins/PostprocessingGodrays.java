@@ -27,6 +27,7 @@ import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
+import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
@@ -76,18 +77,16 @@ public final class PostprocessingGodrays extends ContentWidget
 		public int mouseX;
 		public int mouseY;
 		
-		Mesh sphereMesh;
+		Mesh sphereMesh, quad;
 		
 		Vector3 sunPosition = new Vector3( 0, 1000, -1000 );
 		Vector3 screenSpacePosition = new Vector3();
-		
-		ShaderPass godraysGenerate, godraysCombine, godraysFakeSun;
-		
+			
 		Scene postprocessingScene;
 		OrthographicCamera postprocessingCamera;
-		RenderTargetTexture rtTextureColors, rtTextureDepth;
+		RenderTargetTexture rtTextureColors, rtTextureDepth, rtTextureGodRays1, rtTextureGodRays2;
 		
-		ShaderMaterial materialGodraysFakeSun;
+		ShaderMaterial materialGodraysGenerate, materialGodraysCombine, materialGodraysFakeSun;
 		
 		MeshDepthMaterial materialDepth;
 		
@@ -164,23 +163,38 @@ public final class PostprocessingGodrays extends ContentWidget
 			rtTextureDepth.setMinFilter(TextureMinFilter.LINEAR);
 			rtTextureDepth.setMagFilter(TextureMagFilter.LINEAR);
 			rtTextureDepth.setFormat(PixelFormat.RGBA);
+			
+			// Aggressive downsize god-ray ping-pong render targets to minimize cost
 
-			Postprocessing composer = new Postprocessing( getRenderer(), getScene() );
-			RenderPass renderModel = new RenderPass( getScene(), camera );
-			composer.addPass( renderModel );
+			int w = getRenderer().getAbsoluteWidth() / 4;
+			int h = getRenderer().getAbsoluteHeight() / 4;
+			rtTextureGodRays1 = new RenderTargetTexture( w, h );
+			rtTextureGodRays1.setMinFilter(TextureMinFilter.LINEAR);
+			rtTextureGodRays1.setMagFilter(TextureMagFilter.LINEAR);
+			rtTextureGodRays1.setFormat(PixelFormat.RGBA);
 			
-			godraysGenerate = new ShaderPass( new GodRaysGenerateShader() );
-			composer.addPass( godraysGenerate );
+			rtTextureGodRays2 = new RenderTargetTexture( w, h );
+			rtTextureGodRays2.setMinFilter(TextureMinFilter.LINEAR);
+			rtTextureGodRays2.setMagFilter(TextureMagFilter.LINEAR);
+			rtTextureGodRays2.setFormat(PixelFormat.RGBA);
+
+			// god-ray shaders
 			
-			godraysCombine = new ShaderPass( new GodRaysCombineShader() );
-			godraysCombine.getUniforms().get("fGodRayIntensity").setValue( 0.75 );
-			composer.addPass( godraysCombine );
-			
+			materialGodraysGenerate = new ShaderMaterial ( new GodRaysGenerateShader() );
+			materialGodraysCombine = new ShaderMaterial ( new GodRaysCombineShader() );
+			materialGodraysCombine.getShader().getUniforms().get("fGodRayIntensity").setValue( 0.75 );
+
 			materialGodraysFakeSun = new ShaderMaterial ( new GodraysFakeSunShader() );
-			godraysFakeSun = new ShaderPass( materialGodraysFakeSun.getShader() );
-			((Color)godraysFakeSun.getUniforms().get("bgColor").getValue()).setHex( bgColor );
-			((Color)godraysFakeSun.getUniforms().get("sunColor").getValue()).setHex( sunColor );
-			composer.addPass( godraysFakeSun );
+
+			((Color)materialGodraysFakeSun.getShader().getUniforms().get("bgColor").getValue()).setHex( bgColor );
+			((Color)materialGodraysFakeSun.getShader().getUniforms().get("sunColor").getValue()).setHex( sunColor );
+
+			quad = new Mesh(
+					new PlaneBufferGeometry( getRenderer().getAbsoluteWidth(), getRenderer().getAbsoluteHeight() ),
+					materialGodraysGenerate
+			);
+			quad.getPosition().setZ( -9900 );
+			postprocessingScene.add( quad );
 		}
 				
 		@Override
@@ -204,8 +218,10 @@ public final class PostprocessingGodrays extends ContentWidget
 			
 			// Give it to the god-ray and sun shaders
 
-			((Vector2)godraysGenerate.getUniforms().get("vSunPositionScreenSpace").getValue()).set( screenSpacePosition.getX(), screenSpacePosition.getY() );
-			((Vector2)godraysFakeSun.getUniforms().get("vSunPositionScreenSpace").getValue()).set( screenSpacePosition.getX(), screenSpacePosition.getY() );
+			((Vector2)materialGodraysGenerate.getShader().getUniforms().get("vSunPositionScreenSpace").getValue())
+				.set( screenSpacePosition.getX(), screenSpacePosition.getY() );
+			((Vector2)materialGodraysFakeSun.getShader().getUniforms().get("vSunPositionScreenSpace").getValue())
+				.set( screenSpacePosition.getX(), screenSpacePosition.getY() );
 
 			// -- Draw sky and sun --
 
@@ -229,7 +245,7 @@ public final class PostprocessingGodrays extends ContentWidget
 			getRenderer().setScissor( (int)(screenSpacePosition.getX() - sunsqW / 2), (int)(screenSpacePosition.getY() - sunsqH / 2), sunsqW, sunsqH );
 			getRenderer().enableScissorTest( true );
 
-			godraysFakeSun.getUniforms().get("fAspect").setValue( (double)width / height );
+			materialGodraysFakeSun.getShader().getUniforms().get("fAspect").setValue( (double)width / height );
 
 			postprocessingScene.overrideMaterial = materialGodraysFakeSun;
 			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureColors );
@@ -266,10 +282,43 @@ public final class PostprocessingGodrays extends ContentWidget
 			double pass = 1.0;
 			double stepLen = filterLen * Math.pow( TAPS_PER_PASS, -pass );
 
-			godraysGenerate.getUniforms().get("fStepSize" ).setValue( stepLen );
-			godraysGenerate.getUniforms().get("tInput" ).setValue( rtTextureDepth );
+			materialGodraysGenerate.getShader().getUniforms().get("fStepSize" ).setValue( stepLen );
+			materialGodraysGenerate.getShader().getUniforms().get("tInput" ).setValue( rtTextureDepth );
+			postprocessingScene.overrideMaterial = materialGodraysGenerate;
+			
+			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureGodRays2 );
+			
+			// pass 2 - render into second ping-pong target
 
-			getRenderer().render( getScene(), camera);
+			pass = 2.0;
+			stepLen = filterLen * Math.pow( TAPS_PER_PASS, -pass );
+
+			materialGodraysGenerate.getShader().getUniforms().get("fStepSize" ).setValue( stepLen );
+			materialGodraysGenerate.getShader().getUniforms().get("tInput" ).setValue( rtTextureGodRays2 );
+
+			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureGodRays1 );
+			
+			// pass 3 - 1st RT
+
+			pass = 3.0;
+			stepLen = filterLen * Math.pow( TAPS_PER_PASS, -pass );
+
+			materialGodraysGenerate.getShader().getUniforms().get("fStepSize" ).setValue( stepLen );
+			materialGodraysGenerate.getShader().getUniforms().get("tInput" ).setValue( rtTextureGodRays1 );
+
+			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureGodRays2 );
+
+			// final pass - composite god-rays onto colors
+
+			materialGodraysCombine.getShader().getUniforms().get("tColors" ).setValue( rtTextureColors );
+			materialGodraysCombine.getShader().getUniforms().get("tGodRays" ).setValue( rtTextureGodRays2 );
+
+			postprocessingScene.overrideMaterial = materialGodraysCombine;
+
+			getRenderer().render( postprocessingScene, postprocessingCamera );
+			postprocessingScene.overrideMaterial = null;
+
+
 		}
 	}
 		
@@ -312,6 +361,11 @@ public final class PostprocessingGodrays extends ContentWidget
 	public ImageResource getIcon()
 	{
 		return Demo.resources.examplePostprocessingGodrays();
+	}
+	
+	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
 	}
 	
 	@Override
