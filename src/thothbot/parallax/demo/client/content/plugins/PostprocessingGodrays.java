@@ -236,16 +236,16 @@ public final class PostprocessingGodrays extends ContentWidget
 			int width = getRenderer().getAbsoluteWidth(); 
 			int height = getRenderer().getAbsoluteHeight();
 
-			int sunsqH = (int) (0.74 * height); // 0.74 depends on extent of sun from shader
-			int sunsqW = (int) (0.74 * height); // both depend on height because sun is aspect-corrected
+			double sunsqH = 0.74 * height; // 0.74 depends on extent of sun from shader
+			double sunsqW = 0.74 * height; // both depend on height because sun is aspect-corrected
 
 			screenSpacePosition.setX( screenSpacePosition.getX() * width );
 			screenSpacePosition.setY( screenSpacePosition.getY() * height );
 
-			getRenderer().setScissor( (int)(screenSpacePosition.getX() - sunsqW / 2), (int)(screenSpacePosition.getY() - sunsqH / 2), sunsqW, sunsqH );
+			getRenderer().setScissor( (int)(screenSpacePosition.getX() - sunsqW / 2.0), (int)(screenSpacePosition.getY() - sunsqH / 2.0), (int)sunsqW, (int)sunsqH );
 			getRenderer().enableScissorTest( true );
 
-			materialGodraysFakeSun.getShader().getUniforms().get("fAspect").setValue( (double)width / height );
+			materialGodraysFakeSun.getShader().getUniforms().get("fAspect").setValue( (double)width / (double)height );
 
 			postprocessingScene.overrideMaterial = materialGodraysFakeSun;
 			getRenderer().render( postprocessingScene, postprocessingCamera, rtTextureColors );
