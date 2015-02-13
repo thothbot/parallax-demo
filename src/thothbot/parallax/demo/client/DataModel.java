@@ -73,6 +73,7 @@ import thothbot.parallax.demo.client.content.plugins.EffectsSprites;
 import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
 import thothbot.parallax.demo.client.content.plugins.PostprocessingGodrays;
 import thothbot.parallax.demo.client.content.plugins.Saturn;
+import thothbot.parallax.demo.client.content.plugins.TerrainDynamic;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
@@ -408,8 +409,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Plugins");
 			categoriesList.add(category);
-//			category.addExample(new TerrainDynamic(),
-//					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
+			category.addExample(new TerrainDynamic(),
+					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
 			category.addExample(new HilbertCurves(),
 					RunAsyncCode.runAsyncCode(HilbertCurves.class));
 //			category.addExample(new PostprocessingGodrays(),

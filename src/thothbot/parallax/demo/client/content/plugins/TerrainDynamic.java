@@ -38,6 +38,7 @@ import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
+import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.AmbientLight;
@@ -58,6 +59,8 @@ import thothbot.parallax.demo.client.ContentWidget;
 import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.TerrainShader;
+import thothbot.parallax.loader.shared.JsonLoader;
+import thothbot.parallax.loader.shared.XHRLoader;
 import thothbot.parallax.plugins.postprocessing.BloomPass;
 import thothbot.parallax.plugins.postprocessing.Postprocessing;
 import thothbot.parallax.plugins.postprocessing.RenderPass;
@@ -378,59 +381,42 @@ public final class TerrainDynamic extends ContentWidget
 			composer.addPass( hblur );
 			composer.addPass( vblur );
 			
-//			final JsonLoader jsonLoader = new JsonLoader();
-
 			final double startX = -3000;
 			morphs = new ArrayList<MorphAnimMesh>();
-//			try
-//			{
-//				jsonLoader.load(parrotModel, new JsonLoader.ModelLoadHandler() {
-//					
-//					@Override
-//					public void onModelLoaded() {
-//						Geometry geometry = jsonLoader.getGeometry();
-//
-//						jsonLoader.morphColorsToFaceColors();
-//						addMorph( geometry, 500, startX -500, 500, 700 );
-//						addMorph( geometry, 500, startX - Math.random() * 500, 500, -200 );
-//						addMorph( geometry, 500, startX - Math.random() * 500, 500, 200 );
-//						addMorph( geometry, 500, startX - Math.random() * 500, 500, 1000 );
-//						
-//					}
-//				});
-//				
-//				jsonLoader.load(flamingoModel, new JsonLoader.ModelLoadHandler() {
-//					
-//					@Override
-//					public void onModelLoaded() {
-//						Geometry geometry = jsonLoader.getGeometry();
-//
-//						jsonLoader.morphColorsToFaceColors();
-//						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 40 );
-//					}
-//				});
-//				
-//				jsonLoader.load(storkModel, new JsonLoader.ModelLoadHandler() {
-//
-//					@Override
-//					public void onModelLoaded() {
-//						Geometry geometry = jsonLoader.getGeometry();
-//
-//						jsonLoader.morphColorsToFaceColors();
-//						addMorph( geometry, 1000, startX - Math.random() * 500, 350, 340 );
-//					}
-//				});
-//
-//			}
-//			catch (RequestException exception) 
-//			{
-//				Log.error("Error while loading JSON file.");
-//			}
-			
-			// PRE-INIT
 
-//			getScene().initWebGLObjects(getRenderer());
-			
+			new JsonLoader(parrotModel, new XHRLoader.ModelLoadHandler() {
+					
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
+					((JsonLoader)loader).morphColorsToFaceColors((Geometry) geometry);
+					addMorph( (Geometry)geometry, 500, startX -500, 500, 700 );
+					addMorph( (Geometry)geometry, 500, startX - Math.random() * 500, 500, -200 );
+					addMorph( (Geometry)geometry, 500, startX - Math.random() * 500, 500, 200 );
+					addMorph( (Geometry)geometry, 500, startX - Math.random() * 500, 500, 1000 );
+					
+				}
+			});
+				
+			new JsonLoader(flamingoModel, new XHRLoader.ModelLoadHandler() {
+					
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
+
+					((JsonLoader)loader).morphColorsToFaceColors((Geometry) geometry);
+					addMorph( (Geometry)geometry, 1000, startX - Math.random() * 500, 350, 40 );
+				}
+			});
+				
+			new JsonLoader(storkModel, new XHRLoader.ModelLoadHandler() {
+
+				@Override
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
+					
+					((JsonLoader)loader).morphColorsToFaceColors((Geometry) geometry);
+					addMorph( (Geometry)geometry, 1000, startX - Math.random() * 500, 350, 340 );
+				}
+			});
+		
 			this.oldTime = Duration.currentTimeMillis();
 		}
 		
@@ -585,6 +571,11 @@ public final class TerrainDynamic extends ContentWidget
 		return Demo.resources.exampleTerrainDynamic();
 	}
 	
+	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
+	}
+
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
