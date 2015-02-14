@@ -20,21 +20,25 @@ package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
 import thothbot.parallax.core.client.gl2.enums.PixelFormat;
+import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.renderers.ShadowMap;
 import thothbot.parallax.core.client.shaders.CubeShader;
 import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.cameras.CubeCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.RingGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.Material;
+import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Mathematics;
+import thothbot.parallax.core.shared.objects.Group;
 import thothbot.parallax.core.shared.objects.Mesh;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
@@ -60,7 +64,7 @@ public class Saturn extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-		private static final String skyboxTextures = "./static/textures/cube/milkyway/*.jpg";
+		private static final String skyboxTextures = "./static/textures/starmap_4K.jpg";
 		
 		private static final String saturnTextures = "./static/textures/planets/saturn.jpg";
 		private static final String saturnRingsTextures = "./static/textures/planets/saturnRings.png";
@@ -82,9 +86,7 @@ public class Saturn extends ContentWidget
 		private static final double rheaScale = 0.15;
 		
 		PerspectiveCamera camera;
-		PerspectiveCamera cameraCube;
-
-		Scene sceneCube;
+		CubeCamera cubeCamera;
 		
 		Mesh meshSaturn, meshClouds, meshTitan, meshDione, meshRhea;
 		
@@ -101,24 +103,23 @@ public class Saturn extends ContentWidget
 					50, // near
 					1e7 // far 
 			);
-			camera.getPosition().setY(300);
+
+			camera.getPosition().setY(500);
 					
 			// Sky box
-			cameraCube = new PerspectiveCamera( 60, getRenderer().getAbsoluteWidth() / getRenderer().getAbsoluteHeight(), 1, 100000 );
-			sceneCube = new Scene();
-			
-			CubeTexture textureCube = new CubeTexture( skyboxTextures );
-			textureCube.setFormat(PixelFormat.RGB);
-			
-			CubeShader shaderCube = new CubeShader();
-			shaderCube.getUniforms().get("tCube").setValue(textureCube);
+			MeshBasicMaterial sMaterial = new MeshBasicMaterial();
+			sMaterial.setMap(new Texture(skyboxTextures));
 
-			ShaderMaterial sMaterial = new ShaderMaterial(shaderCube);
-			sMaterial.setSide(Material.SIDE.BACK);
-
-			Mesh mesh = new Mesh( new BoxGeometry( 100000, 100000, 100000 ), sMaterial );
-			sceneCube.add( mesh );
+			Mesh mesh = new Mesh( new SphereGeometry( 900, 60, 40 ), sMaterial );
+			mesh.getScale().setX( -1 );
+			getScene().add( mesh );
 			
+			cubeCamera = new CubeCamera( 1, 1000, 256 );
+			cubeCamera.getRenderTarget().setMinFilter(TextureMinFilter.LINEAR_MIPMAP_LINEAR);
+			getScene().add( cubeCamera );
+			
+			Group saturn = new Group();
+
 			// Saturn
 			MeshPhongMaterial materialSaturn = new MeshPhongMaterial();
 			materialSaturn.setMap(new Texture(saturnTextures));
@@ -128,10 +129,9 @@ public class Saturn extends ContentWidget
 			
 			SphereGeometry saturnGeometry = new SphereGeometry( saturnRadius, 100, 50 );
 			meshSaturn = new Mesh( saturnGeometry, materialSaturn );
-			meshSaturn.getRotation().setZ( Mathematics.degToRad(saturnTitle) ) ;
 			meshSaturn.setCastShadow(true);	
 			meshSaturn.setReceiveShadow(true);	
-			getScene().add( meshSaturn );
+			saturn.add( meshSaturn );
 			
 			// Clouds
 			MeshLambertMaterial materialClouds = new MeshLambertMaterial();
@@ -140,8 +140,8 @@ public class Saturn extends ContentWidget
 	        
 			meshClouds = new Mesh( saturnGeometry, materialClouds );
 			meshClouds.getScale().set( cloudsScale );
-			meshClouds.getRotation().setZ( Mathematics.degToRad(saturnTitle) ) ;
-			getScene().add( meshClouds );
+			saturn.add( meshClouds );
+
 			
 			// Saturn Rings
 			MeshLambertMaterial materialRings = new MeshLambertMaterial();
@@ -150,12 +150,14 @@ public class Saturn extends ContentWidget
 			materialRings.setSide(Material.SIDE.DOUBLE);
 
 			Mesh saturnRings = new Mesh( new RingGeometry( saturnRadius, 265.882 , 20, 5, 0, Math.PI * 2 ), materialRings );
-			saturnRings.getRotation().setX( Mathematics.degToRad(90));
-			saturnRings.getRotation().setY( Mathematics.degToRad(saturnTitle));
+			saturnRings.getRotation().setX( Mathematics.degToRad(90) );
 			saturnRings.setCastShadow(true);	
-			saturnRings.setReceiveShadow(true);	
-			getScene().add(saturnRings);
-			
+			saturnRings.setReceiveShadow(true);
+			saturn.add(saturnRings);
+
+			saturn.getRotation().setZ( Mathematics.degToRad(saturnTitle) ) ;
+			getScene().add(saturn);
+
 			// Moons
 			
 			MeshPhongMaterial materialTitan = new MeshPhongMaterial();
@@ -181,15 +183,15 @@ public class Saturn extends ContentWidget
 			meshRhea = new Mesh( saturnGeometry, materialRhea );
 			meshRhea.getPosition().set( saturnRadius * 5, 0, 0 );
 			meshRhea.getScale().set( rheaScale );
+			meshRhea.setCastShadow(true);
 			getScene().add( meshRhea );
 
 		    // Sun
 		    new LensFlarePlugin(getRenderer(), getScene());
-		    addSun( 0.985, 0.5, 0.850, 800, 400, 0 );
+		    addSun( 0.985, 0.5, 0.850, 800, - saturnRadius * 0.8, 0 );
 		    	    
 		    new ShadowMap(getRenderer(), getScene());
 						
-			getRenderer().setAutoClear(false);
 			getRenderer().setGammaInput(true);
 			getRenderer().setGammaOutput(true);
 			getRenderer().setClearColor(0xffffff);
@@ -208,7 +210,7 @@ public class Saturn extends ContentWidget
 			dirLight.setShadowCameraNear( 1 );
 			dirLight.setShadowCameraFar( 1500 );
 			dirLight.setShadowBias( -0.005 ); 
-			dirLight.setShadowDarkness( 0.35 );		
+			dirLight.setShadowDarkness( 0.85 );		
 //			dirLight.shadowCameraVisible = true;
 
 		    getScene().add( dirLight );
@@ -263,26 +265,24 @@ public class Saturn extends ContentWidget
 
 			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
 			
-			camera.getPosition().setX( saturnRadius * 10 * Math.cos( 0.00005 * duration ) );         
-			camera.getPosition().setZ( saturnRadius * 10 * Math.sin( 0.00005 * duration ) );
+			camera.getPosition().setX( saturnRadius * 8 * Math.cos( 0.00005 * duration ) );         
+			camera.getPosition().setZ( saturnRadius * 9 * Math.sin( 0.00005 * duration ) );
 			camera.lookAt( meshSaturn.getPosition() );
 
 			meshSaturn.getRotation().addY( saturnRotationSpeed * delta );
 			meshClouds.getRotation().addY( 1.25 * saturnRotationSpeed * delta );
 			
-			meshDione.getPosition().setX( saturnRadius * 2.5 * Math.cos( 0.0005 * duration ) );         
-			meshDione.getPosition().setZ( saturnRadius * 2.5 * Math.sin( 0.0005 * duration ) );
+			meshDione.getPosition().setX( saturnRadius * 2.5 * Math.cos( 0.0003 * duration ) );         
+			meshDione.getPosition().setZ( saturnRadius * 2.5 * Math.sin( 0.0003 * duration ) );
 			
 			meshRhea.getPosition().setX( saturnRadius * 5 * Math.cos( 0.0001 * duration ) );         
 			meshRhea.getPosition().setZ( saturnRadius * 5 * Math.sin( 0.0001 * duration ) );
 			
-			meshTitan.getPosition().setX( saturnRadius * 10 * Math.cos( 0.0001 * duration ) );         
-			meshTitan.getPosition().setZ( saturnRadius * 10 * Math.sin( 0.0001 * duration ) );
+			meshTitan.getPosition().setX( saturnRadius * 7 * Math.cos( 0.00007 * duration ) );         
+			meshTitan.getPosition().setZ( saturnRadius * 7 * Math.sin( 0.00007 * duration ) );
 					
-			cameraCube.getRotation().copy( camera.getRotation() );
+		    cubeCamera.updateCubeMap( getRenderer(), getScene() );
 
-			getRenderer().clear();
-			getRenderer().render( sceneCube, cameraCube );
 			getRenderer().render( getScene(), camera );
 			
 			this.oldTime = Duration.currentTimeMillis();
