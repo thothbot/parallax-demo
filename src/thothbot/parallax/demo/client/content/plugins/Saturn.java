@@ -64,7 +64,7 @@ public class Saturn extends ContentWidget
 	@DemoSource
 	class DemoScene extends DemoAnimatedScene 
 	{
-		private static final String skyboxTextures = "./static/textures/starmap_4K.jpg";
+		private static final String skyboxTextures = "./static/textures/stars_skybox.jpg";
 		
 		private static final String saturnTextures = "./static/textures/planets/saturn.jpg";
 		private static final String saturnRingsTextures = "./static/textures/planets/saturnRings.png";
