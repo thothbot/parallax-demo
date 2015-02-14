@@ -91,7 +91,8 @@ public class Saturn extends ContentWidget
 		
 		Mesh meshSaturn, meshClouds, meshTitan, meshDione, meshRhea;
 		
-		private double oldTime;
+		double oldTime;
+		double theta = 0;
 		
 		Audio audio = Audio.createIfSupported();
 		
@@ -126,7 +127,8 @@ public class Saturn extends ContentWidget
 
 			// Saturn
 			MeshPhongMaterial materialSaturn = new MeshPhongMaterial();
-			materialSaturn.setMap(new Texture(saturnTextures));
+			Texture saturnTexture = new Texture(saturnTextures);
+			materialSaturn.setMap(saturnTexture);
 			materialSaturn.setShininess(15.0);
 			materialSaturn.setAmbient(new Color(0x000000));
 			materialSaturn.setSpecular(new Color(0x333333));
@@ -144,7 +146,7 @@ public class Saturn extends ContentWidget
 	        
 			meshClouds = new Mesh( saturnGeometry, materialClouds );
 			meshClouds.getScale().set( cloudsScale );
-			meshClouds.getRotation().setY( Mathematics.degToRad(180) );
+			meshClouds.getRotation().setZ( Mathematics.degToRad(180) );
 			saturn.add( meshClouds );
 			
 			// Saturn Rings
@@ -271,14 +273,18 @@ public class Saturn extends ContentWidget
 			
 			if(duration < 24.8 * 1000 || ( duration > 70 * 1000 && duration < 82 * 1000 ) ) 
 			{
-				cameraRings.getPosition().setY( (saturnRingsRadius + 10 ) * Math.cos( 0.00005 * duration ) );         
-				cameraRings.getPosition().setZ( (saturnRingsRadius + 10 ) * Math.sin( 0.00005 * duration ) );
+				theta += 0.05;
+
+				cameraRings.getPosition().setY( (saturnRingsRadius + 10 ) * Math.cos( Mathematics.degToRad( theta ) ) );         
+				cameraRings.getPosition().setZ( (saturnRingsRadius + 10 ) * Math.sin( Mathematics.degToRad( theta ) ) );
 				cameraRings.lookAt( meshSaturn.getPosition() );
 				
 				camera = cameraRings;
 			} 
 			else 
 			{
+				theta = 0;
+
 				cameraMain.getPosition().setX( saturnRadius * 8 * Math.cos( 0.00005 * duration ) );         
 				cameraMain.getPosition().setZ( saturnRadius * 9 * Math.sin( 0.00005 * duration ) );
 				cameraMain.lookAt( meshSaturn.getPosition() );
@@ -287,7 +293,7 @@ public class Saturn extends ContentWidget
 			}
 
 			meshSaturn.getRotation().addY( saturnRotationSpeed * delta );
-			meshClouds.getRotation().addY( 1.25 * saturnRotationSpeed * delta );
+			meshClouds.getRotation().addY( -3.2 * saturnRotationSpeed * delta );
 			
 			meshDione.getPosition().setX( saturnRadius * 2.5 * Math.cos( 0.0003 * duration ) );         
 			meshDione.getPosition().setZ( saturnRadius * 2.5 * Math.sin( 0.0003 * duration ) );
