@@ -78,6 +78,7 @@ public class Saturn extends ContentWidget
 		private Texture textureFlare3 = new Texture( "./static/textures/lensflare/lensflare3.png" );
 		
 		private static final double saturnRadius = 120.536;
+		private static final double saturnRingsRadius = 265.882;
 		private static final double saturnTitle = 5.51 * -5;
 		private static final double saturnRotationSpeed = 0.02;
 		private static final double cloudsScale = 1.005;
@@ -85,7 +86,7 @@ public class Saturn extends ContentWidget
 		private static final double dioneScale = 0.13;
 		private static final double rheaScale = 0.15;
 		
-		PerspectiveCamera camera;
+		PerspectiveCamera camera, cameraRings, cameraMain;
 		CubeCamera cubeCamera;
 		
 		Mesh meshSaturn, meshClouds, meshTitan, meshDione, meshRhea;
@@ -97,15 +98,18 @@ public class Saturn extends ContentWidget
 		@Override
 		protected void onStart()
 		{
-			camera = new PerspectiveCamera(
+			cameraMain = new PerspectiveCamera(
 					50, // fov
 					getRenderer().getAbsoluteAspectRation(), // aspect 
 					50, // near
 					1e7 // far 
 			);
 
-			camera.getPosition().setY(500);
-					
+			cameraMain.getPosition().setY(500);
+			
+			cameraRings = cameraMain.clone();
+			cameraRings.getPosition().setX(50);
+			
 			// Sky box
 			MeshBasicMaterial sMaterial = new MeshBasicMaterial();
 			sMaterial.setMap(new Texture(skyboxTextures));
@@ -140,8 +144,8 @@ public class Saturn extends ContentWidget
 	        
 			meshClouds = new Mesh( saturnGeometry, materialClouds );
 			meshClouds.getScale().set( cloudsScale );
+			meshClouds.getRotation().setY( Mathematics.degToRad(180) );
 			saturn.add( meshClouds );
-
 			
 			// Saturn Rings
 			MeshLambertMaterial materialRings = new MeshLambertMaterial();
@@ -149,7 +153,7 @@ public class Saturn extends ContentWidget
 			materialRings.setMap(new Texture(saturnRingsTextures));
 			materialRings.setSide(Material.SIDE.DOUBLE);
 
-			Mesh saturnRings = new Mesh( new RingGeometry( saturnRadius, 265.882 , 20, 5, 0, Math.PI * 2 ), materialRings );
+			Mesh saturnRings = new Mesh( new RingGeometry( saturnRadius, saturnRingsRadius , 20, 5, 0, Math.PI * 2 ), materialRings );
 			saturnRings.getRotation().setX( Mathematics.degToRad(90) );
 			saturnRings.setCastShadow(true);	
 			saturnRings.setReceiveShadow(true);
@@ -265,9 +269,22 @@ public class Saturn extends ContentWidget
 
 			double delta = (Duration.currentTimeMillis() - this.oldTime) * 0.001;
 			
-			camera.getPosition().setX( saturnRadius * 8 * Math.cos( 0.00005 * duration ) );         
-			camera.getPosition().setZ( saturnRadius * 9 * Math.sin( 0.00005 * duration ) );
-			camera.lookAt( meshSaturn.getPosition() );
+			if(duration < 24.8 * 1000 || ( duration > 70 * 1000 && duration < 82 * 1000 ) ) 
+			{
+				cameraRings.getPosition().setY( (saturnRingsRadius + 10 ) * Math.cos( 0.00005 * duration ) );         
+				cameraRings.getPosition().setZ( (saturnRingsRadius + 10 ) * Math.sin( 0.00005 * duration ) );
+				cameraRings.lookAt( meshSaturn.getPosition() );
+				
+				camera = cameraRings;
+			} 
+			else 
+			{
+				cameraMain.getPosition().setX( saturnRadius * 8 * Math.cos( 0.00005 * duration ) );         
+				cameraMain.getPosition().setZ( saturnRadius * 9 * Math.sin( 0.00005 * duration ) );
+				cameraMain.lookAt( meshSaturn.getPosition() );
+				
+				camera = cameraMain;
+			}
 
 			meshSaturn.getRotation().addY( saturnRotationSpeed * delta );
 			meshClouds.getRotation().addY( 1.25 * saturnRotationSpeed * delta );
