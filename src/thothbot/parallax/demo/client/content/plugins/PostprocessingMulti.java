@@ -30,13 +30,16 @@ import thothbot.parallax.core.client.shaders.NormalMapShader;
 import thothbot.parallax.core.client.shaders.Uniform;
 import thothbot.parallax.core.client.textures.RenderTargetTexture;
 import thothbot.parallax.core.client.textures.Texture;
+import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.AbstractGeometry;
 import thothbot.parallax.core.shared.core.Geometry;
+import thothbot.parallax.core.shared.geometries.PlaneBufferGeometry;
 import thothbot.parallax.core.shared.geometries.PlaneGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
+import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Vector2;
@@ -163,7 +166,7 @@ public final class PostprocessingMulti extends ContentWidget
 			materialColor.setMap(new Texture(texturebg));
 			materialColor.setDepthTest(false);
 
-			quadBG = new Mesh( new PlaneGeometry( 1, 1 ), materialColor );
+			quadBG = new Mesh( new PlaneBufferGeometry( 1, 1 ), materialColor );
 			quadBG.getPosition().setZ( -500 );
 			quadBG.getScale().set( width, height, 1 );
 			sceneBG.add( quadBG );
@@ -174,7 +177,7 @@ public final class PostprocessingMulti extends ContentWidget
 			MeshBasicMaterial maskMaterial = new MeshBasicMaterial();
 			maskMaterial.setColor(new Color(0xffaa00));
 
-			quadMask = new Mesh( new PlaneGeometry( 1, 1 ), maskMaterial );
+			quadMask = new Mesh( new PlaneBufferGeometry( 1, 1 ), maskMaterial );
 			quadMask.getPosition().setZ( -300 );
 			quadMask.getScale().set( width / 2, height / 2, 1 );
 			sceneMask.add( quadMask );
@@ -194,7 +197,6 @@ public final class PostprocessingMulti extends ContentWidget
 			ShaderPass effectBleach = new ShaderPass( shaderBleach );
 			ShaderPass effectSepia = new ShaderPass( shaderSepia );
 			ShaderPass effectVignette = new ShaderPass( shaderVignette );
-			ShaderPass effectScreen = new ShaderPass( shaderCopy );
 
 			effectBleach.getUniforms().get("opacity").setValue( 0.95 );
 			effectSepia.getUniforms().get("amount").setValue( 0.9 );
@@ -202,8 +204,8 @@ public final class PostprocessingMulti extends ContentWidget
 			effectVignette.getUniforms().get("darkness").setValue( 1.6 );
 
 			BloomPass effectBloom = new BloomPass( 0.5 );
-			FilmPass effectFilm = new FilmPass( 0.35, 0.025, 648, false );
 			FilmPass effectFilmBW = new FilmPass( 0.35, 0.5, 2048, true );
+			FilmPass effectFilm = new FilmPass( 0.35, 0.025, 648, false );
 			DotScreenPass effectDotScreen = new DotScreenPass( new Vector2( 0, 0 ), 0.5, 0.8 );
 
 			ShaderPass effectHBlur = new ShaderPass( new HorizontalBlurShader() );
@@ -230,20 +232,22 @@ public final class PostprocessingMulti extends ContentWidget
 			//effectScreen.renderToScreen = true;
 
 			//
+		
+			int rtWidth  = width / 2;
+			int rtHeight = height / 2;
 
-			RenderPass renderBackground = new RenderPass( sceneBG, cameraOrtho );
-			RenderPass renderModel = new RenderPass( sceneModel, cameraPerspective );
-
-			renderModel.setClear(false);
-			
-			RenderTargetTexture rt = new RenderTargetTexture(width, height);
+			RenderTargetTexture rt = new RenderTargetTexture(rtWidth, rtHeight);
 			rt.setMinFilter(TextureMinFilter.LINEAR);
 			rt.setMagFilter(TextureMagFilter.LINEAR);
 			rt.setFormat(PixelFormat.RGB);
 			rt.setStencilBuffer(true);
 
-			composerScene = new Postprocessing( getRenderer(), getScene(), rt);
+			RenderPass renderBackground = new RenderPass( sceneBG, cameraOrtho );
+			RenderPass renderModel = new RenderPass( sceneModel, cameraPerspective );
+			renderModel.setClear(false);
 
+			composerScene = new Postprocessing( getRenderer(), getScene(), rt);
+			composerScene.setEnabled(false);
 			composerScene.addPass( renderBackground );
 			composerScene.addPass( renderModel );
 			composerScene.addPass( renderMaskInverse );
@@ -311,35 +315,12 @@ public final class PostprocessingMulti extends ContentWidget
 		
 		private void createMesh( Geometry geometry, double scale ) 
 		{
-
 			geometry.computeTangents();
 
-			int ambient = 0x444444, 
-					diffuse = 0x999999, 
-					specular = 0x080808;
-			double shininess = 20;
-
-			ShaderMaterial mat2 = new ShaderMaterial( new NormalMapShader() );
-			mat2.setLights(true);
-			Map<String, Uniform> uniforms = mat2.getShader().getUniforms();
-
-			uniforms.get("tNormal").setValue( new Texture( texture ));
-			((Vector2)uniforms.get("uNormalScale").getValue()).set( 0.75, 0.75 );
-
-			uniforms.get("tDiffuse").setValue( new Texture( textureCol ));
-
-			uniforms.get("enableAO").setValue( false );
-			uniforms.get("enableDiffuse").setValue( true );
-
-			((Color)uniforms.get("uDiffuseColor").getValue()).setHex( diffuse );
-			((Color)uniforms.get("uSpecularColor").getValue()).setHex( specular );
-			((Color)uniforms.get("uAmbientColor").getValue()).setHex( ambient );
-
-			uniforms.get("uShininess").setValue( shininess );
-
-			((Color)uniforms.get("uDiffuseColor").getValue()).convertGammaToLinear();
-			((Color)uniforms.get("uSpecularColor").getValue()).convertGammaToLinear();
-			((Color)uniforms.get("uAmbientColor").getValue()).convertGammaToLinear();
+			MeshLambertMaterial mat2 = new MeshLambertMaterial();
+			mat2.setColor(new Color(0x999999));
+			mat2.setAmbient(new Color(0x444444));
+			mat2.setMap(new Texture( textureCol ));
 
 			mesh = new Mesh( geometry, mat2 );
 			mesh.getPosition().set( 0, -50, 0 );
@@ -360,8 +341,11 @@ public final class PostprocessingMulti extends ContentWidget
 			getRenderer().setViewport( 0, 0, 2 * halfWidth, 2 * halfHeight );
 
 			getRenderer().clear();
+			
+			composerScene.setEnabled(true);
 			getRenderer().render(getScene(), this.cameraPerspective);
-
+			composerScene.setEnabled(false);
+	
 			getRenderer().setViewport( 0, 0, halfWidth, halfHeight );
 			composer1.setEnabled(true);
 			getRenderer().render(getScene(), this.cameraPerspective);
@@ -399,6 +383,11 @@ public final class PostprocessingMulti extends ContentWidget
 	public ImageResource getIcon()
 	{
 		return Demo.resources.examplePostprocessingMulti();
+	}
+	
+	@Override
+	protected boolean isEnabledEffectSwitch() {
+		return false;
 	}
 	
 	@Override
