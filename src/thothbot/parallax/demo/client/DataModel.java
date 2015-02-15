@@ -416,8 +416,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(HilbertCurves.class));
 			category.addExample(new PostprocessingGodrays(),
 					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
-			category.addExample(new PostprocessingMulti(),
-					RunAsyncCode.runAsyncCode(PostprocessingMulti.class));
+//			category.addExample(new PostprocessingMulti(),
+//					RunAsyncCode.runAsyncCode(PostprocessingMulti.class));
 			category.addExample(new EffectsLensFlares(),
 					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
 			category.addExample(new EffectsSprites(),
