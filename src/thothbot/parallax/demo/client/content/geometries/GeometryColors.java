@@ -46,6 +46,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchMoveHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -204,6 +208,19 @@ public class GeometryColors extends ContentWidget
 		    	  	rs.mouseX = event.getX(); 
 		    	  	rs.mouseY = event.getY();
 		      }
+	      
+		});
+				
+		this.renderingPanel.getCanvas().addTouchMoveHandler(new TouchMoveHandler() {
+			
+			@Override
+			public void onTouchMove(TouchMoveEvent event) {
+				
+					DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
+					rs.mouseX = event.getTouches().get(0).getPageX(); 
+		    	  	rs.mouseY = event.getTouches().get(0).getPageY();
+				
+			}
 		});
 	}
 
