@@ -273,10 +273,10 @@ public class Saturn extends ContentWidget
 			
 			if(duration < 24.8 * 1000 || ( duration > 70 * 1000 && duration < 82 * 1000 ) ) 
 			{
-				theta += 0.05;
+				theta += 0.07;
 
 				cameraRings.getPosition().setY( (saturnRingsRadius + 10 ) * Math.cos( Mathematics.degToRad( theta ) ) );         
-				cameraRings.getPosition().setZ( (saturnRingsRadius + 10 ) * Math.sin( Mathematics.degToRad( theta ) ) );
+				cameraRings.getPosition().setZ( -saturnRingsRadius +(saturnRingsRadius + 10 ) * Math.sin( Mathematics.degToRad( theta ) ) );
 				cameraRings.lookAt( meshSaturn.getPosition() );
 				
 				camera = cameraRings;
