@@ -161,12 +161,6 @@ public final class MaterialsTextureCompressed extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsTextureCompressed();
-	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)

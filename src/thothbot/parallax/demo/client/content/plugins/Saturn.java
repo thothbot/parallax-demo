@@ -344,12 +344,6 @@ public class Saturn extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleSaturn();
-	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)

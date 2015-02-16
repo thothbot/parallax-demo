@@ -151,12 +151,6 @@ public final class MaterialsShaderLava extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsShaderLava();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

@@ -303,12 +303,6 @@ public final class MaterialsTextures extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsTextures();
-	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)

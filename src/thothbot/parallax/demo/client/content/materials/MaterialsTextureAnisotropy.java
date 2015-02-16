@@ -205,12 +205,6 @@ public final class MaterialsTextureAnisotropy extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsTextureAnisotropy();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

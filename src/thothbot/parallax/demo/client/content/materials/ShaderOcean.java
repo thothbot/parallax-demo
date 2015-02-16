@@ -199,11 +199,6 @@ public final class ShaderOcean extends ContentWidget {
 	}
 	
 	@Override
-	public ImageResource getIcon() {
-		return Demo.resources.exampleMaterialsShaderOcean();
-	}
-	
-	@Override
 	protected boolean isEnabledEffectSwitch() {
 		return false;
 	}

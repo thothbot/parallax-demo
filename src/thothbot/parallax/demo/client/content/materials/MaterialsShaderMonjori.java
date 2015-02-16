@@ -96,12 +96,6 @@ public final class MaterialsShaderMonjori extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsShaderMonjori();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

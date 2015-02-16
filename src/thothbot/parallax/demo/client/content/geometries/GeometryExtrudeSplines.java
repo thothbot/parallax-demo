@@ -498,12 +498,6 @@ public final class GeometryExtrudeSplines extends ContentWidget
 	}
 
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleGeometryExtrudeSplines();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometryExtrudeSplines.class, new RunAsyncCallback() 

@@ -244,12 +244,6 @@ public final class HilbertCurves extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleHilbertCurves();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

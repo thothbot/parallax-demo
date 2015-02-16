@@ -176,12 +176,6 @@ public class CustomAttributesParticles2 extends ContentWidget
 	}
 	
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleCustomAttributesParticles2();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(CustomAttributesParticles2.class, new RunAsyncCallback() 

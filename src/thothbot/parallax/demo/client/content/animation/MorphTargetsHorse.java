@@ -157,12 +157,6 @@ public final class MorphTargetsHorse extends ContentWidget
 	}
 
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMorphTargetsHorse();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MorphTargetsHorse.class, new RunAsyncCallback() 

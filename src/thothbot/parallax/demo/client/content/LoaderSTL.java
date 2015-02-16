@@ -244,12 +244,6 @@ public class LoaderSTL extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleSTLLoader();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

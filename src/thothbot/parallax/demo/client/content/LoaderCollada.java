@@ -151,12 +151,6 @@ public final class LoaderCollada extends ContentWidget
 	}
 
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleLoaderCollada();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(LoaderCollada.class, new RunAsyncCallback() 

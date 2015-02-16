@@ -220,12 +220,6 @@ public final class MorphNormalsFlamingo extends ContentWidget
 	}
 
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMorphNormalsFlamingo();
-	}
-	
-	@Override
 	protected boolean isEnabledEffectSwitch() {
 		return false;
 	}

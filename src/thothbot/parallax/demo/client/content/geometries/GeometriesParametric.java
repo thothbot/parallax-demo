@@ -148,12 +148,6 @@ public class GeometriesParametric extends ContentWidget
 	}
 	
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleGeometriesParametric();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometriesParametric.class, new RunAsyncCallback() 

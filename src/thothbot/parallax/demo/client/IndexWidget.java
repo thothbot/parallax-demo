@@ -94,7 +94,7 @@ public class IndexWidget extends ScrollPanel
 		final FlowPanel examplePanel = new FlowPanel();
 		examplePanel.setStyleName("indexExamplePanel");
 		examplePanel.ensureDebugId("examplePanel");
-		examplePanel.add(new Image(example.getIcon()));
+		examplePanel.add(new Image(example.getIconUrl()));
 		
 		Label name = new Label(example.getName());
 		name.setStyleName("text");

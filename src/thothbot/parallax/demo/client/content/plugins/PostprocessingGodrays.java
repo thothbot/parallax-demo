@@ -356,12 +356,6 @@ public final class PostprocessingGodrays extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.examplePostprocessingGodrays();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

@@ -111,7 +111,7 @@ public class DataModel implements TreeViewModel
 		{
 			if (value != null) 
 			{
-				sb.appendHtmlConstant("<img class='menuIcon' src='" + value.getIcon().getSafeUri().asString() + "'/>");
+				sb.appendHtmlConstant("<img class='menuIcon' src='" + value.getIconUrl() + "'/>");
 				sb.appendHtmlConstant("<span>" + value.getName() + "</span>");
 			}
 		}

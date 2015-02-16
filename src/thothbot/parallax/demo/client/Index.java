@@ -25,6 +25,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -47,7 +48,7 @@ public class Index extends ResizeComposite
 	Anchor linkIndex;
 	
 	@UiField(provided=true)
-	FlowPanel bottonPanel;
+	HorizontalPanel bottonPanel;
 	
 	/**
 	 * The page content
@@ -69,7 +70,7 @@ public class Index extends ResizeComposite
 		
 	public Index() 
 	{
-		bottonPanel = new FlowPanel();
+		bottonPanel = new HorizontalPanel();
 		contentWidget = new SimpleLayoutPanel();
 		
 		initWidget(uiBinder.createAndBindUi(this));

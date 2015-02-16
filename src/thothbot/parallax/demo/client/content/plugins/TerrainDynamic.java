@@ -564,12 +564,6 @@ public final class TerrainDynamic extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleTerrainDynamic();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

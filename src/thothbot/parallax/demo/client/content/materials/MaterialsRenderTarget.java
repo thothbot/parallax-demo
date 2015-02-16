@@ -264,12 +264,6 @@ public class MaterialsRenderTarget extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsRtt();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

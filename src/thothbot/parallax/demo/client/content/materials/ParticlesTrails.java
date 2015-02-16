@@ -139,12 +139,6 @@ public final class ParticlesTrails extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleParticleTrails();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

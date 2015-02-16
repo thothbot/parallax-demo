@@ -84,7 +84,7 @@ public class DemoGenerator extends Generator
 		{
 			String json = "{\n";
 			json += "\t\"description\": \"" + widget.getName() + "\"\n";
-			json += "\t\"icon\": \""  + widget.getIcon() + "\"\n";
+			json += "\t\"icon\": \""  + widget.getIconUrl() + "\"\n";
 			json += "\t\"url\":  \"#" + widget.getClass().getSimpleName() + "\"\n";
 			json += "}";
 			jsons.add(json);

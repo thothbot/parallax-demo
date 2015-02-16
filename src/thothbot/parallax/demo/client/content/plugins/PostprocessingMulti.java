@@ -378,12 +378,6 @@ public final class PostprocessingMulti extends ContentWidget
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.examplePostprocessingMulti();
-	}
 	
 	@Override
 	protected boolean isEnabledEffectSwitch() {

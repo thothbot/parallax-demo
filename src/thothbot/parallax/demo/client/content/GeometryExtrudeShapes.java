@@ -271,12 +271,6 @@ public class GeometryExtrudeShapes extends ContentWidget
 	{
 		return new DemoScene();
 	}
-	
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleDefault();
-	}
 
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)

@@ -178,12 +178,6 @@ public final class MaterialsCubemapBallsRefraction extends ContentWidget
 
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsCubemapBallsRefraction();
-	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)

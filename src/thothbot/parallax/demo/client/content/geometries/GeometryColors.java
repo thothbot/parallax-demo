@@ -231,12 +231,6 @@ public class GeometryColors extends ContentWidget
 	}
 	
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleColors();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(GeometryColors.class, new RunAsyncCallback() 

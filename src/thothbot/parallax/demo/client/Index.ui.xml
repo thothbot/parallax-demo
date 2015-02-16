@@ -34,6 +34,10 @@
       text-decoration: none;
     }
     
+    .fbPanel {
+		padding: 3px 10px;
+	}
+
 	</ui:style>
 
 	<g:DockLayoutPanel unit='PT'>
@@ -47,14 +51,19 @@
 				</g:HTMLPanel>
 			</g:lineStart>
 			<g:center>
-				<g:FlowPanel ui:field='bottonPanel'>
-					<g:Anchor ui:field='linkExample' addStyleNames='{style.contentButton}'>
-						<ui:msg key='contentWidgetExample'>Example</ui:msg>
-					</g:Anchor>
-					<g:Anchor ui:field='linkSource' addStyleNames='{style.contentButton}'>
-						<ui:msg key='contentWidgetSource'>Source Code</ui:msg>
-					</g:Anchor>
-				</g:FlowPanel>
+				<g:HorizontalPanel ui:field='bottonPanel'>
+					<g:FlowPanel>
+						<g:Anchor ui:field='linkExample' addStyleNames='{style.contentButton}'>
+							<ui:msg key='contentWidgetExample'>Example</ui:msg>
+						</g:Anchor>
+						<g:Anchor ui:field='linkSource' addStyleNames='{style.contentButton}'>
+							<ui:msg key='contentWidgetSource'>Source Code</ui:msg>
+						</g:Anchor>
+					</g:FlowPanel>
+					<g:HTMLPanel addStyleNames='{style.fbPanel}'>
+						<div id="fb-share-button" class="fb-share-button" data-layout="button_count"></div>
+					</g:HTMLPanel>
+				</g:HorizontalPanel>
 			</g:center>
 			<g:east size="220">
 				<g:HTMLPanel>

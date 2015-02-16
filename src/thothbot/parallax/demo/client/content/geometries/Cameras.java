@@ -275,12 +275,6 @@ public class Cameras extends ContentWidget implements RequiresResize
 	}
 	
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleCameras();
-	}
-	
-	@Override
 	protected boolean isEnabledEffectSwitch() {
 		return false;
 	}

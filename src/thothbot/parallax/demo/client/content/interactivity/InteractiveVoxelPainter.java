@@ -310,12 +310,6 @@ public final class InteractiveVoxelPainter extends ContentWidget implements  Mou
 	{
 		return new DemoScene();
 	}
-
-	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleInteractiveVoxelPainter();
-	}
 	
 	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)

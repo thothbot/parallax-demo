@@ -270,12 +270,6 @@ public final class MaterialsTextureFilter extends ContentWidget
 	}
 	
 	@Override
-	public ImageResource getIcon()
-	{
-		return Demo.resources.exampleMaterialsTextureFilter();
-	}
-	
-	@Override
 	protected void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback)
 	{
 		GWT.runAsync(MaterialsTextureFilter.class, new RunAsyncCallback() 
