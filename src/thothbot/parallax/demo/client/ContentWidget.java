@@ -186,8 +186,8 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 * @return ImageResource
 	 */
 	public String getIconUrl() {
-		String icon = this.getClass().getSimpleName() + ".jpg";
-		return "/static/thumbs/" + icon;
+		String icon = getSimpleName(this.getClass()) + ".jpg";
+		return "static/thumbs/" + icon;
 	}
 
 	/**
@@ -230,7 +230,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 */
 	public void onAnimationReady(AnimationReadyEvent event)
 	{
-		ShareDemo.prepareFBShareButton(getName(), getDescription(), getIconUrl());
+		ShareFaceBook.prepareFBShareButton(getName(), getDescription(), getIconUrl());
 		view.setDebugger(this.renderingPanel.getRenderer());
 		
 		this.renderingPanel.setAnimationUpdateHandler(new RenderingPanel.AnimationUpdateHandler() {

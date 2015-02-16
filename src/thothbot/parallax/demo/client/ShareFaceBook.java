@@ -18,6 +18,7 @@
 
 package thothbot.parallax.demo.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.MetaElement;
@@ -25,7 +26,7 @@ import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 
-public class ShareDemo 
+public class ShareFaceBook 
 {
 
 	public static void prepareFBShareButton(String title, HTML description, String imageUrl) 
@@ -36,13 +37,20 @@ public class ShareDemo
 		updateOrAddMetaTag( tags, "og:site_name", "Parallax 3D library" );
 		updateOrAddMetaTag( tags, "og:title", title );
 		updateOrAddMetaTag( tags, "og:description", removeHtmlTags(description) );
-		updateOrAddMetaTag( tags, "og:image", Window.Location.getHost() + imageUrl );
+		updateOrAddMetaTag( tags, "og:image", getCurrentPageUrl() + imageUrl );
 		updateOrAddMetaTag( tags, "og:url", Window.Location.getHref() );
 
 		Document.get().getElementById("fb-share-button").setAttribute("data-href", Window.Location.getHref());
-		FBParse();
+		
+		// Parse only on production
+		if(GWT.isProdMode()) FBParse();
 	}
 
+	private static String getCurrentPageUrl() {
+        String regex = "/([^/]+)$";
+        return Window.Location.getHref().replaceFirst(regex, "") + "/";
+	}
+	
 	private static String removeHtmlTags(HTML html) {
         String regex = "(<([^>]+)>)";
         return html.toString().replaceAll(regex, "");

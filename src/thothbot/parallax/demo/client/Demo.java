@@ -45,6 +45,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -177,17 +178,17 @@ public class Demo implements EntryPoint
 				if (selected != null) 
 				{
 					index.setContentWidget(shell);
-					History.newItem(selected.getContentWidgetToken(), true);
+					History.newItem("!"+selected.getContentWidgetToken(), true);
 				}
 			}
 		});
-
+		
 		// Setup a history handler to reselect the associate menu item.
 		final ValueChangeHandler<String> historyHandler = new ValueChangeHandler<String>() {
 			public void onValueChange(ValueChangeEvent<String> event)
 			{
 				// Get the content widget associated with the history token.
-				ContentWidget contentWidget = treeModel.getContentWidgetForToken(event.getValue());
+				ContentWidget contentWidget = treeModel.getContentWidgetForToken(event.getValue().replaceFirst("!", ""));
 
 				if (contentWidget == null)
 					return;

@@ -58,6 +58,7 @@ pre {
 
 .indexExamplePanel {
 	height: 133px;
+	width: 200px;
 	display: inline;
 	float: left;
 	border: 1px solid #BBB;
