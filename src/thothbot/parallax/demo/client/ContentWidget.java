@@ -230,7 +230,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 */
 	public void onAnimationReady(AnimationReadyEvent event)
 	{
-		ShareFaceBook.prepareFBShareButton(getName(), getDescription(), getIconUrl());
+		//ShareFaceBook.prepareFBShareButton(getName(), getDescription(), getIconUrl());
 		view.setDebugger(this.renderingPanel.getRenderer());
 		
 		this.renderingPanel.setAnimationUpdateHandler(new RenderingPanel.AnimationUpdateHandler() {

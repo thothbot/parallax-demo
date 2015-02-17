@@ -33,8 +33,6 @@ public class ShareFaceBook
 	{
 		NodeList<Element> tags = Document.get().getElementsByTagName("meta");
 		
-		updateOrAddMetaTag( tags, "og:type", "website" );
-		updateOrAddMetaTag( tags, "og:site_name", "Parallax 3D library" );
 		updateOrAddMetaTag( tags, "og:title", title );
 		updateOrAddMetaTag( tags, "og:description", removeHtmlTags(description) );
 		updateOrAddMetaTag( tags, "og:image", getCurrentPageUrl() + imageUrl );
