@@ -60,9 +60,9 @@
 							<ui:msg key='contentWidgetSource'>Source Code</ui:msg>
 						</g:Anchor>
 					</g:FlowPanel>
-					<!-- <g:HTMLPanel addStyleNames='{style.fbPanel}'>
+					<g:HTMLPanel addStyleNames='{style.fbPanel}'>
 						<div id="fb-share-button" class="fb-share-button" data-layout="button_count"></div>
-					</g:HTMLPanel> -->
+					</g:HTMLPanel>
 				</g:HorizontalPanel>
 			</g:center>
 			<g:east size="220">

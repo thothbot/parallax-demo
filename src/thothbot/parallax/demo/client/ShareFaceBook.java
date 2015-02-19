@@ -29,16 +29,9 @@ import com.google.gwt.user.client.ui.HTML;
 public class ShareFaceBook 
 {
 
-	public static void prepareFBShareButton(String title, HTML description, String imageUrl) 
-	{
-		NodeList<Element> tags = Document.get().getElementsByTagName("meta");
-		
-		updateOrAddMetaTag( tags, "og:title", title );
-		updateOrAddMetaTag( tags, "og:description", removeHtmlTags(description) );
-		updateOrAddMetaTag( tags, "og:image", getCurrentPageUrl() + imageUrl );
-		updateOrAddMetaTag( tags, "og:url", Window.Location.getHref() );
-
-		Document.get().getElementById("fb-share-button").setAttribute("data-href", Window.Location.getHref());
+	public static void prepareFBShareButton(String widgetURL) 
+	{	
+		Document.get().getElementById("fb-share-button").setAttribute("data-href", getCurrentPageUrl() + "demo/fb/" + widgetURL + ".html");
 		
 		// Parse only on production
 		if(GWT.isProdMode()) FBParse();
@@ -48,39 +41,7 @@ public class ShareFaceBook
         String regex = "/([^/]+)$";
         return Window.Location.getHref().replaceFirst(regex, "") + "/";
 	}
-	
-	private static String removeHtmlTags(HTML html) {
-        String regex = "(<([^>]+)>)";
-        return html.toString().replaceAll(regex, "");
-	}
-
-	private static void updateOrAddMetaTag(NodeList<Element> tags, String property, String content) 
-	{
-		boolean updated = false;
-		// Update
-		for (int i = 0; i < tags.getLength(); i++) 
-		{
-	        MetaElement metaTag = ((MetaElement) tags.getItem(i));
-			if(metaTag.getAttribute("property").equals(property)) 
-			{
-				metaTag.setContent(content);
-				updated = true;
-				break;
-			}
-		}
-
-		// Add new
-		if(!updated) 
-		{
-			Element head = Document.get().getElementsByTagName("head").getItem(0);
-			
-			MetaElement newMeta = Document.get().createMetaElement();
-			newMeta.setAttribute("property", property);
-			newMeta.setContent(content);
-			head.appendChild(newMeta);
-		}
-	}
-	
+		
 	private static native void FBParse() /*-{
 		if($wnd.FB)
 			$wnd.FB.XFBML.parse();

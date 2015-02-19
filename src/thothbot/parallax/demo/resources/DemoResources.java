@@ -36,14 +36,14 @@ public interface DemoResources extends ClientBundle
 	 * The path to source code for examples.
 	 */
 	String DST_SOURCE = "demoSource/";
+	
+	String DST_FACEBOOK = "fb/";
 
 	/**
 	 * The destination folder for parsed source code from examples.
 	 */
 	String DST_SOURCE_EXAMPLE = DST_SOURCE + "java/";
 	
-	String DST_DEMO_JSON = "demo.json";
-
 	@Source("images/logo.png")
 	ImageResource logo();
 	

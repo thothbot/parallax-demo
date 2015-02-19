@@ -62,9 +62,9 @@ public class Demo implements EntryPoint
 	
 	/**
 	 * The type passed into the
-	 * {@link thothbot.parallax.demo.generator.DemoGenerator}.
+	 * {@link thothbot.parallax.demo.generator.FacebookGenerator}.
 	 */
-	private static final class GenerateDemoSignal 
+	private static final class GenerateFacebookSignal 
 	{}
 
 	/**
@@ -122,7 +122,7 @@ public class Demo implements EntryPoint
 		GWT.create(GenerateSourceSignal.class);
 
 		// Generate the demo file
-		GWT.create(GenerateDemoSignal.class);
+		GWT.create(GenerateFacebookSignal.class);
 
 		resources.css().ensureInjected();
 

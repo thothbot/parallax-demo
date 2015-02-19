@@ -34,11 +34,11 @@ import com.google.gwt.core.ext.TreeLogger;
 import com.google.gwt.core.ext.UnableToCompleteException;
 import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.NotFoundException;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.user.client.ui.HTML;
 
-/**
- * Generate the source code used in Demo examples.
- */
-public class SourceGenerator extends Generator
+public class FacebookGenerator extends Generator 
 {
 	/**
 	 * The class loader used to get resources.
@@ -127,45 +127,75 @@ public class SourceGenerator extends Generator
 	 */
 	private void generateSourceFiles(JClassType type) throws UnableToCompleteException
 	{
+		RegExp pattern = RegExp.compile("super\\ *\\(\"([^\"|^\\\"]+)\",\\ *\"([^\"|^\\\"]+)\"\\)");
+		
 		// Get the file contents
 		String filename = type.getQualifiedSourceName().replace('.', '/') + ".java";
 		String fileContents = getResourceContents(filename);
 
-		// Get each data code block
-		String formattedSource = "";
-		String sourceTag = "@" + DemoSource.class.getSimpleName();
-		int srcTagIndex = fileContents.indexOf(sourceTag);
-
-		while (srcTagIndex >= 0) 
+		String title = "", description = "";
+		for (MatchResult result = pattern.exec(fileContents); result != null; result = pattern.exec(fileContents)) 
 		{
-			// Get the boundaries of a SRC tag
-			int beginIndex = fileContents.lastIndexOf("/*", srcTagIndex) - 2;
-			int beginTagIndex = fileContents.lastIndexOf("\n", srcTagIndex) + 1;
-			int endTagIndex = fileContents.indexOf("\n", srcTagIndex) + 1;
-			// TDO: Fix this (\n\t):
-			int endIndex = fileContents.indexOf("\n\t}", beginIndex) + 4;
-
-			// Add to the formatted source
-			String srcCode = fileContents.substring(beginIndex, beginTagIndex)
-					+ fileContents.substring(endTagIndex, endIndex);
-			formattedSource += srcCode + "\n\n";
-
-			// Get the next tag
-			srcTagIndex = fileContents.indexOf(sourceTag, endIndex + 1);
-		}
-
-		// Make the source pretty
-		formattedSource = formattedSource.replace("\n\t", "\n");
-		formattedSource = formattedSource.replace("\t", "   ");
-		formattedSource = formattedSource.replace("<", "&lt;");
-		formattedSource = formattedSource.replace(">", "&gt;");
-		formattedSource = formattedSource.replace("* \n   */\n", "*/\n");
-		formattedSource = "<pre><code class='hljs java'>" + formattedSource + "</code></pre>";
-
+		    title = result.getGroup(1);
+		    description = result.getGroup(2);
+			break;
+		}		
+		
 		// Save the source code to a file
-		String dstPath = DemoResources.DST_SOURCE_EXAMPLE + type.getSimpleSourceName()
+		String dstPath = DemoResources.DST_FACEBOOK + type.getSimpleSourceName()
 				+ ".html";
-		createPublicResource(dstPath, formattedSource);
+		createPublicResource(dstPath, template(type.getSimpleSourceName(), title, description));
+	}
+	
+	private static String removeHtmlTags(String html) {
+        String regex = "(<([^>]+)>)";
+        return html.replaceAll(regex, "");
+	}
+	
+	private String template(String className, String title, String description) {
+		
+		String template = "---\n---\n";
+		template += "{% assign description = '" + FacebookGenerator.removeHtmlTags(description) + "' %}\n";
+		template += "{% capture image %}http://{{ site.host }}{{ page.url | remove: '/demo/fb/" + className + ".html'}}/static/thumbs/" + className + ".jpg{% endcapture %}\n";
+
+		template += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+		template += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:og=\"http://ogp.me/ns#\" xmlns:fb=\"https://www.facebook.com/2008/fbml\">\n";
+		template += "<head>\n";
+
+		template += "\t<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n";
+		template += "\t<meta property=\"og:locale\" content=\"en_US\">\n";
+		template += "\t<meta property=\"og:type\" content=\"website\">\n";
+		template += "\t<meta property=\"fb:app_id\" content=\"1606041236283596\">\n";
+		template += "\t<meta property=\"og:site_name\" content=\"Parallax 3D library\">\n";
+		
+		template += "\t<meta property=\"og:title\" content=\"Parallax 3D library: " + title + "\">\n";
+		template += "\t<meta property=\"og:description\" content=\"{{description}}\">\n";
+		template += "\t<meta property=\"og:image\" content=\"{{image}}\">\n";
+		template += "\t<meta property=\"og:url\" content=\"http://{{ site.host }}{{ page.url }}\">\n";
+			
+		template += "\t<title>Parallax 3D library: " + title + "</title>\n";
+
+		template += "</head>\n";
+		template += "<body>\n";
+		template += "\t<div id=\"fb-root\"></div>\n";
+
+		template += "\t<script>\n"
+				+ " \t\twindow.fbAsyncInit = function() { FB.init({ appId : '1606041236283596', xfbml : true, version : 'v2.2'}); };\n"
+				+ "\t\t(function(d, s, id) {\n"
+				+ "\t\tvar js, fjs = d.getElementsByTagName(s)[0];\n"
+				+ "\t\tif (d.getElementById(id)) return;\n"
+				+ "\t\tjs = d.createElement(s); js.id = id;\n"
+				+ "\t\tjs.src = \"//connect.facebook.net/en_US/sdk.js\";\n"
+				+ "\t\tfjs.parentNode.insertBefore(js, fjs);\n"
+				+ "\t\t}(document, 'script', 'facebook-jssdk'));</script>\n";
+
+		template +="\t<h1>" + title + "</h1>\n";
+		template +="\t<img src=\"{{image}}\"/>\n";
+		template +="\t<p>{{description}}</p>\n";
+		template += "</body>\n";
+		template += "</html>\n";
+
+		return template;
 	}
 
 	/**
@@ -222,7 +252,7 @@ public class SourceGenerator extends Generator
 	 */
 	private boolean isFirstPass()
 	{
-		String placeholder = "generated.sources.tmp";
+		String placeholder = "generated.fb.tmp";
 		try 
 		{
 			OutputStream outStream = context.tryCreateResource(logger, placeholder);

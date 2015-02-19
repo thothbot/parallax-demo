@@ -41,8 +41,8 @@
     <when-type-assignable class="thothbot.parallax.demo.client.Demo.GenerateSourceSignal" />
   </generate-with>
   
-  <generate-with class="thothbot.parallax.demo.generator.DemoGenerator">
-    <when-type-assignable class="thothbot.parallax.demo.client.Demo.GenerateDemoSignal" />
+  <generate-with class="thothbot.parallax.demo.generator.FacebookGenerator">
+    <when-type-assignable class="thothbot.parallax.demo.client.Demo.GenerateFacebookSignal" />
   </generate-with>
   
   <source path='client'/>
