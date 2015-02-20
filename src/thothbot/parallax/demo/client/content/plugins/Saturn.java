@@ -322,7 +322,7 @@ public class Saturn extends ContentWidget
 		
 	public Saturn() 
 	{
-		super("Saturn", "Design and development by <b>Dejan Ristic</b> (<a href=\"mailto:dejanristic85@gmail.com\">dejanristic85@gmail.com</a>)<br/>Music by <b>Silver Screen</b> - Solar Winds (<a href=\"https://www.youtube.com/watch?v=sSAk4T6IaDs\">https://www.youtube.com/watch?v=sSAk4T6IaDs</a>)");
+		super("Saturn", "Design and development by <b>Dejan Ristic</b> (<a href=\'mailto:dejanristic85@gmail.com\'>dejanristic85@gmail.com</a>)<br/>Music by <b>Silver Screen</b> - Solar Winds (<a href=\'https://www.youtube.com/watch?v=sSAk4T6IaDs\'>https://www.youtube.com/watch?v=sSAk4T6IaDs</a>)");
 	}
 	
 	@Override

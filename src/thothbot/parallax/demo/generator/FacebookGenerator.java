@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import thothbot.parallax.demo.client.ContentWidget;
-import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.ext.Generator;
@@ -36,7 +35,6 @@ import com.google.gwt.core.ext.typeinfo.JClassType;
 import com.google.gwt.core.ext.typeinfo.NotFoundException;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
-import com.google.gwt.user.client.ui.HTML;
 
 public class FacebookGenerator extends Generator 
 {
@@ -156,7 +154,8 @@ public class FacebookGenerator extends Generator
 		
 		String template = "---\n---\n";
 		template += "{% assign description = '" + FacebookGenerator.removeHtmlTags(description) + "' %}\n";
-		template += "{% capture image %}http://{{ site.host }}{{ page.url | remove: '/demo/fb/" + className + ".html'}}/static/thumbs/" + className + ".jpg{% endcapture %}\n";
+		template += "{% capture url %}http://{{ site.host }}{{ page.url | remove: '/demo/fb/" + className + ".html'}}{% endcapture %}\n";
+		template += "{% capture image %}{{ url }}/static/thumbs/" + className + ".jpg{% endcapture %}\n";
 
 		template += "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 		template += "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:og=\"http://ogp.me/ns#\" xmlns:fb=\"https://www.facebook.com/2008/fbml\">\n";
@@ -189,9 +188,12 @@ public class FacebookGenerator extends Generator
 				+ "\t\tfjs.parentNode.insertBefore(js, fjs);\n"
 				+ "\t\t}(document, 'script', 'facebook-jssdk'));</script>\n";
 
-		template +="\t<h1>" + title + "</h1>\n";
+		template +="\t<div style='visibility: hidden;'><h1>" + title + "</h1>\n";
 		template +="\t<img src=\"{{image}}\"/>\n";
-		template +="\t<p>{{description}}</p>\n";
+		template +="\t<p>{{description}}</p></div>\n";
+		
+		template +="\t<script>window.location.replace(\"{{ url }}#!" + className + "\");</script>\n";
+		
 		template += "</body>\n";
 		template += "</html>\n";
 
