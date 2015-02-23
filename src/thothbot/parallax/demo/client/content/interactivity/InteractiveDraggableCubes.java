@@ -183,9 +183,9 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 	{
 		super.onAnimationReady(event);
 
-		getWidget().addDomHandler(this, MouseMoveEvent.getType());
-		getWidget().addDomHandler(this, MouseDownEvent.getType());
-		getWidget().addDomHandler(this, MouseUpEvent.getType());
+		renderingPanel.getCanvas().addDomHandler(this, MouseMoveEvent.getType());
+		renderingPanel.getCanvas().addDomHandler(this, MouseDownEvent.getType());
+		renderingPanel.getCanvas().addDomHandler(this, MouseUpEvent.getType());
 	}
 	
 	@Override
@@ -241,11 +241,11 @@ public final class InteractiveDraggableCubes extends ContentWidget implements  M
 		DemoScene rs = (DemoScene) renderingPanel.getAnimatedScene();
 
 		rs.mouseDeltaX = (event.getX() / (double)renderingPanel.getRenderer().getAbsoluteWidth() ) * 2.0 - 1.0; 
-		rs.mouseDeltaX = - (event.getY() / (double)renderingPanel.getRenderer().getAbsoluteHeight() ) * 2.0 + 1.0;
+		rs.mouseDeltaY = - (event.getY() / (double)renderingPanel.getRenderer().getAbsoluteHeight() ) * 2.0 + 1.0;
 
 		//
 
-		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaX, 0.5 ).unproject( rs.camera );
+		Vector3 vector = new Vector3( rs.mouseDeltaX, rs.mouseDeltaY, 0.5 ).unproject( rs.camera );
 
 		Raycaster raycaster = new Raycaster( rs.camera.getPosition(), vector.sub( rs.camera.getPosition() ).normalize() );
 
