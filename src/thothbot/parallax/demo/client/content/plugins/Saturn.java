@@ -19,15 +19,11 @@
 package thothbot.parallax.demo.client.content.plugins;
 
 import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.client.gl2.enums.PixelFormat;
 import thothbot.parallax.core.client.gl2.enums.TextureMinFilter;
 import thothbot.parallax.core.client.renderers.ShadowMap;
-import thothbot.parallax.core.client.shaders.CubeShader;
-import thothbot.parallax.core.client.textures.CubeTexture;
 import thothbot.parallax.core.client.textures.Texture;
 import thothbot.parallax.core.shared.cameras.CubeCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.BoxGeometry;
 import thothbot.parallax.core.shared.geometries.RingGeometry;
 import thothbot.parallax.core.shared.geometries.SphereGeometry;
 import thothbot.parallax.core.shared.lights.DirectionalLight;
@@ -35,14 +31,11 @@ import thothbot.parallax.core.shared.materials.Material;
 import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
 import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
 import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
-import thothbot.parallax.core.shared.materials.ShaderMaterial;
 import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.math.Mathematics;
 import thothbot.parallax.core.shared.objects.Group;
 import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
-import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugins.lensflare.LensFlare;
 import thothbot.parallax.plugins.lensflare.LensFlare.LensSprite;
@@ -53,7 +46,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.AudioElement;
 import com.google.gwt.media.client.Audio;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class Saturn extends ContentWidget

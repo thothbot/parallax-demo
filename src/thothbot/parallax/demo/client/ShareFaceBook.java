@@ -20,11 +20,7 @@ package thothbot.parallax.demo.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.MetaElement;
-import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
 
 public class ShareFaceBook 
 {

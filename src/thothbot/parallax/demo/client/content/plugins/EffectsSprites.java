@@ -22,7 +22,6 @@ import thothbot.parallax.core.client.events.HasEventBus;
 import thothbot.parallax.core.client.events.ViewportResizeEvent;
 import thothbot.parallax.core.client.events.ViewportResizeHandler;
 import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.Log;
 import thothbot.parallax.core.shared.cameras.OrthographicCamera;
 import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
 import thothbot.parallax.core.shared.core.Object3D;
@@ -30,7 +29,6 @@ import thothbot.parallax.core.shared.math.Color;
 import thothbot.parallax.core.shared.scenes.Fog;
 import thothbot.parallax.core.shared.scenes.Scene;
 import thothbot.parallax.demo.client.ContentWidget;
-import thothbot.parallax.demo.client.Demo;
 import thothbot.parallax.demo.client.DemoAnnotations.DemoSource;
 import thothbot.parallax.plugins.sprite.Sprite;
 import thothbot.parallax.plugins.sprite.SpriteMaterial;
@@ -38,7 +36,6 @@ import thothbot.parallax.plugins.sprite.SpritePlugin;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class EffectsSprites extends ContentWidget 
