@@ -52,7 +52,6 @@ import thothbot.parallax.demo.client.content.materials.MaterialsCubemapBallsRefl
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapBallsRefraction;
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapDynamicReflection;
 import thothbot.parallax.demo.client.content.materials.MaterialsCubemapFresnel;
-import thothbot.parallax.demo.client.content.materials.MaterialsLightmap;
 import thothbot.parallax.demo.client.content.materials.MaterialsRenderTarget;
 import thothbot.parallax.demo.client.content.materials.MaterialsShaderLava;
 import thothbot.parallax.demo.client.content.materials.MaterialsShaderMonjori;
@@ -64,6 +63,7 @@ import thothbot.parallax.demo.client.content.materials.ParticlesRandom;
 import thothbot.parallax.demo.client.content.materials.ParticlesTrails;
 import thothbot.parallax.demo.client.content.materials.ShaderOcean;
 import thothbot.parallax.demo.client.content.materials.TrackballEarth;
+import thothbot.parallax.demo.client.content.misc.Helpers;
 import thothbot.parallax.demo.client.content.misc.MiscLookAt;
 import thothbot.parallax.demo.client.content.misc.MiscMemoryTestGeometries;
 import thothbot.parallax.demo.client.content.misc.MiscMemoryTestShaders;
@@ -72,7 +72,6 @@ import thothbot.parallax.demo.client.content.plugins.EffectsLensFlares;
 import thothbot.parallax.demo.client.content.plugins.EffectsSprites;
 import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
 import thothbot.parallax.demo.client.content.plugins.PostprocessingGodrays;
-import thothbot.parallax.demo.client.content.plugins.PostprocessingMulti;
 import thothbot.parallax.demo.client.content.plugins.Saturn;
 import thothbot.parallax.demo.client.content.plugins.TerrainDynamic;
 
@@ -288,6 +287,8 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Geometries");
 			categoriesList.add(category);
+//			category.addExample(new CopyOfGeometryCube(), 
+//					RunAsyncCode.runAsyncCode(CopyOfGeometryCube.class));
 			category.addExample(new GeometryCube(), 
 					RunAsyncCode.runAsyncCode(GeometryCube.class));
 			category.addExample(new GeometryColors(),
@@ -441,6 +442,8 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(MiscMemoryTestShaders.class));
 			category.addExample(new LoaderSTL(), 
 					RunAsyncCode.runAsyncCode(LoaderSTL.class));
+			category.addExample(new Helpers(), 
+					RunAsyncCode.runAsyncCode(Helpers.class));
 		}
 	}
 }
