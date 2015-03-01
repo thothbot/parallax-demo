@@ -123,7 +123,7 @@ public final class InteractiveCubes extends ContentWidget
 			Vector3 vector = new Vector3( mouseDeltaX, mouseDeltaY, 1 );
 			raycaster.set( camera.getPosition(), vector.sub( camera.getPosition() ).normalize() );
 			
-			List<Raycaster.Intersect> intersects = raycaster.intersectObjects( getScene().getChildren() );
+			List<Raycaster.Intersect> intersects = raycaster.intersectObjects( getScene().getChildren(), false );
 
 			if ( intersects.size() > 0 ) 
 			{

@@ -74,6 +74,7 @@ import thothbot.parallax.demo.client.content.plugins.HilbertCurves;
 import thothbot.parallax.demo.client.content.plugins.PostprocessingGodrays;
 import thothbot.parallax.demo.client.content.plugins.Saturn;
 import thothbot.parallax.demo.client.content.plugins.TerrainDynamic;
+import thothbot.parallax.demo.client.content.raytracing.Raytracing;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
@@ -444,6 +445,14 @@ public class DataModel implements TreeViewModel
 					RunAsyncCode.runAsyncCode(LoaderSTL.class));
 			category.addExample(new Helpers(), 
 					RunAsyncCode.runAsyncCode(Helpers.class));
+		}
+		
+		// Raytracing Rendering
+		{
+			Category category = new Category("Raytracing Rendering");
+			categoriesList.add(category);
+			category.addExample(new Raytracing(),
+					RunAsyncCode.runAsyncCode(Raytracing.class));
 		}
 	}
 }
