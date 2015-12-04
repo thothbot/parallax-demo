@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="demo">
+  <!-- Inherit the some stuff. -->
+  <inherits name="com.google.gwt.core.Core"/>
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.google.gwt.i18n.I18N"/>
+  <inherits name="org.parallax3d.parallax.core.Core"/>
+  <inherits name="org.parallax3d.parallax.loader.Loader"/>
+  <inherits name="org.parallax3d.parallax.plugins.postprocessing.Postprocessing"/>
+  <inherits name="org.parallax3d.parallax.plugins.lensflare.LensFlare"/>
+  <inherits name="org.parallax3d.parallax.plugins.sprite.Sprite"/>
+  <inherits name="org.parallax3d.parallax.plugins.effects.Effects"/>
+  
+  <inherits name="com.google.gwt.user.theme.standard.Standard"/>
+
+  <!--   Logging -->
+  <inherits name="com.google.gwt.logging.Logging"/>
+  <set-property name="gwt.logging.enabled" value="TRUE"/> 
+  <set-property name="gwt.logging.logLevel" value="ALL"/>
+
+  <set-property name="gwt.logging.consoleHandler" value="DISABLED" />
+  <set-property name="gwt.logging.popupHandler" value="DISABLED" />
+  
+  <!-- 
+  <set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />       
+  <set-property name="compiler.stackMode" value="emulated"/>
+  <set-configuration-property name="compiler.emulatedStack.recordLineNumbers" value="true"/>
+  <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true"/>
+   -->   
+
+  <!-- Enable debug ID. -->
+  <inherits name="com.google.gwt.user.Debug"/>
+  <set-property name="gwt.enableDebugId" value="true"/> 
+  
+  <!-- Use a generator to create the source code -->
+
+  <!-- Specify the app entry point class. -->
+  <entry-point class='org.parallax3d.parallax.demo.client.Demo'/>
+
+  <generate-with class="org.parallax3d.parallax.demo.generator.SourceGenerator">
+    <when-type-assignable class="org.parallax3d.parallax.demo.client.Demo.GenerateSourceSignal" />
+  </generate-with>
+  
+  <generate-with class="org.parallax3d.parallax.demo.generator.FacebookGenerator">
+    <when-type-assignable class="org.parallax3d.parallax.demo.client.Demo.GenerateFacebookSignal" />
+  </generate-with>
+  
+  <source path='client'/>
+  <source path='resources'/>
+</module>
