@@ -18,6 +18,9 @@
 
 package org.parallax3d.parallax.demo.client;
 
+import org.parallax3d.parallax.math.Vector2;
+
 public class WebApp {
 
+    Vector2 v;
 }
