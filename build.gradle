@@ -23,6 +23,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -30,8 +31,7 @@ project(":core") {
     apply plugin: "java"
 
     dependencies {
-        compile fileTree(dir: '../parallax/parallax')
-//        compile "org.parallax3d.parallax:parallax:$parallaxVersion"
+        compile "org.parallax3d.parallax:parallax:$parallaxVersion"
     }
 }
 
@@ -40,8 +40,7 @@ project(":android") {
 
     dependencies {
         compile project(":core")
-        compile fileTree(dir: '../parallax/platforms/parallax-android')
-//        compile "org.parallax3d.parallax:parallax-android:$parallaxVersion"
+        compile "org.parallax3d.parallax:parallax-android:$parallaxVersion"
     }
 }
 
@@ -51,10 +50,9 @@ project(":gwt") {
 
     dependencies {
         compile project(":core")
-        compile fileTree(dir: '../parallax/platforms/parallax-gwt')
-//        compile "org.parallax3d.parallax:parallax-gwt:$parallaxVersion"
-//        compile "org.parallax3d.parallax:parallax:$parallaxVersion:sources"
-//        compile "org.parallax3d.parallax:parallax-gwt:$parallaxVersion:sources"
+        compile "org.parallax3d.parallax:parallax-gwt:$parallaxVersion"
+        compile "org.parallax3d.parallax:parallax:$parallaxVersion:sources"
+        compile "org.parallax3d.parallax:parallax-gwt:$parallaxVersion:sources"
     }
 }
 

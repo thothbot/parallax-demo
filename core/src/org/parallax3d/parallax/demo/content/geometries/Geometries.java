@@ -18,40 +18,18 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.geometries.BoxGeometry;
-import thothbot.parallax.core.shared.geometries.CircleGeometry;
-import thothbot.parallax.core.shared.geometries.CylinderGeometry;
-import thothbot.parallax.core.shared.geometries.IcosahedronGeometry;
-import thothbot.parallax.core.shared.geometries.LatheGeometry;
-import thothbot.parallax.core.shared.geometries.OctahedronGeometry;
-import thothbot.parallax.core.shared.geometries.PlaneGeometry;
-import thothbot.parallax.core.shared.geometries.RingGeometry;
-import thothbot.parallax.core.shared.geometries.SphereGeometry;
-import thothbot.parallax.core.shared.geometries.TetrahedronGeometry;
-import thothbot.parallax.core.shared.geometries.TorusGeometry;
-import thothbot.parallax.core.shared.geometries.TorusKnotGeometry;
-import thothbot.parallax.core.shared.helpers.ArrowHelper;
-import thothbot.parallax.core.shared.helpers.AxisHelper;
-import thothbot.parallax.core.shared.lights.AmbientLight;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Mesh;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.extras.geometries.*;
+import org.parallax3d.parallax.graphics.extras.helpers.ArrowHelper;
+import org.parallax3d.parallax.graphics.extras.helpers.AxisHelper;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.Material;
+import org.parallax3d.parallax.graphics.materials.MeshLambertMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.graphics.textures.Texture;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector3;
+import org.parallax3d.parallax.system.gl.enums.TextureWrapMode;
 
 public class Geometries extends ContentWidget
 {
@@ -89,7 +67,7 @@ public class Geometries extends ContentWidget
 			MeshLambertMaterial material = new MeshLambertMaterial();
 			material.setMap( texture );
 			material.setAmbient( new Color(0xbbbbbb) );
-			material.setSide(Material.SIDE.DOUBLE);	
+			material.setSide(Material.SIDE.DOUBLE);
 				
 			Object3D object1 = new Mesh( new SphereGeometry( 75, 20, 10 ), material );
 			object1.getPosition().set( -400, 0, 200 );

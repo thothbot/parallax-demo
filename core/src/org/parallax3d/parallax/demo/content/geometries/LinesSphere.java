@@ -18,29 +18,20 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.materials.LineBasicMaterial;
+import org.parallax3d.parallax.graphics.objects.Line;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector3;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.materials.LineBasicMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Line;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public final class LinesSphere extends ContentWidget 
+public final class LinesSphere extends ContentWidget
 {
 
 	class ExampleData 

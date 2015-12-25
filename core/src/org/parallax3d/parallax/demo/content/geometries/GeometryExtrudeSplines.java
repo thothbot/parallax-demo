@@ -18,63 +18,27 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.extras.SceneUtils;
+import org.parallax3d.parallax.graphics.extras.core.Curve;
+import org.parallax3d.parallax.graphics.extras.curves.SplineCurve3;
+import org.parallax3d.parallax.graphics.extras.curves.SplineCurve3Closed;
+import org.parallax3d.parallax.graphics.extras.curves.parametric.*;
+import org.parallax3d.parallax.graphics.extras.geometries.SphereGeometry;
+import org.parallax3d.parallax.graphics.extras.geometries.TubeGeometry;
+import org.parallax3d.parallax.graphics.extras.helpers.CameraHelper;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.materials.MeshLambertMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector3;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.curves.Curve;
-import thothbot.parallax.core.shared.curves.SplineCurve3;
-import thothbot.parallax.core.shared.curves.SplineCurve3Closed;
-import thothbot.parallax.core.shared.curves.parametric.CurveCinquefoilKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot4a;
-import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot4b;
-import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot5a;
-import thothbot.parallax.core.shared.curves.parametric.CurveDecoratedTorusKnot5c;
-import thothbot.parallax.core.shared.curves.parametric.CurveFigureEightPolynomialKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveGrannyKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveHeart;
-import thothbot.parallax.core.shared.curves.parametric.CurveHelix;
-import thothbot.parallax.core.shared.curves.parametric.CurveKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveTorusKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveTrefoilKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveTrefoilPolynomialKnot;
-import thothbot.parallax.core.shared.curves.parametric.CurveViviani;
-import thothbot.parallax.core.shared.geometries.SphereGeometry;
-import thothbot.parallax.core.shared.geometries.TubeGeometry;
-import thothbot.parallax.core.shared.helpers.CameraHelper;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.utils.SceneUtils;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.InlineHTML;
-import com.google.gwt.user.client.ui.InlineLabel;
-import com.google.gwt.user.client.ui.ListBox;
 
 public final class GeometryExtrudeSplines extends ContentWidget
 {
@@ -133,16 +97,16 @@ public final class GeometryExtrudeSplines extends ContentWidget
 		    retval.put("DecoratedTorusKnot5a", new CurveDecoratedTorusKnot5a());
 		    retval.put("DecoratedTorusKnot5c", new CurveDecoratedTorusKnot5c());
 		    retval.put("PipeSpline", new SplineCurve3(Arrays.asList(
-		             new Vector3(0, 10, -10),  new Vector3(10, 0, -10),  new Vector3(20, 0, 0), 
-		             new Vector3(30, 0, 10),   new Vector3(30, 0, 20),   new Vector3(20, 0, 30), 
-		             new Vector3(10, 0, 30),   new Vector3(0, 0, 30),    new Vector3(-10, 10, 30), 
-		             new Vector3(-10, 20, 30), new Vector3(0, 30, 30),   new Vector3(10, 30, 30), 
-		             new Vector3(20, 30, 15),  new Vector3(10, 30, 10),  new Vector3(0, 30, 10), 
-		             new Vector3(-10, 20, 10), new Vector3(-10, 10, 10), new Vector3(0, 0, 10), 
-		             new Vector3(10, -10, 10), new Vector3(20, -15, 10), new Vector3(30, -15, 10), 
-		             new Vector3(40, -15, 10), new Vector3(50, -15, 10), new Vector3(60, 0, 10), 
-		             new Vector3(70, 0, 0),    new Vector3(80, 0, 0),    new Vector3(90, 0, 0), 
-		             new Vector3(100, 0, 0))));
+					new Vector3(0, 10, -10), new Vector3(10, 0, -10), new Vector3(20, 0, 0),
+					new Vector3(30, 0, 10), new Vector3(30, 0, 20), new Vector3(20, 0, 30),
+					new Vector3(10, 0, 30), new Vector3(0, 0, 30), new Vector3(-10, 10, 30),
+					new Vector3(-10, 20, 30), new Vector3(0, 30, 30), new Vector3(10, 30, 30),
+					new Vector3(20, 30, 15), new Vector3(10, 30, 10), new Vector3(0, 30, 10),
+					new Vector3(-10, 20, 10), new Vector3(-10, 10, 10), new Vector3(0, 0, 10),
+					new Vector3(10, -10, 10), new Vector3(20, -15, 10), new Vector3(30, -15, 10),
+					new Vector3(40, -15, 10), new Vector3(50, -15, 10), new Vector3(60, 0, 10),
+					new Vector3(70, 0, 0), new Vector3(80, 0, 0), new Vector3(90, 0, 0),
+					new Vector3(100, 0, 0))));
 		    retval.put("SampleClosedSpline",  new SplineCurve3Closed(Arrays.asList( //?
 		             new Vector3(0, -40, -40), new Vector3(0, 40, -40), new Vector3(0, 140, -40),
 		             new Vector3(0, 40, 40),   new Vector3(0, -40, 40) )));
@@ -215,7 +179,7 @@ public final class GeometryExtrudeSplines extends ContentWidget
 			setScale();
 		}
 
-	    private void addGeometry(Geometry geometry, Color color) 
+	    private void addGeometry(Geometry geometry, Color color)
 	    {
 	    	MeshLambertMaterial material1 = new MeshLambertMaterial();
 	    	material1.setColor(color);

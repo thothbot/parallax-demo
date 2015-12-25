@@ -18,28 +18,21 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import thothbot.parallax.core.client.gl2.arrays.Float32Array;
-import thothbot.parallax.core.client.gl2.arrays.Uint16Array;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.BufferAttribute;
-import thothbot.parallax.core.shared.core.BufferGeometry;
-import thothbot.parallax.core.shared.lights.AmbientLight;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.Material.COLORS;
-import thothbot.parallax.core.shared.materials.Material.SIDE;
-import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.Fog;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.BufferAttribute;
+import org.parallax3d.parallax.graphics.core.BufferGeometry;
+import org.parallax3d.parallax.graphics.lights.AmbientLight;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.Material;
+import org.parallax3d.parallax.graphics.materials.MeshPhongMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.graphics.scenes.Fog;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector3;
+import org.parallax3d.parallax.system.gl.arrays.Float32Array;
+import org.parallax3d.parallax.system.gl.arrays.Uint16Array;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public final class BufferGeometryDemo extends ContentWidget 
+public final class BufferGeometryDemo extends ContentWidget
 {
 
 	/*
@@ -90,7 +83,7 @@ public final class BufferGeometryDemo extends ContentWidget
 
 			int chunkSize = 20000;
 			
-			Uint16Array indices = Uint16Array.create( triangles * 3 );
+			Uint16Array indices = Uint16Array.create(triangles * 3);
 
 			for ( int i = 0; i < indices.getLength(); i ++ ) 
 			{
@@ -99,7 +92,7 @@ public final class BufferGeometryDemo extends ContentWidget
 
 			Float32Array positions = Float32Array.create( triangles * 3 * 3 );
 			Float32Array normals = Float32Array.create( triangles * 3 * 3 );
-			Float32Array colors = Float32Array.create( triangles * 3 * 3 );
+			Float32Array colors = Float32Array.create(triangles * 3 * 3);
 
 			Color color = new Color();
 
@@ -223,8 +216,8 @@ public final class BufferGeometryDemo extends ContentWidget
 			material.setAmbient(new Color(0xaaaaaa));
 			material.setSpecular(new Color(0xffffff));
 			material.setShininess(250);
-			material.setSide(SIDE.DOUBLE);
-			material.setVertexColors(COLORS.VERTEX);
+			material.setSide(Material.SIDE.DOUBLE);
+			material.setVertexColors(Material.COLORS.VERTEX);
 
 			mesh = new Mesh( geometry, material );
 			getScene().add( mesh );

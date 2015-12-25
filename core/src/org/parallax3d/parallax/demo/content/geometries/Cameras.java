@@ -18,33 +18,20 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.client.events.ViewportResizeEvent;
-import thothbot.parallax.core.client.events.ViewportResizeHandler;
-import thothbot.parallax.core.shared.cameras.Camera;
-import thothbot.parallax.core.shared.cameras.OrthographicCamera;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.geometries.SphereGeometry;
-import thothbot.parallax.core.shared.helpers.CameraHelper;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.PointCloudMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Mathematics;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.objects.PointCloud;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RequiresResize;
-import com.google.gwt.user.client.ui.RootPanel;
+import org.parallax3d.parallax.graphics.cameras.Camera;
+import org.parallax3d.parallax.graphics.cameras.OrthographicCamera;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.extras.geometries.SphereGeometry;
+import org.parallax3d.parallax.graphics.extras.helpers.CameraHelper;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.materials.PointCloudMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.graphics.objects.PointCloud;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Mathematics;
+import org.parallax3d.parallax.math.Vector3;
 
 public class Cameras extends ContentWidget implements RequiresResize
 {
@@ -166,7 +153,7 @@ public class Cameras extends ContentWidget implements RequiresResize
 			{
 				Vector3 vertex = new Vector3();
 				vertex.setX(Mathematics.randFloatSpread( 2000.0 ));
-				vertex.setY(Mathematics.randFloatSpread( 2000.0 ));
+				vertex.setY(Mathematics.randFloatSpread(2000.0));
 				vertex.setZ(Mathematics.randFloatSpread( 2000.0 ));
 	
 				geometry.getVertices().add( vertex );

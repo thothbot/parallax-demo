@@ -18,40 +18,30 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.extras.SceneUtils;
+import org.parallax3d.parallax.graphics.extras.core.ExtrudeGeometry;
+import org.parallax3d.parallax.graphics.extras.core.Path;
+import org.parallax3d.parallax.graphics.extras.core.Shape;
+import org.parallax3d.parallax.graphics.extras.curves.SplineCurve3;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.LineBasicMaterial;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.materials.MeshLambertMaterial;
+import org.parallax3d.parallax.graphics.materials.PointCloudMaterial;
+import org.parallax3d.parallax.graphics.objects.Line;
+import org.parallax3d.parallax.graphics.objects.PointCloud;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector2;
+import org.parallax3d.parallax.math.Vector3;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.ExtrudeGeometry;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.curves.Path;
-import thothbot.parallax.core.shared.curves.Shape;
-import thothbot.parallax.core.shared.curves.SplineCurve3;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.LineBasicMaterial;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.materials.PointCloudMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector2;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Line;
-import thothbot.parallax.core.shared.objects.PointCloud;
-import thothbot.parallax.core.shared.utils.SceneUtils;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.event.dom.client.MouseMoveEvent;
-import com.google.gwt.event.dom.client.MouseMoveHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public final class GeometryShapes extends ContentWidget 
+public final class GeometryShapes extends ContentWidget
 {
 	
 	/*
@@ -107,7 +97,7 @@ public final class GeometryShapes extends ContentWidget
 		private void splineShape(ExtrudeGeometry.ExtrudeGeometryParameters extrudeSettings)
 		{
 			List<Vector2> splinepts = new ArrayList<Vector2>();
-			splinepts.add( new Vector2 ( 350, 100 ) );
+			splinepts.add( new Vector2( 350, 100 ) );
 			splinepts.add( new Vector2 ( 400, 450 ) );
 			splinepts.add( new Vector2 ( -140, 350 ) );
 			splinepts.add( new Vector2 ( 0, 0 ) );
@@ -341,7 +331,7 @@ public final class GeometryShapes extends ContentWidget
 			ctx.quadraticCurveTo( x, y, x, y + radius );
 		}
 		
-		private void addGeometry(Geometry geometry, Geometry points, Geometry spacedPoints, Color color, 
+		private void addGeometry(Geometry geometry, Geometry points, Geometry spacedPoints, Color color,
 				double x, double y, double z, double rx, double ry, double rz, double s 
 		) {
 
@@ -355,7 +345,7 @@ public final class GeometryShapes extends ContentWidget
 			meshMat2.setWireframe(true);
 			meshMat2.setTransparent(true);
 			
-			Object3D mesh = SceneUtils.createMultiMaterialObject( geometry, Arrays.asList( meshMat1 ) );
+			Object3D mesh = SceneUtils.createMultiMaterialObject(geometry, Arrays.asList(meshMat1));
 			
 			mesh.getPosition().set( x, y, z - 75.0 );
 			mesh.getRotation().set( rx, ry, rz );

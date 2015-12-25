@@ -18,32 +18,21 @@
 
 package org.parallax3d.parallax.demo.content.animation;
 
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.AbstractGeometry;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.Material;
+import org.parallax3d.parallax.graphics.materials.MeshLambertMaterial;
+import org.parallax3d.parallax.graphics.materials.MeshPhongMaterial;
+import org.parallax3d.parallax.graphics.objects.MorphAnimMesh;
+import org.parallax3d.parallax.graphics.scenes.Scene;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector3;
+import org.parallax3d.parallax.system.Duration;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.events.ViewportResizeEvent;
-import thothbot.parallax.core.client.events.ViewportResizeHandler;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.AbstractGeometry;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.materials.MeshPhongMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.MorphAnimMesh;
-import thothbot.parallax.core.shared.scenes.Scene;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.loader.shared.XHRLoader;
-
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class MorphNormalsFlamingo extends ContentWidget 
 {
@@ -137,7 +126,7 @@ public final class MorphNormalsFlamingo extends ContentWidget
 			new JsonLoader(model, new XHRLoader.ModelLoadHandler() { 
 				
 					@Override
-					public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {	
+					public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
 
 						((JsonLoader)loader).morphColorsToFaceColors( (Geometry) geometry );
 						((Geometry)geometry).computeMorphNormals();

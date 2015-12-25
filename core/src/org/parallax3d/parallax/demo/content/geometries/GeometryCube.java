@@ -18,17 +18,11 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.geometries.BoxGeometry;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.objects.Mesh;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.extras.geometries.BoxGeometry;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.graphics.textures.Texture;
 
 public class GeometryCube extends ContentWidget
 {

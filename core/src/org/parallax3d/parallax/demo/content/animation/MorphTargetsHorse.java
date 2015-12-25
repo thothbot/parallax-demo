@@ -18,26 +18,17 @@
 
 package org.parallax3d.parallax.demo.content.animation;
 
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.AbstractGeometry;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Mathematics;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Mesh;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-import thothbot.parallax.loader.shared.JsonLoader;
-import thothbot.parallax.loader.shared.XHRLoader;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.AbstractGeometry;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.MeshLambertMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Mathematics;
+import org.parallax3d.parallax.math.Vector3;
+import org.parallax3d.parallax.system.Duration;
 
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public final class MorphTargetsHorse extends ContentWidget 
+public final class MorphTargetsHorse extends ContentWidget
 {
 	/*
 	 * Prepare Rendering Scene
@@ -85,7 +76,7 @@ public final class MorphTargetsHorse extends ContentWidget
 			new JsonLoader(model, new XHRLoader.ModelLoadHandler() {
 
 				@Override
-				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {																					
+				public void onModelLoaded(XHRLoader loader, AbstractGeometry geometry) {
 
 					MeshLambertMaterial material = new MeshLambertMaterial();
 					material.setColor(new Color(0x606060));
@@ -104,7 +95,7 @@ public final class MorphTargetsHorse extends ContentWidget
 		{
 			theta += 0.1;
 
-			camera.getPosition().setX( radius * Math.sin( Mathematics.degToRad( theta ) ) );
+			camera.getPosition().setX( radius * Math.sin( Mathematics.degToRad(theta) ) );
 			camera.getPosition().setZ( radius * Math.cos( Mathematics.degToRad( theta ) ) );
 
 			camera.lookAt( target );

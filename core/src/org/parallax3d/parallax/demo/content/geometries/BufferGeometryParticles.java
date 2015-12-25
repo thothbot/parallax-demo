@@ -18,21 +18,15 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import thothbot.parallax.core.client.gl2.arrays.Float32Array;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.BufferAttribute;
-import thothbot.parallax.core.shared.core.BufferGeometry;
-import thothbot.parallax.core.shared.materials.Material.COLORS;
-import thothbot.parallax.core.shared.materials.PointCloudMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.objects.PointCloud;
-import thothbot.parallax.core.shared.scenes.Fog;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.BufferAttribute;
+import org.parallax3d.parallax.graphics.core.BufferGeometry;
+import org.parallax3d.parallax.graphics.materials.Material;
+import org.parallax3d.parallax.graphics.materials.PointCloudMaterial;
+import org.parallax3d.parallax.graphics.objects.PointCloud;
+import org.parallax3d.parallax.graphics.scenes.Fog;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.system.gl.arrays.Float32Array;
 
 public final class BufferGeometryParticles extends ContentWidget
 {
@@ -67,7 +61,7 @@ public final class BufferGeometryParticles extends ContentWidget
 			BufferGeometry geometry = new BufferGeometry();
 
 			Float32Array positions = Float32Array.create( particles * 3 );
-			Float32Array colors = Float32Array.create( particles * 3 );
+			Float32Array colors = Float32Array.create(particles * 3);
 			
 			Color color = new Color();
 			double n = 1000, n2 = n/2;	// particles spread in the cube
@@ -105,7 +99,7 @@ public final class BufferGeometryParticles extends ContentWidget
 
 			//
 			PointCloudMaterial material = new PointCloudMaterial();
-			material.setVertexColors(COLORS.VERTEX);
+			material.setVertexColors(Material.COLORS.VERTEX);
 			material.setSize(15.0);
 
 			particleSystem = new PointCloud( geometry, material );

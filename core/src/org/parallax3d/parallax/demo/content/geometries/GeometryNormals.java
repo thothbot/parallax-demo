@@ -18,28 +18,19 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import thothbot.parallax.core.client.controls.TrackballControls;
-import thothbot.parallax.core.shared.Log;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Face3;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.geometries.BoxGeometry;
-import thothbot.parallax.core.shared.helpers.ArrowHelper;
-import thothbot.parallax.core.shared.lights.PointLight;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Matrix4;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Group;
-import thothbot.parallax.core.shared.objects.Mesh;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Face3;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.extras.geometries.BoxGeometry;
+import org.parallax3d.parallax.graphics.extras.helpers.ArrowHelper;
+import org.parallax3d.parallax.graphics.lights.PointLight;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.objects.Group;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector3;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public class GeometryNormals extends ContentWidget 
+public class GeometryNormals extends ContentWidget
 {
 	/*
 	 * Prepare Rendering Scene
@@ -128,7 +119,7 @@ public class GeometryNormals extends ContentWidget
 					.add( geometry.getVertices().get( face.getC() ) )
 					.divide( 3.0 );
 
-				ArrowHelper arrow = new ArrowHelper( 
+				ArrowHelper arrow = new ArrowHelper(
 						face.getNormal(),
 						centroid,
 						normalLength,

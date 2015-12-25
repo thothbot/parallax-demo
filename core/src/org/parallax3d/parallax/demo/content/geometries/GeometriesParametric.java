@@ -18,29 +18,24 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.extras.SceneUtils;
+import org.parallax3d.parallax.graphics.extras.geometries.parametric.KleinParametricGeometry;
+import org.parallax3d.parallax.graphics.extras.geometries.parametric.MobiusParametricGeometry;
+import org.parallax3d.parallax.graphics.extras.geometries.parametric.PlaneParametricGeometry;
+import org.parallax3d.parallax.graphics.lights.AmbientLight;
+import org.parallax3d.parallax.graphics.lights.DirectionalLight;
+import org.parallax3d.parallax.graphics.materials.Material;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.materials.MeshLambertMaterial;
+import org.parallax3d.parallax.graphics.textures.Texture;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.system.gl.enums.TextureWrapMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.geometries.parametric.KleinParametricGeometry;
-import thothbot.parallax.core.shared.geometries.parametric.MobiusParametricGeometry;
-import thothbot.parallax.core.shared.geometries.parametric.PlaneParametricGeometry;
-import thothbot.parallax.core.shared.lights.AmbientLight;
-import thothbot.parallax.core.shared.lights.DirectionalLight;
-import thothbot.parallax.core.shared.materials.Material;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.materials.MeshLambertMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.utils.SceneUtils;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class GeometriesParametric extends ContentWidget
 {
@@ -93,7 +88,7 @@ public class GeometriesParametric extends ContentWidget
 			materials.add(bmaterial);
 			
 			// KleinParametricGeometry Bottle
-			Object3D object1 = SceneUtils.createMultiMaterialObject(new KleinParametricGeometry(20, 20), materials );
+			Object3D object1 = SceneUtils.createMultiMaterialObject(new KleinParametricGeometry(20, 20), materials);
 			object1.getPosition().set( 0, 0, 0 );
 			object1.getScale().multiply(20);
 			getScene().add( object1 );

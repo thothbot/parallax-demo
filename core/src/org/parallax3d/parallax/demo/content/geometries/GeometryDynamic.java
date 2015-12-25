@@ -18,25 +18,16 @@
 
 package org.parallax3d.parallax.demo.content.geometries;
 
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.controls.FirstPersonControls;
-import thothbot.parallax.core.client.gl2.enums.TextureWrapMode;
-import thothbot.parallax.core.client.textures.Texture;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.geometries.PlaneGeometry;
-import thothbot.parallax.core.shared.materials.MeshBasicMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Matrix4;
-import thothbot.parallax.core.shared.objects.Mesh;
-import thothbot.parallax.core.shared.scenes.FogExp2;
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
-
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.RunAsyncCallback;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.extras.geometries.PlaneGeometry;
+import org.parallax3d.parallax.graphics.materials.MeshBasicMaterial;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.graphics.scenes.FogExp2;
+import org.parallax3d.parallax.graphics.textures.Texture;
+import org.parallax3d.parallax.math.Matrix4;
+import org.parallax3d.parallax.system.Duration;
+import org.parallax3d.parallax.system.gl.enums.TextureWrapMode;
 
 public class GeometryDynamic extends ContentWidget
 {
@@ -87,7 +78,7 @@ public class GeometryDynamic extends ContentWidget
 			this.geometry.computeVertexNormals();
 
 			Texture texture = new Texture(DemoScene.texture);
-			texture.setWrapS(TextureWrapMode.REPEAT); 
+			texture.setWrapS(TextureWrapMode.REPEAT);
 			texture.setWrapT(TextureWrapMode.REPEAT);
 			texture.getRepeat().set( 5.0, 5.0 );
 
