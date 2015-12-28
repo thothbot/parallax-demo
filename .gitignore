@@ -7,7 +7,10 @@
 /.idea
 *.iml
 
-.gradle/
+!/.gradle
+/.gradle/*
+!/.gradle/wrapper/
+
 build/
 bin/
 target/
