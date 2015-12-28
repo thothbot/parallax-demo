@@ -18,31 +18,31 @@
 
 package org.parallax3d.parallax.demo.resources;
 
-import thothbot.parallax.core.client.shaders.Shader;
-import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Matrix4;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import org.parallax3d.parallax.graphics.renderers.shaders.Shader;
+import org.parallax3d.parallax.graphics.renderers.shaders.Uniform;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Matrix4;
 
-public class MirrorShader extends Shader 
+public class MirrorShader extends Shader
 {
 
-	interface Resources extends DefaultResources
+	interface Resources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 
-		@Source("shaders/mirror.vs")
+		@ClientBundle.Source("shaders/mirror.vs")
 		TextResource getVertexShader();
 
-		@Source("shaders/mirror.fs")
+		@ClientBundle.Source("shaders/mirror.fs")
 		TextResource getFragmentShader();
 	}
 
 	public MirrorShader() 
 	{
-		super(Resources.INSTANCE);
+		super(Resources.INSTANCE.getVertexShader().getText(), Resources.INSTANCE.getFragmentShader().getText());
 	}
 
 	@Override

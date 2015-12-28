@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.debugger.Debugger;
-import thothbot.parallax.core.client.renderers.WebGLRenderer;
+import org.parallax3d.parallax.demo.client.WebApp;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -57,7 +55,7 @@ public class ContentWidgetView extends ResizeComposite
 	Element descriptionField;
 
 	/**
-	 * Main panel where will be {@link RenderingPanel} located
+	 * Main panel where will be RenderingPanel located
 	 */
 	@UiField(provided = true)
 	SimpleLayoutPanel examplePanel;
@@ -97,7 +95,7 @@ public class ContentWidgetView extends ResizeComposite
 	
 	List<ToggleButton> effectButtons;
 		
-	private Debugger debugger;
+//	private Debugger debugger;
 	
 	private ClickHandler handler = new ClickHandler(){
         @Override
@@ -119,14 +117,14 @@ public class ContentWidgetView extends ResizeComposite
 		this.debuggerPanel = new SimpleLayoutPanel();
 		this.nameField = new SimpleLayoutPanel();
 		
-		switchAnimation = new ToggleButton(new Image(Demo.resources.switchAnimation()));
-		switchFullScreen = new ToggleButton(new Image(Demo.resources.switchFullscreen()));
+		switchAnimation = new ToggleButton(new Image(WebApp.resources.switchAnimation()));
+		switchFullScreen = new ToggleButton(new Image(WebApp.resources.switchFullscreen()));
 		
-		switchEffectNone = new ToggleButton(new Image(Demo.resources.switchEffectNone()));
-		switchEffectAnaglyph = new ToggleButton(new Image(Demo.resources.switchEAnaglyph()));
-		switchEffectStereo = new ToggleButton(new Image(Demo.resources.switchEStereo()));
-		switchEffectParallaxBarrier = new ToggleButton(new Image(Demo.resources.switchEParallaxBarrier()));
-		switchEffectOculusRift = new ToggleButton(new Image(Demo.resources.switchEOculusRift()));
+		switchEffectNone = new ToggleButton(new Image(WebApp.resources.switchEffectNone()));
+		switchEffectAnaglyph = new ToggleButton(new Image(WebApp.resources.switchEAnaglyph()));
+		switchEffectStereo = new ToggleButton(new Image(WebApp.resources.switchEStereo()));
+		switchEffectParallaxBarrier = new ToggleButton(new Image(WebApp.resources.switchEParallaxBarrier()));
+		switchEffectOculusRift = new ToggleButton(new Image(WebApp.resources.switchEOculusRift()));
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -152,18 +150,18 @@ public class ContentWidgetView extends ResizeComposite
 			button.setEnabled(enabled);
 	}
 	
-	public void setRenderingPanel(RenderingPanel renderingPanel) 
-	{
-		this.examplePanel.setWidget(renderingPanel);
-	}
-	
-	public void setDebugger(WebGLRenderer renderer) 
-	{
-		this.debugger = new Debugger(renderer.getInfo());
-		this.debuggerPanel.setWidget(this.debugger);		
-	}
-	
-	public Debugger getDebugger() {
-		return this.debugger;
-	}
+//	public void setRenderingPanel(RenderingPanel renderingPanel)
+//	{
+//		this.examplePanel.setWidget(renderingPanel);
+//	}
+//
+//	public void setDebugger(WebGLRenderer renderer)
+//	{
+//		this.debugger = new Debugger(renderer.getInfo());
+//		this.debuggerPanel.setWidget(this.debugger);
+//	}
+//
+//	public Debugger getDebugger() {
+//		return this.debugger;
+//	}
 }

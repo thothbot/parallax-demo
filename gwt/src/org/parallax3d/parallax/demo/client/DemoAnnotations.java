@@ -18,15 +18,13 @@
 
 package org.parallax3d.parallax.demo.client;
 
-import org.parallax3d.parallax.demo.client.Demo;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The annotations used in Parallax {@link Demo}.
+ * The annotations used in Parallax WebApp.
  */
 public class DemoAnnotations 
 {

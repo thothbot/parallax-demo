@@ -18,12 +18,13 @@
 
 package org.parallax3d.parallax.demo.resources;
 
-import thothbot.parallax.core.client.shaders.Shader;
-import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.shared.math.Vector2;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import org.parallax3d.parallax.graphics.renderers.shaders.Shader;
+import org.parallax3d.parallax.graphics.renderers.shaders.Uniform;
+import org.parallax3d.parallax.math.Vector2;
 
 /**
  * The god-ray generation shader.
@@ -45,22 +46,22 @@ import com.google.gwt.resources.client.TextResource;
  * <p>
  * The code from three.js project
  */
-public final class GodRaysGenerateShader extends Shader 
+public final class GodRaysGenerateShader extends Shader
 {
-	interface Resources extends DefaultResources
+	interface Resources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 
-		@Source("shaders/godrays.vs")
+		@ClientBundle.Source("shaders/godrays.vs")
 		TextResource getVertexShader();
 
-		@Source("shaders/godraysGenerate.fs")
+		@ClientBundle.Source("shaders/godraysGenerate.fs")
 		TextResource getFragmentShader();
 	}
 	
 	public GodRaysGenerateShader() 
 	{
-		super(Resources.INSTANCE);
+		super(Resources.INSTANCE.getVertexShader().getText(), Resources.INSTANCE.getFragmentShader().getText());
 	}
 
 	@Override

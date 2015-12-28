@@ -18,10 +18,10 @@
 
 package org.parallax3d.parallax.demo.resources;
 
-import thothbot.parallax.core.client.shaders.Shader;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import org.parallax3d.parallax.graphics.renderers.shaders.Shader;
 
 /**
  * Beckmann distribution function
@@ -35,22 +35,22 @@ import com.google.gwt.resources.client.TextResource;
  * @author thothbot
  *
  */
-public final class BeckmannShader extends Shader 
+public final class BeckmannShader extends Shader
 {
-	interface Resources extends DefaultResources
+	interface Resources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 		
-		@Source("shaders/beckmann.vs")
+		@ClientBundle.Source("shaders/beckmann.vs")
 		TextResource getVertexShader();
 
-		@Source("shaders/beckmann.fs")
+		@ClientBundle.Source("shaders/beckmann.fs")
 		TextResource getFragmentShader();
 	}
 
 	public BeckmannShader() 
 	{
-		super(Resources.INSTANCE);
+		super(Resources.INSTANCE.getVertexShader().getText(), Resources.INSTANCE.getFragmentShader().getText());
 	}
 
 	@Override

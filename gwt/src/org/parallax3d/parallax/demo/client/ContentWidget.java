@@ -18,22 +18,7 @@
 
 package org.parallax3d.parallax.demo.client;
 
-import thothbot.parallax.core.client.AnimatedScene;
-import thothbot.parallax.core.client.RenderingPanel;
-import thothbot.parallax.core.client.events.AnimationReadyEvent;
-import thothbot.parallax.core.client.events.AnimationReadyHandler;
-import thothbot.parallax.core.client.events.Context3dErrorEvent;
-import thothbot.parallax.core.client.events.Context3dErrorHandler;
-import thothbot.parallax.core.client.events.SceneLoadingEvent;
-import thothbot.parallax.core.client.events.SceneLoadingHandler;
-import thothbot.parallax.core.client.renderers.Plugin;
 import org.parallax3d.parallax.demo.resources.DemoResources;
-import thothbot.parallax.loader.shared.XHRLoader;
-import thothbot.parallax.loader.shared.XHRLoader.LoaderProgressHandler;
-import thothbot.parallax.plugins.effects.Anaglyph;
-import thothbot.parallax.plugins.effects.OculusRift;
-import thothbot.parallax.plugins.effects.ParallaxBarrier;
-import thothbot.parallax.plugins.effects.Stereo;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -52,7 +37,7 @@ import com.google.gwt.user.client.ui.SimpleLayoutPanel;
  * A widget used to show Parallax examples.
  */
 public abstract class ContentWidget extends SimpleLayoutPanel 
-	implements AnimationReadyHandler, SceneLoadingHandler, Context3dErrorHandler
+//	implements AnimationReadyHandler, SceneLoadingHandler, Context3dErrorHandler
 {
 
 	/**
@@ -66,10 +51,10 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 		void onSuccess(T value);
 	}
 
-	/**
-	 * {@link RenderingPanel} where example will be shown
-	 */
-	protected RenderingPanel renderingPanel;
+//	/**
+//	 * {@link RenderingPanel} where example will be shown
+//	 */
+//	protected RenderingPanel renderingPanel;
 	
 	private LoadingPanel loadingPanel;
 	private boolean isSceneHasObjects = false;
@@ -103,7 +88,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	 */
 	private boolean widgetInitializing;
 	
-	private Plugin effectPlugin;
+//	private Plugin effectPlugin;
 	
 	/**
 	 * Default constructor should be called in an example (daughter) class
@@ -122,16 +107,16 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	/**
 	 * This is basic preparation for Demo Scene
 	 */
-	protected abstract class DemoAnimatedScene extends AnimatedScene{};
+//	protected abstract class DemoAnimatedScene extends AnimatedScene{};
 	
 	/**
 	 * This is called when the example is first initialized.
 	 * 
 	 * @return a {@link DemoAnimatedScene} to add to the {@link RenderingPanel}
 	 */
-	protected abstract DemoAnimatedScene onInitialize();
-
-	protected abstract void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback);
+//	protected abstract DemoAnimatedScene onInitialize();
+//
+//	protected abstract void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback);
 
 	/**
 	 * Get the simple filename of a class (name without dots).
@@ -219,132 +204,132 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 		}
 	}
 	
-	/**
-	 * This event called when {@link RenderingPanel} is ready to animate a 
-	 * {@link AnimatedScene} in loaded example.
-	 */
-	public void onAnimationReady(AnimationReadyEvent event)
-	{
-		ShareFaceBook.prepareFBShareButton(getContentWidgetToken());
-		
-		view.setDebugger(this.renderingPanel.getRenderer());
-		
-		this.renderingPanel.setAnimationUpdateHandler(new RenderingPanel.AnimationUpdateHandler() {
-			
-			@Override
-			public void onUpdate(double duration) {
-				view.getDebugger().update();
-			}
-		});
-
-    	view.switchAnimation.setEnabled(true);
-    	view.switchAnimation.setDown(true);
-    	view.switchAnimation.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-    			if (view.switchAnimation.isDown())
-    				ContentWidget.this.renderingPanel.getAnimatedScene().run();
-    			else
-    				ContentWidget.this.renderingPanel.getAnimatedScene().stop();
-    		}
-    	});
-    	
-    	view.switchFullScreen.setEnabled(this.renderingPanel.isSupportFullScreen());
-    	view.switchFullScreen.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-    			if (view.switchFullScreen.isDown()) {
-    				ContentWidget.this.renderingPanel.toFullScreen();
-    				view.switchFullScreen.setDown(false);
-    			}
-    		}
-    	});
-    	
-    	view.setEnableEffectSwitch(this.isEnabledEffectSwitch());
-
-    	view.switchEffectAnaglyph.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
-    			if (view.switchEffectAnaglyph.isDown())
-					ContentWidget.this.effectPlugin = new Anaglyph(
-							ContentWidget.this.renderingPanel.getRenderer(), 
-							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
-    		}
-    	});
-    	
-    	view.switchEffectStereo.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
-				if (view.switchEffectStereo.isDown())
-					ContentWidget.this.effectPlugin = new Stereo(
-							ContentWidget.this.renderingPanel.getRenderer(), 
-							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
-    		}
-    	});
-    	
-    	view.switchEffectParallaxBarrier.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
-				if (view.switchEffectParallaxBarrier.isDown())
-					ContentWidget.this.effectPlugin = new ParallaxBarrier(
-							ContentWidget.this.renderingPanel.getRenderer(), 
-							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
-    		}
-    	});
-    	
-    	view.switchEffectOculusRift.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
-				if (view.switchEffectOculusRift.isDown())
-					ContentWidget.this.effectPlugin = new OculusRift(
-							ContentWidget.this.renderingPanel.getRenderer(), 
-							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
-    		}
-    	});
-
-    	view.switchEffectNone.addClickHandler(new ClickHandler() {
-    		public void onClick(ClickEvent event) {
-				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
-    		}
-    	});
-
-	}
+//	/**
+//	 * This event called when {@link RenderingPanel} is ready to animate a
+//	 * {@link AnimatedScene} in loaded example.
+//	 */
+//	public void onAnimationReady(AnimationReadyEvent event)
+//	{
+//		ShareFaceBook.prepareFBShareButton(getContentWidgetToken());
+//
+//		view.setDebugger(this.renderingPanel.getRenderer());
+//
+//		this.renderingPanel.setAnimationUpdateHandler(new RenderingPanel.AnimationUpdateHandler() {
+//
+//			@Override
+//			public void onUpdate(double duration) {
+//				view.getDebugger().update();
+//			}
+//		});
+//
+//    	view.switchAnimation.setEnabled(true);
+//    	view.switchAnimation.setDown(true);
+//    	view.switchAnimation.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//    			if (view.switchAnimation.isDown())
+//    				ContentWidget.this.renderingPanel.getAnimatedScene().run();
+//    			else
+//    				ContentWidget.this.renderingPanel.getAnimatedScene().stop();
+//    		}
+//    	});
+//
+//    	view.switchFullScreen.setEnabled(this.renderingPanel.isSupportFullScreen());
+//    	view.switchFullScreen.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//    			if (view.switchFullScreen.isDown()) {
+//    				ContentWidget.this.renderingPanel.toFullScreen();
+//    				view.switchFullScreen.setDown(false);
+//    			}
+//    		}
+//    	});
+//
+//    	view.setEnableEffectSwitch(this.isEnabledEffectSwitch());
+//
+//    	view.switchEffectAnaglyph.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+//    			if (view.switchEffectAnaglyph.isDown())
+//					ContentWidget.this.effectPlugin = new Anaglyph(
+//							ContentWidget.this.renderingPanel.getRenderer(),
+//							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+//    		}
+//    	});
+//
+//    	view.switchEffectStereo.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+//				if (view.switchEffectStereo.isDown())
+//					ContentWidget.this.effectPlugin = new Stereo(
+//							ContentWidget.this.renderingPanel.getRenderer(),
+//							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+//    		}
+//    	});
+//
+//    	view.switchEffectParallaxBarrier.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+//				if (view.switchEffectParallaxBarrier.isDown())
+//					ContentWidget.this.effectPlugin = new ParallaxBarrier(
+//							ContentWidget.this.renderingPanel.getRenderer(),
+//							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+//    		}
+//    	});
+//
+//    	view.switchEffectOculusRift.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+//				if (view.switchEffectOculusRift.isDown())
+//					ContentWidget.this.effectPlugin = new OculusRift(
+//							ContentWidget.this.renderingPanel.getRenderer(),
+//							ContentWidget.this.renderingPanel.getAnimatedScene().getScene());
+//    		}
+//    	});
+//
+//    	view.switchEffectNone.addClickHandler(new ClickHandler() {
+//    		public void onClick(ClickEvent event) {
+//				ContentWidget.this.renderingPanel.getRenderer().deletePlugin(ContentWidget.this.effectPlugin);
+//    		}
+//    	});
+//
+//	}
 	
-	@Override
-	public void onSceneLoading(SceneLoadingEvent event) 
-	{		
-		if(event.isLoaded() && loadingPanel != null && !isSceneHasObjects ) 
-		{
-			loadingPanel.hide();
-		}
-		else if(this.loadingPanel == null)
-		{
-			this.loadingPanel = new LoadingPanel();
-			this.loadingPanel.show();
-			this.renderingPanel.add(this.loadingPanel);
-			
-			XHRLoader.addLoaderProgress(new LoaderProgressHandler() {
-				
-				@Override
-				public void onProgressUpdate(int left) {
-					if(left > 0) {
-						isSceneHasObjects = true;
-					} else if(isSceneHasObjects) {
-						loadingPanel.hide();
-					}
-				}
-			});
-		}
-	}
-	
-	@Override
-	public void onContextError(Context3dErrorEvent event) 
-	{
-		if(this.loadingPanel != null && this.loadingPanel.isVisible())
-		{
-			this.loadingPanel.hide();
-		}
-		
-		this.renderingPanel.add(new BadCanvasPanel(event.getMessage()));
-	}
+//	@Override
+//	public void onSceneLoading(SceneLoadingEvent event)
+//	{
+//		if(event.isLoaded() && loadingPanel != null && !isSceneHasObjects )
+//		{
+//			loadingPanel.hide();
+//		}
+//		else if(this.loadingPanel == null)
+//		{
+//			this.loadingPanel = new LoadingPanel();
+//			this.loadingPanel.show();
+//			this.renderingPanel.add(this.loadingPanel);
+//
+//			XHRLoader.addLoaderProgress(new LoaderProgressHandler() {
+//
+//				@Override
+//				public void onProgressUpdate(int left) {
+//					if(left > 0) {
+//						isSceneHasObjects = true;
+//					} else if(isSceneHasObjects) {
+//						loadingPanel.hide();
+//					}
+//				}
+//			});
+//		}
+//	}
+//
+//	@Override
+//	public void onContextError(Context3dErrorEvent event)
+//	{
+//		if(this.loadingPanel != null && this.loadingPanel.isVisible())
+//		{
+//			this.loadingPanel.hide();
+//		}
+//
+//		this.renderingPanel.add(new BadCanvasPanel(event.getMessage()));
+//	}
 
 	/**
 	 * Called when an example attached with parent Widget.
@@ -368,7 +353,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	protected void onUnload() 
 	{
 		view = null;
-		renderingPanel = null;
+//		renderingPanel = null;
 		widgetInitializing = widgetInitialized = false;
 		super.onUnload();
 	}
@@ -384,45 +369,45 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 
 		widgetInitializing = true;
 
-		asyncOnInitialize(new AsyncCallback<DemoAnimatedScene>() {
-			public void onFailure(Throwable reason)
-			{
-				widgetInitializing = false;
-				Window.alert("Failed to download code for this widget (" + reason + ")");
-			}
-
-			public void onSuccess(DemoAnimatedScene demoAnimatedScene)
-			{
-				widgetInitializing = false;
-				widgetInitialized = true;
-
-				// Finally setup RenderingPanel attached to the loaded example
-		        if (demoAnimatedScene != null)
-		        {
-		        	RenderingPanel renderingPanel = new RenderingPanel();
-		    		ContentWidget.this.renderingPanel = renderingPanel;
-		    		renderingPanel.addSceneLoadingHandler(ContentWidget.this);
-		    		renderingPanel.addCanvas3dErrorHandler(ContentWidget.this);
-		    		renderingPanel.addAnimationReadyHandler(ContentWidget.this);
-
-		    		ContentWidget.this.loadRenderingPanelAttributes(renderingPanel);
-		    		
-		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
-		    		
-		        	view.setRenderingPanel(renderingPanel);
-		        }
-			}
-		});
+//		asyncOnInitialize(new AsyncCallback<DemoAnimatedScene>() {
+//			public void onFailure(Throwable reason)
+//			{
+//				widgetInitializing = false;
+//				Window.alert("Failed to download code for this widget (" + reason + ")");
+//			}
+//
+//			public void onSuccess(DemoAnimatedScene demoAnimatedScene)
+//			{
+//				widgetInitializing = false;
+//				widgetInitialized = true;
+//
+//				// Finally setup RenderingPanel attached to the loaded example
+//		        if (demoAnimatedScene != null)
+//		        {
+//		        	RenderingPanel renderingPanel = new RenderingPanel();
+//		    		ContentWidget.this.renderingPanel = renderingPanel;
+//		    		renderingPanel.addSceneLoadingHandler(ContentWidget.this);
+//		    		renderingPanel.addCanvas3dErrorHandler(ContentWidget.this);
+//		    		renderingPanel.addAnimationReadyHandler(ContentWidget.this);
+//
+//		    		ContentWidget.this.loadRenderingPanelAttributes(renderingPanel);
+//
+//		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
+//
+//		        	view.setRenderingPanel(renderingPanel);
+//		        }
+//			}
+//		});
 	}
 	
 	protected boolean isEnabledEffectSwitch() {
 		return true;
 	}
 
-	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel) 
-	{
-		/* Empty */
-	}
+//	protected void loadRenderingPanelAttributes(RenderingPanel renderingPanel)
+//	{
+//		/* Empty */
+//	}
 
 	/**
 	 * Send a request for source code.

@@ -18,28 +18,22 @@
 
 package org.parallax3d.parallax.demo.resources;
 
-import java.util.Map;
+import org.parallax3d.parallax.graphics.cameras.Camera;
+import org.parallax3d.parallax.graphics.cameras.PerspectiveCamera;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.core.Object3D;
+import org.parallax3d.parallax.graphics.extras.UniformsUtils;
+import org.parallax3d.parallax.graphics.extras.helpers.ArrowHelper;
+import org.parallax3d.parallax.graphics.materials.LineBasicMaterial;
+import org.parallax3d.parallax.graphics.materials.ShaderMaterial;
+import org.parallax3d.parallax.graphics.objects.Line;
+import org.parallax3d.parallax.graphics.renderers.RenderTargetTexture;
+import org.parallax3d.parallax.graphics.renderers.WebGLRenderer;
+import org.parallax3d.parallax.graphics.renderers.shaders.Uniform;
+import org.parallax3d.parallax.graphics.scenes.Scene;
+import org.parallax3d.parallax.math.*;
 
-import thothbot.parallax.core.client.renderers.WebGLRenderer;
-import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.client.textures.RenderTargetTexture;
-import thothbot.parallax.core.shared.Log;
-import thothbot.parallax.core.shared.cameras.Camera;
-import thothbot.parallax.core.shared.cameras.PerspectiveCamera;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.core.Object3D;
-import thothbot.parallax.core.shared.helpers.ArrowHelper;
-import thothbot.parallax.core.shared.materials.LineBasicMaterial;
-import thothbot.parallax.core.shared.materials.ShaderMaterial;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Mathematics;
-import thothbot.parallax.core.shared.math.Matrix4;
-import thothbot.parallax.core.shared.math.Plane;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.math.Vector4;
-import thothbot.parallax.core.shared.objects.Line;
-import thothbot.parallax.core.shared.scenes.Scene;
-import thothbot.parallax.core.shared.utils.UniformsUtils;
+import java.util.Map;
 
 public class Mirror extends Object3D {
 
@@ -110,7 +104,7 @@ public class Mirror extends Object3D {
 		} else {
 
 			this.camera = new PerspectiveCamera();
-			Log.warn(" -> Mirror() ID " + this.name + ": camera is not a Perspective Camera!");
+//			Log.warn(" -> Mirror() ID " + this.name + ": camera is not a Perspective Camera!");
 
 		}
 

@@ -21,16 +21,12 @@ package org.parallax3d.parallax.demo.resources;
 import java.util.Arrays;
 import java.util.List;
 
-import thothbot.parallax.core.client.shaders.ChunksFragmentShader;
-import thothbot.parallax.core.client.shaders.ChunksVertexShader;
-import thothbot.parallax.core.client.shaders.Shader;
-import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.client.shaders.UniformsLib;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Vector2;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import org.parallax3d.parallax.graphics.renderers.shaders.*;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Vector2;
 
 /**
  * Dynamic terrain shader<br>
@@ -44,23 +40,23 @@ import com.google.gwt.resources.client.TextResource;
  * @author thothbot
  *
  */
-public final class TerrainShader extends Shader 
+public final class TerrainShader extends Shader
 {
 
-	interface Resources extends DefaultResources
+	interface Resources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 		
-		@Source("shaders/terrain.vs")
+		@ClientBundle.Source("shaders/terrain.vs")
 		TextResource getVertexShader();
 
-		@Source("shaders/terrain.fs")
+		@ClientBundle.Source("shaders/terrain.fs")
 		TextResource getFragmentShader();
 	}
 
 	public TerrainShader() 
 	{
-		super(Resources.INSTANCE);
+		super(Resources.INSTANCE.getVertexShader().getText(), Resources.INSTANCE.getFragmentShader().getText());
 	}
 
 	@Override

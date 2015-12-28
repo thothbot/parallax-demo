@@ -22,12 +22,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import thothbot.parallax.core.shared.core.Face3;
-import thothbot.parallax.core.shared.core.Geometry;
-import thothbot.parallax.core.shared.math.Vector3;
-import thothbot.parallax.core.shared.objects.Mesh;
-
 import com.google.gwt.core.client.Duration;
+import org.parallax3d.parallax.graphics.core.Face3;
+import org.parallax3d.parallax.graphics.core.Geometry;
+import org.parallax3d.parallax.graphics.objects.Mesh;
+import org.parallax3d.parallax.math.Vector3;
 
 /**
  * Suggested Readings

@@ -18,32 +18,32 @@
 
 package org.parallax3d.parallax.demo.resources;
 
-import thothbot.parallax.core.client.shaders.Shader;
-import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.shared.math.Color;
-import thothbot.parallax.core.shared.math.Matrix4;
-import thothbot.parallax.core.shared.math.Vector3;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import org.parallax3d.parallax.graphics.renderers.shaders.Shader;
+import org.parallax3d.parallax.graphics.renderers.shaders.Uniform;
+import org.parallax3d.parallax.math.Color;
+import org.parallax3d.parallax.math.Matrix4;
+import org.parallax3d.parallax.math.Vector3;
 
-public class WaterShader extends Shader 
+public class WaterShader extends Shader
 {
 
-	interface Resources extends DefaultResources
+	interface Resources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 
-		@Source("shaders/water.vs")
+		@ClientBundle.Source("shaders/water.vs")
 		TextResource getVertexShader();
 
-		@Source("shaders/water.fs")
+		@ClientBundle.Source("shaders/water.fs")
 		TextResource getFragmentShader();
 	}
 
 	public WaterShader() 
 	{
-		super(Resources.INSTANCE);
+		super(Resources.INSTANCE.getVertexShader().getText(), Resources.INSTANCE.getFragmentShader().getText());
 	}
 
 	@Override

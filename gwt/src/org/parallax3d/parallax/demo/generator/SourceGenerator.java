@@ -25,7 +25,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DemoAnnotations.DemoSource;
+import org.parallax3d.parallax.demo.client.DemoAnnotations;
 import org.parallax3d.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.ext.Generator;
@@ -133,7 +133,7 @@ public class SourceGenerator extends Generator
 
 		// Get each data code block
 		String formattedSource = "";
-		String sourceTag = "@" + DemoSource.class.getSimpleName();
+		String sourceTag = "@" + DemoAnnotations.DemoSource.class.getSimpleName();
 		int srcTagIndex = fileContents.indexOf(sourceTag);
 
 		while (srcTagIndex >= 0) 

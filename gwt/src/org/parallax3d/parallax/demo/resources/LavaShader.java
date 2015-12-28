@@ -18,31 +18,31 @@
 
 package org.parallax3d.parallax.demo.resources;
 
-import thothbot.parallax.core.client.shaders.Shader;
-import thothbot.parallax.core.client.shaders.Uniform;
-import thothbot.parallax.core.shared.math.Vector2;
-import thothbot.parallax.core.shared.math.Vector3;
-
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import org.parallax3d.parallax.graphics.renderers.shaders.Shader;
+import org.parallax3d.parallax.graphics.renderers.shaders.Uniform;
+import org.parallax3d.parallax.math.Vector2;
+import org.parallax3d.parallax.math.Vector3;
 
-public final class LavaShader extends Shader 
+public final class LavaShader extends Shader
 {
 
-	interface Resources extends DefaultResources
+	interface Resources
 	{
 		Resources INSTANCE = GWT.create(Resources.class);
 		
-		@Source("shaders/lava.vs")
+		@ClientBundle.Source("shaders/lava.vs")
 		TextResource getVertexShader();
 
-		@Source("shaders/lava.fs")
+		@ClientBundle.Source("shaders/lava.fs")
 		TextResource getFragmentShader();
 	}
 
 	public LavaShader() 
 	{
-		super(Resources.INSTANCE);
+		super(Resources.INSTANCE.getVertexShader().getText(), Resources.INSTANCE.getFragmentShader().getText());
 	}
 	
 	@Override

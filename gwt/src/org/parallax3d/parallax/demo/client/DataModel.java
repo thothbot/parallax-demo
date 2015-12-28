@@ -25,57 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.parallax3d.parallax.demo.content.CustomAttributesParticles;
-import org.parallax3d.parallax.demo.content.CustomAttributesParticles2;
-import org.parallax3d.parallax.demo.content.LoaderSTL;
-import org.parallax3d.parallax.demo.content.animation.MorphNormalsFlamingo;
-import org.parallax3d.parallax.demo.content.animation.MorphTargetsHorse;
-import org.parallax3d.parallax.demo.content.geometries.BufferGeometryDemo;
-import org.parallax3d.parallax.demo.content.geometries.BufferGeometryParticles;
-import org.parallax3d.parallax.demo.content.geometries.Cameras;
-import org.parallax3d.parallax.demo.content.geometries.Geometries;
-import org.parallax3d.parallax.demo.content.geometries.GeometriesParametric;
-import org.parallax3d.parallax.demo.content.geometries.GeometryColors;
-import org.parallax3d.parallax.demo.content.geometries.GeometryCube;
-import org.parallax3d.parallax.demo.content.geometries.GeometryDynamic;
-import org.parallax3d.parallax.demo.content.geometries.GeometryExtrudeSplines;
-import org.parallax3d.parallax.demo.content.geometries.GeometryHierarchy;
-import org.parallax3d.parallax.demo.content.geometries.GeometryNormals;
-import org.parallax3d.parallax.demo.content.geometries.GeometryShapes;
-import org.parallax3d.parallax.demo.content.geometries.LinesSphere;
-import org.parallax3d.parallax.demo.content.interactivity.InteractiveCubes;
-import org.parallax3d.parallax.demo.content.interactivity.InteractiveDraggableCubes;
-import org.parallax3d.parallax.demo.content.interactivity.InteractiveVoxelPainter;
-import org.parallax3d.parallax.demo.content.materials.MaterialsBumpmap;
-import org.parallax3d.parallax.demo.content.materials.MaterialsBumpmapSkin;
-import org.parallax3d.parallax.demo.content.materials.MaterialsCubemapBallsReflection;
-import org.parallax3d.parallax.demo.content.materials.MaterialsCubemapBallsRefraction;
-import org.parallax3d.parallax.demo.content.materials.MaterialsCubemapDynamicReflection;
-import org.parallax3d.parallax.demo.content.materials.MaterialsCubemapFresnel;
-import org.parallax3d.parallax.demo.content.materials.MaterialsRenderTarget;
-import org.parallax3d.parallax.demo.content.materials.MaterialsShaderLava;
-import org.parallax3d.parallax.demo.content.materials.MaterialsShaderMonjori;
-import org.parallax3d.parallax.demo.content.materials.MaterialsTextureAnisotropy;
-import org.parallax3d.parallax.demo.content.materials.MaterialsTextureFilter;
-import org.parallax3d.parallax.demo.content.materials.MaterialsTextures;
-import org.parallax3d.parallax.demo.content.materials.MaterialsWireframe;
-import org.parallax3d.parallax.demo.content.materials.ParticlesRandom;
-import org.parallax3d.parallax.demo.content.materials.ParticlesTrails;
-import org.parallax3d.parallax.demo.content.materials.ShaderOcean;
-import org.parallax3d.parallax.demo.content.materials.TrackballEarth;
-import org.parallax3d.parallax.demo.content.misc.Helpers;
-import org.parallax3d.parallax.demo.content.misc.MiscLookAt;
-import org.parallax3d.parallax.demo.content.misc.MiscMemoryTestGeometries;
-import org.parallax3d.parallax.demo.content.misc.MiscMemoryTestShaders;
-import org.parallax3d.parallax.demo.content.misc.PerformanceDoubleSided;
-import org.parallax3d.parallax.demo.content.plugins.EffectsLensFlares;
-import org.parallax3d.parallax.demo.content.plugins.EffectsSprites;
-import org.parallax3d.parallax.demo.content.plugins.HilbertCurves;
-import org.parallax3d.parallax.demo.content.plugins.PostprocessingGodrays;
-import org.parallax3d.parallax.demo.content.plugins.Saturn;
-import org.parallax3d.parallax.demo.content.plugins.TerrainDynamic;
-import org.parallax3d.parallax.demo.content.raytracing.Raytracing;
-
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.prefetch.RunAsyncCode;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -290,102 +239,102 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 //			category.addExample(new CopyOfGeometryCube(), 
 //					RunAsyncCode.runAsyncCode(CopyOfGeometryCube.class));
-			category.addExample(new GeometryCube(), 
-					RunAsyncCode.runAsyncCode(GeometryCube.class));
-			category.addExample(new GeometryColors(),
-					RunAsyncCode.runAsyncCode(GeometryColors.class));
-			category.addExample(new Geometries(),
-					RunAsyncCode.runAsyncCode(Geometries.class));
-			category.addExample(new GeometriesParametric(),
-					RunAsyncCode.runAsyncCode(GeometriesParametric.class));
-			category.addExample(new GeometryDynamic(),
-					RunAsyncCode.runAsyncCode(GeometryDynamic.class));
-			category.addExample(new GeometryHierarchy(),
-					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
-			category.addExample(new Cameras(),
-					RunAsyncCode.runAsyncCode(Cameras.class));
-			category.addExample(new LinesSphere(),
-					RunAsyncCode.runAsyncCode(LinesSphere.class));
-			category.addExample(new GeometryShapes(),
-					RunAsyncCode.runAsyncCode(GeometryShapes.class));
-			category.addExample(new GeometryExtrudeSplines(),
-					RunAsyncCode.runAsyncCode(GeometryExtrudeSplines.class));
-			category.addExample(new BufferGeometryDemo(),
-					RunAsyncCode.runAsyncCode(BufferGeometryDemo.class));
-			category.addExample(new BufferGeometryParticles(),
-					RunAsyncCode.runAsyncCode(BufferGeometryParticles.class));
-			category.addExample(new GeometryNormals(),
-					RunAsyncCode.runAsyncCode(GeometryNormals.class));
+//			category.addExample(new GeometryCube(),
+//					RunAsyncCode.runAsyncCode(GeometryCube.class));
+//			category.addExample(new GeometryColors(),
+//					RunAsyncCode.runAsyncCode(GeometryColors.class));
+//			category.addExample(new Geometries(),
+//					RunAsyncCode.runAsyncCode(Geometries.class));
+//			category.addExample(new GeometriesParametric(),
+//					RunAsyncCode.runAsyncCode(GeometriesParametric.class));
+//			category.addExample(new GeometryDynamic(),
+//					RunAsyncCode.runAsyncCode(GeometryDynamic.class));
+//			category.addExample(new GeometryHierarchy(),
+//					RunAsyncCode.runAsyncCode(GeometryHierarchy.class));
+//			category.addExample(new Cameras(),
+//					RunAsyncCode.runAsyncCode(Cameras.class));
+//			category.addExample(new LinesSphere(),
+//					RunAsyncCode.runAsyncCode(LinesSphere.class));
+//			category.addExample(new GeometryShapes(),
+//					RunAsyncCode.runAsyncCode(GeometryShapes.class));
+//			category.addExample(new GeometryExtrudeSplines(),
+//					RunAsyncCode.runAsyncCode(GeometryExtrudeSplines.class));
+//			category.addExample(new BufferGeometryDemo(),
+//					RunAsyncCode.runAsyncCode(BufferGeometryDemo.class));
+//			category.addExample(new BufferGeometryParticles(),
+//					RunAsyncCode.runAsyncCode(BufferGeometryParticles.class));
+//			category.addExample(new GeometryNormals(),
+//					RunAsyncCode.runAsyncCode(GeometryNormals.class));
 		}
 		
 		// Interactivity 
 		{
 			Category category = new Category("Interactivity");
 			categoriesList.add(category);
-			category.addExample(new InteractiveCubes(),
-					RunAsyncCode.runAsyncCode(InteractiveCubes.class));
+//			category.addExample(new InteractiveCubes(),
+//					RunAsyncCode.runAsyncCode(InteractiveCubes.class));
 //			category.addExample(new InteractiveCubesGpu(),
 //					RunAsyncCode.runAsyncCode(InteractiveCubesGpu.class));
-			category.addExample(new InteractiveDraggableCubes(),
-					RunAsyncCode.runAsyncCode(InteractiveDraggableCubes.class));
-			category.addExample(new InteractiveVoxelPainter(),
-					RunAsyncCode.runAsyncCode(InteractiveVoxelPainter.class));
+//			category.addExample(new InteractiveDraggableCubes(),
+//					RunAsyncCode.runAsyncCode(InteractiveDraggableCubes.class));
+//			category.addExample(new InteractiveVoxelPainter(),
+//					RunAsyncCode.runAsyncCode(InteractiveVoxelPainter.class));
 		}
 
 		// Materials
 		{
 			Category category = new Category("Materials");
 			categoriesList.add(category);
-			category.addExample(new MaterialsBumpmap(),
-					RunAsyncCode.runAsyncCode(MaterialsBumpmap.class));
-			category.addExample(new MaterialsBumpmapSkin(),
-					RunAsyncCode.runAsyncCode(MaterialsBumpmapSkin.class));
+//			category.addExample(new MaterialsBumpmap(),
+//					RunAsyncCode.runAsyncCode(MaterialsBumpmap.class));
+//			category.addExample(new MaterialsBumpmapSkin(),
+//					RunAsyncCode.runAsyncCode(MaterialsBumpmapSkin.class));
 //			category.addExample(new MaterialsLightmap(),
 //					RunAsyncCode.runAsyncCode(MaterialsLightmap.class));
-			category.addExample(new MaterialsWireframe(),
-					RunAsyncCode.runAsyncCode(MaterialsWireframe.class));
+//			category.addExample(new MaterialsWireframe(),
+//					RunAsyncCode.runAsyncCode(MaterialsWireframe.class));
 //			category.addExample(new MaterialsCanvas2D(),
 //					RunAsyncCode.runAsyncCode(MaterialsCanvas2D.class));
-			category.addExample(new MaterialsTextures(),
-					RunAsyncCode.runAsyncCode(MaterialsTextures.class));
+//			category.addExample(new MaterialsTextures(),
+//					RunAsyncCode.runAsyncCode(MaterialsTextures.class));
 //			category.addExample(new MaterialsTextureCompressed(),
 //					RunAsyncCode.runAsyncCode(MaterialsTextureCompressed.class));
-			category.addExample(new MaterialsCubemapFresnel(),
-					RunAsyncCode.runAsyncCode(MaterialsCubemapFresnel.class));
-			category.addExample(new MaterialsCubemapBallsReflection(),
-					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsReflection.class));
-			category.addExample(new MaterialsCubemapBallsRefraction(),
-					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsRefraction.class));
-			category.addExample(new MaterialsCubemapDynamicReflection(),
-					RunAsyncCode.runAsyncCode(MaterialsCubemapDynamicReflection.class));
-			category.addExample(new MaterialsTextureFilter(),
-					RunAsyncCode.runAsyncCode(MaterialsTextureFilter.class));
-			category.addExample(new MaterialsTextureAnisotropy(),
-					RunAsyncCode.runAsyncCode(MaterialsTextureAnisotropy.class));
-			category.addExample(new ParticlesTrails(),
-					RunAsyncCode.runAsyncCode(ParticlesTrails.class));
-			category.addExample(new ParticlesRandom(),
-					RunAsyncCode.runAsyncCode(ParticlesRandom.class));
-			category.addExample(new TrackballEarth(),
-					RunAsyncCode.runAsyncCode(TrackballEarth.class));
-			category.addExample(new MaterialsShaderLava(),
-					RunAsyncCode.runAsyncCode(MaterialsShaderLava.class));
-			category.addExample(new MaterialsShaderMonjori(),
-					RunAsyncCode.runAsyncCode(MaterialsShaderMonjori.class));
-			category.addExample(new ShaderOcean(),
-					RunAsyncCode.runAsyncCode(ShaderOcean.class));
-			category.addExample(new MaterialsRenderTarget(),
-					RunAsyncCode.runAsyncCode(MaterialsRenderTarget.class));
+//			category.addExample(new MaterialsCubemapFresnel(),
+//					RunAsyncCode.runAsyncCode(MaterialsCubemapFresnel.class));
+//			category.addExample(new MaterialsCubemapBallsReflection(),
+//					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsReflection.class));
+//			category.addExample(new MaterialsCubemapBallsRefraction(),
+//					RunAsyncCode.runAsyncCode(MaterialsCubemapBallsRefraction.class));
+//			category.addExample(new MaterialsCubemapDynamicReflection(),
+//					RunAsyncCode.runAsyncCode(MaterialsCubemapDynamicReflection.class));
+//			category.addExample(new MaterialsTextureFilter(),
+//					RunAsyncCode.runAsyncCode(MaterialsTextureFilter.class));
+//			category.addExample(new MaterialsTextureAnisotropy(),
+//					RunAsyncCode.runAsyncCode(MaterialsTextureAnisotropy.class));
+//			category.addExample(new ParticlesTrails(),
+//					RunAsyncCode.runAsyncCode(ParticlesTrails.class));
+//			category.addExample(new ParticlesRandom(),
+//					RunAsyncCode.runAsyncCode(ParticlesRandom.class));
+//			category.addExample(new TrackballEarth(),
+//					RunAsyncCode.runAsyncCode(TrackballEarth.class));
+//			category.addExample(new MaterialsShaderLava(),
+//					RunAsyncCode.runAsyncCode(MaterialsShaderLava.class));
+//			category.addExample(new MaterialsShaderMonjori(),
+//					RunAsyncCode.runAsyncCode(MaterialsShaderMonjori.class));
+//			category.addExample(new ShaderOcean(),
+//					RunAsyncCode.runAsyncCode(ShaderOcean.class));
+//			category.addExample(new MaterialsRenderTarget(),
+//					RunAsyncCode.runAsyncCode(MaterialsRenderTarget.class));
 		}
 
 		// Custom Attributes
 		{
 			Category category = new Category("Custom Attributes");
 			categoriesList.add(category);
-			category.addExample(new CustomAttributesParticles(),
-					RunAsyncCode.runAsyncCode(CustomAttributesParticles.class));
-			category.addExample(new CustomAttributesParticles2(),
-					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
+//			category.addExample(new CustomAttributesParticles(),
+//					RunAsyncCode.runAsyncCode(CustomAttributesParticles.class));
+//			category.addExample(new CustomAttributesParticles2(),
+//					RunAsyncCode.runAsyncCode(CustomAttributesParticles2.class));
 		}
 		
 		// Animation
@@ -394,10 +343,10 @@ public class DataModel implements TreeViewModel
 			categoriesList.add(category);
 //			category.addExample(new ClothSimulation(),
 //					RunAsyncCode.runAsyncCode(ClothSimulation.class));
-			category.addExample(new MorphNormalsFlamingo(),
-					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
-			category.addExample(new MorphTargetsHorse(),
-					RunAsyncCode.runAsyncCode(MorphTargetsHorse.class));
+//			category.addExample(new MorphNormalsFlamingo(),
+//					RunAsyncCode.runAsyncCode(MorphNormalsFlamingo.class));
+//			category.addExample(new MorphTargetsHorse(),
+//					RunAsyncCode.runAsyncCode(MorphTargetsHorse.class));
 		}
 		
 		// Loaders
@@ -412,20 +361,20 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Plugins");
 			categoriesList.add(category);
-			category.addExample(new TerrainDynamic(),
-					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
-			category.addExample(new HilbertCurves(),
-					RunAsyncCode.runAsyncCode(HilbertCurves.class));
-			category.addExample(new PostprocessingGodrays(),
-					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
+//			category.addExample(new TerrainDynamic(),
+//					RunAsyncCode.runAsyncCode(TerrainDynamic.class));
+//			category.addExample(new HilbertCurves(),
+//					RunAsyncCode.runAsyncCode(HilbertCurves.class));
+//			category.addExample(new PostprocessingGodrays(),
+//					RunAsyncCode.runAsyncCode(PostprocessingGodrays.class));
 //			category.addExample(new PostprocessingMulti(),
 //					RunAsyncCode.runAsyncCode(PostprocessingMulti.class));
-			category.addExample(new EffectsLensFlares(),
-					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
-			category.addExample(new EffectsSprites(),
-					RunAsyncCode.runAsyncCode(EffectsSprites.class));
-			category.addExample(new Saturn(),
-					RunAsyncCode.runAsyncCode(Saturn.class));
+//			category.addExample(new EffectsLensFlares(),
+//					RunAsyncCode.runAsyncCode(EffectsLensFlares.class));
+//			category.addExample(new EffectsSprites(),
+//					RunAsyncCode.runAsyncCode(EffectsSprites.class));
+//			category.addExample(new Saturn(),
+//					RunAsyncCode.runAsyncCode(Saturn.class));
 
 		}
 
@@ -433,26 +382,26 @@ public class DataModel implements TreeViewModel
 		{
 			Category category = new Category("Miscellaneous");
 			categoriesList.add(category);
-			category.addExample(new PerformanceDoubleSided(),
-					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
-			category.addExample(new MiscLookAt(),
-					RunAsyncCode.runAsyncCode(MiscLookAt.class));
-			category.addExample(new MiscMemoryTestGeometries(),
-					RunAsyncCode.runAsyncCode(MiscMemoryTestGeometries.class));
-			category.addExample(new MiscMemoryTestShaders(),
-					RunAsyncCode.runAsyncCode(MiscMemoryTestShaders.class));
-			category.addExample(new LoaderSTL(), 
-					RunAsyncCode.runAsyncCode(LoaderSTL.class));
-			category.addExample(new Helpers(), 
-					RunAsyncCode.runAsyncCode(Helpers.class));
+//			category.addExample(new PerformanceDoubleSided(),
+//					RunAsyncCode.runAsyncCode(PerformanceDoubleSided.class));
+//			category.addExample(new MiscLookAt(),
+//					RunAsyncCode.runAsyncCode(MiscLookAt.class));
+//			category.addExample(new MiscMemoryTestGeometries(),
+//					RunAsyncCode.runAsyncCode(MiscMemoryTestGeometries.class));
+//			category.addExample(new MiscMemoryTestShaders(),
+//					RunAsyncCode.runAsyncCode(MiscMemoryTestShaders.class));
+//			category.addExample(new LoaderSTL(),
+//					RunAsyncCode.runAsyncCode(LoaderSTL.class));
+//			category.addExample(new Helpers(),
+//					RunAsyncCode.runAsyncCode(Helpers.class));
 		}
 		
 		// Raytracing Rendering
 		{
 			Category category = new Category("Raytracing Rendering");
 			categoriesList.add(category);
-			category.addExample(new Raytracing(),
-					RunAsyncCode.runAsyncCode(Raytracing.class));
+//			category.addExample(new Raytracing(),
+//					RunAsyncCode.runAsyncCode(Raytracing.class));
 		}
 	}
 }

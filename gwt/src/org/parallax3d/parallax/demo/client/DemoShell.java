@@ -119,14 +119,14 @@ public class DemoShell extends ResizeComposite
 	private static int nextCallbackId = 0;
 	
 	/**
-	 * Construct the {@link ShowcaseShell}.
+	 * Construct the ShowcaseShell.
 	 * 
 	 * @param treeModel
 	 *            the treeModel that backs the main menu
 	 */
 	public DemoShell(TreeViewModel treeModel, Index index)
 	{
-		AbstractImagePrototype proto = AbstractImagePrototype.create(Demo.resources.loading());
+		AbstractImagePrototype proto = AbstractImagePrototype.create(WebApp.resources.loading());
 		loadingHtml = proto.getHTML();
 
 		linkExample = index.linkExample;

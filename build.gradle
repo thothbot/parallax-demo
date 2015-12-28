@@ -53,6 +53,7 @@ project(":gwt") {
         compile "org.parallax3d.parallax:parallax-gwt:$parallaxVersion"
         compile "org.parallax3d.parallax:parallax:$parallaxVersion:sources"
         compile "org.parallax3d.parallax:parallax-gwt:$parallaxVersion:sources"
+        compile "com.google.gwt:gwt-dev:2.7.0"
     }
 }
 
