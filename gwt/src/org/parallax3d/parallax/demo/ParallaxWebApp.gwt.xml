@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit trunk//EN" "http://google-web-toolkit.googlecode.com/svn/trunk/distro-source/core/src/gwt-module.dtd">
 <module rename-to="html">
-	<inherits name="com.google.gwt.core.Core"/>
+
 	<inherits name='org.parallax3d.parallax.platforms.parallaxGwt' />
 
-	<!--<inherits name='Demo' />-->
+	<inherits name='Demo' />
+
 	<entry-point class='org.parallax3d.parallax.demo.client.WebApp' />
 	
 	<set-configuration-property name="parallax.assetpath" value="../android/assets" />
 
+	<generate-with class="org.parallax3d.parallax.demo.generator.SourceGenerator">
+		<when-type-assignable class="org.parallax3d.parallax.demo.client.WebApp.GenerateSourceSignal" />
+	</generate-with>
+
+	<generate-with class="org.parallax3d.parallax.demo.generator.FacebookGenerator">
+		<when-type-assignable class="org.parallax3d.parallax.demo.client.WebApp.GenerateFacebookSignal" />
+	</generate-with>
+
 	<source path='client'/>
 	<source path='resources'/>
+	<source path="generator">
+		<exclude name="**" />
+	</source>
 
 </module>
