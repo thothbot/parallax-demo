@@ -35,7 +35,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'rg.parallax3d.parallax.demo.android/org.parallax3d.parallax.demo.android.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'rg.parallax3d.parallax.demo.android/AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.

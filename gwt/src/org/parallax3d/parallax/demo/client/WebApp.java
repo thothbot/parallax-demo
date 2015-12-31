@@ -18,7 +18,6 @@
 
 package org.parallax3d.parallax.demo.client;
 
-import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.prefetch.Prefetcher;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -41,24 +40,28 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import org.parallax3d.parallax.App;
+import org.parallax3d.parallax.demo.generator.FacebookGenerator;
+import org.parallax3d.parallax.demo.generator.SourceGenerator;
 import org.parallax3d.parallax.demo.resources.DemoResources;
+import org.parallax3d.parallax.platforms.gwt.GwtApp;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class WebApp implements EntryPoint
+public class WebApp extends GwtApp
 {
 	/**
 	 * The type passed into the
-	 * {@link org.parallax3d.parallax.demo.generator.SourceGenerator}.
+	 * {@link SourceGenerator}.
 	 */
 	private static final class GenerateSourceSignal 
 	{}
-	
+
 	/**
 	 * The type passed into the
-	 * {@link org.parallax3d.parallax.demo.generator.FacebookGenerator}.
+	 * {@link FacebookGenerator}.
 	 */
 	private static final class GenerateFacebookSignal 
 	{}
@@ -83,7 +86,7 @@ public class WebApp implements EntryPoint
 	 */
 	private Index index;
 
-	public void onModuleLoad()
+	public void onInit()
 	{
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			public void onUncaughtException(Throwable throwable)

@@ -37,11 +37,11 @@
   <!-- Specify the app entry point class. -->
   <entry-point class='org.parallax3d.parallax.demo.client.Demo'/>
 
-  <generate-with class="org.parallax3d.parallax.demo.generator.SourceGenerator">
+  <generate-with class="SourceGenerator">
     <when-type-assignable class="org.parallax3d.parallax.demo.client.Demo.GenerateSourceSignal" />
   </generate-with>
   
-  <generate-with class="org.parallax3d.parallax.demo.generator.FacebookGenerator">
+  <generate-with class="FacebookGenerator">
     <when-type-assignable class="org.parallax3d.parallax.demo.client.Demo.GenerateFacebookSignal" />
   </generate-with>
   

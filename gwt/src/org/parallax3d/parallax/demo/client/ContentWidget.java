@@ -18,20 +18,22 @@
 
 package org.parallax3d.parallax.demo.client;
 
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.parallax3d.parallax.App;
+import org.parallax3d.parallax.demo.DemoAnimation;
 import org.parallax3d.parallax.demo.resources.DemoResources;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
+import org.parallax3d.parallax.platforms.gwt.GwtApp;
+import org.parallax3d.parallax.platforms.gwt.GwtRendering;
 
 /**
  * A widget used to show Parallax examples.
@@ -105,18 +107,12 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 	}
 
 	/**
-	 * This is basic preparation for Demo Scene
-	 */
-//	protected abstract class DemoAnimatedScene extends AnimatedScene{};
-	
-	/**
 	 * This is called when the example is first initialized.
 	 * 
-	 * @return a {@link DemoAnimatedScene} to add to the {@link RenderingPanel}
 	 */
-//	protected abstract DemoAnimatedScene onInitialize();
-//
-//	protected abstract void asyncOnInitialize(final AsyncCallback<DemoAnimatedScene> callback);
+	protected abstract DemoAnimation onInitialize();
+
+	protected abstract void asyncOnInitialize(final AsyncCallback<DemoAnimation> callback);
 
 	/**
 	 * Get the simple filename of a class (name without dots).
@@ -203,7 +199,7 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 			sendSourceRequest(rc, DemoResources.DST_SOURCE_EXAMPLE + className + ".html");
 		}
 	}
-	
+//
 //	/**
 //	 * This event called when {@link RenderingPanel} is ready to animate a
 //	 * {@link AnimatedScene} in loaded example.
@@ -369,21 +365,21 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 
 		widgetInitializing = true;
 
-//		asyncOnInitialize(new AsyncCallback<DemoAnimatedScene>() {
-//			public void onFailure(Throwable reason)
-//			{
-//				widgetInitializing = false;
-//				Window.alert("Failed to download code for this widget (" + reason + ")");
-//			}
-//
-//			public void onSuccess(DemoAnimatedScene demoAnimatedScene)
-//			{
-//				widgetInitializing = false;
-//				widgetInitialized = true;
-//
-//				// Finally setup RenderingPanel attached to the loaded example
-//		        if (demoAnimatedScene != null)
-//		        {
+		asyncOnInitialize(new AsyncCallback<DemoAnimation>() {
+			public void onFailure(Throwable reason)
+			{
+				widgetInitializing = false;
+				Window.alert("Failed to download code for this widget (" + reason + ")");
+			}
+
+			public void onSuccess(DemoAnimation demoAnimatedScene)
+			{
+				widgetInitializing = false;
+				widgetInitialized = true;
+
+				// Finally setup RenderingPanel attached to the loaded example
+		        if (demoAnimatedScene != null)
+		        {
 //		        	RenderingPanel renderingPanel = new RenderingPanel();
 //		    		ContentWidget.this.renderingPanel = renderingPanel;
 //		    		renderingPanel.addSceneLoadingHandler(ContentWidget.this);
@@ -395,9 +391,11 @@ public abstract class ContentWidget extends SimpleLayoutPanel
 //		    		renderingPanel.setAnimatedScene(demoAnimatedScene);
 //
 //		        	view.setRenderingPanel(renderingPanel);
-//		        }
-//			}
-//		});
+
+					((GwtApp)App.app).setRendering(view.getRenderingPanel(), ((GwtApp) App.app).getConfig());
+		        }
+			}
+		});
 	}
 	
 	protected boolean isEnabledEffectSwitch() {

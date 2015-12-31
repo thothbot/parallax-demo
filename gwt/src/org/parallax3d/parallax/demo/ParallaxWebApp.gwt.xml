@@ -6,17 +6,19 @@
 
 	<inherits name='Demo' />
 
+	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
+
 	<entry-point class='org.parallax3d.parallax.demo.client.WebApp' />
 	
 	<set-configuration-property name="parallax.assetpath" value="../android/assets" />
 
-	<generate-with class="org.parallax3d.parallax.demo.generator.SourceGenerator">
-		<when-type-assignable class="org.parallax3d.parallax.demo.client.WebApp.GenerateSourceSignal" />
-	</generate-with>
+	<!--<generate-with class="SourceGenerator">-->
+		<!--<when-type-assignable class="WebApp.GenerateSourceSignal" />-->
+	<!--</generate-with>-->
 
-	<generate-with class="org.parallax3d.parallax.demo.generator.FacebookGenerator">
-		<when-type-assignable class="org.parallax3d.parallax.demo.client.WebApp.GenerateFacebookSignal" />
-	</generate-with>
+	<!--<generate-with class="FacebookGenerator">-->
+		<!--<when-type-assignable class="WebApp.GenerateFacebookSignal" />-->
+	<!--</generate-with>-->
 
 	<source path='client'/>
 	<source path='resources'/>

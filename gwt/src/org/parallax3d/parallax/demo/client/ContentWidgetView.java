@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.parallax3d.parallax.demo.client.WebApp;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -36,6 +34,9 @@ import com.google.gwt.user.client.ui.ResizeComposite;
 import com.google.gwt.user.client.ui.SimpleLayoutPanel;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.Widget;
+import org.parallax3d.parallax.graphics.renderers.GLRenderer;
+import org.parallax3d.parallax.graphics.renderers.Renderer;
+import org.parallax3d.parallax.platforms.gwt.widgets.debugger.Debugger;
 
 /**
  * A view of a {@link ContentWidget}.
@@ -95,7 +96,7 @@ public class ContentWidgetView extends ResizeComposite
 	
 	List<ToggleButton> effectButtons;
 		
-//	private Debugger debugger;
+	private Debugger debugger;
 	
 	private ClickHandler handler = new ClickHandler(){
         @Override
@@ -149,19 +150,19 @@ public class ContentWidgetView extends ResizeComposite
 		for(ToggleButton button: this.effectButtons)
 			button.setEnabled(enabled);
 	}
-	
-//	public void setRenderingPanel(RenderingPanel renderingPanel)
-//	{
-//		this.examplePanel.setWidget(renderingPanel);
-//	}
-//
-//	public void setDebugger(WebGLRenderer renderer)
-//	{
-//		this.debugger = new Debugger(renderer.getInfo());
-//		this.debuggerPanel.setWidget(this.debugger);
-//	}
-//
-//	public Debugger getDebugger() {
-//		return this.debugger;
-//	}
+
+	public SimpleLayoutPanel getRenderingPanel()
+	{
+		return this.examplePanel;
+	}
+
+	public void setDebugger(GLRenderer renderer)
+	{
+		this.debugger = new Debugger(renderer.getInfo());
+		this.debuggerPanel.setWidget(this.debugger);
+	}
+
+	public Debugger getDebugger() {
+		return this.debugger;
+	}
 }

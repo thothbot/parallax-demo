@@ -18,8 +18,6 @@
 
 package org.parallax3d.parallax.demo.client;
 
-import org.parallax3d.parallax.demo.client.ContentWidget;
-import org.parallax3d.parallax.demo.client.DataModel;
 import org.parallax3d.parallax.demo.client.DataModel.Category;
 
 import com.google.gwt.dom.client.Style.Unit;

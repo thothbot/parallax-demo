@@ -20,7 +20,6 @@ package org.parallax3d.parallax.demo.client;
 
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import org.parallax3d.parallax.demo.client.InfoPanel;
 
 /**
  * Simple loading widget. 
